@@ -29,6 +29,7 @@
 #include <linux/mutex.h>
 #include <linux/cpu.h>
 #include <linux/spinlock.h>
+#include <soc/qcom/scm.h>
 
 enum common_ev_idx {
 	INST_IDX,
@@ -246,6 +247,13 @@ static unsigned long get_cnt(struct memlat_hwmon *hw)
 	struct memlat_mon *mon = to_mon(hw);
 	struct memlat_cpu_grp *cpu_grp = mon->cpu_grp;
 	unsigned int cpu;
+
+	/*
+	 * Some of SCM call is very heavy(+20ms) so perf IPI could
+	 * be stuck on the CPU which contributes long latency.
+	 */
+	if (under_scm_call())
+		return 0;
 
 	for_each_cpu(cpu, &mon->cpus) {
 		struct cpu_data *cpu_data = to_cpu_data(cpu_grp, cpu);
