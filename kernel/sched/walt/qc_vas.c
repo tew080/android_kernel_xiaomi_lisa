@@ -204,7 +204,9 @@ void check_for_migration(struct rq *rq, struct task_struct *p)
 
 		raw_spin_lock(&migration_lock);
 		rcu_read_lock();
+#ifdef CONFIG_SCHED_CASS
 		new_cpu = cass_best_cpu(p, prev_cpu, 0);
+#endif /* CONFIG_SCHED_CASS */
 		rcu_read_unlock();
 		if ((new_cpu >= 0) && (new_cpu != prev_cpu) &&
 		    (capacity_orig_of(new_cpu) > capacity_orig_of(prev_cpu))) {
