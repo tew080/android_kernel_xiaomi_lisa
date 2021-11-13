@@ -1032,3 +1032,14 @@ CONFIG_DEFAULT_TCP_CONG="bbr2"
 ######
 ## end of  KernelSU function AND addon - SUSFS support 
 ######
+
+######
+## Sysctl knobs for protecting the working set
+######
+CONFIG_ANON_MIN_KBYTES=6291456
+CONFIG_CLEAN_LOW_KBYTES=12582912
+CONFIG_CLEAN_MIN_KBYTES=3145728
+######
+## end of  Sysctl knobs for protecting the working set
+######
+
