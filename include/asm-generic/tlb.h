@@ -583,7 +583,7 @@ static inline void tlb_flush_p4d_range(struct mmu_gather *tlb,
  * This is a nop so far, because only x86 needs it.
  */
 #ifndef __tlb_remove_pmd_tlb_entry
-#define __tlb_remove_pmd_tlb_entry(tlb, pmdp, address) do {} while (0)
+#define __tlb_remove_pmd_tlb_entry(tlb, pmdp, address) ((void)0)
 #endif
 
 #define tlb_remove_pmd_tlb_entry(tlb, pmdp, address)			\
@@ -597,7 +597,7 @@ static inline void tlb_flush_p4d_range(struct mmu_gather *tlb,
  * invalidation. This is a nop so far, because only x86 needs it.
  */
 #ifndef __tlb_remove_pud_tlb_entry
-#define __tlb_remove_pud_tlb_entry(tlb, pudp, address) do {} while (0)
+#define __tlb_remove_pud_tlb_entry(tlb, pudp, address) ((void)0)
 #endif
 
 #define tlb_remove_pud_tlb_entry(tlb, pudp, address)			\
