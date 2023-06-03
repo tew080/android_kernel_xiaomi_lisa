@@ -132,8 +132,8 @@ obj-$(CONFIG_HOSTFS)		+= hostfs/
 obj-$(CONFIG_CACHEFILES)	+= cachefiles/
 ifeq ($(CONFIG_DEBUG_FS),y)
 obj-y				+= debugfs/
-else
-obj-$(CONFIG_DEBUG_KMEMLEAK)	+= debugfs/
+else ifeq ($(CONFIG_PGO_GEN),y)
+obj-y += debugfs/
 endif
 obj-$(CONFIG_TRACING)		+= tracefs/
 obj-$(CONFIG_OCFS2_FS)		+= ocfs2/
