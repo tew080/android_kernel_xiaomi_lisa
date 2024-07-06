@@ -94,7 +94,7 @@ static void msm_pcm_route_event_handler(enum msm_pcm_routing_event event,
 		q6asm_run(pcm->audio_client, 0, 0, 0);
 		/* fallthrough */
 	default:
-		pr_err("%s: default event 0x%x\n", __func__, event);
+		pr_debug("%s: default event 0x%x\n", __func__, event);
 		break;
 	}
 }
@@ -118,19 +118,19 @@ static void msm_pcm_loopback_event_handler(uint32_t opcode, uint32_t token,
 	case ASM_STREAM_PP_EVENT: {
 		pr_debug("%s: ASM_STREAM_EVENT (0x%x)\n", __func__, opcode);
 		if (!substream) {
-			pr_err("%s: substream is NULL.\n", __func__);
+			pr_debug("%s: substream is NULL.\n", __func__);
 			return;
 		}
 
 		rtd = substream->private_data;
 		if (!rtd) {
-			pr_err("%s: rtd is NULL\n", __func__);
+			pr_debug("%s: rtd is NULL\n", __func__);
 			return;
 		}
 
 		ret = msm_adsp_inform_mixer_ctl(rtd, payload);
 		if (ret) {
-			pr_err("%s: failed to inform mixer ctl. err = %d\n",
+			pr_debug("%s: failed to inform mixer ctl. err = %d\n",
 			__func__, ret);
 			return;
 		}
@@ -152,7 +152,7 @@ static void msm_pcm_loopback_event_handler(uint32_t opcode, uint32_t token,
 	}
 
 	default:
-		pr_err("%s: Not Supported Event opcode[0x%x]\n",
+		pr_debug("%s: Not Supported Event opcode[0x%x]\n",
 			__func__, opcode);
 		break;
 	}
@@ -173,7 +173,7 @@ static int msm_loopback_session_mute_put(struct snd_kcontrol *kcontrol,
 	struct msm_pcm_loopback *pcm = NULL;
 
 	if ((mute < 0) || (mute > 1)) {
-		pr_err(" %s Invalid arguments", __func__);
+		pr_debug(" %s Invalid arguments", __func__);
 		ret = -EINVAL;
 		goto done;
 	}
@@ -187,7 +187,7 @@ static int msm_loopback_session_mute_put(struct snd_kcontrol *kcontrol,
 	if (pcm && pcm->audio_client) {
 		ret = q6asm_set_mute(pcm->audio_client, mute);
 		if (ret < 0)
-			pr_err("%s: Send mute command failed rc=%d\n",
+			pr_debug("%s: Send mute command failed rc=%d\n",
 				__func__, ret);
 	}
 	mutex_unlock(&loopback_session_lock);
@@ -222,7 +222,7 @@ static int pcm_loopback_set_volume(struct msm_pcm_loopback *prtd,
 	if (prtd && prtd->audio_client) {
 		rc = q6asm_set_volume(prtd->audio_client, volume);
 		if (rc < 0) {
-			pr_err("%s: Send Volume command failed rc = %d\n",
+			pr_debug("%s: Send Volume command failed rc = %d\n",
 				__func__, rc);
 			return rc;
 		}
@@ -240,7 +240,7 @@ static int msm_pcm_loopback_get_session(struct snd_soc_pcm_runtime *rtd,
 	int n, index = -1;
 
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -308,7 +308,7 @@ static int msm_pcm_open(struct snd_pcm_substream *substream)
 	uint16_t format = 0;
 
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -421,7 +421,7 @@ static void stop_pcm(struct msm_pcm_loopback *pcm)
 	struct snd_soc_pcm_runtime *soc_pcm_tx;
 
 	if (pcm->audio_client == NULL) {
-		pr_err("%s: audio client freed\n", __func__);
+		pr_debug("%s: audio client freed\n", __func__);
 		return;
 	}
 
@@ -454,7 +454,7 @@ static int msm_pcm_close(struct snd_pcm_substream *substream)
 	bool found = false;
 
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -513,7 +513,7 @@ static int msm_pcm_prepare(struct snd_pcm_substream *substream)
 
 	memset(&event, 0, sizeof(event));
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -545,7 +545,7 @@ static int msm_pcm_prepare(struct snd_pcm_substream *substream)
 
 		if (!pcm->audio_client) {
 			mutex_unlock(&pcm->lock);
-			pr_err("%s: audio client freed\n", __func__);
+			pr_debug("%s: audio client freed\n", __func__);
 			return -EINVAL;
 		}
 
@@ -575,7 +575,7 @@ static int msm_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 			snd_soc_rtdcom_lookup(rtd, DRV_NAME);
 
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -599,7 +599,7 @@ static int msm_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 			q6asm_cmd_nowait(pcm->audio_client, CMD_PAUSE);
 		break;
 	default:
-		pr_err("%s: default cmd %d\n", __func__, cmd);
+		pr_debug("%s: default cmd %d\n", __func__, cmd);
 		break;
 	}
 
@@ -625,7 +625,7 @@ static int msm_pcm_volume_ctl_put(struct snd_kcontrol *kcontrol,
 
 	pr_debug("%s: volume : 0x%x\n", __func__, volume);
 	if ((!substream) || (!substream->runtime)) {
-		pr_err("%s substream or runtime not found\n", __func__);
+		pr_debug("%s substream or runtime not found\n", __func__);
 		rc = -ENODEV;
 		goto exit;
 	}
@@ -654,7 +654,7 @@ static int msm_pcm_volume_ctl_get(struct snd_kcontrol *kcontrol,
 
 	pr_debug("%s\n", __func__);
 	if (!vol) {
-		pr_err("%s: vol is NULL\n", __func__);
+		pr_debug("%s: vol is NULL\n", __func__);
 		return -ENODEV;
 	}
 	substream = vol->pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream;
@@ -725,7 +725,7 @@ static int msm_pcm_playback_app_type_cfg_ctl_put(struct snd_kcontrol *kcontrol,
 	ret = msm_pcm_routing_reg_stream_app_type_cfg(fe_id, session_type,
 						      be_id, &cfg_data);
 	if (ret < 0)
-		pr_err("%s: msm_pcm_routing_reg_stream_app_type_cfg failed returned %d\n",
+		pr_debug("%s: msm_pcm_routing_reg_stream_app_type_cfg failed returned %d\n",
 			__func__, ret);
 
 	return ret;
@@ -743,7 +743,7 @@ static int msm_pcm_playback_app_type_cfg_ctl_get(struct snd_kcontrol *kcontrol,
 	ret = msm_pcm_routing_get_stream_app_type_cfg(fe_id, session_type,
 						      &be_id, &cfg_data);
 	if (ret < 0) {
-		pr_err("%s: msm_pcm_routing_get_stream_app_type_cfg failed returned %d\n",
+		pr_debug("%s: msm_pcm_routing_get_stream_app_type_cfg failed returned %d\n",
 			__func__, ret);
 		goto done;
 	}
@@ -791,7 +791,7 @@ static int msm_pcm_capture_app_type_cfg_ctl_put(struct snd_kcontrol *kcontrol,
 	ret = msm_pcm_routing_reg_stream_app_type_cfg(fe_id, session_type,
 						      be_id, &cfg_data);
 	if (ret < 0)
-		pr_err("%s: msm_pcm_routing_reg_stream_app_type_cfg failed returned %d\n",
+		pr_debug("%s: msm_pcm_routing_reg_stream_app_type_cfg failed returned %d\n",
 			__func__, ret);
 
 	return ret;
@@ -809,7 +809,7 @@ static int msm_pcm_capture_app_type_cfg_ctl_get(struct snd_kcontrol *kcontrol,
 	ret = msm_pcm_routing_get_stream_app_type_cfg(fe_id, session_type,
 						      &be_id, &cfg_data);
 	if (ret < 0) {
-		pr_err("%s: msm_pcm_routing_get_stream_app_type_cfg failed returned %d\n",
+		pr_debug("%s: msm_pcm_routing_get_stream_app_type_cfg failed returned %d\n",
 			__func__, ret);
 		goto done;
 	}
@@ -891,18 +891,18 @@ static struct msm_pcm_channel_mixer *msm_pcm_get_chmixer(
 			u64 fe_id, int session_type)
 {
 	if (!pdata) {
-		pr_err("%s: missing pdata\n", __func__);
+		pr_debug("%s: missing pdata\n", __func__);
 		return NULL;
 	}
 
 	if (fe_id >= MSM_FRONTEND_DAI_MM_SIZE) {
-		pr_err("%s: invalid FE %llu\n", __func__, fe_id);
+		pr_debug("%s: invalid FE %llu\n", __func__, fe_id);
 		return NULL;
 	}
 
 	if ((session_type != SESSION_TYPE_TX) &&
 		(session_type != SESSION_TYPE_RX)) {
-		pr_err("%s: invalid session type %d\n", __func__, session_type);
+		pr_debug("%s: invalid session type %d\n", __func__, session_type);
 		return NULL;
 	}
 
@@ -930,7 +930,7 @@ static int msm_pcm_channel_mixer_cfg_ctl_put(struct snd_kcontrol *kcontrol,
 
 	pcm = pdata->pcm_device[fe_id];
 	if (!pcm) {
-		pr_err("%s invalid pcm handle for fe_id %llu\n",
+		pr_debug("%s invalid pcm handle for fe_id %llu\n",
 				__func__, fe_id);
 		return -EINVAL;
 	}
@@ -940,13 +940,13 @@ static int msm_pcm_channel_mixer_cfg_ctl_put(struct snd_kcontrol *kcontrol,
 	else
 		substream = pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream;
 	if (!substream) {
-		pr_err("%s substream not found\n", __func__);
+		pr_debug("%s substream not found\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_pspd = msm_pcm_get_chmixer(pdata, fe_id, session_type);
 	if (!chmixer_pspd) {
-		pr_err("%s: invalid chmixer_pspd in pdata", __func__);
+		pr_debug("%s: invalid chmixer_pspd in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -960,14 +960,14 @@ static int msm_pcm_channel_mixer_cfg_ctl_put(struct snd_kcontrol *kcontrol,
 		if (session_type == SESSION_TYPE_RX &&
 			!chmixer_pspd->override_in_ch_map) {
 			if (chmixer_pspd->input_channel > PCM_FORMAT_MAX_NUM_CHANNEL_V8) {
-				pr_err("%s: Invalid channel count %d\n",
+				pr_debug("%s: Invalid channel count %d\n",
 					__func__, chmixer_pspd->input_channel);
 				return -EINVAL;
 			}
 			ret = q6asm_map_channels(asm_ch_map,
 				chmixer_pspd->input_channel, false);
 			if (ret < 0) {
-				pr_err("%s q6asm_map_channels failed\n", __func__);
+				pr_debug("%s q6asm_map_channels failed\n", __func__);
 				return ret;
 			}
 
@@ -978,14 +978,14 @@ static int msm_pcm_channel_mixer_cfg_ctl_put(struct snd_kcontrol *kcontrol,
 		} else if (session_type == SESSION_TYPE_TX &&
 			!chmixer_pspd->override_out_ch_map) {
 			if (chmixer_pspd->output_channel > PCM_FORMAT_MAX_NUM_CHANNEL_V8) {
-				pr_err("%s: Invalid channel count %d\n",
+				pr_debug("%s: Invalid channel count %d\n",
 					__func__, chmixer_pspd->output_channel);
 				return -EINVAL;
 			}
 			ret = q6asm_map_channels(asm_ch_map,
 				chmixer_pspd->output_channel, false);
 			if (ret < 0) {
-				pr_err("%s q6asm_map_channels failed\n", __func__);
+				pr_debug("%s q6asm_map_channels failed\n", __func__);
 				return ret;
 			}
 			for (i = 0; i < PCM_FORMAT_MAX_NUM_CHANNEL_V8; i++)
@@ -1005,7 +1005,7 @@ static int msm_pcm_channel_mixer_cfg_ctl_put(struct snd_kcontrol *kcontrol,
 
 	mutex_lock(&loopback_session_lock);
 	if (substream->runtime && substream->ref_count <= 0) {
-		pr_err_ratelimited("%s: substream ref_count:%d invalid\n",
+		pr_debug_ratelimited("%s: substream ref_count:%d invalid\n",
 				__func__, substream->ref_count);
 		mutex_unlock(&loopback_session_lock);
 		return -EINVAL;
@@ -1013,7 +1013,7 @@ static int msm_pcm_channel_mixer_cfg_ctl_put(struct snd_kcontrol *kcontrol,
 	if (chmixer_pspd->enable && substream->runtime) {
 		prtd = substream->runtime->private_data;
 		if (!prtd) {
-			pr_err("%s find invalid prtd fail\n", __func__);
+			pr_debug("%s find invalid prtd fail\n", __func__);
 			ret = -EINVAL;
 			mutex_unlock(&loopback_session_lock);
 			goto done;
@@ -1050,7 +1050,7 @@ static int msm_pcm_channel_mixer_cfg_ctl_get(struct snd_kcontrol *kcontrol,
 
 	chmixer_pspd = msm_pcm_get_chmixer(pdata, fe_id, session_type);
 	if (!chmixer_pspd) {
-		pr_err("%s: invalid chmixer_pspd in pdata", __func__);
+		pr_debug("%s: invalid chmixer_pspd in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1076,7 +1076,7 @@ static int msm_pcm_channel_mixer_output_map_ctl_put(
 
 	chmixer_pspd = msm_pcm_get_chmixer(pdata, fe_id, session_type);
 	if (!chmixer_pspd) {
-		pr_err("%s: invalid chmixer_pspd in pdata", __func__);
+		pr_debug("%s: invalid chmixer_pspd in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1102,7 +1102,7 @@ static int msm_pcm_channel_mixer_output_map_ctl_get(
 
 	chmixer_pspd = msm_pcm_get_chmixer(pdata, fe_id, session_type);
 	if (!chmixer_pspd) {
-		pr_err("%s: invalid chmixer_pspd in pdata", __func__);
+		pr_debug("%s: invalid chmixer_pspd in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1126,7 +1126,7 @@ static int msm_pcm_channel_mixer_input_map_ctl_put(
 
 	chmixer_pspd = msm_pcm_get_chmixer(pdata, fe_id, session_type);
 	if (!chmixer_pspd) {
-		pr_err("%s: invalid chmixer_pspd in pdata", __func__);
+		pr_debug("%s: invalid chmixer_pspd in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1151,7 +1151,7 @@ static int msm_pcm_channel_mixer_input_map_ctl_get(
 
 	chmixer_pspd = msm_pcm_get_chmixer(pdata, fe_id, session_type);
 	if (!chmixer_pspd) {
-		pr_err("%s: invalid chmixer_pspd in pdata", __func__);
+		pr_debug("%s: invalid chmixer_pspd in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1176,12 +1176,12 @@ static int msm_pcm_channel_mixer_weight_ctl_put(
 
 	chmixer_pspd = msm_pcm_get_chmixer(pdata, fe_id, session_type);
 	if (!chmixer_pspd) {
-		pr_err("%s: invalid chmixer_pspd in pdata", __func__);
+		pr_debug("%s: invalid chmixer_pspd in pdata", __func__);
 		return -EINVAL;
 	}
 
 	if (channel <= 0 || channel > PCM_FORMAT_MAX_NUM_CHANNEL_V8) {
-		pr_err("%s: invalid channel number %d\n", __func__, channel);
+		pr_debug("%s: invalid channel number %d\n", __func__, channel);
 		return -EINVAL;
 	}
 	channel--;
@@ -1206,14 +1206,14 @@ static int msm_pcm_channel_mixer_weight_ctl_get(
 	struct msm_pcm_channel_mixer *chmixer_pspd;
 
 	if (channel <= 0 || channel > PCM_FORMAT_MAX_NUM_CHANNEL_V8) {
-		pr_err("%s: invalid channel number %d\n", __func__, channel);
+		pr_debug("%s: invalid channel number %d\n", __func__, channel);
 		return -EINVAL;
 	}
 	channel--;
 
 	chmixer_pspd = msm_pcm_get_chmixer(pdata, fe_id, session_type);
 	if (!chmixer_pspd) {
-		pr_err("%s: invalid chmixer_pspd in pdata", __func__);
+		pr_debug("%s: invalid chmixer_pspd in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1237,7 +1237,7 @@ static int msm_pcm_add_platform_controls(struct snd_kcontrol_new *kctl,
 
 	component = snd_soc_rtdcom_lookup(rtd, DRV_NAME);
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1312,7 +1312,7 @@ static int msm_pcm_add_channel_mixer_output_map_controls(
 	return 0;
 
 fail:
-	pr_err("%s: failed add platform ctl, err = %d\n",
+	pr_debug("%s: failed add platform ctl, err = %d\n",
 		 __func__, ret);
 
 	return ret;
@@ -1365,7 +1365,7 @@ static int msm_pcm_add_channel_mixer_input_map_controls(
 	return 0;
 
 fail:
-	pr_err("%s: failed add platform ctl, err = %d\n",
+	pr_debug("%s: failed add platform ctl, err = %d\n",
 		 __func__, ret);
 	return ret;
 }
@@ -1404,13 +1404,13 @@ static int msm_pcm_add_channel_mixer_cfg_controls(
 
 	component = snd_soc_rtdcom_lookup(rtd, DRV_NAME);
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 	pdata = (struct msm_pcm_pdata *)
 		dev_get_drvdata(component->dev);
 	if (pdata == NULL) {
-		pr_err("%s: platform data not populated\n", __func__);
+		pr_debug("%s: platform data not populated\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1434,7 +1434,7 @@ static int msm_pcm_add_channel_mixer_cfg_controls(
 	return 0;
 
 fail:
-	pr_err("%s: failed add platform ctl, err = %d\n",
+	pr_debug("%s: failed add platform ctl, err = %d\n",
 		 __func__, ret);
 
 	return ret;
@@ -1488,7 +1488,7 @@ static int msm_pcm_add_channel_mixer_weight_controls(
 	return 0;
 
 fail:
-	pr_err("%s: failed add platform ctl, err = %d\n",
+	pr_debug("%s: failed add platform ctl, err = %d\n",
 		 __func__, ret);
 
 	return ret;
@@ -1517,13 +1517,13 @@ static int msm_pcm_chmixer_ec_ref_cfg_ctl_get(
 	struct msm_pcm_channel_mixer *chmixer_ec_ref = NULL;
 
 	if (!pdata) {
-		pr_err("%s missing pdata\n", __func__);
+		pr_debug("%s missing pdata\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_ec_ref = pdata->chmixer_ec_ref[fe_id];
 	if (!chmixer_ec_ref) {
-		pr_err("%s: invalid chmixer_ec_ref in pdata", __func__);
+		pr_debug("%s: invalid chmixer_ec_ref in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1543,13 +1543,13 @@ static int msm_pcm_chmixer_ec_ref_cfg_ctl_put(
 	struct msm_pcm_channel_mixer *chmixer_ec_ref = NULL;
 
 	if (!pdata) {
-		pr_err("%s missing pdata\n", __func__);
+		pr_debug("%s missing pdata\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_ec_ref = pdata->chmixer_ec_ref[fe_id];
 	if (!chmixer_ec_ref) {
-		pr_err("%s: invalid chmixer_ec_ref in pdata", __func__);
+		pr_debug("%s: invalid chmixer_ec_ref in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1560,7 +1560,7 @@ static int msm_pcm_chmixer_ec_ref_cfg_ctl_put(
 		chmixer_ec_ref->input_channel > PCM_FORMAT_MAX_NUM_CHANNEL_V8 ||
 		chmixer_ec_ref->output_channel < 0 ||
 		chmixer_ec_ref->output_channel > PCM_FORMAT_MAX_NUM_CHANNEL_V8) {
-		pr_err("%s: Invalid channels, in %d, out %d\n",
+		pr_debug("%s: Invalid channels, in %d, out %d\n",
 				__func__, chmixer_ec_ref->input_channel,
 				chmixer_ec_ref->output_channel);
 		return -EINVAL;
@@ -1593,7 +1593,7 @@ static int msm_pcm_add_chmixer_ec_ref_controls(
 
 	component = snd_soc_rtdcom_lookup(rtd, DRV_NAME);
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1615,7 +1615,7 @@ static int msm_pcm_add_chmixer_ec_ref_controls(
 	return 0;
 
 fail:
-	pr_err("%s: failed add platform ctl, err = %d\n",
+	pr_debug("%s: failed add platform ctl, err = %d\n",
 		 __func__, ret);
 
 	return ret;
@@ -1644,18 +1644,18 @@ static int msm_pcm_chmixer_ec_ref_weight_ctl_get(
 	int i = 0;
 
 	if (!pdata) {
-		pr_err("%s missing pdata\n", __func__);
+		pr_debug("%s missing pdata\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_ec_ref = pdata->chmixer_ec_ref[fe_id];
 	if (!chmixer_ec_ref) {
-		pr_err("%s: invalid chmixer_ec_ref in pdata", __func__);
+		pr_debug("%s: invalid chmixer_ec_ref in pdata", __func__);
 		return -EINVAL;
 	}
 
 	if (channel <= 0 || channel > PCM_FORMAT_MAX_NUM_CHANNEL_V8) {
-		pr_err("%s: invalid channel %d\n",
+		pr_debug("%s: invalid channel %d\n",
 		 __func__, channel);
 		return -EINVAL;
 	}
@@ -1680,18 +1680,18 @@ static int msm_pcm_chmixer_ec_ref_weight_ctl_put(
 	int i = 0;
 
 	if (!pdata) {
-		pr_err("%s missing pdata\n", __func__);
+		pr_debug("%s missing pdata\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_ec_ref = pdata->chmixer_ec_ref[fe_id];
 	if (!chmixer_ec_ref) {
-		pr_err("%s: invalid chmixer_ec_ref in pdata", __func__);
+		pr_debug("%s: invalid chmixer_ec_ref in pdata", __func__);
 		return -EINVAL;
 	}
 
 	if (channel <= 0 || channel > PCM_FORMAT_MAX_NUM_CHANNEL_V8) {
-		pr_err("%s: invalid channel %d\n",
+		pr_debug("%s: invalid channel %d\n",
 		 __func__, channel);
 		return -EINVAL;
 	}
@@ -1734,7 +1734,7 @@ static int msm_pcm_add_chmixer_ec_ref_weight_controls(
 	return 0;
 
 fail:
-	pr_err("%s: failed add platform ctl, err = %d\n",
+	pr_debug("%s: failed add platform ctl, err = %d\n",
 		 __func__, ret);
 
 	return ret;
@@ -1773,13 +1773,13 @@ static int msm_pcm_chmixer_ec_ref_input_map_ctl_get(
 	int i = 0;
 
 	if (!pdata) {
-		pr_err("%s missing pdata\n", __func__);
+		pr_debug("%s missing pdata\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_ec_ref = pdata->chmixer_ec_ref[fe_id];
 	if (!chmixer_ec_ref) {
-		pr_err("%s: invalid chmixer_ec_ref in pdata", __func__);
+		pr_debug("%s: invalid chmixer_ec_ref in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1801,13 +1801,13 @@ static int msm_pcm_chmixer_ec_ref_input_map_ctl_put(
 	int i = 0;
 
 	if (!pdata) {
-		pr_err("%s missing pdata\n", __func__);
+		pr_debug("%s missing pdata\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_ec_ref = pdata->chmixer_ec_ref[fe_id];
 	if (!chmixer_ec_ref) {
-		pr_err("%s: invalid chmixer_ec_ref in pdata", __func__);
+		pr_debug("%s: invalid chmixer_ec_ref in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1830,13 +1830,13 @@ static int msm_pcm_chmixer_ec_ref_output_map_ctl_get(
 	int i = 0;
 
 	if (!pdata) {
-		pr_err("%s missing pdata\n", __func__);
+		pr_debug("%s missing pdata\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_ec_ref = pdata->chmixer_ec_ref[fe_id];
 	if (!chmixer_ec_ref) {
-		pr_err("%s: invalid chmixer_ec_ref in pdata", __func__);
+		pr_debug("%s: invalid chmixer_ec_ref in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1858,13 +1858,13 @@ static int msm_pcm_chmixer_ec_ref_output_map_ctl_put(
 	int i = 0;
 
 	if (!pdata) {
-		pr_err("%s missing pdata\n", __func__);
+		pr_debug("%s missing pdata\n", __func__);
 		return -EINVAL;
 	}
 
 	chmixer_ec_ref = pdata->chmixer_ec_ref[fe_id];
 	if (!chmixer_ec_ref) {
-		pr_err("%s: invalid chmixer_ec_ref in pdata", __func__);
+		pr_debug("%s: invalid chmixer_ec_ref in pdata", __func__);
 		return -EINVAL;
 	}
 
@@ -1906,7 +1906,7 @@ static int msm_pcm_add_chmixer_ec_ref_input_map_controls(
 	return 0;
 
 fail:
-	pr_err("%s: failed add platform ctl, err = %d\n",
+	pr_debug("%s: failed add platform ctl, err = %d\n",
 		 __func__, ret);
 
 	return ret;
@@ -1942,7 +1942,7 @@ static int msm_pcm_add_chmixer_ec_ref_output_map_controls(
 	return 0;
 
 fail:
-	pr_err("%s: failed add platform ctl, err = %d\n",
+	pr_debug("%s: failed add platform ctl, err = %d\n",
 		 __func__, ret);
 	return ret;
 }
@@ -1955,21 +1955,21 @@ static int msm_pcm_add_channel_mixer_controls(struct snd_soc_pcm_runtime *rtd)
 	struct snd_soc_component *component = NULL;
 
 	if (!rtd || !rtd->pcm) {
-		pr_err("%s invalid rtd or pcm\n", __func__);
+		pr_debug("%s invalid rtd or pcm\n", __func__);
 		return -EINVAL;
 	}
 	pcm = rtd->pcm;
 
 	component = snd_soc_rtdcom_lookup(rtd, DRV_NAME);
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
 	pdata = (struct msm_pcm_pdata *)
 				dev_get_drvdata(component->dev);
 	if (!pdata) {
-		pr_err("%s: platform data not populated\n", __func__);
+		pr_debug("%s: platform data not populated\n", __func__);
 		return -EINVAL;
 	}
 
@@ -1999,7 +1999,7 @@ static int msm_pcm_add_channel_mixer_controls(struct snd_soc_pcm_runtime *rtd)
 			kzalloc(sizeof(struct msm_pcm_channel_mixer),
 			GFP_KERNEL);
 		if (!pdata->chmixer_ec_ref[rtd->dai_link->id]) {
-			pr_err("%s: fail to allocate memory\n", __func__);
+			pr_debug("%s: fail to allocate memory\n", __func__);
 			ret = -ENOMEM;
 			goto fail;
 		}
@@ -2007,39 +2007,39 @@ static int msm_pcm_add_channel_mixer_controls(struct snd_soc_pcm_runtime *rtd)
 
 	ret = msm_pcm_add_channel_mixer_cfg_controls(rtd);
 	if (ret) {
-		pr_err("%s: pcm add channel mixer cfg controls failed:%d\n",
+		pr_debug("%s: pcm add channel mixer cfg controls failed:%d\n",
 				__func__, ret);
 		goto fail;
 	}
 	ret = msm_pcm_add_channel_mixer_input_map_controls(rtd);
 	if (ret) {
-		pr_err("%s: pcm add channel mixer input map controls failed:%d\n",
+		pr_debug("%s: pcm add channel mixer input map controls failed:%d\n",
 				__func__, ret);
 		goto fail;
 	}
 	ret = msm_pcm_add_channel_mixer_output_map_controls(rtd);
 	if (ret) {
-		pr_err("%s: pcm add channel mixer output map controls failed:%d\n",
+		pr_debug("%s: pcm add channel mixer output map controls failed:%d\n",
 				__func__, ret);
 		goto fail;
 	}
 
 	ret = msm_pcm_add_chmixer_ec_ref_controls(rtd);
 	if (ret) {
-		pr_err("%s: pcm add ef_ref channel mixer cfg controls failed:%d\n",
+		pr_debug("%s: pcm add ef_ref channel mixer cfg controls failed:%d\n",
 				__func__, ret);
 		goto fail;
 	}
 
 	ret = msm_pcm_add_chmixer_ec_ref_input_map_controls(rtd);
 	if (ret) {
-		pr_err("%s: pcm add ec_ref channel mixer input map controls failed:%d\n",
+		pr_debug("%s: pcm add ec_ref channel mixer input map controls failed:%d\n",
 				__func__, ret);
 		goto fail;
 	}
 	ret = msm_pcm_add_chmixer_ec_ref_output_map_controls(rtd);
 	if (ret) {
-		pr_err("%s: pcm add ec_ref channel mixer output map controls failed:%d\n",
+		pr_debug("%s: pcm add ec_ref channel mixer output map controls failed:%d\n",
 				__func__, ret);
 		goto fail;
 	}
@@ -2047,14 +2047,14 @@ static int msm_pcm_add_channel_mixer_controls(struct snd_soc_pcm_runtime *rtd)
 	for (i = 1; i <= PCM_FORMAT_MAX_NUM_CHANNEL_V8; i++) {
 		ret =  msm_pcm_add_channel_mixer_weight_controls(rtd, i);
 		if (ret) {
-			pr_err("%s: pcm add channel mixer weight controls failed:%d\n",
+			pr_debug("%s: pcm add channel mixer weight controls failed:%d\n",
 					__func__, ret);
 			goto fail;
 		}
 
 		ret =  msm_pcm_add_chmixer_ec_ref_weight_controls(rtd, i);
 		if (ret) {
-			pr_err("%s: pcm add ec_ref channel weight controls failed:%d\n",
+			pr_debug("%s: pcm add ec_ref channel weight controls failed:%d\n",
 				__func__, ret);
 			goto fail;
 		}
@@ -2083,7 +2083,7 @@ static int msm_loopback_adsp_stream_cmd_put(struct snd_kcontrol *kcontrol,
 	unsigned long fe_id = kcontrol->private_value;
 
 	if (fe_id >= MSM_FRONTEND_DAI_MAX) {
-		pr_err("%s Received invalid fe_id %lu\n", __func__, fe_id);
+		pr_debug("%s Received invalid fe_id %lu\n", __func__, fe_id);
 			ret = -EINVAL;
 			goto done;
 	}
@@ -2093,7 +2093,7 @@ static int msm_loopback_adsp_stream_cmd_put(struct snd_kcontrol *kcontrol,
 
 	event_data = (struct msm_adsp_event_data *)ucontrol->value.bytes.data;
 	if (event_data->event_type >= ADSP_STREAM_EVENT_MAX) {
-		pr_err("%s: invalid event_type=%d\n",
+		pr_debug("%s: invalid event_type=%d\n",
 			__func__, event_data->event_type);
 		ret = -EINVAL;
 		goto done;
@@ -2102,7 +2102,7 @@ static int msm_loopback_adsp_stream_cmd_put(struct snd_kcontrol *kcontrol,
 	actual_payload_len = sizeof(struct msm_adsp_event_data) +
 							event_data->payload_len;
 	if (actual_payload_len >= U32_MAX) {
-		pr_err("%s payload length 0x%X  exceeds limit\n",
+		pr_debug("%s payload length 0x%X  exceeds limit\n",
 			__func__, event_data->payload_len);
 		ret = -EINVAL;
 		goto done;
@@ -2110,7 +2110,7 @@ static int msm_loopback_adsp_stream_cmd_put(struct snd_kcontrol *kcontrol,
 
 	if (event_data->payload_len > sizeof(ucontrol->value.bytes.data)
 			- sizeof(struct msm_adsp_event_data)) {
-		pr_err("%s param length=%d  exceeds limit\n",
+		pr_debug("%s param length=%d  exceeds limit\n",
 			__func__, event_data->payload_len);
 		ret = -EINVAL;
 		goto done;
@@ -2118,7 +2118,7 @@ static int msm_loopback_adsp_stream_cmd_put(struct snd_kcontrol *kcontrol,
 
 	ret = q6asm_send_stream_cmd(audio_client, event_data);
 	if (ret < 0)
-		pr_err("%s: failed to send stream event cmd, err = %d\n",
+		pr_debug("%s: failed to send stream event cmd, err = %d\n",
 			__func__, ret);
 done:
 
@@ -2146,14 +2146,14 @@ static int msm_pcm_add_audio_adsp_stream_cmd_control(
 	};
 
 	if (!rtd) {
-		pr_err("%s rtd is NULL\n", __func__);
+		pr_debug("%s rtd is NULL\n", __func__);
 		ret = -EINVAL;
 		goto done;
 	}
 
 	component = snd_soc_rtdcom_lookup(rtd, DRV_NAME);
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -2173,7 +2173,7 @@ static int msm_pcm_add_audio_adsp_stream_cmd_control(
 		fe_audio_adsp_stream_cmd_config_control,
 		ARRAY_SIZE(fe_audio_adsp_stream_cmd_config_control));
 	if (ret < 0)
-		pr_err("%s: failed add ctl %s. err = %d\n",
+		pr_debug("%s: failed add ctl %s. err = %d\n",
 			__func__, mixer_str, ret);
 
 	kfree(mixer_str);
@@ -2203,14 +2203,14 @@ static int msm_pcm_add_audio_adsp_stream_callback_control(
 	};
 
 	if (!rtd) {
-		pr_err("%s NULL rtd\n", __func__);
+		pr_debug("%s NULL rtd\n", __func__);
 		ret = -EINVAL;
 		goto done;
 	}
 
 	component = snd_soc_rtdcom_lookup(rtd, DRV_NAME);
 	if (!component) {
-		pr_err("%s: component is NULL\n", __func__);
+		pr_debug("%s: component is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -2232,7 +2232,7 @@ static int msm_pcm_add_audio_adsp_stream_callback_control(
 			fe_audio_adsp_callback_config_control,
 			ARRAY_SIZE(fe_audio_adsp_callback_config_control));
 	if (ret < 0) {
-		pr_err("%s: failed to add ctl %s. err = %d\n",
+		pr_debug("%s: failed to add ctl %s. err = %d\n",
 			__func__, mixer_str, ret);
 		ret = -EINVAL;
 		goto free_mixer_str;
@@ -2240,7 +2240,7 @@ static int msm_pcm_add_audio_adsp_stream_callback_control(
 
 	kctl = snd_soc_card_get_kcontrol(rtd->card, mixer_str);
 	if (!kctl) {
-		pr_err("%s: failed to get kctl %s.\n", __func__, mixer_str);
+		pr_debug("%s: failed to get kctl %s.\n", __func__, mixer_str);
 		ret = -EINVAL;
 		goto free_mixer_str;
 	}
@@ -2260,26 +2260,26 @@ static int msm_pcm_add_controls(struct snd_soc_pcm_runtime *rtd)
 	pr_debug("%s\n", __func__);
 	ret = msm_pcm_add_volume_controls(rtd);
 	if (ret)
-		pr_err("%s: pcm add volume controls failed:%d\n",
+		pr_debug("%s: pcm add volume controls failed:%d\n",
 			__func__, ret);
 	ret = msm_pcm_add_app_type_controls(rtd);
 	if (ret)
-		pr_err("%s: pcm add app type controls failed:%d\n",
+		pr_debug("%s: pcm add app type controls failed:%d\n",
 			__func__, ret);
 
 	ret = msm_pcm_add_channel_mixer_controls(rtd);
 	if (ret)
-		pr_err("%s: pcm add channel mixer controls failed:%d\n",
+		pr_debug("%s: pcm add channel mixer controls failed:%d\n",
 			__func__, ret);
 
 	ret = msm_pcm_add_audio_adsp_stream_cmd_control(rtd);
 	if (ret)
-		pr_err("%s: Could not add pcm ADSP Stream Cmd Control\n",
+		pr_debug("%s: Could not add pcm ADSP Stream Cmd Control\n",
 			__func__);
 
 	ret = msm_pcm_add_audio_adsp_stream_callback_control(rtd);
 	if (ret)
-		pr_err("%s: Could not add pcm ADSP Stream Callback Control\n",
+		pr_debug("%s: Could not add pcm ADSP Stream Callback Control\n",
 			__func__);
 	return ret;
 }

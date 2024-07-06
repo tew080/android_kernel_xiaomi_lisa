@@ -90,7 +90,7 @@ static int audio_ext_clk_prepare(struct clk_hw *hw)
 		ret = pinctrl_select_state(pnctrl_info->pinctrl,
 				pnctrl_info->active);
 		if (ret) {
-			pr_err("%s: active state select failed with %d\n",
+			pr_debug("%s: active state select failed with %d\n",
 				__func__, ret);
 			return -EIO;
 		}
@@ -112,7 +112,7 @@ static void audio_ext_clk_unprepare(struct clk_hw *hw)
 		ret = pinctrl_select_state(pnctrl_info->pinctrl,
 					   pnctrl_info->sleep);
 		if (ret) {
-			pr_err("%s: active state select failed with %d\n",
+			pr_debug("%s: active state select failed with %d\n",
 				__func__, ret);
 			return;
 		}
@@ -166,7 +166,7 @@ static int lpass_hw_vote_prepare(struct clk_hw *hw)
 			"LPASS_HW_MACRO",
 			&clk_priv->lpass_core_hwvote_client_handle);
 		if (ret < 0) {
-			pr_err("%s lpass core hw vote failed %d\n",
+			pr_debug("%s lpass core hw vote failed %d\n",
 				__func__, ret);
 			if (ret == -110 && adsp_dev != NULL) {
 				subsystem_restart_dev(adsp_dev);
@@ -183,7 +183,7 @@ static int lpass_hw_vote_prepare(struct clk_hw *hw)
 			&clk_priv->lpass_audio_hwvote_client_handle);
 		if (ret < 0) {
 			if (__ratelimit(&rtl))
-				pr_err("%s lpass audio hw vote failed %d\n",
+				pr_debug("%s lpass audio hw vote failed %d\n",
 				__func__, ret);
 			return ret;
 		}
@@ -221,7 +221,7 @@ static void lpass_hw_vote_unprepare(struct clk_hw *hw)
 			AFE_LPASS_CORE_HW_DCODEC_BLOCK,
 			clk_priv->lpass_audio_hwvote_client_handle);
 		if (ret < 0) {
-			pr_err("%s lpass audio hw unvote failed %d\n",
+			pr_debug("%s lpass audio hw unvote failed %d\n",
 				__func__, ret);
 		}
 	}

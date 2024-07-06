@@ -1184,7 +1184,7 @@ static u16 msm_dai_q6_max_num_slot(int frame_rate)
 	case AFE_PORT_PCM_BITS_PER_FRAME_256:
 		return 16;
 	default:
-		pr_err("%s Invalid bits per frame %d\n",
+		pr_debug("%s Invalid bits per frame %d\n",
 			__func__, frame_rate);
 		return 0;
 	}
@@ -1196,11 +1196,11 @@ static int msm_dai_q6_dai_add_route(struct snd_soc_dai *dai)
 	struct snd_soc_dapm_context *dapm;
 
 	if (!dai) {
-		pr_err("%s: Invalid params dai\n", __func__);
+		pr_debug("%s: Invalid params dai\n", __func__);
 		return -EINVAL;
 	}
 	if (!dai->driver) {
-		pr_err("%s: Invalid params dai driver\n", __func__);
+		pr_debug("%s: Invalid params dai driver\n", __func__);
 		return -EINVAL;
 	}
 	dapm = snd_soc_component_get_dapm(dai->component);
@@ -1624,7 +1624,7 @@ static int msm_dai_q6_auxpcm_trigger(struct snd_pcm_substream *substream,
 		return 0;
 
 	default:
-		pr_err("%s: cmd %d\n", __func__, cmd);
+		pr_debug("%s: cmd %d\n", __func__, cmd);
 		rc = -EINVAL;
 	}
 
@@ -1727,7 +1727,7 @@ static int msm_dai_q6_add_power_mode_mx_ctls(struct snd_card *card,
 	kctl->private_free = power_mode_mx_ctl_private_free;
 	rc = snd_ctl_add(card, kctl);
 	if (rc < 0)
-		pr_err("%s: err add config ctl, DAI = %s\n",
+		pr_debug("%s: err add config ctl, DAI = %s\n",
 			__func__, dai_name);
 	kfree(mixer_str);
 
@@ -1805,7 +1805,7 @@ static int msm_dai_q6_add_island_mx_ctls(struct snd_card *card,
 	kctl->private_free = island_mx_ctl_private_free;
 	rc = snd_ctl_add(card, kctl);
 	if (rc < 0)
-		pr_err("%s: err add config ctl, DAI = %s\n",
+		pr_debug("%s: err add config ctl, DAI = %s\n",
 			__func__, dai_name);
 	kfree(mixer_str);
 
@@ -1853,7 +1853,7 @@ static int msm_dai_q6_add_isconfig_config_mx_ctls(struct snd_card *card,
 	kctl->private_free = island_mx_ctl_private_free;
 	rc = snd_ctl_add(card, kctl);
 	if (rc < 0)
-		pr_err("%s: err add config ctl, DAI = %s\n",
+		pr_debug("%s: err add config ctl, DAI = %s\n",
 			__func__, dai_name);
 	kfree(mixer_str);
 
@@ -1890,11 +1890,11 @@ static int msm_dai_q6_aux_pcm_probe(struct snd_soc_dai *dai)
 	struct msm_dai_q6_auxpcm_dai_data *dai_data = NULL;
 
 	if (!dai) {
-		pr_err("%s: Invalid params dai\n", __func__);
+		pr_debug("%s: Invalid params dai\n", __func__);
 		return -EINVAL;
 	}
 	if (!dai->dev) {
-		pr_err("%s: Invalid params dai dev\n", __func__);
+		pr_debug("%s: Invalid params dai dev\n", __func__);
 		return -EINVAL;
 	}
 
@@ -2301,7 +2301,7 @@ static int msm_dai_q6_spdif_hw_params(struct snd_pcm_substream *substream,
 		dai_data->spdif_port.cfg.bit_width = 24;
 		break;
 	default:
-		pr_err("%s: format %d\n",
+		pr_debug("%s: format %d\n",
 			__func__, params_format(params));
 		return -EINVAL;
 	}
@@ -2378,7 +2378,7 @@ static ssize_t msm_dai_q6_spdif_sysfs_rda_audio_state(struct device *dev,
 	struct msm_dai_q6_spdif_dai_data *dai_data = dev_get_drvdata(dev);
 
 	if (!dai_data) {
-		pr_err("%s: invalid input\n", __func__);
+		pr_debug("%s: invalid input\n", __func__);
 		return -EINVAL;
 	}
 
@@ -2396,7 +2396,7 @@ static ssize_t msm_dai_q6_spdif_sysfs_rda_audio_format(struct device *dev,
 	struct msm_dai_q6_spdif_dai_data *dai_data = dev_get_drvdata(dev);
 
 	if (!dai_data) {
-		pr_err("%s: invalid input\n", __func__);
+		pr_debug("%s: invalid input\n", __func__);
 		return -EINVAL;
 	}
 
@@ -2414,7 +2414,7 @@ static ssize_t msm_dai_q6_spdif_sysfs_rda_audio_rate(struct device *dev,
 	struct msm_dai_q6_spdif_dai_data *dai_data = dev_get_drvdata(dev);
 
 	if (!dai_data) {
-		pr_err("%s: invalid input\n", __func__);
+		pr_debug("%s: invalid input\n", __func__);
 		return -EINVAL;
 	}
 
@@ -2433,7 +2433,7 @@ static ssize_t msm_dai_q6_spdif_sysfs_rda_audio_preemph(struct device *dev,
 	int preemph = 0;
 
 	if (!dai_data) {
-		pr_err("%s: invalid input\n", __func__);
+		pr_debug("%s: invalid input\n", __func__);
 		return -EINVAL;
 	}
 
@@ -2473,7 +2473,7 @@ static int msm_dai_q6_spdif_sysfs_create(struct snd_soc_dai *dai,
 	rc = sysfs_create_group(&dai->dev->kobj,
 		&msm_dai_q6_spdif_fs_attrs_group);
 	if (rc) {
-		pr_err("%s: failed, rc=%d\n", __func__, rc);
+		pr_debug("%s: failed, rc=%d\n", __func__, rc);
 		return rc;
 	}
 	dai_data->kobj = &dai->dev->kobj;
@@ -2498,11 +2498,11 @@ static int msm_dai_q6_spdif_dai_probe(struct snd_soc_dai *dai)
 	struct snd_soc_dapm_context *dapm;
 
 	if (!dai) {
-		pr_err("%s: dai not found!!\n", __func__);
+		pr_debug("%s: dai not found!!\n", __func__);
 		return -EINVAL;
 	}
 	if (!dai->dev) {
-		pr_err("%s: Invalid params dai dev\n", __func__);
+		pr_debug("%s: Invalid params dai dev\n", __func__);
 		return -EINVAL;
 	}
 
@@ -2758,7 +2758,7 @@ static int msm_dai_q6_prepare(struct snd_pcm_substream *substream,
 					       bitwidth,
 					       &dai_data->enc_config, NULL);
 			if (rc < 0)
-				pr_err("%s: afe_port_start_v2 failed error: %d\n",
+				pr_debug("%s: afe_port_start_v2 failed error: %d\n",
 					__func__, rc);
 		} else if (dai_data->dec_config.format != DEC_FMT_NONE) {
 			int bitwidth = 0;
@@ -2804,7 +2804,7 @@ static int msm_dai_q6_prepare(struct snd_pcm_substream *substream,
 						NULL, &dai_data->dec_config);
 			}
 			if (rc < 0) {
-				pr_err("%s: fail to open AFE port 0x%x\n",
+				pr_debug("%s: fail to open AFE port 0x%x\n",
 					__func__, dai->id);
 			}
 		} else {
@@ -2836,7 +2836,7 @@ static int msm_dai_q6_cdc_hw_params(struct snd_pcm_hw_params *params,
 		break;
 	default:
 		return -EINVAL;
-		pr_err("%s: err channels %d\n",
+		pr_debug("%s: err channels %d\n",
 			__func__, dai_data->channels);
 		break;
 	}
@@ -2851,7 +2851,7 @@ static int msm_dai_q6_cdc_hw_params(struct snd_pcm_hw_params *params,
 		dai_data->port_config.i2s.bit_width = 24;
 		break;
 	default:
-		pr_err("%s: format %d\n",
+		pr_debug("%s: format %d\n",
 			__func__, params_format(params));
 		return -EINVAL;
 	}
@@ -2935,7 +2935,7 @@ static int msm_dai_q6_slim_bus_hw_params(struct snd_pcm_hw_params *params,
 		dai_data->port_config.slim_sch.bit_width = 32;
 		break;
 	default:
-		pr_err("%s: format %d\n",
+		pr_debug("%s: format %d\n",
 			__func__, params_format(params));
 		return -EINVAL;
 	}
@@ -3191,7 +3191,7 @@ static int msm_dai_q6_cdc_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
 		dai_data->port_config.i2s.ws_src = 0; /* CPU is slave */
 		break;
 	default:
-		pr_err("%s: fmt 0x%x\n",
+		pr_debug("%s: fmt 0x%x\n",
 			__func__, fmt & SND_SOC_DAIFMT_MASTER_MASK);
 		return -EINVAL;
 	}
@@ -3249,11 +3249,11 @@ static int msm_dai_q6_set_channel_map(struct snd_soc_dai *dai,
 		 * from 144 to 159 for Taiko
 		 */
 		if (!rx_slot) {
-			pr_err("%s: rx slot not found\n", __func__);
+			pr_debug("%s: rx slot not found\n", __func__);
 			return -EINVAL;
 		}
 		if (rx_num > AFE_PORT_MAX_AUDIO_CHAN_CNT) {
-			pr_err("%s: invalid rx num %d\n", __func__, rx_num);
+			pr_debug("%s: invalid rx num %d\n", __func__, rx_num);
 			return -EINVAL;
 		}
 
@@ -3287,11 +3287,11 @@ static int msm_dai_q6_set_channel_map(struct snd_soc_dai *dai,
 		 * from 128 to 143 for Taiko
 		 */
 		if (!tx_slot) {
-			pr_err("%s: tx slot not found\n", __func__);
+			pr_debug("%s: tx slot not found\n", __func__);
 			return -EINVAL;
 		}
 		if (tx_num > AFE_PORT_MAX_AUDIO_CHAN_CNT) {
-			pr_err("%s: invalid tx num %d\n", __func__, tx_num);
+			pr_debug("%s: invalid tx num %d\n", __func__, tx_num);
 			return -EINVAL;
 		}
 
@@ -3456,7 +3456,7 @@ static int msm_dai_q6_usb_audio_cfg_put(struct snd_kcontrol *kcontrol,
 		pr_debug("%s: dev_token = 0x%x\n",  __func__,
 				 dai_data->port_config.usb_audio.dev_token);
 	} else {
-		pr_err("%s: dai_data is NULL\n", __func__);
+		pr_debug("%s: dai_data is NULL\n", __func__);
 	}
 
 	return 0;
@@ -3473,7 +3473,7 @@ static int msm_dai_q6_usb_audio_cfg_get(struct snd_kcontrol *kcontrol,
 		pr_debug("%s: dev_token = 0x%x\n",  __func__,
 				 dai_data->port_config.usb_audio.dev_token);
 	} else {
-		pr_err("%s: dai_data is NULL\n", __func__);
+		pr_debug("%s: dai_data is NULL\n", __func__);
 	}
 
 	return 0;
@@ -3490,7 +3490,7 @@ static int msm_dai_q6_usb_audio_endian_cfg_put(struct snd_kcontrol *kcontrol,
 		pr_debug("%s: endian = 0x%x\n",  __func__,
 				 dai_data->port_config.usb_audio.endian);
 	} else {
-		pr_err("%s: dai_data is NULL\n", __func__);
+		pr_debug("%s: dai_data is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -3508,7 +3508,7 @@ static int msm_dai_q6_usb_audio_endian_cfg_get(struct snd_kcontrol *kcontrol,
 		pr_debug("%s: endian = 0x%x\n",  __func__,
 				 dai_data->port_config.usb_audio.endian);
 	} else {
-		pr_err("%s: dai_data is NULL\n", __func__);
+		pr_debug("%s: dai_data is NULL\n", __func__);
 		return -EINVAL;
 	}
 
@@ -3522,7 +3522,7 @@ static int msm_dai_q6_usb_audio_svc_interval_put(struct snd_kcontrol *kcontrol,
 	u32 val = ucontrol->value.integer.value[0];
 
 	if (!dai_data) {
-		pr_err("%s: dai_data is NULL\n", __func__);
+		pr_debug("%s: dai_data is NULL\n", __func__);
 		return -EINVAL;
 	}
 	dai_data->port_config.usb_audio.service_interval = val;
@@ -3537,7 +3537,7 @@ static int msm_dai_q6_usb_audio_svc_interval_get(struct snd_kcontrol *kcontrol,
 	struct msm_dai_q6_dai_data *dai_data = kcontrol->private_data;
 
 	if (!dai_data) {
-		pr_err("%s: dai_data is NULL\n", __func__);
+		pr_debug("%s: dai_data is NULL\n", __func__);
 		return -EINVAL;
 	}
 	ucontrol->value.integer.value[0] =
@@ -3805,7 +3805,7 @@ static int msm_dai_q6_tws_channel_mode_put(struct snd_kcontrol *kcontrol,
 			ret = afe_set_tws_channel_mode(format,
 				dai->id, ucontrol->value.integer.value[0]);
 			if (ret < 0) {
-				pr_err("%s: channel mode setting failed for TWS\n",
+				pr_debug("%s: channel mode setting failed for TWS\n",
 				__func__);
 				goto exit;
 			} else {
@@ -3866,7 +3866,7 @@ static int msm_dai_q6_lc3_channel_mode_put(struct snd_kcontrol *kcontrol,
 			ret = afe_set_lc3_channel_mode(format,
 				dai->id, ucontrol->value.integer.value[0]);
 			if (ret < 0) {
-				pr_err("%s: channel mode setting failed for LC3\n",
+				pr_debug("%s: channel mode setting failed for LC3\n",
 				__func__);
 				goto exit;
 			} else {
@@ -3894,7 +3894,7 @@ static int msm_dai_q6_afe_input_bit_format_get(
 	struct msm_dai_q6_dai_data *dai_data = kcontrol->private_data;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -3923,7 +3923,7 @@ static int msm_dai_q6_afe_input_bit_format_put(
 	struct msm_dai_q6_dai_data *dai_data = kcontrol->private_data;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 	switch (ucontrol->value.integer.value[0]) {
@@ -3951,7 +3951,7 @@ static int msm_dai_q6_afe_output_bit_format_get(
 	struct msm_dai_q6_dai_data *dai_data = kcontrol->private_data;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -3980,7 +3980,7 @@ static int msm_dai_q6_afe_output_bit_format_put(
 	struct msm_dai_q6_dai_data *dai_data = kcontrol->private_data;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 	switch (ucontrol->value.integer.value[0]) {
@@ -4036,7 +4036,7 @@ static int msm_dai_q6_afe_scrambler_mode_get(
 	struct msm_dai_q6_dai_data *dai_data = kcontrol->private_data;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 	ucontrol->value.integer.value[0] = dai_data->enc_config.scrambler_mode;
@@ -4051,7 +4051,7 @@ static int msm_dai_q6_afe_scrambler_mode_put(
 	struct msm_dai_q6_dai_data *dai_data = kcontrol->private_data;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 	dai_data->enc_config.scrambler_mode = ucontrol->value.integer.value[0];
@@ -4114,7 +4114,7 @@ static int msm_dai_q6_afe_feedback_dec_cfg_get(struct snd_kcontrol *kcontrol,
 	u32 abr_size = 0;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -4162,7 +4162,7 @@ static int msm_dai_q6_afe_feedback_dec_cfg_put(struct snd_kcontrol *kcontrol,
 	u32 abr_size = 0;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -4212,7 +4212,7 @@ static int msm_dai_q6_afe_dec_cfg_get(struct snd_kcontrol *kcontrol,
 	int ret = 0;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -4236,7 +4236,7 @@ static int msm_dai_q6_afe_dec_cfg_get(struct snd_kcontrol *kcontrol,
 		/* No decoder specific data available */
 		break;
 	default:
-		pr_err("%s: Invalid format %d\n",
+		pr_debug("%s: Invalid format %d\n",
 				__func__, dai_data->dec_config.format);
 		ret = -EINVAL;
 		break;
@@ -4253,7 +4253,7 @@ static int msm_dai_q6_afe_dec_cfg_put(struct snd_kcontrol *kcontrol,
 	int ret = 0;
 
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -4282,7 +4282,7 @@ static int msm_dai_q6_afe_dec_cfg_put(struct snd_kcontrol *kcontrol,
 			sizeof(struct asm_aptx_ad_dec_cfg_t));
 		break;
 	default:
-		pr_err("%s: Invalid format %d\n",
+		pr_debug("%s: Invalid format %d\n",
 				__func__, dai_data->dec_config.format);
 		ret = -EINVAL;
 		break;
@@ -4307,7 +4307,7 @@ static int msm_dai_q6_afe_enable_ttp_get(struct snd_kcontrol *kcontrol,
 
 	pr_debug("%s:\n", __func__);
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -4324,7 +4324,7 @@ static int msm_dai_q6_afe_enable_ttp_put(struct snd_kcontrol *kcontrol,
 
 	pr_debug("%s:\n", __func__);
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -4350,7 +4350,7 @@ static int msm_dai_q6_afe_ttp_cfg_get(struct snd_kcontrol *kcontrol,
 
 	pr_debug("%s:\n", __func__);
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -4367,7 +4367,7 @@ static int msm_dai_q6_afe_ttp_cfg_put(struct snd_kcontrol *kcontrol,
 
 	pr_debug("%s: Received ttp config\n", __func__);
 	if (!dai_data) {
-		pr_err("%s: Invalid dai data\n", __func__);
+		pr_debug("%s: Invalid dai data\n", __func__);
 		return -EINVAL;
 	}
 
@@ -4453,7 +4453,7 @@ static int msm_dai_q6_slim_rx_drift_get(struct snd_kcontrol *kcontrol,
 	memset(&timing_stats, 0, sizeof(struct afe_param_id_dev_timing_stats));
 	ret = afe_get_av_dev_drift(&timing_stats, dai->id);
 	if (ret) {
-		pr_err("%s: Error getting AFE Drift for port %d, err=%d\n",
+		pr_debug("%s: Error getting AFE Drift for port %d, err=%d\n",
 			__func__, dai->id, ret);
 
 		goto done;
@@ -4593,11 +4593,11 @@ static int msm_dai_q6_dai_probe(struct snd_soc_dai *dai)
 	int rc = 0;
 
 	if (!dai) {
-		pr_err("%s: Invalid params dai\n", __func__);
+		pr_debug("%s: Invalid params dai\n", __func__);
 		return -EINVAL;
 	}
 	if (!dai->dev) {
-		pr_err("%s: Invalid params dai dev\n", __func__);
+		pr_debug("%s: Invalid params dai dev\n", __func__);
 		return -EINVAL;
 	}
 
@@ -6049,7 +6049,7 @@ static int msm_mi2s_get_port_id(u32 mi2s_id, int stream, u16 *port_id)
 			*port_id = AFE_PORT_ID_INT6_MI2S_RX;
 			break;
 		default:
-			pr_err("%s: playback err id 0x%x\n",
+			pr_debug("%s: playback err id 0x%x\n",
 				__func__, mi2s_id);
 			ret = -1;
 			break;
@@ -6097,13 +6097,13 @@ static int msm_mi2s_get_port_id(u32 mi2s_id, int stream, u16 *port_id)
 			*port_id = AFE_PORT_ID_INT6_MI2S_TX;
 			break;
 		default:
-			pr_err("%s: capture err id 0x%x\n", __func__, mi2s_id);
+			pr_debug("%s: capture err id 0x%x\n", __func__, mi2s_id);
 			ret = -1;
 			break;
 		}
 	break;
 	default:
-		pr_err("%s: default err %d\n", __func__, stream);
+		pr_debug("%s: default err %d\n", __func__, stream);
 		ret = -1;
 	break;
 	}
@@ -6326,7 +6326,7 @@ static int msm_dai_q6_mi2s_hw_params(struct snd_pcm_substream *substream,
 			dai_data->port_config.i2s.mono_stereo = MSM_AFE_MONO;
 		break;
 	default:
-		pr_err("%s: default err channels %d\n",
+		pr_debug("%s: default err channels %d\n",
 			__func__, dai_data->channels);
 		goto error_invalid_data;
 	}
@@ -6348,7 +6348,7 @@ static int msm_dai_q6_mi2s_hw_params(struct snd_pcm_substream *substream,
 		dai_data->bitwidth = 32;
 		break;
 	default:
-		pr_err("%s: format %d\n",
+		pr_debug("%s: format %d\n",
 			__func__, params_format(params));
 		return -EINVAL;
 	}
@@ -6368,7 +6368,7 @@ static int msm_dai_q6_mi2s_hw_params(struct snd_pcm_substream *substream,
 	return 0;
 
 error_invalid_data:
-	pr_err("%s: dai_data->channels = %d channel_mode = %d\n", __func__,
+	pr_debug("%s: dai_data->channels = %d channel_mode = %d\n", __func__,
 		 dai_data->channels, dai_data->port_config.i2s.channel_mode);
 	return -EINVAL;
 }
@@ -6395,7 +6395,7 @@ static int msm_dai_q6_mi2s_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
 		mi2s_dai_data->mi2s_dai.mi2s_dai_data.port_config.i2s.ws_src = 0;
 		break;
 	default:
-		pr_err("%s: fmt %d\n",
+		pr_debug("%s: fmt %d\n",
 			__func__, fmt & SND_SOC_DAIFMT_MASTER_MASK);
 		return -EINVAL;
 	}
@@ -6971,7 +6971,7 @@ static int msm_dai_q6_mi2s_get_lineconfig(u16 sd_lines, u16 *config_ptr,
 			*config_ptr = AFE_PORT_I2S_SD7;
 			break;
 		default:
-			pr_err("%s: invalid SD lines %d\n",
+			pr_debug("%s: invalid SD lines %d\n",
 				   __func__, sd_lines);
 			goto error_invalid_data;
 		}
@@ -6991,7 +6991,7 @@ static int msm_dai_q6_mi2s_get_lineconfig(u16 sd_lines, u16 *config_ptr,
 			*config_ptr = AFE_PORT_I2S_QUAD67;
 			break;
 		default:
-			pr_err("%s: invalid SD lines %d\n",
+			pr_debug("%s: invalid SD lines %d\n",
 				   __func__, sd_lines);
 			goto error_invalid_data;
 		}
@@ -7002,7 +7002,7 @@ static int msm_dai_q6_mi2s_get_lineconfig(u16 sd_lines, u16 *config_ptr,
 			*config_ptr = AFE_PORT_I2S_6CHS;
 			break;
 		default:
-			pr_err("%s: invalid SD lines %d\n",
+			pr_debug("%s: invalid SD lines %d\n",
 				   __func__, sd_lines);
 			goto error_invalid_data;
 		}
@@ -7016,7 +7016,7 @@ static int msm_dai_q6_mi2s_get_lineconfig(u16 sd_lines, u16 *config_ptr,
 			*config_ptr = AFE_PORT_I2S_8CHS_2;
 			break;
 		default:
-			pr_err("%s: invalid SD lines %d\n",
+			pr_debug("%s: invalid SD lines %d\n",
 				   __func__, sd_lines);
 			goto error_invalid_data;
 		}
@@ -7028,7 +7028,7 @@ static int msm_dai_q6_mi2s_get_lineconfig(u16 sd_lines, u16 *config_ptr,
 			*config_ptr = AFE_PORT_I2S_10CHS;
 			break;
 		default:
-			pr_err("%s: invalid SD lines %d\n",
+			pr_debug("%s: invalid SD lines %d\n",
 				   __func__, sd_lines);
 			goto error_invalid_data;
 		}
@@ -7040,7 +7040,7 @@ static int msm_dai_q6_mi2s_get_lineconfig(u16 sd_lines, u16 *config_ptr,
 			*config_ptr = AFE_PORT_I2S_12CHS;
 			break;
 		default:
-			pr_err("%s: invalid SD lines %d\n",
+			pr_debug("%s: invalid SD lines %d\n",
 				   __func__, sd_lines);
 			goto error_invalid_data;
 		}
@@ -7052,7 +7052,7 @@ static int msm_dai_q6_mi2s_get_lineconfig(u16 sd_lines, u16 *config_ptr,
 			*config_ptr = AFE_PORT_I2S_14CHS;
 			break;
 		default:
-			pr_err("%s: invalid SD lines %d\n",
+			pr_debug("%s: invalid SD lines %d\n",
 				   __func__, sd_lines);
 			goto error_invalid_data;
 		}
@@ -7064,20 +7064,20 @@ static int msm_dai_q6_mi2s_get_lineconfig(u16 sd_lines, u16 *config_ptr,
 			*config_ptr = AFE_PORT_I2S_16CHS;
 			break;
 		default:
-			pr_err("%s: invalid SD lines %d\n",
+			pr_debug("%s: invalid SD lines %d\n",
 				   __func__, sd_lines);
 			goto error_invalid_data;
 		}
 		break;
 	default:
-		pr_err("%s: invalid SD lines %d\n", __func__, num_of_sd_lines);
+		pr_debug("%s: invalid SD lines %d\n", __func__, num_of_sd_lines);
 		goto error_invalid_data;
 	}
 	*ch_cnt = num_of_sd_lines;
 	return 0;
 
 error_invalid_data:
-	pr_err("%s: invalid data\n", __func__);
+	pr_debug("%s: invalid data\n", __func__);
 	return -EINVAL;
 }
 
@@ -7112,7 +7112,7 @@ static u16 msm_dai_q6_mi2s_get_num_channels(u16 config)
 	case AFE_PORT_I2S_16CHS:
 		return 16;
 	default:
-		pr_err("%s: invalid config\n", __func__);
+		pr_debug("%s: invalid config\n", __func__);
 		return 0;
 	}
 }
@@ -7128,7 +7128,7 @@ static int msm_dai_q6_mi2s_platform_data_validation(
 	u16 sd_line;
 
 	if (mi2s_pdata == NULL) {
-		pr_err("%s: mi2s_pdata NULL", __func__);
+		pr_debug("%s: mi2s_pdata NULL", __func__);
 		return -EINVAL;
 	}
 
@@ -7303,7 +7303,7 @@ static int msm_meta_mi2s_get_port_id(u32 mi2s_id, int stream, u16 *port_id)
 			*port_id = AFE_PORT_ID_SECONDARY_META_MI2S_RX;
 			break;
 		default:
-			pr_err("%s: playback err id 0x%x\n",
+			pr_debug("%s: playback err id 0x%x\n",
 				__func__, mi2s_id);
 			ret = -1;
 			break;
@@ -7313,14 +7313,14 @@ static int msm_meta_mi2s_get_port_id(u32 mi2s_id, int stream, u16 *port_id)
 	case SNDRV_PCM_STREAM_CAPTURE:
 		switch (mi2s_id) {
 		default:
-			pr_err("%s: capture err id 0x%x\n", __func__, mi2s_id);
+			pr_debug("%s: capture err id 0x%x\n", __func__, mi2s_id);
 			ret = -1;
 			break;
 		}
 		break;
 
 	default:
-		pr_err("%s: default err %d\n", __func__, stream);
+		pr_debug("%s: default err %d\n", __func__, stream);
 		ret = -1;
 		break;
 	}
@@ -7564,7 +7564,7 @@ static int msm_dai_q6_meta_mi2s_hw_params(struct snd_pcm_substream *substream,
 	}
 
 	if (channels_left > 0) {
-		pr_err("%s: too many channels %d\n",
+		pr_debug("%s: too many channels %d\n",
 			__func__, dai_data->channels);
 		return -EINVAL;
 	}
@@ -7588,7 +7588,7 @@ static int msm_dai_q6_meta_mi2s_hw_params(struct snd_pcm_substream *substream,
 		dai_data->bitwidth = 32;
 		break;
 	default:
-		pr_err("%s: format %d\n",
+		pr_debug("%s: format %d\n",
 			__func__, params_format(params));
 		return -EINVAL;
 	}
@@ -7613,7 +7613,7 @@ static int msm_dai_q6_meta_mi2s_hw_params(struct snd_pcm_substream *substream,
 	return 0;
 
 error_invalid_data:
-	pr_err("%s: error when assigning member port %d channels (channels_left %d)\n",
+	pr_debug("%s: error when assigning member port %d channels (channels_left %d)\n",
 		__func__, idx, channels_left);
 	return -EINVAL;
 }
@@ -7638,7 +7638,7 @@ static int msm_dai_q6_meta_mi2s_set_fmt(struct snd_soc_dai *dai,
 		dai_data->port_config.meta_i2s.ws_src = 0;
 		break;
 	default:
-		pr_err("%s: fmt %d\n",
+		pr_debug("%s: fmt %d\n",
 			__func__, fmt & SND_SOC_DAIFMT_MASTER_MASK);
 		return -EINVAL;
 	}
@@ -7741,7 +7741,7 @@ static int msm_dai_q6_meta_mi2s_platform_data_validation(
 		&dai_data->port_config.meta_i2s;
 
 	if (meta_mi2s_pdata == NULL) {
-		pr_err("%s: meta_mi2s_pdata NULL", __func__);
+		pr_debug("%s: meta_mi2s_pdata NULL", __func__);
 		return -EINVAL;
 	}
 
@@ -7990,7 +7990,7 @@ register_slim_playback:
 			}
 		}
 		if (rc)
-			pr_err("%s: Device not found stream name %s\n",
+			pr_debug("%s: Device not found stream name %s\n",
 				__func__, stream_name);
 		break;
 	case SLIMBUS_0_TX:
@@ -8038,7 +8038,7 @@ register_slim_capture:
 			}
 		}
 		if (rc)
-			pr_err("%s: Device not found stream name %s\n",
+			pr_debug("%s: Device not found stream name %s\n",
 				__func__, stream_name);
 		break;
 	case AFE_LOOPBACK_TX:
@@ -8097,7 +8097,7 @@ register_afe_playback:
 			}
 		}
 		if (rc)
-			pr_err("%s: Device not found stream name %s\n",
+			pr_debug("%s: Device not found stream name %s\n",
 			__func__, stream_name);
 		break;
 	case RT_PROXY_DAI_001_TX:
@@ -8119,7 +8119,7 @@ register_afe_capture:
 			}
 		}
 		if (rc)
-			pr_err("%s: Device not found stream name %s\n",
+			pr_debug("%s: Device not found stream name %s\n",
 			__func__, stream_name);
 		break;
         case RT_PROXY_DAI_003_TX:
@@ -8145,7 +8145,7 @@ register_voice_playback:
 			}
 		}
 		if (rc)
-			pr_err("%s Device not found stream name %s\n",
+			pr_debug("%s Device not found stream name %s\n",
 			       __func__, stream_name);
 		break;
 	case VOICE_RECORD_RX:
@@ -8168,7 +8168,7 @@ register_uplink_capture:
 			}
 		}
 		if (rc)
-			pr_err("%s: Device not found stream name %s\n",
+			pr_debug("%s: Device not found stream name %s\n",
 			__func__, stream_name);
 		break;
 	case RT_PROXY_PORT_002_RX:
@@ -8667,7 +8667,7 @@ static int msm_dai_q6_tdm_data_format_put(struct snd_kcontrol *kcontrol,
 		dai_data->port_cfg.tdm.data_format = AFE_GENERIC_COMPRESSED;
 		break;
 	default:
-		pr_err("%s: data_format invalid\n", __func__);
+		pr_debug("%s: data_format invalid\n", __func__);
 		break;
 	}
 	pr_debug("%s: data_format = %d\n",
@@ -10365,7 +10365,7 @@ static int msm_dai_q6_tdm_set_clk(
 	rc = afe_set_lpass_clock_v2(port_id,
 		&dai_data->clk_set);
 	if (rc < 0)
-		pr_err("%s: afe lpass clock failed, err:%d\n",
+		pr_debug("%s: afe lpass clock failed, err:%d\n",
 			__func__, rc);
 
 	return rc;
@@ -10390,7 +10390,7 @@ static int msm_pcm_afe_port_logging_ctl_get(struct snd_kcontrol *kcontrol,
 
 	ucontrol->value.integer.value[0] = afe_port_logging_port_id;
 	if (port_idx < 0 || port_idx >= IDX_TDM_MAX) {
-		pr_err_ratelimited("%s: port_idx = %d\n", __func__, port_idx);
+		pr_debug_ratelimited("%s: port_idx = %d\n", __func__, port_idx);
 		return -EINVAL;
 	}
 	ucontrol->value.integer.value[1] = afe_port_logging_item[port_idx];
@@ -10414,13 +10414,13 @@ static int msm_pcm_afe_port_logging_ctl_put(struct snd_kcontrol *kcontrol,
 
 	ret = afe_port_send_logging_cfg(port_id, &log_disable);
 	if (ret)
-		pr_err("%s: AFE port logging setting for port 0x%x failed %d\n",
+		pr_debug("%s: AFE port logging setting for port 0x%x failed %d\n",
 			__func__, port_id, ret);
 
 	afe_port_logging_port_id = port_id;
 	port_idx = port_id - AFE_PORT_ID_TDM_PORT_RANGE_START;
 	if (port_idx < 0 || port_idx >= IDX_TDM_MAX) {
-		pr_err_ratelimited("%s: port_idx = %d\n", __func__, port_idx);
+		pr_debug_ratelimited("%s: port_idx = %d\n", __func__, port_idx);
 		return -EINVAL;
 	}
 	afe_port_logging_item[port_idx] = ucontrol->value.integer.value[1];
@@ -10454,7 +10454,7 @@ static int msm_pcm_add_afe_port_logging_control(struct snd_soc_dai *dai)
 
 	rc = snd_ctl_add(dai->component->card->snd_card, kctl);
 	if (rc < 0)
-		pr_err("%s: err add AFE port logging disable control, DAI = %s\n",
+		pr_debug("%s: err add AFE port logging disable control, DAI = %s\n",
 			__func__, dai->name);
 
 	return rc;
@@ -10463,7 +10463,7 @@ static int msm_pcm_add_afe_port_logging_control(struct snd_soc_dai *dai)
 static int get_global_clk_root(int value)
 {
 	if ((value < 0) || (value > ARRAY_SIZE(afe_dyn_clk_root_enum) - 1)) {
-		pr_err("%s, %d set clk_root range failed\n", __func__, __LINE__);
+		pr_debug("%s, %d set clk_root range failed\n", __func__, __LINE__);
 		return global_dyn_mclk_cfg.clk_root;
 	}
 	clk_root_index = value;
@@ -10473,7 +10473,7 @@ static int get_global_clk_root(int value)
 static int get_global_clk_attri(int value)
 {
 	if ((value < 0) || (value > ARRAY_SIZE(afe_dyn_clk_attri_enum) - 1)) {
-		pr_err("%s, %d set clk_attri range failed\n", __func__, __LINE__);
+		pr_debug("%s, %d set clk_attri range failed\n", __func__, __LINE__);
 		return global_dyn_mclk_cfg.clk_attri;
 	}
 	clk_attri_index = value;
@@ -10483,7 +10483,7 @@ static int get_global_clk_attri(int value)
 static int get_global_clk_id(int value)
 {
 	if ((value < 0) || (value > ARRAY_SIZE(afe_dyn_clk_id_enum) - 1)) {
-		pr_err("%s, %d set clk_id range failed\n", __func__, __LINE__);
+		pr_debug("%s, %d set clk_id range failed\n", __func__, __LINE__);
 		return global_dyn_mclk_cfg.clk_id;
 	}
 	clk_id_index = value;
@@ -10568,7 +10568,7 @@ static int msm_pcm_afe_dyn_mclk_ctl_put(struct snd_kcontrol *kcontrol,
 	ret = afe_set_lpass_clk_cfg_ext_mclk_v2(global_dyn_mclk_cfg_portid,
 		&global_dyn_mclk_cfg, 0);
 	if (ret)
-		pr_err("%s: AFE port logging setting for port 0x%x failed %d\n",
+		pr_debug("%s: AFE port logging setting for port 0x%x failed %d\n",
 			__func__, global_dyn_mclk_cfg_portid, ret);
 
 	return ret;
@@ -10600,7 +10600,7 @@ static int msm_pcm_add_afe_dyn_mclk_control(struct snd_soc_dai *dai)
 
 	rc = snd_ctl_add(dai->component->card->snd_card, kctl);
 	if (rc < 0)
-		pr_err("%s: err add AFE dyn mclk control, DAI = %s\n",
+		pr_debug("%s: err add AFE dyn mclk control, DAI = %s\n",
 			__func__, dai->name);
 
 	return rc;
@@ -10661,7 +10661,7 @@ static int msm_pcm_afe_limiter_param_ctl_put(struct snd_kcontrol *kcontrol,
 
 	ret = afe_port_send_afe_limiter_param(port_id, &afe_limiter_disable);
 	if (ret)
-		pr_err("%s: AFE port logging setting for port 0x%x failed %d\n",
+		pr_debug("%s: AFE port logging setting for port 0x%x failed %d\n",
 			__func__, port_id, ret);
 
 	//resetting number of parameters to zero
@@ -10696,7 +10696,7 @@ static int msm_pcm_add_afe_port_limiter_control(struct snd_soc_dai *dai)
 
 	rc = snd_ctl_add(dai->component->card->snd_card, kctl);
 	if (rc < 0)
-		pr_err("%s: err add AFE port limiter disable control, DAI = %s\n",
+		pr_debug("%s: err add AFE port limiter disable control, DAI = %s\n",
 			__func__, dai->name);
 
 	return rc;
@@ -11417,7 +11417,7 @@ static unsigned int tdm_param_set_slot_mask(u16 *slot_offset, int slot_width,
 		channel_count = AFE_PORT_MAX_AUDIO_CHAN_CNT_V2;
 
 	if (slot_width_bytes == 0) {
-		pr_err("%s: slot width is zero\n", __func__);
+		pr_debug("%s: slot width is zero\n", __func__);
 		return slot_mask;
 	}
 
@@ -11432,7 +11432,7 @@ static unsigned int tdm_param_set_slot_mask(u16 *slot_offset, int slot_width,
 			if (slot_index < slots_per_frame)
 				set_bit(slot_index, &slot_mask);
 			else {
-				pr_err("%s: invalid slot map setting\n",
+				pr_debug("%s: invalid slot map setting\n",
 				       __func__);
 				return 0;
 			}
@@ -11772,7 +11772,7 @@ static int msm_dai_q6_tdm_prepare(struct snd_pcm_substream *substream,
 		if (rc < 0) {
 			rc = afe_paired_rx_tdm_port_ops(intf_idx, false, tdm_group_ref);
 			if (rc < 0)
-				pr_err("%s:Unable to close Paired Rx due to tx usecase start failure", __func__);
+				pr_debug("%s:Unable to close Paired Rx due to tx usecase start failure", __func__);
 			if (atomic_read(group_ref) == 0) {
 				afe_port_group_enable(group_id,
 					NULL, false, NULL);
@@ -11849,7 +11849,7 @@ static void msm_dai_q6_tdm_shutdown(struct snd_pcm_substream *substream,
 					msm_dai_q6_tdm_set_clk(dai_data,
 						dai->id, false);
 				}
-				pr_err("%s:AFE Paired Rx Port Not disabled");
+				pr_debug("%s:AFE Paired Rx Port Not disabled");
 			}
 		}
 		if (msm_dai_q6_get_tdm_clk_ref(group_idx) == 0) {
@@ -15537,11 +15537,11 @@ static int msm_dai_q6_dai_cdc_dma_probe(struct snd_soc_dai *dai)
 	int rc = 0;
 
 	if (!dai) {
-		pr_err("%s: Invalid params dai\n", __func__);
+		pr_debug("%s: Invalid params dai\n", __func__);
 		return -EINVAL;
 	}
 	if (!dai->dev) {
-		pr_err("%s: Invalid params dai dev\n", __func__);
+		pr_debug("%s: Invalid params dai dev\n", __func__);
 		return -EINVAL;
 	}
 
@@ -16505,69 +16505,69 @@ int __init msm_dai_q6_init(void)
 #ifndef CONFIG_AUXPCM_DISABLE
 	rc = platform_driver_register(&msm_auxpcm_dev_driver);
 	if (rc) {
-		pr_err("%s: fail to register auxpcm dev driver", __func__);
+		pr_debug("%s: fail to register auxpcm dev driver", __func__);
 		return rc;
 	}
 #endif
 	rc = platform_driver_register(&msm_dai_q6);
 	if (rc) {
-		pr_err("%s: fail to register dai q6 driver", __func__);
+		pr_debug("%s: fail to register dai q6 driver", __func__);
 		goto dai_q6_fail;
 	}
 
 	rc = platform_driver_register(&msm_dai_q6_dev);
 	if (rc) {
-		pr_err("%s: fail to register dai q6 dev driver", __func__);
+		pr_debug("%s: fail to register dai q6 dev driver", __func__);
 		goto dai_q6_dev_fail;
 	}
 
 	rc = platform_driver_register(&msm_dai_q6_mi2s_driver);
 	if (rc) {
-		pr_err("%s: fail to register dai MI2S dev drv\n", __func__);
+		pr_debug("%s: fail to register dai MI2S dev drv\n", __func__);
 		goto dai_q6_mi2s_drv_fail;
 	}
 
 	rc = platform_driver_register(&msm_dai_q6_meta_mi2s_driver);
 	if (rc) {
-		pr_err("%s: fail to register dai META MI2S dev drv\n",
+		pr_debug("%s: fail to register dai META MI2S dev drv\n",
 			__func__);
 		goto dai_q6_meta_mi2s_drv_fail;
 	}
 
 	rc = platform_driver_register(&msm_dai_mi2s_q6);
 	if (rc) {
-		pr_err("%s: fail to register dai MI2S\n", __func__);
+		pr_debug("%s: fail to register dai MI2S\n", __func__);
 		goto dai_mi2s_q6_fail;
 	}
 
 	rc = platform_driver_register(&msm_dai_q6_spdif_driver);
 	if (rc) {
-		pr_err("%s: fail to register dai SPDIF\n", __func__);
+		pr_debug("%s: fail to register dai SPDIF\n", __func__);
 		goto dai_spdif_q6_fail;
 	}
 
 	rc = platform_driver_register(&msm_dai_q6_tdm_driver);
 	if (rc) {
-		pr_err("%s: fail to register dai TDM dev drv\n", __func__);
+		pr_debug("%s: fail to register dai TDM dev drv\n", __func__);
 		goto dai_q6_tdm_drv_fail;
 	}
 
 	rc = platform_driver_register(&msm_dai_tdm_q6);
 	if (rc) {
-		pr_err("%s: fail to register dai TDM\n", __func__);
+		pr_debug("%s: fail to register dai TDM\n", __func__);
 		goto dai_tdm_q6_fail;
 	}
 
 	rc = platform_driver_register(&msm_dai_q6_cdc_dma_driver);
 	if (rc) {
-		pr_err("%s: fail to register dai CDC DMA dev\n", __func__);
+		pr_debug("%s: fail to register dai CDC DMA dev\n", __func__);
 		goto dai_cdc_dma_q6_dev_fail;
 	}
 
 
 	rc = platform_driver_register(&msm_dai_cdc_dma_q6);
 	if (rc) {
-		pr_err("%s: fail to register dai CDC DMA\n", __func__);
+		pr_debug("%s: fail to register dai CDC DMA\n", __func__);
 		goto dai_cdc_dma_q6_fail;
 	}
 	return rc;

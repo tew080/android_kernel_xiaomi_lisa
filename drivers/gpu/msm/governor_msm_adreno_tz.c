@@ -327,7 +327,7 @@ static int tz_init(struct device *dev, struct devfreq_msm_adreno_tz_data *priv,
 			 * success as normal DCVS will still work.
 			 */
 			if (ret) {
-				pr_err(TAG "tz: context aware DCVS init failed\n");
+				pr_debug(TAG "tz: context aware DCVS init failed\n");
 				priv->ctxt_aware_enable = false;
 				return 0;
 			}
@@ -496,7 +496,7 @@ static int tz_start(struct devfreq *devfreq)
 			tz_pwrlevels[out++] = devfreq->profile->freq_table[i];
 		tz_pwrlevels[0] = i;
 	} else {
-		pr_err(TAG "tz_pwrlevels[] is too short\n");
+		pr_debug(TAG "tz_pwrlevels[] is too short\n");
 		return -EINVAL;
 	}
 
@@ -512,7 +512,7 @@ static int tz_start(struct devfreq *devfreq)
 	ret = tz_init(&devfreq->dev, priv, tz_pwrlevels, sizeof(tz_pwrlevels),
 			&version, sizeof(version));
 	if (ret != 0 || version > MAX_TZ_VERSION) {
-		pr_err(TAG "tz_init failed\n");
+		pr_debug(TAG "tz_init failed\n");
 		return ret;
 	}
 
@@ -681,7 +681,7 @@ void msm_adreno_tz_exit(void)
 	int ret = devfreq_remove_governor(&msm_adreno_tz);
 
 	if (ret)
-		pr_err(TAG "failed to remove governor %d\n", ret);
+		pr_debug(TAG "failed to remove governor %d\n", ret);
 
 	if (workqueue != NULL)
 		destroy_workqueue(workqueue);
