@@ -763,11 +763,11 @@ else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
 
-KBUILD_CFLAGS   += -ffp-contract=fast
-KBUILD_CFLAGS  +=  -fno-rtti
-KBUILD_CFLAGS  +=  -fno-trapping-math
-KBUILD_CFLAGS  +=  -fno-exceptions
-KBUILD_CFLAGS  +=  -fno-math-errno
+KBUILD_LDFLAGS += -mllvm -enable-ml-inliner=release
+# Machine Instruction Scheduler
+KBUILD_CFLAGS  +=  -mllvm -enable-misched
+KBUILD_CFLAGS  +=  -mllvm -misched-topdown
+KBUILD_CFLAGS  +=  -mllvm -regalloc=greedy
 
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \

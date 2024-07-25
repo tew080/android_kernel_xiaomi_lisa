@@ -5820,8 +5820,11 @@ out_put_task:
 	return retval;
 }
 
-char sched_lib_name[LIB_PATH_LENGTH];
-unsigned int sched_lib_mask_force;
+char sched_lib_name[LIB_PATH_LENGTH] =
+{ "com.miHoYo.,com.activision.,UnityMain,libunity.so,libil2cpp.so,libfb.so"
+};
+unsigned int sched_lib_mask_force = 255;
+
 bool is_sched_lib_based_app(pid_t pid)
 {
 	const char *name = NULL;
@@ -5857,7 +5860,11 @@ bool is_sched_lib_based_app(pid_t pid)
 	if (!mm)
 		goto put_task_struct;
 
+<<<<<<< HEAD
 	mmap_read_lock(mm);
+=======
+	down_read(&mm->mmap_sem);
+>>>>>>> 942b232a8a23 (Revert "kernel: Remove sched_lib hacks")
 	for (vma = mm->mmap; vma ; vma = vma->vm_next) {
 		if (vma->vm_file && vma->vm_flags & VM_EXEC) {
 			name = d_path(&vma->vm_file->f_path,
@@ -5879,7 +5886,11 @@ bool is_sched_lib_based_app(pid_t pid)
 	}
 
 release_sem:
+<<<<<<< HEAD
 	mmap_read_unlock(mm);
+=======
+	up_read(&mm->mmap_sem);
+>>>>>>> 942b232a8a23 (Revert "kernel: Remove sched_lib hacks")
 	mmput(mm);
 put_task_struct:
 	put_task_struct(p);
