@@ -517,6 +517,13 @@ static int qcom_cpufreq_hw_read_lut(struct platform_device *pdev,
 				      i * lut_row_size);
 		volt = FIELD_GET(LUT_VOLT, data) * 1000;
 
+		if (i >= 20 && lval < 166) {
+			src = 1;
+			lval = 166;
+			core_count = 4;
+			volt = 1064000;
+		}
+
 		if (src)
 			freq = xo_rate * lval / 1000;
 		else
