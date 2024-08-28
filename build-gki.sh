@@ -28,7 +28,7 @@ if [[ $2 = "-c" || $1 = "--clean" ]]; then
 	rm -rf out
 fi
 
-#sudo rm -rf out
+sudo rm -rf out
 
 mkdir -p out
 ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 CROSS_COMPILE=$GCC_64_DIR/bin/aarch64-linux-android- CROSS_COMPILE_ARM32=$GCC_32_DIR/bin/arm-linux-androideabi- scripts/kconfig/merge_config.sh -O out arch/arm64/configs/lisa_defconfig

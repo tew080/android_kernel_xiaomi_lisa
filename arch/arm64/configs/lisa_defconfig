@@ -892,7 +892,9 @@ CONFIG_PANIC_ON_OOPS=y
 CONFIG_PANIC_TIMEOUT=-1
 CONFIG_BUG_ON_DATA_CORRUPTION=y
 
-## Modules ##
+######
+## Modules 
+######
 CONFIG_SLIMBUS_MSM_NGD=y
 CONFIG_ICNSS2=y
 CONFIG_QCOM_LLCC_PERFMON=y
@@ -912,5 +914,15 @@ CONFIG_MSM_BT_POWER=y
 CONFIG_BTFM_SLIM=y
 CONFIG_NFC_QTI_I2C=y
 CONFIG_I2C_RTC6226_QCA=y
-## end modules ##
+######
+## end  Modules  
+######
+
+######
+## BORE (Burst-Oriented Response Enhancer) CPU Scheduler 
+######
+CONFIG_SCHED_BORE=y
+######
+## end BORE (Burst-Oriented Response Enhancer) CPU Scheduler 
+######
 
