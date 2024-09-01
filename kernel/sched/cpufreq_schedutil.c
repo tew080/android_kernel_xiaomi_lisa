@@ -12,7 +12,6 @@
 #include "sched.h"
 
 #include <linux/sched/cpufreq.h>
-#include <trace/events/power.h>
 #include <linux/sched/sysctl.h>
 #include <trace/hooks/sched.h>
 #include <drm/mi_disp_notifier.h>
@@ -23,6 +22,7 @@ struct sugov_tunables {
 	unsigned int		up_rate_limit_us_screen_off;
 	unsigned int		down_rate_limit_us;
 	unsigned int		down_rate_limit_us_screen_off;
+	bool 				exp_util;
 };
 
 struct sugov_policy {
@@ -109,7 +109,11 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
 	 * limit once frequency change direction is decided, according
 	 * to the separate rate limits.
 	 */
-	
+
+	 /* If the last frequency wasn't set yet then we can still amend it */
+	if (sg_policy->work_in_progress)
+		return true;
+
 	delta_ns = time - sg_policy->last_freq_update_time;
 	return delta_ns >= sg_policy->min_rate_limit_ns;
 }
@@ -149,6 +153,9 @@ static bool sugov_update_next_freq(struct sugov_policy *sg_policy, u64 time,
 
 	if (sugov_up_down_rate_limit(sg_policy, time, next_freq))
 		return false;
+
+	if (sg_policy->next_freq > next_freq)
+		next_freq = (sg_policy->next_freq + next_freq) >> 1;
 
 	sg_policy->next_freq = next_freq;
 	sg_policy->last_freq_update_time = time;
@@ -210,6 +217,7 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
 	struct cpufreq_policy *policy = sg_policy->policy;
 
 		unsigned int freq;
+		unsigned int idx, l_freq, h_freq;
         unsigned long next_freq = 0;
 
 	if (arch_scale_freq_invariant())
@@ -225,16 +233,27 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
         if (next_freq)
                 freq = next_freq;
         else
-                freq = map_util_freq(util, freq, max);
-
-	trace_sugov_next_freq(policy->cpu, util, max, freq);
+                freq = map_util_freq(util, freq, max, sg_policy->tunables->exp_util);
 	if (freq == sg_policy->cached_raw_freq && !sg_policy->need_freq_update)
 		return sg_policy->next_freq;
 
 	sg_policy->need_freq_update = false;
 	sg_policy->cached_raw_freq = freq;
-	return cpufreq_driver_resolve_freq(policy, freq);
+	l_freq = cpufreq_driver_resolve_freq(policy, freq);
+	idx = cpufreq_frequency_table_target(policy, freq, CPUFREQ_RELATION_H);
+	h_freq = policy->freq_table[idx].frequency;
+	h_freq = clamp(h_freq, policy->min, policy->max);
+	if (l_freq <= h_freq || l_freq == policy->min)
+		return l_freq;
 
+	/*
+	 * Use the frequency step below if the calculated frequency is <20%
+	 * higher than it.
+	 */
+	if (mult_frac(100, freq - h_freq, l_freq - h_freq) < 20)
+		return h_freq;
+
+	return l_freq;
 }
 
 /*
@@ -655,18 +674,38 @@ static ssize_t down_rate_limit_us_screen_off_store(struct gov_attr_set *attr_set
 	return count;
 }
 
+static ssize_t exp_util_show(struct gov_attr_set *attr_set, char *buf)
+{
+	struct sugov_tunables *tunables = to_sugov_tunables(attr_set);
+
+	return scnprintf(buf, PAGE_SIZE, "%u\n", tunables->exp_util);
+}
+
+static ssize_t exp_util_store(struct gov_attr_set *attr_set, const char *buf,
+				   size_t count)
+{
+	struct sugov_tunables *tunables = to_sugov_tunables(attr_set);
+
+	if (kstrtobool(buf, &tunables->exp_util))
+		return -EINVAL;
+
+	return count;
+}
+
 static struct governor_attr up_rate_limit_us = __ATTR_RW(up_rate_limit_us);
 static struct governor_attr up_rate_limit_us_screen_off =
 		__ATTR_RW(up_rate_limit_us_screen_off);
 static struct governor_attr down_rate_limit_us = __ATTR_RW(down_rate_limit_us);
 static struct governor_attr down_rate_limit_us_screen_off =
 		__ATTR_RW(down_rate_limit_us_screen_off);
+static struct governor_attr exp_util = __ATTR_RW(exp_util);
 
 static struct attribute *sugov_attrs[] = {
 	&up_rate_limit_us.attr,
 	&up_rate_limit_us_screen_off.attr,
 	&down_rate_limit_us.attr,
 	&down_rate_limit_us_screen_off.attr,
+	&exp_util.attr,
 	NULL
 };
 ATTRIBUTE_GROUPS(sugov);
@@ -791,6 +830,7 @@ static void sugov_tunables_save(struct cpufreq_policy *policy,
 	cached->down_rate_limit_us = tunables->down_rate_limit_us;
 	cached->down_rate_limit_us_screen_off =
 			tunables->down_rate_limit_us_screen_off;
+	cached->exp_util = tunables->exp_util;
 }
 
 static void sugov_clear_global_tunables(void)
@@ -811,9 +851,8 @@ static void sugov_tunables_restore(struct cpufreq_policy *policy)
 	tunables->up_rate_limit_us = cached->up_rate_limit_us;
 	tunables->down_rate_limit_us = cached->down_rate_limit_us;
 	tunables->up_rate_limit_us_screen_off = cached->up_rate_limit_us_screen_off;
-	tunables->down_rate_limit_us_screen_off =
-			cached->down_rate_limit_us_screen_off;
-	update_rate_limit_ns(sg_policy);
+	tunables->down_rate_limit_us_screen_off = cached->down_rate_limit_us_screen_off;
+	tunables->exp_util = cached->exp_util;
 }
 
 static int sugov_init(struct cpufreq_policy *policy)
