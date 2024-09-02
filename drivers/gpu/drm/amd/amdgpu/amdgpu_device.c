@@ -2908,7 +2908,7 @@ fence_driver_init:
 	/* must succeed. */
 	amdgpu_ras_resume(adev);
 
-	queue_delayed_work(system_wq, &adev->delayed_init_work,
+	queue_delayed_work(system_power_efficient_wq, &adev->delayed_init_work,
 			   msecs_to_jiffies(AMDGPU_RESUME_MS));
 
 	r = device_create_file(adev->dev, &dev_attr_pcie_replay_count);
@@ -3154,7 +3154,7 @@ int amdgpu_device_resume(struct drm_device *dev, bool resume, bool fbcon)
 	if (r)
 		return r;
 
-	queue_delayed_work(system_wq, &adev->delayed_init_work,
+	queue_delayed_work(system_power_efficient_wq, &adev->delayed_init_work,
 			   msecs_to_jiffies(AMDGPU_RESUME_MS));
 
 	if (!amdgpu_device_has_dc_support(adev)) {
