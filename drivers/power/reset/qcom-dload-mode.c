@@ -24,7 +24,7 @@ enum qcom_download_dest {
 
 struct qcom_dload {
 	struct notifier_block panic_nb;
-	struct notifier_block reboot_nb;
+	struct notifier_block restart_nb;
 	struct kobject kobj;
 
 	bool in_panic;
@@ -203,6 +203,11 @@ static ssize_t dload_mode_show(struct kobject *kobj,
 	case QCOM_DOWNLOAD_BOTHDUMP:
 		mode = "both";
 		break;
+#ifdef CONFIG_POWER_RESET_QCOM_DOWNLOAD_MODE_NODUMP
+	case QCOM_DOWNLOAD_NODUMP:
+		mode = "nodump";
+		break;
+#endif
 	default:
 		mode = "unknown";
 		break;
@@ -214,6 +219,17 @@ static ssize_t dload_mode_store(struct kobject *kobj,
 				const char *buf, size_t count)
 {
 	enum qcom_download_mode mode;
+#ifdef CONFIG_POWER_RESET_QCOM_DOWNLOAD_MODE_NODUMP
+	int temp;
+
+	dump_mode = qcom_scm_get_download_mode(&temp, 0) ? dump_mode : temp;
+
+	if (dump_mode == QCOM_DOWNLOAD_NODUMP) {
+		pr_err("%s: Current dump mode already set: nodump\n", __func__);
+		pr_err("%s: Changing dump mode now is not allowed, reboot the device\n", __func__);
+		return -EINVAL;
+	}
+#endif
 
 	if (sysfs_streq(buf, "full"))
 		mode = QCOM_DOWNLOAD_FULLDUMP;
@@ -221,9 +237,19 @@ static ssize_t dload_mode_store(struct kobject *kobj,
 		mode = QCOM_DOWNLOAD_MINIDUMP;
 	else if (sysfs_streq(buf, "both"))
 		mode = QCOM_DOWNLOAD_BOTHDUMP;
+#ifdef CONFIG_POWER_RESET_QCOM_DOWNLOAD_MODE_NODUMP
+	else if (sysfs_streq(buf, "nodump")) {
+		mode = QCOM_DOWNLOAD_NODUMP;
+		qcom_scm_disable_sdi();
+	}
+#endif
 	else {
 		pr_err("Invalid dump mode request...\n");
+#ifdef CONFIG_POWER_RESET_QCOM_DOWNLOAD_MODE_NODUMP
+		pr_err("Supported dumps: 'full', 'mini', 'both' or 'nodump'\n");
+#else
 		pr_err("Supported dumps: 'full', 'mini', or 'both'\n");
+#endif
 		return -EINVAL;
 	}
 
@@ -257,7 +283,7 @@ static int qcom_dload_panic(struct notifier_block *this, unsigned long event,
 	return NOTIFY_OK;
 }
 
-static int qcom_dload_reboot(struct notifier_block *this, unsigned long event,
+static int qcom_dload_restart(struct notifier_block *this, unsigned long event,
 			      void *ptr)
 {
 	char *cmd = ptr;
@@ -275,7 +301,10 @@ static int qcom_dload_reboot(struct notifier_block *this, unsigned long event,
 	}
 
 	if (current_download_mode != QCOM_DOWNLOAD_NODUMP)
+	if (cmd && !strcmp(cmd, "edl")) {
+		set_download_mode(QCOM_DOWNLOAD_EDL);
 		reboot_mode = REBOOT_WARM;
+	}
 
 	return NOTIFY_OK;
 }
@@ -384,9 +413,14 @@ static int qcom_dload_probe(struct platform_device *pdev)
 	atomic_notifier_chain_register(&panic_notifier_list,
 				       &poweroff->panic_nb);
 
-	poweroff->reboot_nb.notifier_call = qcom_dload_reboot;
-	poweroff->reboot_nb.priority = 255;
-	register_reboot_notifier(&poweroff->reboot_nb);
+	poweroff->restart_nb.notifier_call = qcom_dload_restart;
+	/* Here, Restart handler priority should be higher than
+	 * of restart handler present in scm driver so that
+	 * reboot_mode set by this handler seen by SCM's one
+	 * for EDL mode.
+	 */
+	poweroff->restart_nb.priority = 131;
+	register_restart_handler(&poweroff->restart_nb);
 
 	platform_set_drvdata(pdev, poweroff);
 
@@ -399,7 +433,7 @@ static int qcom_dload_remove(struct platform_device *pdev)
 
 	atomic_notifier_chain_unregister(&panic_notifier_list,
 					 &poweroff->panic_nb);
-	unregister_reboot_notifier(&poweroff->reboot_nb);
+	unregister_restart_handler(&poweroff->restart_nb);
 
 	if (poweroff->dload_dest_addr)
 		iounmap(poweroff->dload_dest_addr);
