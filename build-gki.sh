@@ -40,6 +40,8 @@ kernel="out/arch/arm64/boot/Image"
 dtb="out/arch/arm64/boot/dts/vendor/qcom/yupik.dtb"
 dtbo="out/arch/arm64/boot/dts/vendor/qcom/lisa-sm7325-overlay.dtbo"
 
+sudo rm -rf *.zip
+
 if [ -f "$kernel" ] && [ -f "$dtb" ] && [ -f "$dtbo" ]; then
 	echo -e "\nKernel compiled succesfully! Zipping up...\n"
 
