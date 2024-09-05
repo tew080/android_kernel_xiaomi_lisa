@@ -2,12 +2,6 @@
 #
 # Makefile for some libs needed in the kernel.
 #
-# Inlin optimization
-KBUILD_CFLAGS += -mllvm -inline-threshold=5000
-KBUILD_CFLAGS += -mllvm -inlinehint-threshold=4000
-KBUILD_CFLAGS += -mllvm -unroll-count=10
-KBUILD_CFLAGS += -mllvm -unroll-threshold=3000
-KBUILD_CFLAGS += -mllvm -unroll-partial-threshold=3000
 
 ifdef CONFIG_FUNCTION_TRACER
 ORIG_CFLAGS := $(KBUILD_CFLAGS)
