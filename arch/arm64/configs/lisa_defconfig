@@ -916,5 +916,3 @@ CONFIG_I2C_RTC6226_QCA=y
 ######
 ## end  Modules  
 ######
-
-
