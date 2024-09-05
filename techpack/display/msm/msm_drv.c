@@ -341,7 +341,7 @@ u32 msm_readl(const void __iomem *addr)
 	u32 val = readl(addr);
 
 	if (reglog)
-		pr_err("IO:R %pK %08x\n", addr, val);
+		pr_debug("IO:R %pK %08x\n", addr, val);
 	return val;
 }
 
@@ -626,7 +626,7 @@ static int msm_drm_display_thread_create(struct sched_param param, struct msm_dr
 	struct device *dev)
 {
 	int i, ret = 0;
-
+	
 	/**
 	 * this priority was found during empiric testing to have appropriate
 	 * realtime scheduling to process display updates and interact with
@@ -658,7 +658,6 @@ static int msm_drm_display_thread_create(struct sched_param param, struct msm_dr
 		if (ret)
 			pr_warn("display thread priority update failed: %d\n",
 									ret);
-
 		if (IS_ERR(priv->disp_thread[i].thread)) {
 			dev_err(dev, "failed to create crtc_commit kthread\n");
 			priv->disp_thread[i].thread = NULL;
@@ -668,7 +667,6 @@ static int msm_drm_display_thread_create(struct sched_param param, struct msm_dr
 		priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
 		kthread_init_worker(&priv->event_thread[i].worker);
 		priv->event_thread[i].dev = ddev;
-		priv->event_thread[i].thread =
 		/* Only pin first event thread to big cluster */
 		if (i == 0) {
 			priv->event_thread[i].thread =
@@ -831,7 +829,7 @@ static int msm_drm_device_init(struct platform_device *pdev,
 
 	ret = sde_power_resource_init(pdev, &priv->phandle);
 	if (ret) {
-		pr_err("sde power resource init failed\n");
+		pr_debug("sde power resource init failed\n");
 		goto power_init_fail;
 	}
 
@@ -979,7 +977,7 @@ static int msm_drm_component_init(struct device *dev)
 	if (kms && kms->funcs && kms->funcs->postinit) {
 		ret = kms->funcs->postinit(kms);
 		if (ret) {
-			pr_err("kms post init failed: %d\n", ret);
+			pr_debug("kms post init failed: %d\n", ret);
 			goto fail;
 		}
 	}
@@ -1719,7 +1717,7 @@ int msm_ioctl_power_ctrl(struct drm_device *dev, void *data,
 		if (!ctx->enable_refcnt)
 			vote_req = true;
 	} else {
-		pr_err("ignoring, unbalanced disable\n");
+		pr_debug("ignoring, unbalanced disable\n");
 	}
 
 	if (vote_req) {
