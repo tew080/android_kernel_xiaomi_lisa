@@ -767,38 +767,17 @@ ifdef CONFIG_GCC_GRAPHITE
 KBUILD_CFLAGS	+= -fipa-pta -fgraphite-identity -floop-nest-optimize -fno-semantic-interposition
 endif
 
-# Enable hot cold split optimization
-KBUILD_CFLAGS   += -mllvm -hot-cold-split=true
-KBUILD_AFLAGS   += -mllvm -hot-cold-split=true
-KBUILD_LDFLAGS   += -mllvm -hot-cold-split=true
-# Enable MLGO for register allocation.
-KBUILD_CFLAGS   += -ffp-contract=fast -mllvm -regalloc-enable-advisor=release
-KBUILD_AFLAGS   += -ffp-contract=fast -mllvm -regalloc-enable-advisor=release
-KBUILD_LDFLAGS += -mllvm -regalloc-enable-advisor=release
 KBUILD_LDFLAGS += -mllvm -enable-ml-inliner=release
 # Snapdragon optimization
-KBUILD_CFLAGS  +=  -mcpu=cortex-a78 
-KBUILD_CFLAGS  +=  -mtune=cortex-a78 
-KBUILD_AFLAGS  +=  -mcpu=cortex-a78 
-KBUILD_AFLAGS  +=  -mtune=cortex-a78 
+KBUILD_CFLAGS   += -ffp-contract=fast
 KBUILD_CFLAGS  +=  -fno-rtti
 KBUILD_CFLAGS  +=  -fno-trapping-math
 KBUILD_CFLAGS  +=  -fno-exceptions
 KBUILD_CFLAGS  +=  -fno-math-errno
-KBUILD_AFLAGS  +=  -fno-rtti
-KBUILD_AFLAGS  +=  -fno-trapping-math
-KBUILD_AFLAGS  +=  -fno-exceptions
-KBUILD_AFLAGS  +=  -fno-math-errno
 # Machine Instruction Scheduler
 KBUILD_CFLAGS  +=  -mllvm -enable-misched
 KBUILD_CFLAGS  +=  -mllvm -misched-topdown
 KBUILD_CFLAGS  +=  -mllvm -regalloc=greedy
-KBUILD_AFLAGS  +=  -mllvm -enable-misched
-KBUILD_AFLAGS  +=  -mllvm -misched-topdown
-KBUILD_AFLAGS  +=  -mllvm -regalloc=greedy
-KBUILD_LDFLAGS  +=  -mllvm -enable-misched
-KBUILD_LDFLAGS  +=  -mllvm -misched-topdown
-KBUILD_LDFLAGS  +=  -mllvm -regalloc=greedy
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-inliner \
