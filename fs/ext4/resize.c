@@ -2105,8 +2105,9 @@ retry:
 	/* Add flex groups. Note that a regular group is a
 	 * flex group with 1 group.
 	 */
-	while (ext4_setup_next_flex_gd(sb, flex_gd, n_blocks_count)) {
-		if (jiffies - last_update_time > msecs_to_jiffies(10000)) {
+	while (ext4_setup_next_flex_gd(sb, flex_gd, n_blocks_count,
+					      flexbg_size)) {
+		if (jiffies - last_update_time > 10000) {
 			if (last_update_time)
 				ext4_msg(sb, KERN_INFO,
 					 "resized to %llu blocks",
