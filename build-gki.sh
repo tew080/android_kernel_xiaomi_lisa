@@ -5,12 +5,12 @@
 
 SECONDS=0 # builtin bash timer
 ZIPNAME="Hexagon-lisa-$(date '+%Y%m%d-%H%M').zip"
-TC_DIR="/home/tew404/lisa-Kernel/clang-r416183b"
+TC_DIR="/home/tew404/lisa-Kernel/neutron-clang-10032024"
 GCC_64_DIR="/home/tew404/lisa-Kernel/aarch64-linux-android-4.9"
 GCC_32_DIR="/home/tew404/lisa-Kernel/arm-linux-androideabi-4.9"
 DEVICE="lisa"
 
-MAKE_PARAMS="O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 TARGET_PRODUCT=$DEVICE \
+MAKE_PARAMS="O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 LLVM_IAS=1 TARGET_PRODUCT=$DEVICE \
 	CROSS_COMPILE=$GCC_64_DIR/bin/aarch64-linux-android- \
 	CROSS_COMPILE_ARM32=$GCC_32_DIR/bin/arm-linux-androideabi-"
 
@@ -31,7 +31,7 @@ fi
 sudo rm -rf out
 
 mkdir -p out
-ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 CROSS_COMPILE=$GCC_64_DIR/bin/aarch64-linux-android- CROSS_COMPILE_ARM32=$GCC_32_DIR/bin/arm-linux-androideabi- scripts/kconfig/merge_config.sh -O out arch/arm64/configs/lisa_defconfig
+ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 LLVM_IAS=1 CROSS_COMPILE=$GCC_64_DIR/bin/aarch64-linux-android- CROSS_COMPILE_ARM32=$GCC_32_DIR/bin/arm-linux-androideabi- scripts/kconfig/merge_config.sh -O out arch/arm64/configs/lisa_defconfig
 
 echo -e "\nStarting compilation...\n"
 make -j$(nproc --all) $MAKE_PARAMS || exit $?
