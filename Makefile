@@ -758,9 +758,21 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
 KBUILD_CFLAGS += -O2
 else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 KBUILD_CFLAGS += -O3
+KBUILD_AFLAGS += -O3 
 else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
+# Increase the speed of mathematical calculations
+KBUILD_CFLAGS  += -ffp-contract=fast 
+# Snapdragon optimization
+KBUILD_CFLAGS  +=  -fno-rtti
+KBUILD_CFLAGS  +=  -fno-trapping-math
+KBUILD_CFLAGS  +=  -fno-exceptions
+KBUILD_CFLAGS  +=  -fno-math-errno
+# Machine Instruction Scheduler
+KBUILD_CFLAGS  +=  -mllvm -enable-misched
+KBUILD_CFLAGS  +=  -mllvm -misched-topdown
+KBUILD_CFLAGS  +=  -mllvm -regalloc=greedy
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-inliner \
