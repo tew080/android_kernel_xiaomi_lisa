@@ -917,11 +917,4 @@ CONFIG_I2C_RTC6226_QCA=y
 ## end  Modules  
 ######
 
-######
-## BORE (Burst-Oriented Response Enhancer) CPU Scheduler 
-######
-CONFIG_SCHED_BORE=y
-######
-## end BORE (Burst-Oriented Response Enhancer) CPU Scheduler 
-######
 
