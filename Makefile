@@ -763,21 +763,12 @@ else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
 
-ifdef CONFIG_GCC_GRAPHITE
-KBUILD_CFLAGS	+= -fipa-pta -fgraphite-identity -floop-nest-optimize -fno-semantic-interposition
-endif
-
-KBUILD_LDFLAGS += -mllvm -enable-ml-inliner=release
-# Snapdragon optimization
 KBUILD_CFLAGS   += -ffp-contract=fast
 KBUILD_CFLAGS  +=  -fno-rtti
 KBUILD_CFLAGS  +=  -fno-trapping-math
 KBUILD_CFLAGS  +=  -fno-exceptions
 KBUILD_CFLAGS  +=  -fno-math-errno
-# Machine Instruction Scheduler
-KBUILD_CFLAGS  +=  -mllvm -enable-misched
-KBUILD_CFLAGS  +=  -mllvm -misched-topdown
-KBUILD_CFLAGS  +=  -mllvm -regalloc=greedy
+
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-inliner \
