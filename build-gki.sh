@@ -5,14 +5,18 @@
 
 SECONDS=0 # builtin bash timer
 ZIPNAME="Hexagon-lisa-$(date '+%Y%m%d-%H%M').zip"
-TC_DIR="/home/tew404/lisa-Kernel/neutron-clang-10032024"
-GCC_64_DIR="/home/tew404/lisa-Kernel/aarch64-linux-android-4.9"
-GCC_32_DIR="/home/tew404/lisa-Kernel/arm-linux-androideabi-4.9"
+TC_DIR="/home/tew404/lisa-Kernel/clang-r530567"
 DEVICE="lisa"
 
-MAKE_PARAMS="O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 LLVM_IAS=1 TARGET_PRODUCT=$DEVICE \
-	CROSS_COMPILE=$GCC_64_DIR/bin/aarch64-linux-android- \
-	CROSS_COMPILE_ARM32=$GCC_32_DIR/bin/arm-linux-androideabi-"
+MAKE_PARAMS="O=out \
+	ARCH=arm64 \
+	CC=$TC_DIR/bin/clang \
+	CLANG_TRIPLE=aarch64-linux-gnu- \
+	LLVM=1 \
+	LLVM_IAS=1 \
+	TARGET_PRODUCT=$DEVICE \
+	CROSS_COMPILE=$TC_DIR/bin/llvm- \
+	CROSS_COMPILE_ARM32=$TC_DIR/bin/llvm- "
 
 export PATH="$TC_DIR/bin:$PATH"
 
@@ -31,7 +35,7 @@ fi
 sudo rm -rf out
 
 mkdir -p out
-ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 LLVM_IAS=1 CROSS_COMPILE=$GCC_64_DIR/bin/aarch64-linux-android- CROSS_COMPILE_ARM32=$GCC_32_DIR/bin/arm-linux-androideabi- scripts/kconfig/merge_config.sh -O out arch/arm64/configs/lisa_defconfig
+ARCH=arm64 CC=$TC_DIR/bin/clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 LLVM_IAS=1 CROSS_COMPILE=$TC_DIR/bin/llvm-  CROSS_COMPILE_ARM32=$TC_DIR/bin/llvm-  scripts/kconfig/merge_config.sh -O out arch/arm64/configs/lisa_defconfig
 
 echo -e "\nStarting compilation...\n"
 make -j$(nproc --all) $MAKE_PARAMS || exit $?
@@ -42,16 +46,23 @@ dtbo="out/arch/arm64/boot/dts/vendor/qcom/lisa-sm7325-overlay.dtbo"
 
 sudo rm -rf *.zip
 
-if [ -f "$kernel" ] && [ -f "$dtb" ] && [ -f "$dtbo" ]; then
-	echo -e "\nKernel compiled succesfully! Zipping up...\n"
-
-	cp $kernel AnyKernel3
-	cp $dtb AnyKernel3/dtb
-	#cp $dtbo AnyKernel3
-
-	cd AnyKernel3
-	zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder
-	cd ..
-	echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
-	echo "Zip: $ZIPNAME"
+if [ ! -f "$kernel" ] || [ ! -f "$dtb" ] || [ ! -f "$dtbo" ]; then
+	echo -e "\nCompilation failed!"
+	exit 1
 fi
+
+rm -rf AnyKernel3/Image
+rm -rf AnyKernel3/dtb
+rm -rf AnyKernel3/dtbo.img
+
+cp $kernel AnyKernel3
+cp $dtb AnyKernel3/dtb
+#cp $dtbo AnyKernel3
+
+cd AnyKernel3
+zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder
+cd ..
+echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
+echo "Zip: $ZIPNAME"
+
+
