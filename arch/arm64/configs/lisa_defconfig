@@ -941,3 +941,10 @@ CONFIG_BLK_CGROUP_IOCOST=y
 ## end  SamSung Generic I/O scheduler
 ######
 
+######
+## UClamp configuration helper
+######
+CONFIG_UCLAMP_ASSIST=y
+######
+## end  UClamp configuration helper
+######
