@@ -12975,10 +12975,6 @@ struct hdd_context *hdd_context_create(struct device *dev)
 	}
 
 	status = cfg_parse(WLAN_INI_FILE);
-	if (!QDF_IS_STATUS_ERROR(status))
-		goto cfg_exit;
-
-	status = cfg_parse(WLAN_INI_FILE_DEFAULT);
 	if (QDF_IS_STATUS_ERROR(status)) {
 		hdd_err("Failed to parse cfg %s; status:%d\n",
 			WLAN_INI_FILE, status);
@@ -12988,7 +12984,6 @@ struct hdd_context *hdd_context_create(struct device *dev)
 		goto err_free_config;
 	}
 
-cfg_exit:
 	ret = hdd_objmgr_create_and_store_psoc(hdd_ctx, DEFAULT_PSOC_ID);
 	if (ret) {
 		QDF_DEBUG_PANIC("Psoc creation fails!");
@@ -16900,7 +16895,6 @@ static void hdd_inform_wifi_on(void)
 #endif
 
 int hdd_driver_load(void);
-
 static ssize_t wlan_hdd_state_ctrl_param_write(struct file *filp,
 						const char __user *user_buf,
 						size_t count,
@@ -17964,7 +17958,6 @@ static ssize_t wlan_boot_cb(struct kobject *kobj,
 			    const char *buf,
 			    size_t count)
 {
-
 	wlan_loader->loaded_state = MODULE_INITIALIZED;
 
 	return count;
@@ -18053,7 +18046,6 @@ error_return:
  */
 static int wlan_deinit_sysfs(void)
 {
-
 	hdd_sysfs_cleanup();
 	return 0;
 }
@@ -18074,7 +18066,6 @@ static int hdd_module_init(void)
 static int hdd_module_init(void)
 {
 	int ret;
-
 	ret = wlan_init_sysfs();
 	ret = wlan_hdd_state_ctrl_param_create();
 	if (ret)

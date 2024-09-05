@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2012-2021 The Linux Foundation. All rights reserved.
- * Copyright (C) 2021 XiaoMi, Inc.
  * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Permission to use, copy, modify, and/or distribute this software for
@@ -87,11 +86,6 @@
 #include "wlan_pkt_capture_ucfg_api.h"
 #include "wlan_hdd_thermal.h"
 #include "wlan_hdd_object_manager.h"
-
-#ifdef FEATURE_WLAN_DYNAMIC_NSS
-#include "wlan_hdd_dynamic_nss.h"
-#endif
-
 #include <linux/igmp.h>
 #include "qdf_types.h"
 #include <wlan_cp_stats_mc_ucfg_api.h>
@@ -420,10 +414,6 @@ static void __wlan_hdd_ipv6_changed(struct net_device *net_dev,
 		sme_dhcp_done_ind(hdd_ctx->mac_handle, adapter->vdev_id);
 		schedule_work(&adapter->ipv6_notifier_work);
 	}
-
-#ifdef FEATURE_WLAN_DYNAMIC_NSS
-	wlan_hdd_start_dynamic_nss(adapter);
-#endif
 
 exit:
 	hdd_exit();
@@ -1176,10 +1166,6 @@ static void __wlan_hdd_ipv4_changed(struct net_device *net_dev)
 		if (ifa && ifa->ifa_local)
 			schedule_work(&adapter->ipv4_notifier_work);
 	}
-
-#ifdef FEATURE_WLAN_DYNAMIC_NSS
-	wlan_hdd_start_dynamic_nss(adapter);
-#endif
 
 exit:
 	hdd_exit();
@@ -3003,8 +2989,8 @@ static int __wlan_hdd_cfg80211_get_txpower(struct wiphy *wiphy,
 	HDD_IS_RATE_LIMIT_REQ(is_rate_limited,
 			      hdd_ctx->config->nb_commands_interval);
 	if (hdd_ctx->driver_status != DRIVER_MODULES_ENABLED ||
-	    is_rate_limited) {
-		hdd_debug("Modules not enabled/rate limited, use cached stats");
+	    is_rate_limited || hdd_is_roaming_in_progress(hdd_ctx)) {
+		hdd_debug("Modules not enabled/rate limited/roaming, use cached stats");
 		/* Send cached data to upperlayer*/
 		vdev = hdd_objmgr_get_vdev(adapter);
 		if (!vdev) {

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2017-2021 The Linux Foundation. All rights reserved.
- * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Permission to use, copy, modify, and/or distribute this software for
  * any purpose with or without fee is hereby granted, provided that the
@@ -789,6 +789,9 @@ util_scan_parse_extn_ie(struct scan_cache_entry *scan_params,
 		scan_params->ie_list.srp   = (uint8_t *)ie;
 		break;
 	case WLAN_EXTN_ELEMID_HECAP:
+		if ((extn_ie->ie_len < WLAN_MIN_HECAP_IE_LEN) ||
+		    (extn_ie->ie_len > WLAN_MAX_HECAP_IE_LEN))
+			return QDF_STATUS_E_INVAL;
 		scan_params->ie_list.hecap = (uint8_t *)ie;
 		break;
 	case WLAN_EXTN_ELEMID_HEOP:
@@ -1218,7 +1221,8 @@ static void util_scan_update_esp_data(struct wlan_esp_ie *esp_information,
 	esp_ie = (struct wlan_esp_ie *)
 		util_scan_entry_esp_info(scan_entry);
 
-	total_elements  = esp_ie->esp_len;
+	// Ignore ESP_ID_EXTN element
+	total_elements  = esp_ie->esp_len - 1;
 	data = (uint8_t *)esp_ie + 3;
 	do_div(total_elements, ESP_INFORMATION_LIST_LENGTH);
 
@@ -1228,7 +1232,7 @@ static void util_scan_update_esp_data(struct wlan_esp_ie *esp_information,
 	}
 
 	for (i = 0; i < total_elements &&
-	     data < ((uint8_t *)esp_ie + esp_ie->esp_len + 3); i++) {
+	     data < ((uint8_t *)esp_ie + esp_ie->esp_len); i++) {
 		esp_info = (struct wlan_esp_info *)data;
 		if (esp_info->access_category == ESP_AC_BK) {
 			qdf_mem_copy(&esp_information->esp_info_AC_BK,
@@ -1258,7 +1262,7 @@ static void util_scan_update_esp_data(struct wlan_esp_ie *esp_information,
 }
 
 /**
- * util_scan_scm_update_bss_with_esp_dataa: calculate estimated air time
+ * util_scan_scm_update_bss_with_esp_data: calculate estimated air time
  * fraction
  * @scan_entry: new received entry
  *
@@ -1308,7 +1312,7 @@ static void util_scan_scm_update_bss_with_esp_data(
 
 /**
  * util_scan_scm_calc_nss_supported_by_ap() - finds out nss from AP
- * @scan_entry: new received entry
+ * @scan_params: new received entry
  *
  * Return: number of nss advertised by AP
  */
@@ -1317,28 +1321,36 @@ static int util_scan_scm_calc_nss_supported_by_ap(
 {
 	struct htcap_cmn_ie *htcap;
 	struct wlan_ie_vhtcaps *vhtcaps;
-	struct wlan_ie_hecaps *hecaps;
+	uint8_t *he_cap;
+	uint8_t *end_ptr = NULL;
 	uint16_t rx_mcs_map = 0;
+	uint8_t *mcs_map_offset;
 
 	htcap = (struct htcap_cmn_ie *)
 		util_scan_entry_htcap(scan_params);
 	vhtcaps = (struct wlan_ie_vhtcaps *)
 		util_scan_entry_vhtcap(scan_params);
-	hecaps = (struct wlan_ie_hecaps *)
-		util_scan_entry_hecap(scan_params);
+	he_cap = util_scan_entry_hecap(scan_params);
 
-	if (hecaps) {
+	if (he_cap) {
 		/* Using rx mcs map related to 80MHz or lower as in some
-		 * cases higher mcs may suuport lesser NSS than that
+		 * cases higher mcs may support lesser NSS than that
 		 * of lowe mcs. Thus giving max NSS capability.
 		 */
-		rx_mcs_map =
-			qdf_cpu_to_le16(hecaps->mcs_bw_map[0].rx_mcs_map);
+		end_ptr = he_cap + he_cap[1] + sizeof(struct ie_header);
+		mcs_map_offset = (he_cap + sizeof(struct extn_ie_header) +
+				  WLAN_HE_MACCAP_LEN + WLAN_HE_PHYCAP_LEN);
+		if ((mcs_map_offset + WLAN_HE_MCS_MAP_LEN) <= end_ptr) {
+			rx_mcs_map = *(uint16_t *)mcs_map_offset;
+		} else {
+			rx_mcs_map = WLAN_INVALID_RX_MCS_MAP;
+			scm_debug("mcs_map_offset exceeds he cap len");
+		}
 	} else if (vhtcaps) {
 		rx_mcs_map = vhtcaps->rx_mcs_map;
 	}
 
-	if (hecaps || vhtcaps) {
+	if (he_cap || vhtcaps) {
 		if ((rx_mcs_map & 0xC000) != 0xC000)
 			return 8;
 
@@ -1642,7 +1654,7 @@ util_scan_gen_scan_entry(struct wlan_objmgr_pdev *pdev,
 	scan_entry->bcn_int = le16toh(bcn->beacon_interval);
 
 	/*
-	 * In case if the beacon dosnt have
+	 * In case if the beacon doesn't have
 	 * valid beacon interval falback to def
 	 */
 	if (!scan_entry->bcn_int)
@@ -2134,8 +2146,9 @@ static uint32_t util_gen_new_ie(uint8_t *ie, uint32_t ielen,
 	 * copied to new ie, skip ssid, capability, bssid-index ie
 	 */
 	tmp_new = sub_copy;
-	while (((tmp_new + tmp_new[1] + MIN_IE_LEN) - sub_copy) <=
-	       (subie_len - 1)) {
+	while ((subie_len > 0) &&
+	       (((tmp_new + tmp_new[1] + MIN_IE_LEN) - sub_copy) <=
+		(subie_len - 1))) {
 		if (!(tmp_new[0] == WLAN_ELEMID_NONTX_BSSID_CAP ||
 		      tmp_new[0] == WLAN_ELEMID_SSID ||
 		      tmp_new[0] == WLAN_ELEMID_MULTI_BSSID_IDX ||
@@ -2630,9 +2643,10 @@ util_scan_parse_beacon_frame(struct wlan_objmgr_pdev *pdev,
 		mbssid_ie = util_scan_find_ie(WLAN_ELEMID_MULTIPLE_BSSID,
 					      (uint8_t *)&bcn->ie, ie_len);
 		if (mbssid_ie) {
-			if (mbssid_ie[1] <= 0) {
+			/* some APs announce the MBSSID ie_len as 1 */
+			if (mbssid_ie[TAG_LEN_POS] < 1) {
 				scm_debug("MBSSID IE length is wrong %d",
-					  mbssid_ie[1]);
+					  mbssid_ie[TAG_LEN_POS]);
 				return status;
 			}
 			qdf_mem_copy(&mbssid_info.trans_bssid,
