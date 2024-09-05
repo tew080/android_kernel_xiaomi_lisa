@@ -918,3 +918,4 @@ CONFIG_I2C_RTC6226_QCA=y
 # CONFIG_MODULE_UNLOAD is not set
 # CONFIG_MODVERSIONS is not set
 ## end modules ##
+

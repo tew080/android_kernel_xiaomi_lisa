@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -1607,7 +1607,16 @@ static bool dp_fisa_aggregation_should_stop(
 				 HAL_RX_TLV_GET_TCP_OFFSET(rx_tlv_hdr);
 	uint32_t cumulative_ip_len_delta = hal_cumulative_ip_len -
 					   fisa_flow->hal_cumultive_ip_len;
+	bool ip_csum_err = hal_rx_attn_ip_cksum_fail_get(rx_tlv_hdr);
+	bool tcp_udp_csum_er = hal_rx_attn_tcp_udp_cksum_fail_get(rx_tlv_hdr);
+
 	/**
+	 * If l3/l4 checksum validation failed for MSDU, then data
+	 * is not trust worthy to build aggregated skb, so do not
+	 * allow for aggregation. And also in aggregated case it
+	 * is job of driver to make sure checksum is valid before
+	 * computing partial checksum for final aggregated skb.
+	 *
 	 * kernel network panic if UDP data length < 12 bytes get aggregated,
 	 * no solid conclusion currently, as a SW WAR, only allow UDP
 	 * aggregation if UDP data length >= 16 bytes.
@@ -1620,6 +1629,7 @@ static bool dp_fisa_aggregation_should_stop(
 	 * otherwise, current fisa flow aggregation should be stopped.
 	 */
 	if (fisa_flow->do_not_aggregate ||
+	    (ip_csum_err || tcp_udp_csum_er) ||
 	    msdu_len < (l4_hdr_offset + FISA_MIN_L4_AND_DATA_LEN) ||
 	    hal_cumulative_ip_len <= fisa_flow->hal_cumultive_ip_len ||
 	    cumulative_ip_len_delta > FISA_MAX_SINGLE_CUMULATIVE_IP_LEN ||
@@ -1901,6 +1911,7 @@ QDF_STATUS dp_fisa_rx(struct dp_soc *soc, struct dp_vdev *vdev,
 	struct dp_fisa_rx_sw_ft *fisa_flow;
 	int fisa_ret;
 	uint8_t rx_ctx_id = QDF_NBUF_CB_RX_CTX_ID(nbuf_list);
+	uint32_t tlv_reo_dest_ind;
 
 	head_nbuf = nbuf_list;
 
@@ -1928,6 +1939,17 @@ QDF_STATUS dp_fisa_rx(struct dp_soc *soc, struct dp_vdev *vdev,
 
 		qdf_nbuf_push_head(head_nbuf, RX_PKT_TLVS_LEN +
 				   QDF_NBUF_CB_RX_PACKET_L3_HDR_PAD(head_nbuf));
+
+		hal_rx_msdu_get_reo_destination_indication(soc->hal_soc,
+							   (uint8_t *)qdf_nbuf_data(head_nbuf),
+							   &tlv_reo_dest_ind);
+		/* Skip FISA aggregation and drop the frame if RDI is REO2TCL */
+		if (qdf_unlikely(tlv_reo_dest_ind == REO_REMAP_TCL)) {
+			qdf_nbuf_free(head_nbuf);
+			head_nbuf = next_nbuf;
+			DP_STATS_INC(dp_fisa_rx_hdl, incorrect_rdi, 1);
+			continue;
+		}
 
 		/* Add new flow if the there is no ongoing flow */
 		fisa_flow = dp_rx_get_fisa_flow(dp_fisa_rx_hdl, vdev,
