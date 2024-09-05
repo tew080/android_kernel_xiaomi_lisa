@@ -120,7 +120,7 @@ bool qdf_periodic_work_start(struct qdf_periodic_work *pwork, uint32_t msec)
 
 	pwork->msec = msec;
 
-	return schedule_delayed_work(&pwork->dwork, msecs_to_jiffies(msec));
+	return queue_delayed_work(system_power_efficient_wq,&pwork->dwork, msecs_to_jiffies(msec));
 }
 
 bool qdf_periodic_work_stop_async(struct qdf_periodic_work *pwork)
