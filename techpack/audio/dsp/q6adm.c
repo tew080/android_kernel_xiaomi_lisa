@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
  * Copyright (c) 2012-2021, The Linux Foundation. All rights reserved.
- * Copyright (C) 2021 XiaoMi, Inc.
  * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 #include <linux/module.h>
@@ -53,11 +52,11 @@ enum adm_cal_status {
 	ADM_STATUS_MAX,
 };
 
-static bool is_usb_timeout;
-static bool close_usb;
-
 typedef int (*adm_cb)(uint32_t opcode, uint32_t token,
 		       uint32_t *pp_event_package, void *pvt);
+
+static bool is_usb_timeout;
+static bool close_usb;
 
 struct adm_copp {
 
@@ -389,7 +388,7 @@ static int adm_get_copp_id(int port_idx, int copp_idx)
 static int adm_get_idx_if_single_copp_exists(int port_idx,
 			int topology,
 			int rate, int bit_width,
-			uint32_t copp_token)
+			uint32_t copp_token, int channel_mode)
 {
 	int idx;
 
@@ -403,14 +402,16 @@ static int adm_get_idx_if_single_copp_exists(int port_idx,
 			(bit_width ==
 			atomic_read(&this_adm.copp.bit_width[port_idx][idx])) &&
 			(copp_token ==
-			atomic_read(&this_adm.copp.token[port_idx][idx])))
+			atomic_read(&this_adm.copp.token[port_idx][idx])) &&
+			(channel_mode ==
+			atomic_read(&this_adm.copp.channels[port_idx][idx])))
 			return idx;
 	return -EINVAL;
 }
 
 static int adm_get_idx_if_copp_exists(int port_idx, int topology, int mode,
 				 int rate, int bit_width, int app_type,
-				 int session_type, uint32_t copp_token)
+				 int session_type, uint32_t copp_token, int channel_mode)
 {
 	int idx;
 
@@ -421,7 +422,8 @@ static int adm_get_idx_if_copp_exists(int port_idx, int topology, int mode,
 		return adm_get_idx_if_single_copp_exists(port_idx,
 				topology,
 				rate, bit_width,
-				copp_token);
+				copp_token,
+				channel_mode);
 
 	for (idx = 0; idx < MAX_COPPS_PER_PORT; idx++)
 		if ((topology ==
@@ -434,7 +436,9 @@ static int adm_get_idx_if_copp_exists(int port_idx, int topology, int mode,
 			atomic_read(
 				&this_adm.copp.session_type[port_idx][idx])) &&
 		    (app_type ==
-			atomic_read(&this_adm.copp.app_type[port_idx][idx])))
+			atomic_read(&this_adm.copp.app_type[port_idx][idx])) &&
+			(channel_mode ==
+			atomic_read(&this_adm.copp.channels[port_idx][idx])))
 			return idx;
 	return -EINVAL;
 }
@@ -1799,11 +1803,16 @@ static int32_t adm_callback(struct apr_client_data *data, void *priv)
 		if (data->opcode == APR_BASIC_RSP_RESULT) {
 			pr_debug("%s: APR_BASIC_RSP_RESULT id 0x%x\n",
 				__func__, payload[0]);
-			if (data->payload_size <
-					(2 * sizeof(uint32_t))) {
-				pr_err("%s: Invalid payload size %d\n",
-					__func__, data->payload_size);
-				return 0;
+
+			if (!((client_id != ADM_CLIENT_ID_SOURCE_TRACKING) &&
+			     ((payload[0] == ADM_CMD_SET_PP_PARAMS_V5) ||
+			      (payload[0] == ADM_CMD_SET_PP_PARAMS_V6)))) {
+				if (data->payload_size <
+						(2 * sizeof(uint32_t))) {
+					pr_err("%s: Invalid payload size %d\n",
+						__func__, data->payload_size);
+					return 0;
+				}
 			}
 
 			if (payload[1] != 0) {
@@ -3578,10 +3587,9 @@ int adm_open_v2(int port_id, int path, int rate, int channel_mode, int topology,
 					ec_ref_port_cfg->sampling_rate :
 					this_adm.ec_ref_rx_sampling_rate;
 
-	pr_err("%s:port %#x path:%d rate:%d channel_mode:%d perf_mode:%d topology 0x%x bit_width %d \
-		app_type %d acdb_id %d session_type %d passthr_mode %d \n",
-			__func__, port_id, path, rate, channel_mode, perf_mode,
-				topology, bit_width, app_type, acdb_id, session_type, passthr_mode);
+	pr_debug("%s:port %#x path:%d rate:%d mode:%d perf_mode:%d,topo_id %d\n",
+		 __func__, port_id, path, rate, channel_mode, perf_mode,
+		 topology);
 
 	port_id = q6audio_convert_virtual_to_portid(port_id);
 	port_idx = adm_validate_and_get_port_index(port_id);
@@ -3677,7 +3685,8 @@ int adm_open_v2(int port_id, int path, int rate, int channel_mode, int topology,
 						      perf_mode,
 						      rate, bit_width,
 						      app_type, session_type,
-						      copp_token);
+						      copp_token,
+						      channel_mode);
 
 	if (copp_idx < 0) {
 		copp_idx = adm_get_next_available_copp(port_idx);
@@ -4415,7 +4424,7 @@ int adm_close(int port_id, int perf_mode, int copp_idx)
 	int usb_copp_idx = 0;
 	struct apr_hdr usb_close;
 
-	pr_err("%s: port_id=0x%x perf_mode: %d copp_idx: %d\n", __func__,
+	pr_debug("%s: port_id=0x%x perf_mode: %d copp_idx: %d\n", __func__,
 		 port_id, perf_mode, copp_idx);
 
 	port_id = q6audio_convert_virtual_to_portid(port_id);

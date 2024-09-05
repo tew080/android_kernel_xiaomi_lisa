@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
  * Copyright (c) 2012-2021, The Linux Foundation. All rights reserved.
- * Copyright (C) 2021 XiaoMi, Inc.
  * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
  * Author: Brian Swetland <swetland@google.com>
  *
@@ -2360,7 +2359,7 @@ static int32_t q6asm_callback(struct apr_client_data *data, void *priv)
 			}
 			if ( data->payload_size >= 2 * sizeof(uint32_t) &&
 				(lower_32_bits(port->buf[buf_index].phys) !=
-				payload[0] ||
+				payload[0] || 
 				msm_audio_populate_upper_32_bits(
 					port->buf[buf_index].phys) != payload[1])) {
 				pr_debug("%s: Expected addr %pK\n",
@@ -7418,8 +7417,6 @@ static int __q6asm_media_format_block_multi_ch_pcm_v5(struct audio_client *ac,
 		memcpy(channel_mapping, channel_map,
 			 PCM_FORMAT_MAX_NUM_CHANNEL_V8);
 	}
-	pr_debug("%s: chnl map %d, %d, %d, %d\n",  __func__,
-		channel_mapping[0], channel_mapping[1], channel_mapping[2], channel_mapping[3]);
 
 	if (fmt.param.num_channels==2) {
 		if (channel_mapping[0] == 0 || channel_mapping[1] ==0) {
@@ -8860,8 +8857,6 @@ static int q6asm_memory_map_regions(struct audio_client *ac, int dir,
 	}
 	mmap_regions = (struct avs_cmd_shared_mem_map_regions *)
 							mmap_region_cmd;
-
-	mutex_lock(&ac->cmd_lock);
 	q6asm_add_mmaphdr(ac, &mmap_regions->hdr, cmd_size, dir);
 	atomic_set(&ac->mem_state, -1);
 	pr_debug("%s: mmap_region=0x%pK token=0x%x\n", __func__,
@@ -8919,6 +8914,7 @@ static int q6asm_memory_map_regions(struct audio_client *ac, int dir,
 		buffer_node = NULL;
 		goto fail_cmd;
 	}
+	mutex_lock(&ac->cmd_lock);
 
 	for (i = 0; i < bufcnt; i++) {
 		ab = &port->buf[i];
@@ -8931,9 +8927,9 @@ static int q6asm_memory_map_regions(struct audio_client *ac, int dir,
 			buffer_node[i].mmap_hdl);
 	}
 	ac->port[dir].tmp_hdl = 0;
+	mutex_unlock(&ac->cmd_lock);
 	rc = 0;
 fail_cmd:
-	mutex_unlock(&ac->cmd_lock);
 	kfree(mmap_region_cmd);
 	mmap_region_cmd = NULL;
 	return rc;
@@ -11424,7 +11420,7 @@ static int q6asm_get_asm_topology_apptype(struct q6asm_cal_info *cal_info, struc
 unlock:
 	mutex_unlock(&cal_data[ASM_TOPOLOGY_CAL]->lock);
 done:
-	pr_err("%s: Using topology %d app_type %d\n", __func__,
+	pr_debug("%s: Using topology %d app_type %d\n", __func__,
 			cal_info->topology_id, cal_info->app_type);
 
 	return 0;

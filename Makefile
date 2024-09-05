@@ -761,7 +761,6 @@ KBUILD_CFLAGS += -O3
 else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
-
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-inliner \
@@ -952,6 +951,7 @@ endif
 
 ifdef CONFIG_LTO_CLANG
 ifdef CONFIG_THINLTO
+CC_FLAGS_LTO_CLANG := -funified-lto
 CC_FLAGS_LTO_CLANG := -flto=thin $(call cc-option, -fsplit-lto-unit)
 KBUILD_LDFLAGS	+= --thinlto-cache-dir=.thinlto-cache
 else
@@ -960,8 +960,10 @@ endif
 ifdef CONFIG_LD_IS_LLD
 KBUILD_LDFLAGS += --lto-O3
 endif
-CC_FLAGS_LTO_CLANG += -fvisibility=default
+CC_FLAGS_LTO_CLANG += -fvisibility=hidden -fwhole-program-vtables
 KBUILD_LDS_MODULE += $(srctree)/scripts/module-lto.lds
+# Set O3 optimization level for LTO
+KBUILD_LDFLAGS	+= --plugin-opt=O3
 endif
 
 ifdef CONFIG_LTO

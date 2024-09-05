@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.
- * Copyright (C) 2021 XiaoMi, Inc.
  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 
@@ -466,7 +465,6 @@ struct rx_macro_priv {
 	u16 default_clk_id;
 	int8_t rx0_gain_val;
 	int8_t rx1_gain_val;
-	u32 mclk_freq;
 };
 
 static struct snd_soc_dai_driver rx_macro_dai[];
@@ -974,8 +972,8 @@ static int rx_macro_set_prim_interpolator_rate(struct snd_soc_dai *dai,
 					     0x80 * j;
 				pr_debug("%s: AIF_PB DAI(%d) connected to INT%u_1\n",
 					  __func__, dai->id, j);
-				pr_debug("%s: set INT%u_1 sample rate to %u, rate_reg=%d\n",
-					__func__, j, sample_rate, rate_reg_val);
+				pr_debug("%s: set INT%u_1 sample rate to %u\n",
+					__func__, j, sample_rate);
 				/* sample_rate is in Hz */
 				snd_soc_component_update_bits(component,
 						int_fs_reg,
@@ -1216,9 +1214,9 @@ static int rx_macro_get_channel_map(struct snd_soc_dai *dai,
 			ch_mask = 0x1;
 		*rx_slot = ch_mask;
 		*rx_num = rx_priv->active_ch_cnt[dai->id];
-		dev_err(rx_priv->dev,
-			"%s: dai->id:%d(%s) ch_mask:0x%x active_ch_cnt:%d active_mask: 0x%lx\n",
-			__func__, dai->id, dai->name, *rx_slot, *rx_num, rx_priv->active_ch_mask[dai->id]);
+		dev_dbg(rx_priv->dev,
+			"%s: dai->id:%d, ch_mask:0x%x, active_ch_cnt:%d active_mask: 0x%x\n",
+			__func__, dai->id, *rx_slot, *rx_num, rx_priv->active_ch_mask[dai->id]);
 		break;
 	case RX_MACRO_AIF5_PB:
 		*rx_slot = 0x1;
@@ -1413,12 +1411,11 @@ static int rx_macro_mclk_event(struct snd_soc_dapm_widget *w,
 	int ret = 0;
 	struct device *rx_dev = NULL;
 	struct rx_macro_priv *rx_priv = NULL;
-	int mclk_freq = 0;
+	int mclk_freq = MCLK_FREQ;
 
 	if (!rx_macro_get_data(component, &rx_dev, &rx_priv, __func__))
 		return -EINVAL;
 
-	mclk_freq = rx_priv->mclk_freq;
 	dev_dbg(rx_dev, "%s: event = %d\n", __func__, event);
 	switch (event) {
 	case SND_SOC_DAPM_PRE_PMU:
@@ -2280,8 +2277,8 @@ static int rx_macro_mux_put(struct snd_kcontrol *kcontrol,
 	}
 	rx_priv->rx_port_value[widget->shift] = rx_port_value;
 
-	dev_err(rx_dev, "%s: name:%s mux input:%d mux output:%d aif_rst: %d\n",
-		__func__, widget->name, rx_port_value, widget->shift, aif_rst);
+	dev_dbg(rx_dev, "%s: mux input: %d, mux output: %d, aif_rst: %d\n",
+		__func__, rx_port_value, widget->shift, aif_rst);
 
 	switch (rx_port_value) {
 	case 0:
@@ -2713,8 +2710,7 @@ static void rx_macro_hphdelay_lutbypass(struct snd_soc_component *component,
 	}
 
 	if (hph_lut_bypass_reg && SND_SOC_DAPM_EVENT_OFF(event)) {
-		if (!rx_priv->is_ear_mode_on)
-			snd_soc_component_update_bits(component,
+		snd_soc_component_update_bits(component,
 					BOLERO_CDC_RX_RX0_RX_PATH_CFG1,
 					0x02, 0x00);
 		snd_soc_component_update_bits(component, hph_lut_bypass_reg,
@@ -2798,7 +2794,6 @@ static int rx_macro_enable_interp_clk(struct snd_soc_component *component,
 			snd_soc_component_update_bits(component, main_reg,
 						0x40, 0x00);
 			/* Reset rate to 48K*/
-			dev_dbg(component->dev, "%s: reset rate to 48k\n", __func__);
 			snd_soc_component_update_bits(component, main_reg,
 						0x0F, 0x04);
 			snd_soc_component_update_bits(component, rx_cfg2_reg,
@@ -4192,14 +4187,13 @@ static int rx_macro_probe(struct platform_device *pdev)
 {
 	struct macro_ops ops = {0};
 	struct rx_macro_priv *rx_priv = NULL;
-	u32 rx_base_addr = 0, muxsel = 0, mclk_freq = 0;
+	u32 rx_base_addr = 0, muxsel = 0;
 	char __iomem *rx_io_base = NULL, *muxsel_io = NULL;
 	int ret = 0;
 	u8 bcl_pmic_params[3];
 	u32 default_clk_id = 0;
 	u32 is_used_rx_swr_gpio = 1;
 	const char *is_used_rx_swr_gpio_dt = "qcom,is-used-swr-gpio";
-	const char *cdc_mclk_clk_rate = "qcom,cdc-mclk-clk-rate";
 
 	if (!bolero_is_va_macro_registered(&pdev->dev)) {
 		dev_err(&pdev->dev,
@@ -4234,15 +4228,6 @@ static int rx_macro_probe(struct platform_device *pdev)
 			__func__, "qcom,default-clk-id");
 		default_clk_id = RX_CORE_CLK;
 	}
-	ret = of_property_read_u32(pdev->dev.of_node, cdc_mclk_clk_rate,
-				   &mclk_freq);
-	if (ret) {
-		rx_priv->mclk_freq = MCLK_FREQ;
-	} else {
-		rx_priv->mclk_freq = mclk_freq;
-	}
-	dev_dbg(rx_priv->dev,
-		"%s: mclk_freq = %u\n", __func__, rx_priv->mclk_freq);
 	if (of_find_property(pdev->dev.of_node, is_used_rx_swr_gpio_dt,
 			     NULL)) {
 		ret = of_property_read_u32(pdev->dev.of_node,
