@@ -32,7 +32,7 @@ if [[ $2 = "-c" || $1 = "--clean" ]]; then
 	rm -rf out
 fi
 
-#sudo rm -rf out
+sudo rm -rf out
 
 mkdir -p out
 ARCH=arm64 CC=$TC_DIR/bin/clang CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1 LLVM_IAS=1 CROSS_COMPILE=$TC_DIR/bin/llvm-  CROSS_COMPILE_ARM32=$TC_DIR/bin/llvm-  scripts/kconfig/merge_config.sh -O out arch/arm64/configs/lisa_defconfig
