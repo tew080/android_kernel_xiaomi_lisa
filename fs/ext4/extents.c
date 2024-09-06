@@ -2985,8 +2985,8 @@ int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
 	int depth = ext_depth(inode);
 	struct ext4_ext_path *path = NULL;
+	struct partial_cluster partial;
 	struct ext4_ext_path path_onstack[SZ_4K / sizeof(*path)] __aligned(8);
-	long long partial_cluster = 0;
 	handle_t *handle;
 	int i = 0, err = 0;
 
