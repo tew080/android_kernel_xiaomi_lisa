@@ -17344,19 +17344,6 @@ wlan_hdd_update_akm_suit_info(struct wiphy *wiphy)
 }
 #endif
 
-#ifdef CFG80211_MULTI_AKM_CONNECT_SUPPORT
-static void
-wlan_hdd_update_max_connect_akm(struct wiphy *wiphy)
-{
-	wiphy->max_num_akm_suites = WLAN_CM_MAX_CONNECT_AKMS;
-}
-#else
-static void
-wlan_hdd_update_max_connect_akm(struct wiphy *wiphy)
-{
-}
-#endif
-
 /*
  * FUNCTION: wlan_hdd_cfg80211_init
  * This function is called by hdd_wlan_startup()
@@ -20493,77 +20480,6 @@ static bool wlan_hdd_is_akm_suite_fils(uint32_t key_mgmt)
 		return true;
 	default:
 		return false;
-	}
-}
-
-static int
-hdd_get_num_akm_suites(const struct cfg80211_connect_params *req)
-{
-	return req->crypto.n_akm_suites;
-}
-
-static uint32_t*
-hdd_get_akm_suites(const struct cfg80211_connect_params *req)
-{
-	return (uint32_t *)req->crypto.akm_suites;
-}
-
-#ifdef CFG80211_MULTI_AKM_CONNECT_SUPPORT
-#define MAX_AKM_SUITES WLAN_CM_MAX_CONNECT_AKMS
-#else
-#define MAX_AKM_SUITES NL80211_MAX_NR_AKM_SUITES
-#endif
-/**
- * hdd_populate_crypto_akm_type() - populate akm type for crypto
- * @vdev: pointed to vdev obmgr
- * @req: connect req
- *
- * set the crypto akm type for corresponding akm type received
- * from NL
- *
- * Return: None
- */
-static void
-hdd_populate_crypto_akm_type(struct wlan_objmgr_vdev *vdev,
-			     const struct cfg80211_connect_params *req)
-{
-	QDF_STATUS status;
-	uint32_t i = 0;
-	uint32_t set_val = 0;
-	wlan_crypto_key_mgmt akm;
-
-	if (req->crypto.n_akm_suites) {
-		for (i = 0; i < req->crypto.n_akm_suites &&
-		     i < MAX_AKM_SUITES; i++) {
-			akm = osif_nl_to_crypto_akm_type(
-					req->crypto.akm_suites[i]);
-
-			HDD_SET_BIT(set_val, akm);
-		}
-
-		status = wlan_crypto_set_vdev_param(vdev,
-						    WLAN_CRYPTO_PARAM_KEY_MGMT,
-						    set_val);
-		if (QDF_IS_STATUS_ERROR(status))
-			hdd_err("Failed to set akm type %0x to crypto",
-				set_val);
-
-		status = wlan_crypto_set_vdev_param(vdev,
-						    WLAN_CRYPTO_PARAM_ORIG_KEY_MGMT,
-						    set_val);
-		if (QDF_IS_STATUS_ERROR(status))
-			hdd_err("Failed to set original akm type %0x to crypto",
-				set_val);
-	} else {
-		set_val = 0;
-		/* Reset to none */
-		HDD_SET_BIT(set_val, WLAN_CRYPTO_KEY_MGMT_NONE);
-		wlan_crypto_set_vdev_param(vdev,
-					   WLAN_CRYPTO_PARAM_KEY_MGMT,
-					   set_val);
-		wlan_crypto_set_vdev_param(vdev,
-					   WLAN_CRYPTO_PARAM_ORIG_KEY_MGMT,
-					   set_val);
 	}
 }
 
