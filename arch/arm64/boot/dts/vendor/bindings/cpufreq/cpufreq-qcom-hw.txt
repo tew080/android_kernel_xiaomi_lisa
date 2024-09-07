@@ -193,7 +193,6 @@ DCVS state together.
 		#freq-domain-cells = <1>;
 
 		qcom,cpufreq-table-0 =
-			<300000>,
 			<940800>,
 			<1324800>,
 			<1516800>,

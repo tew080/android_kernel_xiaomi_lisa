@@ -2715,7 +2715,6 @@
 		#freq-domain-cells = <2>;
 
 		qcom,cpufreq-table-0 =
-			<300000>,
 			<940800>,
 			<1324800>,
 			<1516800>,
