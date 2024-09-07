@@ -939,6 +939,14 @@ CONFIG_BLK_CGROUP_IOCOST=y
 ######
 
 ######
+## Capacity Aware Superset Scheduler
+######
+CONFIG_SCHED_CASS=y
+######
+## end of  Capacity Aware Superset Scheduler
+######
+
+######
 ## Schedutil cpufreq policy governor
 ######
 CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y
