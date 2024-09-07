@@ -941,7 +941,7 @@ CONFIG_BLK_CGROUP_IOCOST=y
 ######
 ## Capacity Aware Superset Scheduler
 ######
-# CONFIG_SCHED_CASS is not set
+CONFIG_SCHED_CASS=y
 ######
 ## end of  Capacity Aware Superset Scheduler
 ######
