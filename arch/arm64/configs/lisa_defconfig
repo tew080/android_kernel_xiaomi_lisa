@@ -913,7 +913,7 @@ CONFIG_BTFM_SLIM=y
 CONFIG_NFC_QTI_I2C=y
 CONFIG_I2C_RTC6226_QCA=y
 ######
-## end  Modules  
+## end of  Modules  
 ######
 
 ######
@@ -923,7 +923,7 @@ CONFIG_LZ4KD_COMPRESS=y
 CONFIG_LZ4KD_DECOMPRESS=y
 CONFIG_CRYPTO_LZ4KD=y
 ######
-## end  LZ4KD compression algorithm
+## end of  LZ4KD compression algorithm
 ######
 
 ######
@@ -935,7 +935,7 @@ CONFIG_BLK_DEV_THROTTLIN=y
 CONFIG_BLK_CGROUP_IOCOST=y
 # CONFIG_BLK_DEV_THROTTLING_LOW is not set
 ######
-## end  SamSung Generic I/O scheduler
+## end of  SamSung Generic I/O scheduler
 ######
 
 ######
@@ -944,7 +944,7 @@ CONFIG_BLK_CGROUP_IOCOST=y
 CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y
 CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL=y
 ######
-## Schedutil cpufreq policy governor
+## end of Schedutil cpufreq policy governor
 ######
 
 ######
@@ -960,7 +960,7 @@ CONFIG_CPUSET_RESTRICTED="0-3"
 CONFIG_CPUSET_SYSTEM_BG="0-3"
 CONFIG_CPUSET_TOP_APP="0-7"
 ######
-## end  Cpuset configuration helper
+## end of  Cpuset configuration helper
 ######
 
 ######
@@ -968,7 +968,7 @@ CONFIG_CPUSET_TOP_APP="0-7"
 ######
 CONFIG_UCLAMP_ASSIST=y
 ######
-## end  UClamp configuration helper
+## end of UClamp configuration helper
 ######
 
 ######
@@ -979,7 +979,7 @@ CONFIG_IRQ_SBALANCE_POLL_MSEC=500
 CONFIG_IRQ_SBALANCE_THRESH=1024
 CONFIG_SBALANCE_EXCLUDE_CPUS=3,6,7
 ######
-## end  SBalance IRQ balancer
+## end of  SBalance IRQ balancer
 ######
 
 ######
@@ -1004,6 +1004,23 @@ CONFIG_TCP_CONG_RENO=y
 CONFIG_DEFAULT_BBR2=y
 CONFIG_DEFAULT_TCP_CONG="bbr2"
 ######
-## end  Enable BBR2 TCP
+## end of  Enable BBR2 TCP
 ######
 
+######
+## KernelSU function AND addon - SUSFS support 
+######
+CONFIG_KSU=y
+CONFIG_KSU_SUSFS=y
+CONFIG_KSU_SUSFS_SUS_PATH=y
+CONFIG_KSU_SUSFS_SUS_MOUNT=y
+CONFIG_KSU_SUSFS_SUS_MOUNT_MNT_ID_REORDER=y
+\CONFIG_KSU_SUSFS_SUS_KSTAT=y
+CONFIG_KSU_SUSFS_SUS_MAPS=y
+CONFIG_KSU_SUSFS_SUS_PROC_FD_LINK=y
+CONFIG_KSU_SUSFS_SUS_MEMFD=y
+CONFIG_KSU_SUSFS_TRY_UMOUNT=y
+CONFIG_KSU_SUSFS_SPOOF_UNAME=y
+######
+## end of  KernelSU function AND addon - SUSFS support 
+######

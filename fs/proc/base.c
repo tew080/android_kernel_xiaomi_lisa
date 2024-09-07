@@ -2336,6 +2336,7 @@ proc_map_files_readdir(struct file *file, struct dir_context *ctx)
 	int ret;
 
 #ifdef CONFIG_KSU_SUSFS_SUS_MAPS
+	struct map_files_info info;
 	int susfs_ret = 0;
 #endif
 
@@ -2395,7 +2396,6 @@ proc_map_files_readdir(struct file *file, struct dir_context *ctx)
 		p->mode = vma->vm_file->f_mode;
 
 #ifdef CONFIG_KSU_SUSFS_SUS_MAPS
-		struct map_files_info info;
 		susfs_ret = susfs_sus_map_files_instantiate(vma);
 		info.susfs_action = susfs_ret;
 #endif
