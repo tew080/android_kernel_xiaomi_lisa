@@ -1054,7 +1054,7 @@ CONFIG_CLEAN_MIN_KBYTES=3145728
 ######
 ## Zram size to set from kernel
 ######
-CONFIG_ZRAM_SIZE_OVERRIDE=12
+CONFIG_ZRAM_SIZE_OVERRIDE=6
 ######
 ## end of  Zram size to set from kernel
 ######
