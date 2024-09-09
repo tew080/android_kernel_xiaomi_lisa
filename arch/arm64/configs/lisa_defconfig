@@ -1041,6 +1041,7 @@ CONFIG_NTFS3_FS=y
 ## end of  NTFS3 is fully functional NTFS Read-Write driver. The driver works with NTFS
 ######
 
+######
 ## Sysctl knobs for protecting the working set
 ######
 CONFIG_ANON_MIN_KBYTES=6291456
@@ -1048,5 +1049,13 @@ CONFIG_CLEAN_LOW_KBYTES=12582912
 CONFIG_CLEAN_MIN_KBYTES=3145728
 ######
 ## end of  Sysctl knobs for protecting the working set
+######
+
+######
+## Zram size to set from kernel
+######
+CONFIG_ZRAM_SIZE_OVERRIDE=6
+######
+## end of  Zram size to set from kernel
 ######
 
