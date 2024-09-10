@@ -130,9 +130,10 @@ obj-$(CONFIG_NILFS2_FS)		+= nilfs2/
 obj-$(CONFIG_BEFS_FS)		+= befs/
 obj-$(CONFIG_HOSTFS)		+= hostfs/
 obj-$(CONFIG_CACHEFILES)	+= cachefiles/
-ifeq ($(CONFIG_DEBUG_FS),y)
+ifdef CONFIG_DEBUG_FS
 obj-y				+= debugfs/
-else ifeq ($(CONFIG_PGO_GEN),y)
+endif
+ifdef CONFIG_PGO_GEN
 obj-y += debugfs/
 endif
 obj-$(CONFIG_TRACING)		+= tracefs/

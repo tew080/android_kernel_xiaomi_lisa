@@ -684,7 +684,7 @@ endif # KBUILD_EXTMOD
 # Defaults to vmlinux, but the arch makefile usually adds further targets
 all: vmlinux
 
-ifeq ($(CONFIG_PGO_GEN),y)
+ifdef CONFIG_PGO_GEN
 CFLAGS_GCOV := -fprofile-generate -fkernel-pgo
 else
 CFLAGS_GCOV := --coverage
@@ -784,6 +784,11 @@ else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
 
+# Snapdragon optimization
+KBUILD_CFLAGS  +=  -march=armv8-a+crypto+rcpc+dotprod+fp16+aes+sha2+lse+simd+sve
+KBUILD_CFLAGS  +=  -mcpu=cortex-a78 
+KBUILD_CFLAGS  +=  -mtune=cortex-a78 
+
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-inliner \
@@ -814,7 +819,7 @@ endif
 endif
 
 # Use generated profiles from profiling with CONFIG_PGO_GEN to optimize the kernel
-ifeq ($(CONFIG_PGO_USE),y)
+ifdef CONFIG_PGO_USE
 KBUILD_CFLAGS	+=	-fprofile-use \
 			-fprofile-correction \
 			-fprofile-partial-training \
