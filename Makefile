@@ -784,6 +784,10 @@ else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
 
+# Snapdragon optimization
+KBUILD_CFLAGS  +=  -mcpu=cortex-a78 
+KBUILD_CFLAGS  +=  -mtune=cortex-a78 
+
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-inliner \
