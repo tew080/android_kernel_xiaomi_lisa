@@ -5,9 +5,8 @@ ifeq ($(CONFIG_DEBUG_KMEMLEAK),y)
 ccflags-y	:= -DCONFIG_DEBUG_FS
 endif
 
-ifdef CONFIG_DEBUG_FS
-obj-y += debugfs/
-endif
-ifdef CONFIG_PGO_GEN
-obj-y += debugfs/
+ifdef  CONFIG_DEBUG_FS
+obj-y += debugfs.o
+else ifdef CONFIG_PGO_GEN 
+obj-y += debugfs.o
 endif
