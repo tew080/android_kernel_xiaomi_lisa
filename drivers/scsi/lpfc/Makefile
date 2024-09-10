@@ -21,7 +21,7 @@
 # *******************************************************************/
 ######################################################################
 
-ifdef CONFIG_PGO_GEN
+ifeq ($(CONFIG_PGO_GEN),y)
 ccflags-$(GCOV) := -fprofile-generate -ftest-coverage
 else
 ccflags-$(GCOV) := -fprofile-arcs -ftest-coverage

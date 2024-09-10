@@ -50,7 +50,7 @@ $(vobjs): KBUILD_CFLAGS += $(CFL)
 #
 # vDSO code runs in userspace and -pg doesn't help with profiling anyway.
 #
-ifdef CONFIG_PGO_GEN
+ifeq ($(CONFIG_PGO_GEN),y)
 CFLAGS_REMOVE_vdso-note.o = -pg -fprofile-generate -ftest-coverage
 CFLAGS_REMOVE_um_vdso.o = -pg -fprofile-generate -ftest-coverage
 else

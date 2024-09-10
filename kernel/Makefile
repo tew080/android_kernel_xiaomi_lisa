@@ -2,13 +2,6 @@
 #
 # Makefile for the linux kernel.
 #
-# Snapdragon optimization
-KBUILD_CFLAGS   += -ffp-contract=fast
-KBUILD_CFLAGS  +=  -fno-rtti
-KBUILD_CFLAGS  +=  -fno-trapping-math
-KBUILD_CFLAGS  +=  -fno-exceptions
-KBUILD_CFLAGS  +=  -fno-math-errno
-
 obj-y     = fork.o exec_domain.o panic.o \
 	    cpu.o exit.o softirq.o resource.o \
 	    sysctl.o sysctl_binary.o capability.o ptrace.o user.o \
@@ -37,6 +30,9 @@ KCOV_INSTRUMENT_extable.o := n
 KCOV_INSTRUMENT_kcov.o := n
 KASAN_SANITIZE_kcov.o := n
 CFLAGS_kcov.o := $(call cc-option, -fno-conserve-stack -fno-stack-protector)
+
+# cond_syscall is currently not LTO compatible
+CFLAGS_sys_ni.o = $(DISABLE_LTO)
 
 # Don't instrument error handlers
 CFLAGS_REMOVE_cfi.o := $(CC_FLAGS_CFI)

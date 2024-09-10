@@ -5,7 +5,7 @@
 
 GPROF_OPT += -pg
 
-ifdef CONFIG_PGO_GEN
+ifeq ($(CONFIG_PGO_GEN),y)
 GCOV_OPT += -fprofile-generate -ftest-coverage
 else
 GCOV_OPT += -fprofile-arcs -ftest-coverage
