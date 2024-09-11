@@ -148,8 +148,10 @@ static int six_hundred_forty_kb = 640 * 1024;
 static int __maybe_unused max_kswapd_threads = MAX_KSWAPD_THREADS;
 
 #ifdef CONFIG_SCHED_WALT
+#if 0
 static int neg_three = -3;
 static int three = 3;
+#endif
 static int fifty = 50;
 static int two_hundred_fifty_five = 255;
 const int sched_user_hint_max = 1000;
