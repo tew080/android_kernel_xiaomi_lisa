@@ -5,7 +5,7 @@
 
 SECONDS=0 # builtin bash timer
 ZIPNAME="Hexagon-lisa-$(date '+%Y%m%d-%H%M').zip"
-TC_DIR="/home/tew404/lisa-Kernel/clang-r530567"
+TC_DIR="/home/tew404/lisa-Kernel/neutron-clang-10032024"
 DEVICE="lisa"
 
 MAKE_PARAMS="O=out \
