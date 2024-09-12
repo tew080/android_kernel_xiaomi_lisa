@@ -758,9 +758,17 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
 KBUILD_CFLAGS += -O2
 else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
 KBUILD_CFLAGS += -O3
+KBUILD_AFLAGS += -O3
 else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS += -Os
 endif
+
+# Enable hot cold split optimization
+KBUILD_CFLAGS   += -mllvm -hot-cold-split=true
+
+# Enable MLGO for register allocation.
+KBUILD_CFLAGS   += -ffp-contract=fast -mllvm -regalloc-enable-advisor=release
+KBUILD_LDFLAGS += -mllvm -enable-ml-inliner=release
 
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
