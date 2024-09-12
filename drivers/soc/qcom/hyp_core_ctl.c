@@ -669,7 +669,7 @@ static void hyp_core_ctl_init_reserve_cpus(struct hyp_core_ctl_data *hcd)
 
 	cpumask_copy(&hcd->final_reserved_cpus, &hcd->reserve_cpus);
 	spin_unlock_irqrestore(&hcd->lock, flags);
-	pr_debug("reserve_cpus=%*pbl\n", cpumask_pr_args(&hcd->reserve_cpus));
+	pr_info("reserve_cpus=%*pbl\n", cpumask_pr_args(&hcd->reserve_cpus));
 }
 
 /*

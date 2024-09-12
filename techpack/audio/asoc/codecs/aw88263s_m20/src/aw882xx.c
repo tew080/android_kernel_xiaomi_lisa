@@ -2398,7 +2398,7 @@ static int aw882xx_i2c_probe(struct i2c_client *i2c,
 	struct aw882xx *aw882xx = NULL;
 	struct device_node *np = i2c->dev.of_node;
 
-	aw_pr_debug("enter addr=0x%x", i2c->addr);
+	aw_pr_info("enter addr=0x%x", i2c->addr);
 
 	if (!i2c_check_functionality(i2c->adapter, I2C_FUNC_I2C)) {
 		aw_dev_err(&i2c->dev, "check_functionality failed");
@@ -2589,7 +2589,7 @@ static int __init aw882xx_i2c_init(void)
 {
 	int ret = -1;
 
-	aw_pr_debug("aw882xx driver version %s", AW882XX_DRIVER_VERSION);
+	aw_pr_info("aw882xx driver version %s", AW882XX_DRIVER_VERSION);
 
 	ret = i2c_add_driver(&aw882xx_i2c_driver);
 	if (ret)

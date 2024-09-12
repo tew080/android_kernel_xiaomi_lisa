@@ -90,7 +90,7 @@ static int cnss_get_vreg_single(struct cnss_plat_data *plat_priv,
 		if (ret == -ENODEV)
 			return ret;
 		else if (ret == -EPROBE_DEFER)
-			cnss_pr_debug("EPROBE_DEFER for regulator: %s\n",
+			cnss_pr_info("EPROBE_DEFER for regulator: %s\n",
 				     vreg->cfg.name);
 		else
 			cnss_pr_err("Failed to get regulator %s, err = %d\n",

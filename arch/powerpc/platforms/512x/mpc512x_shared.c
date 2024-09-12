@@ -238,7 +238,7 @@ static void __init mpc512x_init_diu(void)
 
 	mode = in_be32(&diu_reg->diu_mode);
 	if (mode == MFB_MODE0) {
-		pr_debug("%s: DIU OFF\n", __func__);
+		pr_info("%s: DIU OFF\n", __func__);
 		goto out;
 	}
 

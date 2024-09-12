@@ -112,7 +112,7 @@ static int apsh4ad0a_clk_init(void)
 /* Initialize the board */
 static void __init apsh4ad0a_setup(char **cmdline_p)
 {
-	pr_debug("Alpha Project AP-SH4AD-0A support:\n");
+	pr_info("Alpha Project AP-SH4AD-0A support:\n");
 }
 
 static void __init apsh4ad0a_init_irq(void)

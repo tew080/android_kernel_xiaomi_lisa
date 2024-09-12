@@ -229,7 +229,7 @@ void __init config_atari(void)
 	 * Determine hardware present
 	 */
 
-	pr_debug("Atari hardware found:");
+	pr_info("Atari hardware found:");
 	if (MACH_IS_MEDUSA) {
 		/* There's no Atari video hardware on the Medusa, but all the
 		 * addresses below generate a DTACK so no bus error occurs! */

@@ -92,7 +92,7 @@ static void cougar_fix_g6_mapping(void)
 		if (cougar_mapping[i][0] == COUGAR_KEY_G6) {
 			cougar_mapping[i][1] =
 				g6_is_space ? KEY_SPACE : KEY_F18;
-			pr_debug("cougar: G6 mapped to %s\n",
+			pr_info("cougar: G6 mapped to %s\n",
 				g6_is_space ? "space" : "F18");
 			return;
 		}

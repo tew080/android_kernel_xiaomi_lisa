@@ -209,7 +209,7 @@ int hab_open_receive_cancel(struct physical_channel *pchan,
 			(request->xdata.vchan_id == data.vchan_id)) {
 			list_del(&node->node);
 			dev->openq_cnt--;
-			pr_debug("open cancelled on pchan %s vcid %x subid %d openid %d\n",
+			pr_info("open cancelled on pchan %s vcid %x subid %d openid %d\n",
 					pchan->name, data.vchan_id,
 					data.sub_id, data.open_id);
 			/* found un-serviced open request, delete it */
@@ -220,7 +220,7 @@ int hab_open_receive_cancel(struct physical_channel *pchan,
 	hab_spin_unlock(&dev->openlock, irqs_disabled);
 
 	if (!bfound) {
-		pr_debug("init waiting is in-flight. vcid %x sub %d open %d\n",
+		pr_info("init waiting is in-flight. vcid %x sub %d open %d\n",
 				data.vchan_id, data.sub_id, data.open_id);
 		/* add cancel to the openq to let the waiting open bail out */
 		node = kzalloc(sizeof(*node), GFP_ATOMIC);

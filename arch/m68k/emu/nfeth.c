@@ -232,7 +232,7 @@ static int __init nfeth_init(void)
 		return -ENODEV;
 
 	ver = nf_call(nfEtherID + GET_VERSION);
-	pr_debug("API %lu\n", ver);
+	pr_info("API %lu\n", ver);
 
 	nfEtherIRQ = nf_call(nfEtherID + XIF_INTLEVEL);
 	error = request_irq(nfEtherIRQ, nfeth_interrupt, IRQF_SHARED,

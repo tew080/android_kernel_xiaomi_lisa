@@ -235,7 +235,7 @@ int __init ics_opal_init(void)
 	/* Register ourselves */
 	xics_register_ics(&ics_hal);
 
-	pr_debug("ICS OPAL backend registered\n");
+	pr_info("ICS OPAL backend registered\n");
 
 	return 0;
 }

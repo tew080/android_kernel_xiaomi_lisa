@@ -315,7 +315,7 @@ static ssize_t perf_mode_override_store(struct device *dev,
 
 	val = min(val, npu_dev->pwrctrl.num_pwrlevels);
 	npu_dev->pwrctrl.perf_mode_override = val;
-	pr_debug("setting uc_pwrlevel_override to %d\n", val);
+	pr_info("setting uc_pwrlevel_override to %d\n", val);
 
 	client.npu_dev = npu_dev;
 	npu_host_set_perf_mode(&client, 0, val);
@@ -2119,7 +2119,7 @@ static int npu_probe(struct platform_device *pdev)
 	res = platform_get_resource_byname(pdev,
 		IORESOURCE_MEM, "qfprom_physical");
 	if (!res) {
-		pr_debug("unable to get qfprom_physical resource\n");
+		pr_info("unable to get qfprom_physical resource\n");
 	} else {
 		npu_dev->qfprom_io.size = resource_size(res);
 		npu_dev->qfprom_io.base = devm_ioremap(&pdev->dev, res->start,

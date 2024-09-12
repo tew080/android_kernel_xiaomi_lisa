@@ -60,17 +60,17 @@ static void dprint_field(const char *dir, int nla_type,
 	case NLA_U8:  val = (__u8)val;
 	case NLA_U16: val = (__u16)val;
 	case NLA_U32: val = (__u32)val;
-		pr_debug("%s attr %s: %d 0x%08x\n", dir,
+		pr_info("%s attr %s: %d 0x%08x\n", dir,
 			name, (int)val, (unsigned)val);
 		break;
 	case NLA_U64:
 		val = *(__u64*)valp;
-		pr_debug("%s attr %s: %lld 0x%08llx\n", dir,
+		pr_info("%s attr %s: %lld 0x%08llx\n", dir,
 			name, (long long)val, (unsigned long long)val);
 		break;
 	case NLA_FLAG:
 		if (val)
-			pr_debug("%s attr %s: set\n", dir, name);
+			pr_info("%s attr %s: set\n", dir, name);
 		break;
 	}
 }
@@ -82,17 +82,17 @@ static void dprint_array(const char *dir, int nla_type,
 	case NLA_NUL_STRING:
 		if (len && val[len-1] == '\0')
 			len--;
-		pr_debug("%s attr %s: [len:%u] '%s'\n", dir, name, len, val);
+		pr_info("%s attr %s: [len:%u] '%s'\n", dir, name, len, val);
 		break;
 	default:
 		/* we can always show 4 byte,
 		 * thats what nlattr are aligned to. */
-		pr_debug("%s attr %s: [len:%u] %02x%02x%02x%02x ...\n",
+		pr_info("%s attr %s: [len:%u] %02x%02x%02x%02x ...\n",
 			dir, name, len, val[0], val[1], val[2], val[3]);
 	}
 }
 
-#define DPRINT_TLA(a, op, b) pr_debug("%s %s %s\n", a, op, b);
+#define DPRINT_TLA(a, op, b) pr_info("%s %s %s\n", a, op, b);
 
 /* Name is a member field name of the struct s.
  * If s is NULL (only parsing, no copy requested in *_from_attrs()),
@@ -170,7 +170,7 @@ static int s_name ## _from_attrs_for_change(struct s_name *s,		\
 		nla = ntb[attr_nr];						\
 		if (nla) {						\
 			if (exclude_invariants && !!((attr_flag) & DRBD_F_INVARIANT)) {		\
-				pr_debug("<< must not change invariant attr: %s\n", #name);	\
+				pr_info("<< must not change invariant attr: %s\n", #name);	\
 				return -EEXIST;				\
 			}						\
 			assignment;					\
@@ -178,7 +178,7 @@ static int s_name ## _from_attrs_for_change(struct s_name *s,		\
 			/* attribute missing from payload, */		\
 			/* which was expected */			\
 		} else if ((attr_flag) & DRBD_F_REQUIRED) {		\
-			pr_debug("<< missing attr: %s\n", #name);	\
+			pr_info("<< missing attr: %s\n", #name);	\
 			return -ENOMSG;					\
 		}
 

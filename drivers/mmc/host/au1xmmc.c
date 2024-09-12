@@ -280,7 +280,7 @@ static int au1xmmc_send_command(struct au1xmmc_host *host, int wait,
 		mmccmd |= SD_CMD_RT_3;
 		break;
 	default:
-		pr_debug("au1xmmc: unhandled response type %02x\n",
+		pr_info("au1xmmc: unhandled response type %02x\n",
 			mmc_resp_type(cmd));
 		return -EINVAL;
 	}

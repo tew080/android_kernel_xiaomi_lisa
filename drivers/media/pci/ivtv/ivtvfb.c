@@ -1161,8 +1161,8 @@ static int ivtvfb_init_card(struct ivtv *itv)
 #ifdef CONFIG_X86_64
 	if (pat_enabled()) {
 		if (ivtvfb_force_pat) {
-			pr_debug("PAT is enabled. Write-combined framebuffer caching will be disabled.\n");
-			pr_debug("To enable caching, boot with nopat kernel parameter\n");
+			pr_info("PAT is enabled. Write-combined framebuffer caching will be disabled.\n");
+			pr_info("To enable caching, boot with nopat kernel parameter\n");
 		} else {
 			pr_warn("ivtvfb needs PAT disabled for write-combined framebuffer caching.\n");
 			pr_warn("Boot with nopat kernel parameter to use caching, or use the\n");
@@ -1294,7 +1294,7 @@ static void ivtvfb_cleanup(void)
 	struct device_driver *drv;
 	int err;
 
-	pr_debug("Unloading framebuffer module\n");
+	pr_info("Unloading framebuffer module\n");
 
 	drv = driver_find("ivtv", &pci_bus_type);
 	err = driver_for_each_device(drv, NULL, NULL, ivtvfb_callback_cleanup);

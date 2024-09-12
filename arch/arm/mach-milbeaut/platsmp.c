@@ -34,7 +34,7 @@ static int m10v_boot_secondary(unsigned int l_cpu, struct task_struct *idle)
 	if (cpu >= M10V_MAX_CPU)
 		return -EINVAL;
 
-	pr_debug("%s: cpu %u l_cpu %u cluster %u\n",
+	pr_info("%s: cpu %u l_cpu %u cluster %u\n",
 			__func__, cpu, l_cpu, cluster);
 
 	writel(__pa_symbol(secondary_startup), m10v_smp_base + cpu * 4);
@@ -59,7 +59,7 @@ static void m10v_smp_init(unsigned int max_cpus)
 	mpidr = read_cpuid_mpidr();
 	cpu = MPIDR_AFFINITY_LEVEL(mpidr, 0);
 	cluster = MPIDR_AFFINITY_LEVEL(mpidr, 1);
-	pr_debug("MCPM boot on cpu_%u cluster_%u\n", cpu, cluster);
+	pr_info("MCPM boot on cpu_%u cluster_%u\n", cpu, cluster);
 
 	for (cpu = 0; cpu < M10V_MAX_CPU; cpu++)
 		writel(KERNEL_UNBOOT_FLAG, m10v_smp_base + cpu * 4);

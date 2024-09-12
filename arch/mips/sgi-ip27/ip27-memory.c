@@ -154,11 +154,11 @@ static int __init compute_node_distance(nasid_t nasid_a, nasid_t nasid_b)
 	}
 
 	if (router_a == NULL) {
-		pr_debug("node_distance: router_a NULL\n");
+		pr_info("node_distance: router_a NULL\n");
 		return -1;
 	}
 	if (router_b == NULL) {
-		pr_debug("node_distance: router_b NULL\n");
+		pr_info("node_distance: router_b NULL\n");
 		return -1;
 	}
 
@@ -203,14 +203,14 @@ static void __init dump_topology(void)
 	klrou_t *router;
 	cnodeid_t row, col;
 
-	pr_debug("************** Topology ********************\n");
+	pr_info("************** Topology ********************\n");
 
-	pr_debug("    ");
+	pr_info("    ");
 	for_each_online_node(col)
 		pr_cont("%02d ", col);
 	pr_cont("\n");
 	for_each_online_node(row) {
-		pr_debug("%02d  ", row);
+		pr_info("%02d  ", row);
 		for_each_online_node(col)
 			pr_cont("%2d ", node_distance(row, col));
 		pr_cont("\n");
@@ -369,7 +369,7 @@ static void __init szmem(void)
 
 			if ((nodebytes >> PAGE_SHIFT) * (sizeof(struct page)) >
 						(slot0sz << PAGE_SHIFT)) {
-				pr_debug("Ignoring slot %d onwards on node %d\n",
+				pr_info("Ignoring slot %d onwards on node %d\n",
 								slot, node);
 				slot = MAX_MEM_SLOTS;
 				continue;

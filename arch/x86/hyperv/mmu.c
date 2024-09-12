@@ -238,7 +238,7 @@ void hyperv_setup_mmu_ops(void)
 	if (!(ms_hyperv.hints & HV_X64_REMOTE_TLB_FLUSH_RECOMMENDED))
 		return;
 
-	pr_debug("Using hypercall for remote TLB flush\n");
+	pr_info("Using hypercall for remote TLB flush\n");
 	pv_ops.mmu.flush_tlb_others = hyperv_flush_tlb_others;
 	pv_ops.mmu.tlb_remove_table = tlb_remove_table;
 }

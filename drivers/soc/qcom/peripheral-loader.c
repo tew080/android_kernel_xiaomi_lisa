@@ -1684,7 +1684,7 @@ static int __init msm_pil_init(void)
 		pil_get_resource("qcom,msm-imem-pil-disable-timeout", NULL);
 	if (pil_disable_timeout_base) {
 		if (__raw_readl(pil_disable_timeout_base) == 0x53444247) {
-			pr_debug("pil: pil-imem set to disable pil timeouts\n");
+			pr_info("pil: pil-imem set to disable pil timeouts\n");
 			disable_timeouts = true;
 		}
 

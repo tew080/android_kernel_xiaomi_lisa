@@ -585,7 +585,7 @@ void omap1_clk_disable_unused(struct clk *clk)
 	/* Clocks in the DSP domain need api_ck. Just assume bootloader
 	 * has not enabled any DSP clocks */
 	if (clk->enable_reg == DSP_IDLECT2) {
-		pr_debug("Skipping reset check for DSP domain clock \"%s\"\n",
+		pr_info("Skipping reset check for DSP domain clock \"%s\"\n",
 			clk->name);
 		return;
 	}
@@ -935,7 +935,7 @@ static int __init clk_disable_unused(void)
 	struct clk *ck;
 	unsigned long flags;
 
-	pr_debug("clock: disabling unused clocks to save power\n");
+	pr_info("clock: disabling unused clocks to save power\n");
 
 	spin_lock_irqsave(&clockfw_lock, flags);
 	list_for_each_entry(ck, &clocks, node) {

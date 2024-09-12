@@ -233,7 +233,7 @@ static void show_signal(struct task_struct *tsk, int signr,
 {
 	if (show_unhandled_signals && unhandled_signal(tsk, signr) &&
 	    printk_ratelimit()) {
-		pr_debug("%s[%d] %s%s ip:%lx sp:%lx error:%lx",
+		pr_info("%s[%d] %s%s ip:%lx sp:%lx error:%lx",
 			tsk->comm, task_pid_nr(tsk), type, desc,
 			regs->ip, regs->sp, error_code);
 		print_vma_addr(KERN_CONT " in ", regs->ip);

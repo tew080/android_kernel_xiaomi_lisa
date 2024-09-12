@@ -1551,10 +1551,10 @@ static int jtag_mm_etm_online(unsigned int cpu)
 			if (version < TZ_DBG_ETM_VER)
 				etm[cpu]->save_restore_enabled = true;
 			else
-				pr_debug("etm save-restore supported by TZ\n");
+				pr_info("etm save-restore supported by TZ\n");
 		}
 	} else
-		pr_debug("etm arch %u not supported\n", etm[cpu]->arch);
+		pr_info("etm arch %u not supported\n", etm[cpu]->arch);
 	etm[cpu]->enable = true;
 	mutex_unlock(&etm[cpu]->mutex);
 
@@ -1626,10 +1626,10 @@ static int jtag_mm_etm_probe(struct platform_device *pdev, uint32_t cpu)
 				if (version < TZ_DBG_ETM_VER)
 					etmdata->save_restore_enabled = true;
 				else
-					pr_debug("etm save-restore supported by TZ\n");
+					pr_info("etm save-restore supported by TZ\n");
 			}
 		} else
-			pr_debug("etm arch %u not supported\n", etmdata->arch);
+			pr_info("etm arch %u not supported\n", etmdata->arch);
 		etmdata->enable = true;
 	}
 	mutex_unlock(&etmdata->mutex);

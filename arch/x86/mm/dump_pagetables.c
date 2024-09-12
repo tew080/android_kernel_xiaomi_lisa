@@ -560,10 +560,10 @@ static void ptdump_walk_pgd_level_core(struct seq_file *m, pgd_t *pgd,
 	if (!checkwx)
 		return;
 	if (st.wx_pages)
-		pr_debug("x86/mm: Checked W+X mappings: FAILED, %lu W+X pages found.\n",
+		pr_info("x86/mm: Checked W+X mappings: FAILED, %lu W+X pages found.\n",
 			st.wx_pages);
 	else
-		pr_debug("x86/mm: Checked W+X mappings: passed, no W+X pages found.\n");
+		pr_info("x86/mm: Checked W+X mappings: passed, no W+X pages found.\n");
 }
 
 void ptdump_walk_pgd_level(struct seq_file *m, pgd_t *pgd)
@@ -590,7 +590,7 @@ void ptdump_walk_user_pgd_level_checkwx(void)
 	    !boot_cpu_has(X86_FEATURE_PTI))
 		return;
 
-	pr_debug("x86/mm: Checking user space page tables\n");
+	pr_info("x86/mm: Checking user space page tables\n");
 	pgd = kernel_to_user_pgdp(pgd);
 	ptdump_walk_pgd_level_core(NULL, pgd, true, false);
 #endif

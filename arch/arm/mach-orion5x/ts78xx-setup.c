@@ -106,7 +106,7 @@ static int ts78xx_ts_rtc_load(void)
 	}
 
 	if (rc)
-		pr_debug("RTC could not be registered: %d\n", rc);
+		pr_info("RTC could not be registered: %d\n", rc);
 
 	return rc;
 }
@@ -273,7 +273,7 @@ static int ts78xx_ts_nand_load(void)
 		rc = platform_device_add(&ts78xx_ts_nand_device);
 
 	if (rc)
-		pr_debug("NAND could not be registered: %d\n", rc);
+		pr_info("NAND could not be registered: %d\n", rc);
 	return rc;
 };
 
@@ -316,7 +316,7 @@ static int ts78xx_ts_rng_load(void)
 		rc = platform_device_add(&ts78xx_ts_rng_device);
 
 	if (rc)
-		pr_debug("RNG could not be registered: %d\n", rc);
+		pr_info("RNG could not be registered: %d\n", rc);
 	return rc;
 };
 
@@ -414,7 +414,7 @@ static int ts78xx_fpga_load(void)
 {
 	ts78xx_fpga.id = readl(TS78XX_FPGA_REGS_VIRT_BASE);
 
-	pr_debug("FPGA magic=0x%.6x, rev=0x%.2x\n",
+	pr_info("FPGA magic=0x%.6x, rev=0x%.2x\n",
 			(ts78xx_fpga.id >> 8) & 0xffffff,
 			ts78xx_fpga.id & 0xff);
 

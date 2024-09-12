@@ -247,7 +247,7 @@ static int open_file_read(struct perf_data *data)
 	}
 
 	if (!st.st_size) {
-		pr_debug("zero-sized data (%s), nothing to do!\n",
+		pr_info("zero-sized data (%s), nothing to do!\n",
 			data->file.path);
 		goto out_close;
 	}

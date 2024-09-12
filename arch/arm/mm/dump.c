@@ -440,7 +440,7 @@ void ptdump_check_wx(void)
 		pr_warn("Checked W+X mappings: FAILED, %lu W+X pages found\n",
 			st.wx_pages);
 	else
-		pr_debug("Checked W+X mappings: passed, no W+X pages found\n");
+		pr_info("Checked W+X mappings: passed, no W+X pages found\n");
 }
 
 static int ptdump_init(void)

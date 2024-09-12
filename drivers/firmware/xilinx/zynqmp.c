@@ -728,7 +728,7 @@ static int zynqmp_firmware_probe(struct platform_device *pdev)
 		      pm_api_version >> 16, pm_api_version & 0xFFFF);
 	}
 
-	pr_debug("%s Platform Management API v%d.%d\n", __func__,
+	pr_info("%s Platform Management API v%d.%d\n", __func__,
 		pm_api_version >> 16, pm_api_version & 0xFFFF);
 
 	/* Check trustzone version number */
@@ -742,7 +742,7 @@ static int zynqmp_firmware_probe(struct platform_device *pdev)
 		      ZYNQMP_TZ_VERSION_MAJOR, ZYNQMP_TZ_VERSION_MINOR,
 		      pm_tz_version >> 16, pm_tz_version & 0xFFFF);
 
-	pr_debug("%s Trustzone version v%d.%d\n", __func__,
+	pr_info("%s Trustzone version v%d.%d\n", __func__,
 		pm_tz_version >> 16, pm_tz_version & 0xFFFF);
 
 	/* Assign eemi_ops_table */

@@ -753,7 +753,7 @@ static void ideapad_check_special_buttons(struct ideapad_private *priv)
 				ideapad_input_report(priv, 64);
 				break;
 			default:
-				pr_debug("Unknown special button: %lu\n", bit);
+				pr_info("Unknown special button: %lu\n", bit);
 				break;
 			}
 		}
@@ -933,7 +933,7 @@ static void ideapad_acpi_notify(acpi_handle handle, u32 event, void *data)
 				 */
 				break;
 			default:
-				pr_debug("Unknown event: %lu\n", vpc_bit);
+				pr_info("Unknown event: %lu\n", vpc_bit);
 			}
 		}
 	}
@@ -947,7 +947,7 @@ static void ideapad_wmi_notify(u32 value, void *context)
 		ideapad_input_report(context, value);
 		break;
 	default:
-		pr_debug("Unknown WMI event %u\n", value);
+		pr_info("Unknown WMI event %u\n", value);
 	}
 }
 #endif

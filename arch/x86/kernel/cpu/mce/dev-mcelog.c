@@ -346,7 +346,7 @@ static __init int dev_mcelog_init_device(void)
 	if (err) {
 		if (err == -EBUSY)
 			/* Xen dom0 might have registered the device already. */
-			pr_debug("Unable to init device /dev/mcelog, already registered");
+			pr_info("Unable to init device /dev/mcelog, already registered");
 		else
 			pr_err("Unable to init device /dev/mcelog (rc: %d)\n", err);
 

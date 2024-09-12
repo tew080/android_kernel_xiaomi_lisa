@@ -9472,7 +9472,7 @@ static int qseecom_init_control(void)
 	rc = qseecom_scm_call(6, 3, &feature, sizeof(feature),
 		&resp, sizeof(resp));
 	mutex_unlock(&app_access_lock);
-	pr_debug("qseecom.qsee_version = 0x%x\n", resp.result);
+	pr_info("qseecom.qsee_version = 0x%x\n", resp.result);
 	if (rc) {
 		pr_err("Failed to get QSEE version info %d\n", rc);
 		return rc;

@@ -26,11 +26,11 @@ static void sysrq_tlbdump_single(void *dummy)
 
 	spin_lock_irqsave(&show_lock, flags);
 
-	pr_debug("CPU%d:\n", smp_processor_id());
+	pr_info("CPU%d:\n", smp_processor_id());
 	dump_tlb_regs();
-	pr_debug("\n");
+	pr_info("\n");
 	dump_tlb_all();
-	pr_debug("\n");
+	pr_info("\n");
 
 	spin_unlock_irqrestore(&show_lock, flags);
 }

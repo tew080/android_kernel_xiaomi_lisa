@@ -111,7 +111,7 @@ EXPORT_SYMBOL(strict_msr_control);
 static int __init enable_strict_msr_control(char *str)
 {
 	strict_msr_control = true;
-	pr_debug("Enabling strict facility control\n");
+	pr_info("Enabling strict facility control\n");
 
 	return 0;
 }
@@ -1268,7 +1268,7 @@ void show_user_instructions(struct pt_regs *regs)
 	 * elsewhere.
 	 */
 	if (!__access_ok(pc, NR_INSN_TO_PRINT * sizeof(int), USER_DS)) {
-		pr_debug("%s[%d]: Bad NIP, not dumping instructions.\n",
+		pr_info("%s[%d]: Bad NIP, not dumping instructions.\n",
 			current->comm, current->pid);
 		return;
 	}
@@ -1291,7 +1291,7 @@ void show_user_instructions(struct pt_regs *regs)
 		}
 
 		if (!seq_buf_has_overflowed(&s))
-			pr_debug("%s[%d]: code: %s\n", current->comm,
+			pr_info("%s[%d]: code: %s\n", current->comm,
 				current->pid, s.buffer);
 	}
 }

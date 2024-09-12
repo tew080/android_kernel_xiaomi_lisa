@@ -998,7 +998,7 @@ err_nfcc_reset_failed:
 	switch (nfc_dev->nqx_info.info.chip_type) {
 	case NFCC_SN100_A:
 	case NFCC_SN100_B:
-		pr_debug("%s: ## NFCC == SN100x ##\n", __func__);
+		pr_info("%s: ## NFCC == SN100x ##\n", __func__);
 		break;
 	default:
 		pr_warn("%s: - NFCC HW not Supported\n", __func__);

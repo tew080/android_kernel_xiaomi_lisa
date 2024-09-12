@@ -263,7 +263,7 @@ int kfr2r09_lcd_setup(void *sohandle, struct sh_mobile_lcdc_sys_bus_ops *so)
 	if (read_device_code(sohandle, so) != 0x01221517)
 		return -ENODEV;
 
-	pr_debug("KFR2R09 WQVGA LCD Module detected.\n");
+	pr_info("KFR2R09 WQVGA LCD Module detected.\n");
 
 	display_on(sohandle, so);
 	return 0;

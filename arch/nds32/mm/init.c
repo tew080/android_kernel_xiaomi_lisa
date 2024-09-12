@@ -146,7 +146,7 @@ void __init paging_init(void)
 	int i;
 	void *zero_page;
 
-	pr_debug("Setting up paging and PTEs.\n");
+	pr_info("Setting up paging and PTEs.\n");
 	/* clear out the init_mm.pgd that will contain the kernel's mappings */
 	for (i = 0; i < PTRS_PER_PGD; i++)
 		swapper_pg_dir[i] = __pgd(1);
@@ -200,7 +200,7 @@ void __init mem_init(void)
 	memblock_free_all();
 	mem_init_print_info(NULL);
 
-	pr_debug("virtual kernel memory layout:\n"
+	pr_info("virtual kernel memory layout:\n"
 		"    fixmap  : 0x%08lx - 0x%08lx   (%4ld kB)\n"
 #ifdef CONFIG_HIGHMEM
 		"    pkmap   : 0x%08lx - 0x%08lx   (%4ld kB)\n"

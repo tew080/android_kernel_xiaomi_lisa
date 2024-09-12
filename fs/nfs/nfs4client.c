@@ -690,13 +690,13 @@ int nfs4_detect_session_trunking(struct nfs_client *clp,
 	if (!nfs4_check_server_scope(clp->cl_serverscope, res->server_scope))
 		goto out_err;
 
-	pr_debug("NFS:  %s: Session trunking succeeded for %s\n",
+	pr_info("NFS:  %s: Session trunking succeeded for %s\n",
 		clp->cl_hostname,
 		xprt->address_strings[RPC_DISPLAY_ADDR]);
 
 	return 0;
 out_err:
-	pr_debug("NFS:  %s: Session trunking failed for %s\n", clp->cl_hostname,
+	pr_info("NFS:  %s: Session trunking failed for %s\n", clp->cl_hostname,
 		xprt->address_strings[RPC_DISPLAY_ADDR]);
 
 	return -EINVAL;

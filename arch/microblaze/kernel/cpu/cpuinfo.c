@@ -93,7 +93,7 @@ void __init setup_cpuinfo(void)
 	if (!cpu)
 		pr_err("You don't have cpu or are missing cpu reg property!!!\n");
 
-	pr_debug("%s: initialising\n", __func__);
+	pr_info("%s: initialising\n", __func__);
 
 	switch (cpu_has_pvr()) {
 	case 0:
@@ -104,7 +104,7 @@ void __init setup_cpuinfo(void)
 /* FIXME I found weird behavior with MB 7.00.a/b 7.10.a
  * please do not use FULL PVR with MMU */
 	case 1:
-		pr_debug("%s: Using full CPU PVR support\n",
+		pr_info("%s: Using full CPU PVR support\n",
 			__func__);
 		set_cpuinfo_static(&cpuinfo, cpu);
 		set_cpuinfo_pvr_full(&cpuinfo, cpu);

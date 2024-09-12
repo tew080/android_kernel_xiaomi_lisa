@@ -3096,16 +3096,16 @@ void mcsafe_test(void)
 	enum INJECT inj;
 
 	if (IS_ENABLED(CONFIG_MCSAFE_TEST)) {
-		pr_debug("%s: run...\n", __func__);
+		pr_info("%s: run...\n", __func__);
 	} else {
-		pr_debug("%s: disabled, skip.\n", __func__);
+		pr_info("%s: disabled, skip.\n", __func__);
 		return;
 	}
 
 	for (inj = INJECT_NONE; inj <= INJECT_DST; inj++) {
 		int i;
 
-		pr_debug("%s: inject: %s\n", __func__, inject_desc[inj]);
+		pr_info("%s: inject: %s\n", __func__, inject_desc[inj]);
 		for (i = 0; i < 512; i++) {
 			unsigned long expect, rem;
 			void *src, *dst;
@@ -3140,7 +3140,7 @@ void mcsafe_test(void)
 			valid = mcsafe_test_validate(dst, src, 512, expect);
 			if (rem == expect && valid)
 				continue;
-			pr_debug("%s: copy(%#lx, %#lx, %d) off: %d rem: %ld %s expect: %ld\n",
+			pr_info("%s: copy(%#lx, %#lx, %d) off: %d rem: %ld %s expect: %ld\n",
 					__func__,
 					((unsigned long) dst) & ~PAGE_MASK,
 					((unsigned long ) src) & ~PAGE_MASK,

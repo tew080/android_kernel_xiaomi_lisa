@@ -64,11 +64,11 @@ static void guestvm_isolate_cpu(void)
 			pr_err("fail to offline CPU%d. ret=%d\n", cpu, ret);
 			continue;
 		}
-		pr_debug("%s: offlined cpu : %d\n", __func__, cpu);
+		pr_info("%s: offlined cpu : %d\n", __func__, cpu);
 		cpumask_set_cpu(cpu, &guestvm_isolated_cpus);
 	}
 
-	pr_debug("%s: reserved_cpus=%*pbl online=%*pbl\n", __func__,
+	pr_info("%s: reserved_cpus=%*pbl online=%*pbl\n", __func__,
 		cpumask_pr_args(&guestvm_isolated_cpus),
 		cpumask_pr_args(cpu_online_mask));
 }
@@ -83,12 +83,12 @@ static void guestvm_unisolate_cpu(void)
 			pr_err("fail to online CPU%d. ret=%d\n", i, ret);
 			continue;
 		}
-		pr_debug("%s: onlined cpu : %d\n", __func__, i);
+		pr_info("%s: onlined cpu : %d\n", __func__, i);
 
 		cpumask_clear_cpu(i, &guestvm_isolated_cpus);
 	}
 
-	pr_debug("%s: cpu online mask=%*pbl\n", __func__,
+	pr_info("%s: cpu online mask=%*pbl\n", __func__,
 					cpumask_pr_args(cpu_online_mask));
 	del_timer(&guestvm_cpu_isolate_timer);
 }

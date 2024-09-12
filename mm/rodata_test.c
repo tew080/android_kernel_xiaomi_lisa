@@ -49,5 +49,5 @@ void rodata_test(void)
 		return;
 	}
 
-	pr_debug("all tests were successful\n");
+	pr_info("all tests were successful\n");
 }

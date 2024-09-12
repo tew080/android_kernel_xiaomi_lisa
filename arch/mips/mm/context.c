@@ -285,7 +285,7 @@ static int mmid_init(void)
 	/* Reserve an MMID for kmap/wired entries */
 	__set_bit(MMID_KERNEL_WIRED, mmid_map);
 
-	pr_debug("MMID allocator initialised with %u entries\n", num_mmids);
+	pr_info("MMID allocator initialised with %u entries\n", num_mmids);
 	return 0;
 }
 early_initcall(mmid_init);

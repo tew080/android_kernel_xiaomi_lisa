@@ -741,7 +741,7 @@ static int icnss_driver_event_server_exit(struct icnss_priv *priv)
 	if (!priv)
 		return -ENODEV;
 
-	icnss_pr_debug("WLAN FW Service Disconnected: 0x%lx\n", priv->state);
+	icnss_pr_info("WLAN FW Service Disconnected: 0x%lx\n", priv->state);
 
 	icnss_clear_server(priv);
 
@@ -888,7 +888,7 @@ static int icnss_driver_event_fw_ready_ind(struct icnss_priv *priv, void *data)
 	if (priv->device_id == WCN6750_DEVICE_ID)
 		icnss_free_qdss_mem(priv);
 
-	icnss_pr_debug("WLAN FW is ready: 0x%lx\n", priv->state);
+	icnss_pr_info("WLAN FW is ready: 0x%lx\n", priv->state);
 
 	icnss_hw_power_off(priv);
 
@@ -919,10 +919,10 @@ static int icnss_driver_event_fw_init_done(struct icnss_priv *priv, void *data)
 	if (!priv)
 		return -ENODEV;
 
-	icnss_pr_debug("WLAN FW Initialization done: 0x%lx\n", priv->state);
+	icnss_pr_info("WLAN FW Initialization done: 0x%lx\n", priv->state);
 
 	if (icnss_wlfw_qdss_dnld_send_sync(priv))
-		icnss_pr_debug("Failed to download qdss configuration file");
+		icnss_pr_info("Failed to download qdss configuration file");
 
 	if (test_bit(ICNSS_COLD_BOOT_CAL, &priv->state))
 		ret = wlfw_wlan_mode_send_sync_msg(priv,
@@ -1753,7 +1753,7 @@ static int icnss_wpss_notifier_nb(struct notifier_block *nb,
 		      icnss_subsys_notify_state_to_str(code), code);
 
 	if (code == SUBSYS_AFTER_SHUTDOWN) {
-		icnss_pr_debug("Collecting msa0 segment dump\n");
+		icnss_pr_info("Collecting msa0 segment dump\n");
 		icnss_msa0_ramdump(priv);
 		goto out;
 	}
@@ -1763,7 +1763,7 @@ static int icnss_wpss_notifier_nb(struct notifier_block *nb,
 
 	priv->is_ssr = true;
 
-	icnss_pr_debug("WPSS went down, state: 0x%lx, crashed: %d\n",
+	icnss_pr_info("WPSS went down, state: 0x%lx, crashed: %d\n",
 		      priv->state, notif->crashed);
 
 	set_bit(ICNSS_FW_DOWN, &priv->state);
@@ -1811,7 +1811,7 @@ static int icnss_modem_notifier_nb(struct notifier_block *nb,
 		      icnss_subsys_notify_state_to_str(code), code);
 
 	if (code == SUBSYS_AFTER_SHUTDOWN) {
-		icnss_pr_debug("Collecting msa0 segment dump\n");
+		icnss_pr_info("Collecting msa0 segment dump\n");
 		icnss_msa0_ramdump(priv);
 		goto out;
 	}
@@ -1837,7 +1837,7 @@ static int icnss_modem_notifier_nb(struct notifier_block *nb,
 		goto out;
 	}
 
-	icnss_pr_debug("Modem went down, state: 0x%lx, crashed: %d\n",
+	icnss_pr_info("Modem went down, state: 0x%lx, crashed: %d\n",
 		      priv->state, notif->crashed);
 
 	set_bit(ICNSS_FW_DOWN, &priv->state);
@@ -2019,7 +2019,7 @@ static int icnss_service_notifier_notify(struct notifier_block *nb,
 		priv->stats.recovery.root_pd_crash++;
 		break;
 	}
-	icnss_pr_debug("PD service down, pd_state: %d, state: 0x%lx: cause: %s\n",
+	icnss_pr_info("PD service down, pd_state: %d, state: 0x%lx: cause: %s\n",
 		      *state, priv->state, icnss_pdr_cause[cause]);
 event_post:
 	if (!test_bit(ICNSS_FW_DOWN, &priv->state)) {
@@ -3314,7 +3314,7 @@ void icnss_allow_recursive_recovery(struct device *dev)
 
 	priv->allow_recursive_recovery = true;
 
-	icnss_pr_debug("Recursive recovery allowed for WLAN\n");
+	icnss_pr_info("Recursive recovery allowed for WLAN\n");
 }
 
 void icnss_disallow_recursive_recovery(struct device *dev)
@@ -3323,7 +3323,7 @@ void icnss_disallow_recursive_recovery(struct device *dev)
 
 	priv->allow_recursive_recovery = false;
 
-	icnss_pr_debug("Recursive recovery disallowed for WLAN\n");
+	icnss_pr_info("Recursive recovery disallowed for WLAN\n");
 }
 
 static int icnss_create_shutdown_sysfs(struct icnss_priv *priv)
@@ -4144,7 +4144,7 @@ static int icnss_probe(struct platform_device *pdev)
 
 	INIT_LIST_HEAD(&priv->icnss_tcdev_list);
 
-	icnss_pr_debug("Platform driver probed successfully\n");
+	icnss_pr_info("Platform driver probed successfully\n");
 
 	return 0;
 
@@ -4177,7 +4177,7 @@ static int icnss_remove(struct platform_device *pdev)
 {
 	struct icnss_priv *priv = dev_get_drvdata(&pdev->dev);
 
-	icnss_pr_debug("Removing driver: state: 0x%lx\n", priv->state);
+	icnss_pr_info("Removing driver: state: 0x%lx\n", priv->state);
 
 	if (priv->device_id == WCN6750_DEVICE_ID) {
 		icnss_dms_deinit(priv);

@@ -287,7 +287,7 @@ static int npcm_adc_probe(struct platform_device *pdev)
 		goto err_iio_register;
 	}
 
-	pr_debug("NPCM ADC driver probed\n");
+	pr_info("NPCM ADC driver probed\n");
 
 	return 0;
 

@@ -692,7 +692,7 @@ static int __init mpc85xx_mc_init(void)
 	int res = 0;
 	u32 __maybe_unused pvr = 0;
 
-	pr_debug("Freescale(R) MPC85xx EDAC driver, (C) 2006 Montavista Software\n");
+	pr_info("Freescale(R) MPC85xx EDAC driver, (C) 2006 Montavista Software\n");
 
 	/* make sure error reporting method is sane */
 	switch (edac_op_state) {

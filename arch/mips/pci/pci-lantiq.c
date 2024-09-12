@@ -244,7 +244,7 @@ int __init pcibios_init(void)
 {
 	int ret = platform_driver_register(&ltq_pci_driver);
 	if (ret)
-		pr_debug("pci-xway: Error registering platform driver!");
+		pr_info("pci-xway: Error registering platform driver!");
 	return ret;
 }
 

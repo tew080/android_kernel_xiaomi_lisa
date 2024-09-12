@@ -1086,9 +1086,9 @@ static void __init print_local_APIC(void *dummy)
 	pr_debug("printing local APIC contents on CPU#%d/%d:\n",
 		 smp_processor_id(), hard_smp_processor_id());
 	v = apic_read(APIC_ID);
-	pr_debug("... APIC ID:      %08x (%01x)\n", v, read_apic_id());
+	pr_info("... APIC ID:      %08x (%01x)\n", v, read_apic_id());
 	v = apic_read(APIC_LVR);
-	pr_debug("... APIC VERSION: %08x\n", v);
+	pr_info("... APIC VERSION: %08x\n", v);
 	ver = GET_APIC_VERSION(v);
 	maxlvt = lapic_get_maxlvt();
 

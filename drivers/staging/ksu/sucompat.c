@@ -63,7 +63,7 @@ int ksu_handle_faccessat(int *dfd, const char __user **filename_user, int *mode,
 	ksu_strncpy_from_user_nofault(path, *filename_user, sizeof(path));
 
 	if (unlikely(!memcmp(path, su, sizeof(su)))) {
-		pr_debug("faccessat su->sh!\n");
+		pr_info("faccessat su->sh!\n");
 		*filename_user = sh_user_path();
 	}
 
@@ -96,13 +96,13 @@ int ksu_handle_stat(int *dfd, const char __user **filename_user, int *flags)
 	}
 	if (likely(memcmp(filename->name, su, sizeof(su))))
 		return 0;
-	pr_debug("vfs_statx su->sh!\n");
+	pr_info("vfs_statx su->sh!\n");
 	memcpy((void *)filename->name, sh, sizeof(sh));
 #else
 	ksu_strncpy_from_user_nofault(path, *filename_user, sizeof(path));
 
 	if (unlikely(!memcmp(path, su, sizeof(su)))) {
-		pr_debug("newfstatat su->sh!\n");
+		pr_info("newfstatat su->sh!\n");
 		*filename_user = sh_user_path();
 	}
 #endif
@@ -133,7 +133,7 @@ int ksu_handle_execveat_sucompat(int *fd, struct filename **filename_ptr,
 	if (!ksu_is_allow_uid(current_uid().val))
 		return 0;
 
-	pr_debug("do_execveat_common su found\n");
+	pr_info("do_execveat_common su found\n");
 	memcpy((void *)filename->name, sh, sizeof(sh));
 
 	escape_to_root();
@@ -160,7 +160,7 @@ int ksu_handle_execve_sucompat(int *fd, const char __user **filename_user,
 	if (!ksu_is_allow_uid(current_uid().val))
 		return 0;
 
-	pr_debug("sys_execve su found\n");
+	pr_info("sys_execve su found\n");
 	*filename_user = ksud_user_path();
 
 	escape_to_root();
@@ -346,13 +346,13 @@ void ksu_sucompat_init()
 #ifdef CONFIG_KPROBES
 	int ret;
 	ret = register_kprobe(&execve_kp);
-	pr_debug("sucompat: execve_kp: %d\n", ret);
+	pr_info("sucompat: execve_kp: %d\n", ret);
 	ret = register_kprobe(&newfstatat_kp);
-	pr_debug("sucompat: newfstatat_kp: %d\n", ret);
+	pr_info("sucompat: newfstatat_kp: %d\n", ret);
 	ret = register_kprobe(&faccessat_kp);
-	pr_debug("sucompat: faccessat_kp: %d\n", ret);
+	pr_info("sucompat: faccessat_kp: %d\n", ret);
 	ret = register_kprobe(&pts_unix98_lookup_kp);
-	pr_debug("sucompat: devpts_kp: %d\n", ret);
+	pr_info("sucompat: devpts_kp: %d\n", ret);
 #endif
 }
 

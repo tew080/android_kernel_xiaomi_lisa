@@ -14,8 +14,8 @@
 
 void __init arch_init_irq(void)
 {
-	pr_debug("EIC is %s\n", cpu_has_veic ? "on" : "off");
-	pr_debug("VINT is %s\n", cpu_has_vint ? "on" : "off");
+	pr_info("EIC is %s\n", cpu_has_veic ? "on" : "off");
+	pr_info("VINT is %s\n", cpu_has_vint ? "on" : "off");
 
 	if (!cpu_has_veic)
 		mips_cpu_irq_init();

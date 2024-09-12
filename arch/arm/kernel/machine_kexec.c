@@ -146,7 +146,7 @@ void machine_crash_shutdown(struct pt_regs *regs)
 	crash_save_cpu(regs, smp_processor_id());
 	machine_kexec_mask_interrupts();
 
-	pr_debug("Loading crashdump kernel...\n");
+	pr_info("Loading crashdump kernel...\n");
 }
 
 /*
@@ -187,7 +187,7 @@ void machine_kexec(struct kimage *image)
 	/* get the identity mapping physical address for the reboot code */
 	reboot_entry_phys = virt_to_idmap(reboot_entry);
 
-	pr_debug("Bye!\n");
+	pr_info("Bye!\n");
 
 	if (kexec_reinit)
 		kexec_reinit();

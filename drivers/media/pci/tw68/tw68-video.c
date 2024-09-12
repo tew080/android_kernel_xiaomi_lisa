@@ -778,7 +778,7 @@ static void tw68_dump_regs(struct tw68_dev *dev)
 	int i, j, k;
 	unsigned char *cptr;
 
-	pr_debug("Full dump of TW68 registers:\n");
+	pr_info("Full dump of TW68 registers:\n");
 	/* First we do the PCI regs, 8 4-byte regs per line */
 	for (i = 0; i < 0x100; i += 32) {
 		cptr = line;
@@ -791,7 +791,7 @@ static void tw68_dump_regs(struct tw68_dev *dev)
 			cptr += sprintf(cptr, "%08x ", tw_readl(j));
 		*cptr++ = '\n';
 		*cptr = 0;
-		pr_debug("%s", line);
+		pr_info("%s", line);
 	}
 	/* Next the control regs, which are single-byte, address mod 4 */
 	while (i < 0x400) {
@@ -808,7 +808,7 @@ static void tw68_dump_regs(struct tw68_dev *dev)
 		}
 		*cptr++ = '\n';
 		*cptr = 0;
-		pr_debug("%s", line);
+		pr_info("%s", line);
 	}
 }
 

@@ -146,7 +146,7 @@ static int __init orangefs_init(void)
 
 	ret = register_filesystem(&orangefs_fs_type);
 	if (ret == 0) {
-		pr_debug("%s: module version %s loaded\n",
+		pr_info("%s: module version %s loaded\n",
 			__func__,
 			ORANGEFS_VERSION);
 		ret = 0;
@@ -196,7 +196,7 @@ static void __exit orangefs_exit(void)
 
 	kfree(orangefs_htable_ops_in_progress);
 
-	pr_debug("orangefs: module version %s unloaded\n", ORANGEFS_VERSION);
+	pr_info("orangefs: module version %s unloaded\n", ORANGEFS_VERSION);
 }
 
 /*

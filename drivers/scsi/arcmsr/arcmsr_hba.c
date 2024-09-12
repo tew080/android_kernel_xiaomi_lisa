@@ -873,7 +873,7 @@ arcmsr_request_irq(struct pci_dev *pdev, struct AdapterControlBlock *acb)
 	nvec = pci_alloc_irq_vectors(pdev, 1, ARCMST_NUM_MSIX_VECTORS,
 			PCI_IRQ_MSIX);
 	if (nvec > 0) {
-		pr_debug("arcmsr%d: msi-x enabled\n", acb->host->host_no);
+		pr_info("arcmsr%d: msi-x enabled\n", acb->host->host_no);
 		flags = 0;
 	} else {
 msi_int0:
@@ -2788,7 +2788,7 @@ static int arcmsr_iop_message_xfer(struct AdapterControlBlock *acb,
 	transfer_len += sg->length;
 	if (transfer_len > sizeof(struct CMD_MESSAGE_FIELD)) {
 		retvalue = ARCMSR_MESSAGE_FAIL;
-		pr_debug("%s: ARCMSR_MESSAGE_FAIL!\n", __func__);
+		pr_info("%s: ARCMSR_MESSAGE_FAIL!\n", __func__);
 		goto message_out;
 	}
 	pcmdmessagefld = (struct CMD_MESSAGE_FIELD *)buffer;
@@ -2800,7 +2800,7 @@ static int arcmsr_iop_message_xfer(struct AdapterControlBlock *acb,
 		ver_addr = kmalloc(ARCMSR_API_DATA_BUFLEN, GFP_ATOMIC);
 		if (!ver_addr) {
 			retvalue = ARCMSR_MESSAGE_FAIL;
-			pr_debug("%s: memory not enough!\n", __func__);
+			pr_info("%s: memory not enough!\n", __func__);
 			goto message_out;
 		}
 		ptmpQbuffer = ver_addr;
@@ -3008,7 +3008,7 @@ static int arcmsr_iop_message_xfer(struct AdapterControlBlock *acb,
 	}
 	default:
 		retvalue = ARCMSR_MESSAGE_FAIL;
-		pr_debug("%s: unknown controlcode!\n", __func__);
+		pr_info("%s: unknown controlcode!\n", __func__);
 	}
 message_out:
 	if (use_sg) {

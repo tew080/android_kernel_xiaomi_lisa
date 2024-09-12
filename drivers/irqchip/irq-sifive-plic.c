@@ -301,7 +301,7 @@ done:
 		nr_handlers++;
 	}
 
-	pr_debug("mapped %d interrupts with %d handlers for %d contexts.\n",
+	pr_info("mapped %d interrupts with %d handlers for %d contexts.\n",
 		nr_irqs, nr_handlers, nr_contexts);
 	set_handle_irq(plic_handle_irq);
 	return 0;

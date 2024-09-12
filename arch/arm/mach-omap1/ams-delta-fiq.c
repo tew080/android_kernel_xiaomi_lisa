@@ -132,7 +132,7 @@ void __init ams_delta_init_fiq(struct gpio_chip *chip,
 
 	fiqhandler_start = &qwerty_fiqin_start;
 	fiqhandler_length = &qwerty_fiqin_end - &qwerty_fiqin_start;
-	pr_debug("Installing fiq handler from %p, length 0x%x\n",
+	pr_info("Installing fiq handler from %p, length 0x%x\n",
 			fiqhandler_start, fiqhandler_length);
 
 	retval = claim_fiq(&fh);
@@ -189,7 +189,7 @@ void __init ams_delta_init_fiq(struct gpio_chip *chip,
 	FIQ_regs.ARM_r9 = (unsigned int)fiq_buffer;
 	set_fiq_regs(&FIQ_regs);
 
-	pr_debug("request_fiq(): fiq_buffer = %p\n", fiq_buffer);
+	pr_info("request_fiq(): fiq_buffer = %p\n", fiq_buffer);
 
 	/*
 	 * Redirect GPIO interrupts to FIQ

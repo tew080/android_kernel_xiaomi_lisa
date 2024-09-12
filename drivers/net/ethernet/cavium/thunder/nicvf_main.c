@@ -2339,7 +2339,7 @@ static struct pci_driver nicvf_driver = {
 
 static int __init nicvf_init_module(void)
 {
-	pr_debug("%s, ver %s\n", DRV_NAME, DRV_VERSION);
+	pr_info("%s, ver %s\n", DRV_NAME, DRV_VERSION);
 	return pci_register_driver(&nicvf_driver);
 }
 

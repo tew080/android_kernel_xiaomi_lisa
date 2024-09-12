@@ -110,14 +110,14 @@ int strcmp_cpuid_str(const char *mapcpuid, const char *id)
 	 * Error out if the cpuid string is incomplete.
 	 */
 	if (full_mapcpuid && !full_cpuid) {
-		pr_debug("Invalid CPUID %s. Full CPUID is required, "
+		pr_info("Invalid CPUID %s. Full CPUID is required, "
 			"vendor-family-model-stepping\n", id);
 		return 1;
 	}
 
 	if (regcomp(&re, mapcpuid, REG_EXTENDED) != 0) {
 		/* Warn unable to generate match particular string. */
-		pr_debug("Invalid regular expression %s\n", mapcpuid);
+		pr_info("Invalid regular expression %s\n", mapcpuid);
 		return 1;
 	}
 

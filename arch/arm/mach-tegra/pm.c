@@ -353,7 +353,7 @@ static int tegra_suspend_enter(suspend_state_t state)
 		    mode >= TEGRA_MAX_SUSPEND_MODE))
 		return -EINVAL;
 
-	pr_debug("Entering suspend state %s\n", lp_state[mode]);
+	pr_info("Entering suspend state %s\n", lp_state[mode]);
 
 	tegra_pm_set(mode);
 

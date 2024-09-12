@@ -4327,7 +4327,7 @@ static int __init macsec_init(void)
 {
 	int err;
 
-	pr_debug("MACsec IEEE 802.1AE\n");
+	pr_info("MACsec IEEE 802.1AE\n");
 	err = register_netdevice_notifier(&macsec_notifier);
 	if (err)
 		return err;

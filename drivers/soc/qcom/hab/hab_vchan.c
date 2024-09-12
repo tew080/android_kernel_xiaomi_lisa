@@ -237,7 +237,7 @@ static int hab_vchans_empty(int vmid)
 				if (!hab_vchans_per_pchan_empty(pchan)) {
 					empty = 0;
 					spin_unlock_bh(&hab_dev->pchan_lock);
-					pr_debug("vmid %d %s's vchans are not closed\n",
+					pr_info("vmid %d %s's vchans are not closed\n",
 							vmid, pchan->name);
 					break;
 				}
@@ -255,12 +255,12 @@ static int hab_vchans_empty(int vmid)
  */
 void hab_vchans_empty_wait(int vmid)
 {
-	pr_debug("waiting for GVM%d's sockets closure\n", vmid);
+	pr_info("waiting for GVM%d's sockets closure\n", vmid);
 
 	while (!hab_vchans_empty(vmid))
 		usleep_range(10000, 12000);
 
-	pr_debug("all of GVM%d's sockets are closed\n", vmid);
+	pr_info("all of GVM%d's sockets are closed\n", vmid);
 }
 
 int hab_vchan_find_domid(struct virtual_channel *vchan)

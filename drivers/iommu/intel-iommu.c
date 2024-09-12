@@ -441,32 +441,32 @@ static int __init intel_iommu_setup(char *str)
 	while (*str) {
 		if (!strncmp(str, "on", 2)) {
 			dmar_disabled = 0;
-			pr_debug("IOMMU enabled\n");
+			pr_info("IOMMU enabled\n");
 		} else if (!strncmp(str, "off", 3)) {
 			dmar_disabled = 1;
 			no_platform_optin = 1;
-			pr_debug("IOMMU disabled\n");
+			pr_info("IOMMU disabled\n");
 		} else if (!strncmp(str, "igfx_off", 8)) {
 			dmar_map_gfx = 0;
-			pr_debug("Disable GFX device mapping\n");
+			pr_info("Disable GFX device mapping\n");
 		} else if (!strncmp(str, "forcedac", 8)) {
-			pr_debug("Forcing DAC for PCI devices\n");
+			pr_info("Forcing DAC for PCI devices\n");
 			dmar_forcedac = 1;
 		} else if (!strncmp(str, "strict", 6)) {
-			pr_debug("Disable batched IOTLB flush\n");
+			pr_info("Disable batched IOTLB flush\n");
 			intel_iommu_strict = 1;
 		} else if (!strncmp(str, "sp_off", 6)) {
-			pr_debug("Disable supported super page\n");
+			pr_info("Disable supported super page\n");
 			intel_iommu_superpage = 0;
 		} else if (!strncmp(str, "sm_on", 5)) {
-			pr_debug("Intel-IOMMU: scalable mode supported\n");
+			pr_info("Intel-IOMMU: scalable mode supported\n");
 			intel_iommu_sm = 1;
 		} else if (!strncmp(str, "tboot_noforce", 13)) {
 			printk(KERN_INFO
 				"Intel-IOMMU: not forcing on after tboot. This could expose security risk for tboot\n");
 			intel_iommu_tboot_noforce = 1;
 		} else if (!strncmp(str, "nobounce", 8)) {
-			pr_debug("Intel-IOMMU: No bounce buffer. This could expose security risks of DMA attacks\n");
+			pr_info("Intel-IOMMU: No bounce buffer. This could expose security risks of DMA attacks\n");
 			intel_no_bounce = 1;
 		}
 
@@ -2987,12 +2987,12 @@ static void intel_iommu_init_qi(struct intel_iommu *iommu)
 		 */
 		iommu->flush.flush_context = __iommu_flush_context;
 		iommu->flush.flush_iotlb = __iommu_flush_iotlb;
-		pr_debug("%s: Using Register based invalidation\n",
+		pr_info("%s: Using Register based invalidation\n",
 			iommu->name);
 	} else {
 		iommu->flush.flush_context = qi_flush_context;
 		iommu->flush.flush_iotlb = qi_flush_iotlb;
-		pr_debug("%s: Using Queued invalidation\n", iommu->name);
+		pr_info("%s: Using Queued invalidation\n", iommu->name);
 	}
 }
 
@@ -3262,7 +3262,7 @@ static int __init init_dmars(void)
 			goto free_iommu;
 
 		if (translation_pre_enabled(iommu)) {
-			pr_debug("Translation already enabled - trying to copy translation structures\n");
+			pr_info("Translation already enabled - trying to copy translation structures\n");
 
 			ret = copy_translation_tables(iommu);
 			if (ret) {
@@ -3280,7 +3280,7 @@ static int __init init_dmars(void)
 				iommu_disable_translation(iommu);
 				clear_translation_pre_enabled(iommu);
 			} else {
-				pr_debug("Copied translation tables from previous kernel for %s\n",
+				pr_info("Copied translation tables from previous kernel for %s\n",
 					iommu->name);
 			}
 		}
@@ -3289,7 +3289,7 @@ static int __init init_dmars(void)
 			hw_pass_through = 0;
 
 		if (!intel_iommu_strict && cap_caching_mode(iommu->cap)) {
-			pr_debug("Disable batched IOTLB flush due to virtualization");
+			pr_info("Disable batched IOTLB flush due to virtualization");
 			intel_iommu_strict = 1;
 		}
 
@@ -4871,7 +4871,7 @@ static int __init platform_optin_force_iommu(void)
 		return 0;
 
 	if (no_iommu || dmar_disabled)
-		pr_debug("Intel-IOMMU force enabled due to platform opt in\n");
+		pr_info("Intel-IOMMU force enabled due to platform opt in\n");
 
 	/*
 	 * If Intel-IOMMU is disabled by default, we will apply identity
@@ -4998,10 +4998,10 @@ int __init intel_iommu_init(void)
 	}
 
 	if (list_empty(&dmar_rmrr_units))
-		pr_debug("No RMRR found\n");
+		pr_info("No RMRR found\n");
 
 	if (list_empty(&dmar_atsr_units))
-		pr_debug("No ATSR found\n");
+		pr_info("No ATSR found\n");
 
 	if (dmar_init_reserved_ranges()) {
 		if (force_on)
@@ -5066,7 +5066,7 @@ int __init intel_iommu_init(void)
 	}
 	up_read(&dmar_global_lock);
 
-	pr_debug("Intel(R) Virtualization Technology for Directed I/O\n");
+	pr_info("Intel(R) Virtualization Technology for Directed I/O\n");
 
 	intel_iommu_enabled = 1;
 

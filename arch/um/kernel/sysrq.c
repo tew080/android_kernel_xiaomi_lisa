@@ -17,7 +17,7 @@
 
 static void _print_addr(void *data, unsigned long address, int reliable)
 {
-	pr_debug(" [<%08lx>] %s%pS\n", address, reliable ? "" : "? ",
+	pr_info(" [<%08lx>] %s%pS\n", address, reliable ? "" : "? ",
 		(void *)address);
 }
 
@@ -40,7 +40,7 @@ void show_stack(struct task_struct *task, unsigned long *stack)
 	if (!stack)
 		sp = get_stack_pointer(task, segv_regs);
 
-	pr_debug("Stack:\n");
+	pr_info("Stack:\n");
 	stack = sp;
 	for (i = 0; i < 3 * STACKSLOTS_PER_LINE; i++) {
 		if (kstack_end(stack))
@@ -51,7 +51,7 @@ void show_stack(struct task_struct *task, unsigned long *stack)
 	}
 	pr_cont("\n");
 
-	pr_debug("Call Trace:\n");
+	pr_info("Call Trace:\n");
 	dump_trace(current, &stackops, NULL);
-	pr_debug("\n");
+	pr_info("\n");
 }

@@ -1552,7 +1552,7 @@ asmlinkage void do_mcheck(struct pt_regs *regs)
 
 	if (multi_match) {
 		dump_tlb_regs();
-		pr_debug("\n");
+		pr_info("\n");
 		dump_tlb_all();
 	}
 
@@ -1703,7 +1703,7 @@ static inline void parity_protection_init(void)
 		gcr_ectl &= CM_GCR_ERR_CONTROL_L2_ECC_EN;
 		WARN_ON(!!gcr_ectl != l2parity);
 
-		pr_debug("Cache parity protection %sabled\n",
+		pr_info("Cache parity protection %sabled\n",
 			l1parity ? "en" : "dis");
 		return;
 	}
@@ -2111,7 +2111,7 @@ static int noulri;
 
 static int __init ulri_disable(char *s)
 {
-	pr_debug("Disabling ulri\n");
+	pr_info("Disabling ulri\n");
 	noulri = 1;
 
 	return 1;

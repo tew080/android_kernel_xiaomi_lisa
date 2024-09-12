@@ -185,7 +185,7 @@ void __init generic_bigsmp_probe(void)
 			bigsmp_early_logical_apicid(cpu);
 	}
 
-	pr_debug("Overriding APIC driver with %s\n", apic_bigsmp.name);
+	pr_info("Overriding APIC driver with %s\n", apic_bigsmp.name);
 }
 
 apic_driver(apic_bigsmp);

@@ -323,20 +323,20 @@ void __init mem_init(void)
 
 	mem_init_print_info(NULL);
 #ifdef CONFIG_PPC32
-	pr_debug("Kernel virtual memory layout:\n");
+	pr_info("Kernel virtual memory layout:\n");
 #ifdef CONFIG_KASAN
-	pr_debug("  * 0x%08lx..0x%08lx  : kasan shadow mem\n",
+	pr_info("  * 0x%08lx..0x%08lx  : kasan shadow mem\n",
 		KASAN_SHADOW_START, KASAN_SHADOW_END);
 #endif
-	pr_debug("  * 0x%08lx..0x%08lx  : fixmap\n", FIXADDR_START, FIXADDR_TOP);
+	pr_info("  * 0x%08lx..0x%08lx  : fixmap\n", FIXADDR_START, FIXADDR_TOP);
 #ifdef CONFIG_HIGHMEM
-	pr_debug("  * 0x%08lx..0x%08lx  : highmem PTEs\n",
+	pr_info("  * 0x%08lx..0x%08lx  : highmem PTEs\n",
 		PKMAP_BASE, PKMAP_ADDR(LAST_PKMAP));
 #endif /* CONFIG_HIGHMEM */
 	if (ioremap_bot != IOREMAP_TOP)
-		pr_debug("  * 0x%08lx..0x%08lx  : early ioremap\n",
+		pr_info("  * 0x%08lx..0x%08lx  : early ioremap\n",
 			ioremap_bot, IOREMAP_TOP);
-	pr_debug("  * 0x%08lx..0x%08lx  : vmalloc & ioremap\n",
+	pr_info("  * 0x%08lx..0x%08lx  : vmalloc & ioremap\n",
 		VMALLOC_START, VMALLOC_END);
 #endif /* CONFIG_PPC32 */
 }

@@ -65,7 +65,7 @@
 /* edmac specific logging macros */
 #define EDMAC_INFO(ec_dev, ev_ch, fmt, ...) do { \
 	if (ec_dev->klog_lvl <= LOG_LVL_INFO) \
-		pr_debug("[I] %s: %s: %u: %u: %s: " fmt, ec_dev->label, \
+		pr_info("[I] %s: %s: %u: %u: %s: " fmt, ec_dev->label, \
 			TO_EDMA_DIR_CH_STR(ec_dev->dir), ec_dev->ch_id, ev_ch, \
 			__func__, ##__VA_ARGS__); \
 	if (ec_dev->ipc_log && ec_dev->ipc_log_lvl <= LOG_LVL_INFO) \
@@ -117,7 +117,7 @@ static struct edma_dev *e_dev_info;
 
 #define EDMAC_VERB(ec_dev, ev_ch, fmt, ...) do { \
 	if (ec_dev->klog_lvl <= LOG_LVL_VERBOSE) \
-		pr_debug("[V] %s: %s: %u: %u: %s: " fmt, ec_dev->label, \
+		pr_info("[V] %s: %s: %u: %u: %s: " fmt, ec_dev->label, \
 			TO_EDMA_DIR_CH_STR(ec_dev->dir), ec_dev->ch_id, ev_ch, \
 			__func__, ##__VA_ARGS__); \
 	if (ec_dev->ipc_log && ec_dev->ipc_log_lvl <= LOG_LVL_VERBOSE) \
@@ -1075,12 +1075,12 @@ int qcom_edma_init(struct device *dev)
 
 	of_node = of_parse_phandle(dev->of_node, "edma-parent", 0);
 	if (!of_node) {
-		pr_debug("EDMA: no phandle for eDMA found\n");
+		pr_info("EDMA: no phandle for eDMA found\n");
 		return -ENODEV;
 	}
 
 	if (!of_device_is_compatible(of_node, "qcom,pci-edma")) {
-		pr_debug("EDMA: no compatible qcom,pci-edma found\n");
+		pr_info("EDMA: no compatible qcom,pci-edma found\n");
 		return -ENODEV;
 	}
 

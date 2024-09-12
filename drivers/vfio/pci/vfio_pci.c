@@ -1992,7 +1992,7 @@ static void __init vfio_pci_fill_ids(void)
 				vendor, device, subvendor, subdevice,
 				class, class_mask, rc);
 		else
-			pr_debug("add [%04x:%04x[%04x:%04x]] class %#08x/%08x\n",
+			pr_info("add [%04x:%04x[%04x:%04x]] class %#08x/%08x\n",
 				vendor, device, subvendor, subdevice,
 				class, class_mask);
 	}

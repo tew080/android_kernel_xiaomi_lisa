@@ -186,7 +186,7 @@ static void probe_spram(char *type,
 				       vp+1, ~TDAT, v);
 		}
 
-		pr_debug("%s%d: PA=%08x,Size=%08x%s\n",
+		pr_info("%s%d: PA=%08x,Size=%08x%s\n",
 			type, i, pa, size, enabled ? ",enabled" : "");
 		offset += 2 * SPRAM_TAG_STRIDE;
 	}

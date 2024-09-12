@@ -52,13 +52,13 @@ static int reloc_test_init(void)
 {
 	int i;
 
-	pr_debug("Relocation test:\n");
-	pr_debug("-------------------------------------------------------\n");
+	pr_info("Relocation test:\n");
+	pr_info("-------------------------------------------------------\n");
 
 	for (i = 0; i < ARRAY_SIZE(funcs); i++) {
 		u64 ret = funcs[i].f();
 
-		pr_debug("%-31s 0x%016llx %s\n", funcs[i].name, ret,
+		pr_info("%-31s 0x%016llx %s\n", funcs[i].name, ret,
 			ret == funcs[i].expect ? "pass" : "fail");
 		if (ret != funcs[i].expect)
 			pr_err("Relocation failed, expected 0x%016llx, not 0x%016llx\n",

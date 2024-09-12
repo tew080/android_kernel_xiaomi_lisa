@@ -272,7 +272,7 @@ static void  __noreturn pnv_restart(char *cmd)
 			else
 				pr_err("Unable to issue '%s' reboot. Err=%ld\n",
 				       cmd, rc);
-			pr_debug("Forcing a cec-reboot\n");
+			pr_info("Forcing a cec-reboot\n");
 			cmd = NULL;
 			rc = OPAL_BUSY;
 
@@ -463,7 +463,7 @@ void __init pnv_tm_init(void)
 	if (opal_reinit_cpus(OPAL_REINIT_CPUS_TM_SUSPEND_DISABLED) != OPAL_SUCCESS)
 		return;
 
-	pr_debug("Enabling TM (Transactional Memory) with Suspend Disabled\n");
+	pr_info("Enabling TM (Transactional Memory) with Suspend Disabled\n");
 	cur_cpu_spec->cpu_features |= CPU_FTR_TM;
 	/* Make sure "normal" HTM is off (it should be) */
 	cur_cpu_spec->cpu_user_features2 &= ~PPC_FEATURE2_HTM;

@@ -696,12 +696,12 @@ static void print_bad_events(int bad, int total)
 	const char *name[4] =
 		{ "acquire", "acquired", "contended", "release" };
 
-	pr_debug("\n=== output for debug===\n\n");
-	pr_debug("bad: %d, total: %d\n", bad, total);
-	pr_debug("bad rate: %.2f %%\n", (double)bad / (double)total * 100);
-	pr_debug("histogram of events caused bad sequence\n");
+	pr_info("\n=== output for debug===\n\n");
+	pr_info("bad: %d, total: %d\n", bad, total);
+	pr_info("bad rate: %.2f %%\n", (double)bad / (double)total * 100);
+	pr_info("histogram of events caused bad sequence\n");
 	for (i = 0; i < BROKEN_MAX; i++)
-		pr_debug(" %10s: %d\n", name[i], bad_hist[i]);
+		pr_info(" %10s: %d\n", name[i], bad_hist[i]);
 }
 
 /* TODO: various way to print, coloring, nano or milli sec */
@@ -711,16 +711,16 @@ static void print_result(void)
 	char cut_name[20];
 	int bad, total;
 
-	pr_debug("%20s ", "Name");
-	pr_debug("%10s ", "acquired");
-	pr_debug("%10s ", "contended");
+	pr_info("%20s ", "Name");
+	pr_info("%10s ", "acquired");
+	pr_info("%10s ", "contended");
 
-	pr_debug("%15s ", "avg wait (ns)");
-	pr_debug("%15s ", "total wait (ns)");
-	pr_debug("%15s ", "max wait (ns)");
-	pr_debug("%15s ", "min wait (ns)");
+	pr_info("%15s ", "avg wait (ns)");
+	pr_info("%15s ", "total wait (ns)");
+	pr_info("%15s ", "max wait (ns)");
+	pr_info("%15s ", "min wait (ns)");
 
-	pr_debug("\n\n");
+	pr_info("\n\n");
 
 	bad = total = 0;
 	while ((st = pop_from_result())) {
@@ -733,7 +733,7 @@ static void print_result(void)
 
 		if (strlen(st->name) < 16) {
 			/* output raw name */
-			pr_debug("%20s ", st->name);
+			pr_info("%20s ", st->name);
 		} else {
 			strncpy(cut_name, st->name, 16);
 			cut_name[16] = '.';
@@ -741,18 +741,18 @@ static void print_result(void)
 			cut_name[18] = '.';
 			cut_name[19] = '\0';
 			/* cut off name for saving output style */
-			pr_debug("%20s ", cut_name);
+			pr_info("%20s ", cut_name);
 		}
 
-		pr_debug("%10u ", st->nr_acquired);
-		pr_debug("%10u ", st->nr_contended);
+		pr_info("%10u ", st->nr_acquired);
+		pr_info("%10u ", st->nr_contended);
 
-		pr_debug("%15" PRIu64 " ", st->avg_wait_time);
-		pr_debug("%15" PRIu64 " ", st->wait_time_total);
-		pr_debug("%15" PRIu64 " ", st->wait_time_max);
-		pr_debug("%15" PRIu64 " ", st->wait_time_min == ULLONG_MAX ?
+		pr_info("%15" PRIu64 " ", st->avg_wait_time);
+		pr_info("%15" PRIu64 " ", st->wait_time_total);
+		pr_info("%15" PRIu64 " ", st->wait_time_max);
+		pr_info("%15" PRIu64 " ", st->wait_time_min == ULLONG_MAX ?
 		       0 : st->wait_time_min);
-		pr_debug("\n");
+		pr_info("\n");
 	}
 
 	print_bad_events(bad, total);
@@ -766,13 +766,13 @@ static void dump_threads(void)
 	struct rb_node *node;
 	struct thread *t;
 
-	pr_debug("%10s: comm\n", "Thread ID");
+	pr_info("%10s: comm\n", "Thread ID");
 
 	node = rb_first(&thread_stats);
 	while (node) {
 		st = container_of(node, struct thread_stat, rb);
 		t = perf_session__findnew(session, st->tid);
-		pr_debug("%10d: %s\n", st->tid, thread__comm_str(t));
+		pr_info("%10d: %s\n", st->tid, thread__comm_str(t));
 		node = rb_next(node);
 		thread__put(t);
 	};
@@ -783,10 +783,10 @@ static void dump_map(void)
 	unsigned int i;
 	struct lock_stat *st;
 
-	pr_debug("Address of instance: name of class\n");
+	pr_info("Address of instance: name of class\n");
 	for (i = 0; i < LOCKHASH_SIZE; i++) {
 		list_for_each_entry(st, &lockhash_table[i], hash_entry) {
-			pr_debug(" %p: %s\n", st->addr, st->name);
+			pr_info(" %p: %s\n", st->addr, st->name);
 		}
 	}
 }

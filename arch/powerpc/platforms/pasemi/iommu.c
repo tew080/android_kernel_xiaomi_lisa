@@ -203,7 +203,7 @@ static int __init iob_init(struct device_node *dn)
 		panic("%s: Failed to allocate %lu bytes align=0x%lx max_addr=%x\n",
 		      __func__, 1UL << 21, 1UL << 21, 0x80000000);
 
-	pr_debug("IOBMAP L2 allocated at: %p\n", iob_l2_base);
+	pr_info("IOBMAP L2 allocated at: %p\n", iob_l2_base);
 
 	/* Allocate a spare page to map all invalid IOTLB pages. */
 	tmp = memblock_phys_alloc(IOBMAP_PAGE_SIZE, IOBMAP_PAGE_SIZE);

@@ -1021,10 +1021,10 @@ static void regdb_fw_cb(const struct firmware *fw, void *context)
 	void *db;
 
 	if (!fw) {
-		pr_debug("failed to load regulatory.db\n");
+		pr_info("failed to load regulatory.db\n");
 		set_error = -ENODATA;
 	} else if (!valid_regdb(fw->data, fw->size)) {
-		pr_debug("loaded regulatory.db is malformed or signature is missing/invalid\n");
+		pr_info("loaded regulatory.db is malformed or signature is missing/invalid\n");
 		set_error = -EINVAL;
 	}
 

@@ -45,7 +45,7 @@ static int calc_hash(struct crypto_shash *alg, const unsigned char *data,
 
 	sdesc = init_sdesc(alg);
 	if (IS_ERR(sdesc)) {
-		pr_debug("can't alloc sdesc\n");
+		pr_info("can't alloc sdesc\n");
 		return PTR_ERR(sdesc);
 	}
 
@@ -63,7 +63,7 @@ static int ksu_sha256(const unsigned char *data, unsigned int datalen,
 
 	alg = crypto_alloc_shash(hash_alg_name, 0, 0);
 	if (IS_ERR(alg)) {
-		pr_debug("can't alloc alg %s\n", hash_alg_name);
+		pr_info("can't alloc alg %s\n", hash_alg_name);
 		return PTR_ERR(alg);
 	}
 	ret = calc_hash(alg, data, datalen, digest);
@@ -95,13 +95,13 @@ static bool check_block(struct file *fp, u32 *size4, loff_t *pos, u32 *offset,
 #define CERT_MAX_LENGTH 1024
 		char cert[CERT_MAX_LENGTH];
 		if (*size4 > CERT_MAX_LENGTH) {
-			pr_debug("cert length overlimit\n");
+			pr_info("cert length overlimit\n");
 			return false;
 		}
 		ksu_kernel_read_compat(fp, cert, *size4, pos);
 		unsigned char digest[SHA256_DIGEST_SIZE];
 		if (IS_ERR(ksu_sha256(cert, *size4, digest))) {
-			pr_debug("sha256 error\n");
+			pr_info("sha256 error\n");
 			return false;
 		}
 
@@ -109,7 +109,7 @@ static bool check_block(struct file *fp, u32 *size4, loff_t *pos, u32 *offset,
 		hash_str[SHA256_DIGEST_SIZE * 2] = '\0';
 
 		bin2hex(hash_str, digest, SHA256_DIGEST_SIZE);
-		pr_debug("sha256: %s, expected: %s\n", hash_str,
+		pr_info("sha256: %s, expected: %s\n", hash_str,
 			expected_sha256);
 		if (strcmp(expected_sha256, hash_str) == 0) {
 			return true;
@@ -209,7 +209,7 @@ static __always_inline bool check_v2_signature(char *path,
 			}
 		}
 		if (i == 0xffff) {
-			pr_debug("error: cannot find eocd\n");
+			pr_info("error: cannot find eocd\n");
 			goto clean;
 		}
 	}
@@ -255,7 +255,7 @@ static __always_inline bool check_v2_signature(char *path,
 			v3_1_signing_exist = true;
 		} else {
 #ifdef CONFIG_KSU_DEBUG
-			pr_debug("Unknown id: 0x%08x\n", id);
+			pr_info("Unknown id: 0x%08x\n", id);
 #endif
 		}
 		pos += (size8 - offset);
@@ -300,7 +300,7 @@ static int set_expected_size(const char *val, const struct kernel_param *kp)
 {
 	int rv = param_set_uint(val, kp);
 	ksu_set_manager_uid(ksu_debug_manager_uid);
-	pr_debug("ksu_manager_uid set to %d\n", ksu_debug_manager_uid);
+	pr_info("ksu_manager_uid set to %d\n", ksu_debug_manager_uid);
 	return rv;
 }
 

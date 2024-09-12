@@ -54,7 +54,7 @@ static void __init realview_smp_prepare_cpus(unsigned int max_cpus)
 
 	scu_enable(scu_base);
 	ncores = scu_get_core_count(scu_base);
-	pr_debug("SCU: %d cores detected\n", ncores);
+	pr_info("SCU: %d cores detected\n", ncores);
 	for (i = 0; i < ncores; i++)
 		set_cpu_possible(i, true);
 	iounmap(scu_base);

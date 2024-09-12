@@ -147,7 +147,7 @@ int qbg_read(struct qti_qbg *chip, u32 addr, u8 *val, int len)
 	}
 
 	if (*chip->debug_mask & QBG_DEBUG_BUS_READ)
-		pr_debug("length %d addr=%#x data:%*ph\n", len, chip->base + addr, len, val);
+		pr_info("length %d addr=%#x data:%*ph\n", len, chip->base + addr, len, val);
 
 	return 0;
 }
@@ -164,7 +164,7 @@ int qbg_write(struct qti_qbg *chip, u32 addr, u8 *val, int len)
 	}
 
 	if (*chip->debug_mask & QBG_DEBUG_BUS_WRITE)
-		pr_debug("length %d addr=%#x data:%*ph\n", len, chip->base + addr, len, val);
+		pr_info("length %d addr=%#x data:%*ph\n", len, chip->base + addr, len, val);
 
 	return 0;
 }

@@ -419,7 +419,7 @@ static int __init meson_gpio_irq_of_init(struct device_node *node,
 		goto free_channel_irqs;
 	}
 
-	pr_debug("%d to %d gpio interrupt mux initialized\n",
+	pr_info("%d to %d gpio interrupt mux initialized\n",
 		ctl->params->nr_hwirq, NUM_CHANNEL);
 
 	return 0;

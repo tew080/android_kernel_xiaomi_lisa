@@ -2522,7 +2522,7 @@ static int __init rvu_init_module(void)
 {
 	int err;
 
-	pr_debug("%s: %s\n", DRV_NAME, DRV_STRING);
+	pr_info("%s: %s\n", DRV_NAME, DRV_STRING);
 
 	err = pci_register_driver(&cgx_driver);
 	if (err < 0)

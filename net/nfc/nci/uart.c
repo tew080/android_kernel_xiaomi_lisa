@@ -414,7 +414,7 @@ int nci_uart_register(struct nci_uart *nu)
 	}
 	nci_uart_drivers[nu->driver] = nu;
 
-	pr_debug("NCI uart driver '%s [%d]' registered\n", nu->name, nu->driver);
+	pr_info("NCI uart driver '%s [%d]' registered\n", nu->name, nu->driver);
 
 	return 0;
 }
@@ -422,7 +422,7 @@ EXPORT_SYMBOL_GPL(nci_uart_register);
 
 void nci_uart_unregister(struct nci_uart *nu)
 {
-	pr_debug("NCI uart driver '%s [%d]' unregistered\n", nu->name,
+	pr_info("NCI uart driver '%s [%d]' unregistered\n", nu->name,
 		nu->driver);
 
 	/* Remove this driver from the driver list */

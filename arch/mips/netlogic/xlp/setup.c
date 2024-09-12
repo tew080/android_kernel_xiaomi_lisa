@@ -111,7 +111,7 @@ void __init plat_mem_setup(void)
 	xlp_early_init_devtree();
 
 	if (memblock_end_of_DRAM() == 0) {
-		pr_debug("Using DRAM BARs for memory map.\n");
+		pr_info("Using DRAM BARs for memory map.\n");
 		xlp_init_mem_from_bars();
 	}
 	/* Calculate and setup wired entries for mapped kernel */

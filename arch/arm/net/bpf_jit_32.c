@@ -1379,7 +1379,7 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx)
 #define check_imm(bits, imm) do {				\
 	if ((imm) >= (1 << ((bits) - 1)) ||			\
 	    (imm) < -(1 << ((bits) - 1))) {			\
-		pr_debug("[%2d] imm=%d(0x%x) out of range\n",	\
+		pr_info("[%2d] imm=%d(0x%x) out of range\n",	\
 			i, imm, imm);				\
 		return -EINVAL;					\
 	}							\

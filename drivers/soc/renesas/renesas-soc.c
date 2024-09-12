@@ -362,7 +362,7 @@ done:
 		soc_dev_attr->revision = kasprintf(GFP_KERNEL, "ES%u.%u", eshi,
 						   eslo);
 
-	pr_debug("Detected Renesas %s %s %s\n", soc_dev_attr->family,
+	pr_info("Detected Renesas %s %s %s\n", soc_dev_attr->family,
 		soc_dev_attr->soc_id, soc_dev_attr->revision ?: "");
 
 	soc_dev = soc_device_register(soc_dev_attr);

@@ -1200,7 +1200,7 @@ int init_hw_perf_events(void)
 	csky_pmu.hw_events = alloc_percpu_gfp(struct pmu_hw_events,
 					      GFP_KERNEL);
 	if (!csky_pmu.hw_events) {
-		pr_debug("failed to allocate per-cpu PMU data.\n");
+		pr_info("failed to allocate per-cpu PMU data.\n");
 		return -ENOMEM;
 	}
 

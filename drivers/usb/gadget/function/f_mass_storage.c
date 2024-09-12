@@ -2804,7 +2804,7 @@ int fsg_common_create_lun(struct fsg_common *common, struct fsg_lun_config *cfg,
 
 		rc = device_register(&lun->dev);
 		if (rc) {
-			pr_debug("failed to register LUN%d: %d\n", id, rc);
+			pr_info("failed to register LUN%d: %d\n", id, rc);
 			put_device(&lun->dev);
 			goto error_sysfs;
 		}
@@ -2828,7 +2828,7 @@ int fsg_common_create_lun(struct fsg_common *common, struct fsg_lun_config *cfg,
 				p = "(error)";
 		}
 	}
-	pr_debug("LUN: %s%s%sfile: %s\n",
+	pr_info("LUN: %s%s%sfile: %s\n",
 	      lun->removable ? "removable " : "",
 	      lun->ro ? "read only " : "",
 	      lun->cdrom ? "CD-ROM " : "",
@@ -2862,7 +2862,7 @@ int fsg_common_create_luns(struct fsg_common *common, struct fsg_config *cfg)
 			goto fail;
 	}
 
-	pr_debug("Number of LUNs=%d\n", cfg->nluns);
+	pr_info("Number of LUNs=%d\n", cfg->nluns);
 
 	return 0;
 

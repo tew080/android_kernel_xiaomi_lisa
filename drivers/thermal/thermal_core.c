@@ -276,7 +276,7 @@ static int __init thermal_register_governors(void)
 			break;
 		}
 
-		pr_debug("Registered thermal governor '%s'",
+		pr_info("Registered thermal governor '%s'",
 			(*governor)->name);
 	}
 
@@ -1796,7 +1796,7 @@ static int of_parse_thermal_message(void)
 	if (of_property_read_string(np, "board-sensor", &board_sensor))
 		return -EINVAL;
 
-	pr_debug("%s board sensor: %s\n", __func__, board_sensor);
+	pr_info("%s board sensor: %s\n", __func__, board_sensor);
 
 	return 0;
 }

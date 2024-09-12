@@ -340,7 +340,7 @@ static int ion_msm_system_heap_allocate(struct ion_heap *heap,
 
 	if (ion_heap_is_msm_system_heap_type(buffer->heap->type) &&
 	    is_secure_allocation(buffer->flags)) {
-		pr_debug("%s: System heap doesn't support secure allocations\n",
+		pr_info("%s: System heap doesn't support secure allocations\n",
 			__func__);
 		return -EINVAL;
 	}

@@ -104,7 +104,7 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
 		return -ENOENT;
 
 	if (table->header.revision < 2)
-		pr_debug("SPCR table version %d\n", table->header.revision);
+		pr_info("SPCR table version %d\n", table->header.revision);
 
 	if (table->serial_port.space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY) {
 		switch (ACPI_ACCESS_BIT_WIDTH((
@@ -210,7 +210,7 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
 			 table->serial_port.address, baud_rate);
 	}
 
-	pr_debug("console: %s\n", opts);
+	pr_info("console: %s\n", opts);
 
 	if (enable_earlycon)
 		setup_earlycon(opts);

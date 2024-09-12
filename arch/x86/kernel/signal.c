@@ -287,7 +287,7 @@ get_sigframe(struct k_sigaction *ka, struct pt_regs *regs, size_t frame_size,
 		     !__on_sig_stack(sp))) {
 
 		if (show_unhandled_signals && printk_ratelimit())
-			pr_debug("%s[%d] overflowed sigaltstack\n",
+			pr_info("%s[%d] overflowed sigaltstack\n",
 				current->comm, task_pid_nr(current));
 
 		return (void __user *)-1L;

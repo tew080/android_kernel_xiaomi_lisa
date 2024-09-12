@@ -3695,7 +3695,7 @@ static void __init meson8b_clkc_init_common(struct device_node *np,
 	map = syscon_node_to_regmap(parent_np);
 	of_node_put(parent_np);
 	if (IS_ERR(map)) {
-		pr_debug("failed to get HHI regmap - Trying obsolete regs\n");
+		pr_info("failed to get HHI regmap - Trying obsolete regs\n");
 
 		/* Generic clocks, PLLs and some of the reset-bits */
 		clk_base = of_iomap(np, 1);

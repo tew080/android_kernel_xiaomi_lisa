@@ -238,7 +238,7 @@ static void __init kzm_board_init(void)
 				      ARRAY_SIZE(kzm_pins), "kzm");
 	kzm_init_imx_uart();
 
-	pr_debug("Clock input source is 26MHz\n");
+	pr_info("Clock input source is 26MHz\n");
 }
 
 static void __init kzm_late_init(void)

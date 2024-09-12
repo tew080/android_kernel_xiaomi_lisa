@@ -4028,10 +4028,10 @@ static int __init iavf_init_module(void)
 {
 	int ret;
 
-	pr_debug("iavf: %s - version %s\n", iavf_driver_string,
+	pr_info("iavf: %s - version %s\n", iavf_driver_string,
 		iavf_driver_version);
 
-	pr_debug("%s\n", iavf_copyright);
+	pr_info("%s\n", iavf_copyright);
 
 	iavf_wq = alloc_workqueue("%s", WQ_UNBOUND | WQ_MEM_RECLAIM, 1,
 				  iavf_driver_name);

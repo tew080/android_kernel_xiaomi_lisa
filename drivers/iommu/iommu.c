@@ -122,12 +122,12 @@ static int __init iommu_subsys_init(void)
 			iommu_set_default_translated(false);
 
 		if (iommu_default_passthrough() && mem_encrypt_active()) {
-			pr_debug("Memory encryption detected - Disabling default IOMMU Passthrough\n");
+			pr_info("Memory encryption detected - Disabling default IOMMU Passthrough\n");
 			iommu_set_default_translated(false);
 		}
 	}
 
-	pr_debug("Default domain type: %s %s\n",
+	pr_info("Default domain type: %s %s\n",
 		iommu_domain_type_str(iommu_def_domain_type),
 		cmd_line ? "(set via kernel command line)" : "");
 

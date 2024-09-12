@@ -1407,7 +1407,7 @@ static int param_set_aauint(const char *val, const struct kernel_param *kp)
 		return -EPERM;
 
 	error = param_set_uint(val, kp);
-	pr_debug("AppArmor: buffer size set to %d bytes\n", aa_g_path_max);
+	pr_info("AppArmor: buffer size set to %d bytes\n", aa_g_path_max);
 
 	return error;
 }

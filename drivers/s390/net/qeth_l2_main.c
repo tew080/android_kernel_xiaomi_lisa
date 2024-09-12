@@ -960,13 +960,13 @@ static int qeth_l2_recover(void *ptr)
 
 static int __init qeth_l2_init(void)
 {
-	pr_debug("register layer 2 discipline\n");
+	pr_info("register layer 2 discipline\n");
 	return 0;
 }
 
 static void __exit qeth_l2_exit(void)
 {
-	pr_debug("unregister layer 2 discipline\n");
+	pr_info("unregister layer 2 discipline\n");
 }
 
 /* Returns zero if the command is successfully "consumed" */

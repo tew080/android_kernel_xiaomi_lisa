@@ -247,7 +247,7 @@ static int __init ipc_mni_extend(char *str)
 	ipc_mni = IPCMNI_EXTEND;
 	ipc_mni_shift = IPCMNI_EXTEND_SHIFT;
 	ipc_min_cycle = IPCMNI_EXTEND_MIN_CYCLE;
-	pr_debug("IPCMNI extended to %d.\n", ipc_mni);
+	pr_info("IPCMNI extended to %d.\n", ipc_mni);
 	return 0;
 }
 early_param("ipcmni_extend", ipc_mni_extend);

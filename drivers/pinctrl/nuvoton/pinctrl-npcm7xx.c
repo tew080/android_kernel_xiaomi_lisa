@@ -2036,7 +2036,7 @@ static int npcm7xx_pinctrl_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	pr_debug("NPCM7xx Pinctrl driver probed\n");
+	pr_info("NPCM7xx Pinctrl driver probed\n");
 	return 0;
 }
 

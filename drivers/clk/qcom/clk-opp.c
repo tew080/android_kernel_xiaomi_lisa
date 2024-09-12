@@ -83,7 +83,7 @@ static int clk_add_and_print_opp(struct clk_hw *hw,
 			return ret;
 		}
 
-		pr_debug("%s: set OPP pair(%lu Hz: %u uV) on %s\n",
+		pr_info("%s: set OPP pair(%lu Hz: %u uV) on %s\n",
 						clk_hw_get_name(hw), rate, uv,
 						dev_name(device_list[j]));
 	}

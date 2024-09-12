@@ -132,7 +132,7 @@ static int __init early_get_pnodeid(void)
 	pnode = (node_id.s.node_id >> 1) & uv_cpuid.pnode_mask;
 	uv_cpuid.gpa_shift = 46;	/* Default unless changed */
 
-	pr_debug("UV: rev:%d part#:%x nodeid:%04x n_skt:%d pnmsk:%x pn:%x\n",
+	pr_info("UV: rev:%d part#:%x nodeid:%04x n_skt:%d pnmsk:%x pn:%x\n",
 		node_id.s.revision, node_id.s.part_number, node_id.s.node_id,
 		m_n_config.s.n_skt, uv_cpuid.pnode_mask, pnode);
 	return pnode;
@@ -171,7 +171,7 @@ static void __init uv_tsc_check_sync(void)
 		valid = true;
 		break;
 	}
-	pr_debug("UV: TSC sync state from BIOS:0%d(%s)\n", sync_state, state);
+	pr_info("UV: TSC sync state from BIOS:0%d(%s)\n", sync_state, state);
 
 	/* Mark flag that says TSC != 0 is valid for socket 0 */
 	if (valid)
@@ -196,13 +196,13 @@ static void set_x2apic_bits(void)
 
 	cpuid(0, &eax, &ebx, &ecx, &edx);
 	if (eax < 0xb) {
-		pr_debug("UV: CPU does not have CPUID.11\n");
+		pr_info("UV: CPU does not have CPUID.11\n");
 		return;
 	}
 
 	cpuid_count(0xb, SMT_LEVEL, &eax, &ebx, &ecx, &edx);
 	if (ebx == 0 || (LEAFB_SUBTYPE(ecx) != SMT_TYPE)) {
-		pr_debug("UV: CPUID.11 not implemented\n");
+		pr_info("UV: CPUID.11 not implemented\n");
 		return;
 	}
 
@@ -229,8 +229,8 @@ static void __init early_get_apic_socketid_shift(void)
 
 	set_x2apic_bits();
 
-	pr_debug("UV: apicid_shift:%d apicid_mask:0x%x\n", uv_cpuid.apicid_shift, uv_cpuid.apicid_mask);
-	pr_debug("UV: socketid_shift:%d pnode_mask:0x%x\n", uv_cpuid.socketid_shift, uv_cpuid.pnode_mask);
+	pr_info("UV: apicid_shift:%d apicid_mask:0x%x\n", uv_cpuid.apicid_shift, uv_cpuid.apicid_mask);
+	pr_info("UV: socketid_shift:%d pnode_mask:0x%x\n", uv_cpuid.socketid_shift, uv_cpuid.pnode_mask);
 }
 
 /*
@@ -256,7 +256,7 @@ static int __init uv_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
 	if (strncmp(oem_id, "SGI", 3) != 0) {
 		if (strncmp(oem_id, "NSGI", 4) == 0) {
 			uv_hubless_system = true;
-			pr_debug("UV: OEM IDs %s/%s, HUBLESS\n",
+			pr_info("UV: OEM IDs %s/%s, HUBLESS\n",
 				oem_id, oem_table_id);
 		}
 		return 0;
@@ -314,7 +314,7 @@ static int __init uv_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
 		goto badbios;
 	}
 
-	pr_debug("UV: OEM IDs %s/%s, System/HUB Types %d/%d, uv_apic %d\n", oem_id, oem_table_id, uv_system_type, uv_min_hub_revision_id, uv_apic);
+	pr_info("UV: OEM IDs %s/%s, System/HUB Types %d/%d, uv_apic %d\n", oem_id, oem_table_id, uv_system_type, uv_min_hub_revision_id, uv_apic);
 	uv_tsc_check_sync();
 
 	return uv_apic;
@@ -411,7 +411,7 @@ static __init void set_block_size(void)
 	if (order) {
 		/* adjust for ffs return of 1..64 */
 		set_memory_block_size_order(order - 1);
-		pr_debug("UV: mem_block_size set to 0x%lx\n", mem_block_size);
+		pr_info("UV: mem_block_size set to 0x%lx\n", mem_block_size);
 	} else {
 		/* bad or zero value, default to 1UL << 31 (2GB) */
 		pr_err("UV: mem_block_size error with 0x%lx\n", mem_block_size);
@@ -445,7 +445,7 @@ static __init void build_uv_gr_table(void)
 				continue;
 			}
 			last_limit = gre->limit;
-			pr_debug("UV: extra hole in GAM RE table @%d\n", (int)(gre - uv_gre_table));
+			pr_info("UV: extra hole in GAM RE table @%d\n", (int)(gre - uv_gre_table));
 			continue;
 		}
 		if (_max_socket < gre->sockid) {
@@ -510,7 +510,7 @@ static __init void build_uv_gr_table(void)
 		start = gb < 0 ?  0 : (unsigned long)_gr_table[gb].limit << UV_GAM_RANGE_SHFT;
 		end = (unsigned long)grt->limit << UV_GAM_RANGE_SHFT;
 
-		pr_debug("UV: GAM Range %2d %04x 0x%013lx-0x%013lx (%d)\n", i, grt->nasid, start, end, gb);
+		pr_info("UV: GAM Range %2d %04x 0x%013lx-0x%013lx (%d)\n", i, grt->nasid, start, end, gb);
 	}
 }
 
@@ -738,7 +738,7 @@ static __init void map_high(char *id, unsigned long base, int pshift, int bshift
 	paddr = base << pshift;
 	bytes = (1UL << bshift) * (max_pnode + 1);
 	if (!paddr) {
-		pr_debug("UV: Map %s_HI base address NULL\n", id);
+		pr_info("UV: Map %s_HI base address NULL\n", id);
 		return;
 	}
 	pr_debug("UV: Map %s_HI 0x%lx - 0x%lx\n", id, paddr, paddr + bytes);
@@ -760,7 +760,7 @@ static __init void map_gru_distributed(unsigned long c)
 	/* Only base bits 42:28 relevant in dist mode */
 	gru_dist_base = gru.v & 0x000007fff0000000UL;
 	if (!gru_dist_base) {
-		pr_debug("UV: Map GRU_DIST base address NULL\n");
+		pr_info("UV: Map GRU_DIST base address NULL\n");
 		return;
 	}
 
@@ -793,7 +793,7 @@ static __init void map_gru_high(int max_pnode)
 
 	gru.v = uv_read_local_mmr(UVH_RH_GAM_GRU_OVERLAY_CONFIG_MMR);
 	if (!gru.s.enable) {
-		pr_debug("UV: GRU disabled\n");
+		pr_info("UV: GRU disabled\n");
 		return;
 	}
 
@@ -818,7 +818,7 @@ static __init void map_mmr_high(int max_pnode)
 	if (mmr.s.enable)
 		map_high("MMR", mmr.s.base, shift, shift, max_pnode, map_uc);
 	else
-		pr_debug("UV: MMR disabled\n");
+		pr_info("UV: MMR disabled\n");
 }
 
 /* UV3/4 have identical MMIOH overlay configs, UV4A is slightly different */
@@ -856,9 +856,9 @@ static __init void map_mmioh_high_uv34(int index, int min_pnode, int max_pnode)
 		n = UVH_RH_GAM_MMIOH_REDIRECT_CONFIG1_MMR_DEPTH;
 		nasid_mask = UVH_RH_GAM_MMIOH_REDIRECT_CONFIG1_MMR_NASID_MASK;
 	}
-	pr_debug("UV: %s overlay 0x%lx base:0x%lx m_io:%d\n", id, overlay, base, m_io);
+	pr_info("UV: %s overlay 0x%lx base:0x%lx m_io:%d\n", id, overlay, base, m_io);
 	if (!(overlay & UVH_RH_GAM_MMIOH_OVERLAY_CONFIG0_MMR_ENABLE_MASK)) {
-		pr_debug("UV: %s disabled\n", id);
+		pr_info("UV: %s disabled\n", id);
 		return;
 	}
 
@@ -873,7 +873,7 @@ static __init void map_mmioh_high_uv34(int index, int min_pnode, int max_pnode)
 
 		nasid = redirect & nasid_mask;
 		if (i == 0)
-			pr_debug("UV: %s redirect base 0x%lx(@0x%lx) 0x%04x\n",
+			pr_info("UV: %s redirect base 0x%lx(@0x%lx) 0x%04x\n",
 				id, redirect, m_redirect, nasid);
 
 		/* Invalid NASID: */
@@ -901,7 +901,7 @@ static __init void map_mmioh_high_uv34(int index, int min_pnode, int max_pnode)
 			}
 			addr1 = (base << shift) + f * (1ULL << m_io);
 			addr2 = (base << shift) + (l + 1) * (1ULL << m_io);
-			pr_debug("UV: %s[%03d..%03d] NASID 0x%04x ADDR 0x%016lx - 0x%016lx\n", id, fi, li, lnasid, addr1, addr2);
+			pr_info("UV: %s[%03d..%03d] NASID 0x%04x ADDR 0x%016lx - 0x%016lx\n", id, fi, li, lnasid, addr1, addr2);
 			if (max_io < l)
 				max_io = l;
 		}
@@ -909,7 +909,7 @@ static __init void map_mmioh_high_uv34(int index, int min_pnode, int max_pnode)
 		lnasid = nasid;
 	}
 
-	pr_debug("UV: %s base:0x%lx shift:%d M_IO:%d MAX_IO:%d\n", id, base, shift, m_io, max_io);
+	pr_info("UV: %s base:0x%lx shift:%d M_IO:%d MAX_IO:%d\n", id, base, shift, m_io, max_io);
 
 	if (max_io >= 0)
 		map_high(id, base, shift, m_io, max_io, map_uc);
@@ -950,10 +950,10 @@ static __init void map_mmioh_high(int min_pnode, int max_pnode)
 
 	if (enable) {
 		max_pnode &= (1 << n_io) - 1;
-		pr_debug("UV: base:0x%lx shift:%d N_IO:%d M_IO:%d max_pnode:0x%x\n", base, shift, m_io, n_io, max_pnode);
+		pr_info("UV: base:0x%lx shift:%d N_IO:%d M_IO:%d max_pnode:0x%x\n", base, shift, m_io, n_io, max_pnode);
 		map_high("MMIOH", base, shift, m_io, max_pnode, map_uc);
 	} else {
-		pr_debug("UV: MMIOH disabled\n");
+		pr_info("UV: MMIOH disabled\n");
 	}
 }
 
@@ -1176,18 +1176,18 @@ static void __init uv_init_hub_info(struct uv_hub_info_s *hi)
 	hi->apic_pnode_shift = uv_cpuid.socketid_shift;
 
 	/* Show system specific info: */
-	pr_debug("UV: N:%d M:%d m_shift:%d n_lshift:%d\n", hi->n_val, hi->m_val, hi->m_shift, hi->n_lshift);
-	pr_debug("UV: gpa_mask/shift:0x%lx/%d pnode_mask:0x%x apic_pns:%d\n", hi->gpa_mask, hi->gpa_shift, hi->pnode_mask, hi->apic_pnode_shift);
-	pr_debug("UV: mmr_base/shift:0x%lx/%ld gru_base/shift:0x%lx/%ld\n", hi->global_mmr_base, hi->global_mmr_shift, hi->global_gru_base, hi->global_gru_shift);
-	pr_debug("UV: gnode_upper:0x%lx gnode_extra:0x%x\n", hi->gnode_upper, hi->gnode_extra);
+	pr_info("UV: N:%d M:%d m_shift:%d n_lshift:%d\n", hi->n_val, hi->m_val, hi->m_shift, hi->n_lshift);
+	pr_info("UV: gpa_mask/shift:0x%lx/%d pnode_mask:0x%x apic_pns:%d\n", hi->gpa_mask, hi->gpa_shift, hi->pnode_mask, hi->apic_pnode_shift);
+	pr_info("UV: mmr_base/shift:0x%lx/%ld gru_base/shift:0x%lx/%ld\n", hi->global_mmr_base, hi->global_mmr_shift, hi->global_gru_base, hi->global_gru_shift);
+	pr_info("UV: gnode_upper:0x%lx gnode_extra:0x%x\n", hi->gnode_upper, hi->gnode_extra);
 }
 
 static void __init decode_gam_params(unsigned long ptr)
 {
 	uv_gp_table = (struct uv_gam_parameters *)ptr;
 
-	pr_debug("UV: GAM Params...\n");
-	pr_debug("UV: mmr_base/shift:0x%llx/%d gru_base/shift:0x%llx/%d gpa_shift:%d\n",
+	pr_info("UV: GAM Params...\n");
+	pr_info("UV: mmr_base/shift:0x%llx/%d gru_base/shift:0x%llx/%d gpa_shift:%d\n",
 		uv_gp_table->mmr_base, uv_gp_table->mmr_shift,
 		uv_gp_table->gru_base, uv_gp_table->gru_shift,
 		uv_gp_table->gpa_shift);
@@ -1220,10 +1220,10 @@ static void __init decode_gam_rng_tbl(unsigned long ptr)
 				flag = '*';
 
 		if (!index) {
-			pr_debug("UV: GAM Range Table...\n");
-			pr_debug("UV:  # %20s %14s %6s %4s %5s %3s %2s\n", "Range", "", "Size", "Type", "NASID", "SID", "PN");
+			pr_info("UV: GAM Range Table...\n");
+			pr_info("UV:  # %20s %14s %6s %4s %5s %3s %2s\n", "Range", "", "Size", "Type", "NASID", "SID", "PN");
 		}
-		pr_debug("UV: %2d: 0x%014lx-0x%014lx%c %5lu%c %3d   %04x  %02x %02x\n",
+		pr_info("UV: %2d: 0x%014lx-0x%014lx%c %5lu%c %3d   %04x  %02x %02x\n",
 			index++,
 			(unsigned long)lgre << UV_GAM_RANGE_SHFT,
 			(unsigned long)gre->limit << UV_GAM_RANGE_SHFT,
@@ -1247,7 +1247,7 @@ static void __init decode_gam_rng_tbl(unsigned long ptr)
 	_max_pnode	= pnode_max;
 	_gr_table_len	= index;
 
-	pr_debug("UV: GRT: %d entries, sockets(min:%x,max:%x) pnodes(min:%x,max:%x)\n", index, _min_socket, _max_socket, _min_pnode, _max_pnode);
+	pr_info("UV: GRT: %d entries, sockets(min:%x,max:%x) pnodes(min:%x,max:%x)\n", index, _min_socket, _max_socket, _min_pnode, _max_pnode);
 }
 
 static int __init decode_uv_systab(void)
@@ -1299,13 +1299,13 @@ static __init void boot_init_possible_blades(struct uv_hub_info_s *hub_info)
 {
 	int i, uv_pb = 0;
 
-	pr_debug("UV: NODE_PRESENT_DEPTH = %d\n", UVH_NODE_PRESENT_TABLE_DEPTH);
+	pr_info("UV: NODE_PRESENT_DEPTH = %d\n", UVH_NODE_PRESENT_TABLE_DEPTH);
 	for (i = 0; i < UVH_NODE_PRESENT_TABLE_DEPTH; i++) {
 		unsigned long np;
 
 		np = uv_read_local_mmr(UVH_NODE_PRESENT_TABLE + i * 8);
 		if (np)
-			pr_debug("UV: NODE_PRESENT(%d) = 0x%016lx\n", i, np);
+			pr_info("UV: NODE_PRESENT(%d) = 0x%016lx\n", i, np);
 
 		uv_pb += hweight64(np);
 	}
@@ -1326,7 +1326,7 @@ static void __init build_socket_tables(void)
 
 	if (!gre) {
 		if (is_uv1_hub() || is_uv2_hub() || is_uv3_hub()) {
-			pr_debug("UV: No UVsystab socket table, ignoring\n");
+			pr_info("UV: No UVsystab socket table, ignoring\n");
 			return;
 		}
 		pr_crit("UV: Error: UVsystab address translations not available!\n");
@@ -1351,7 +1351,7 @@ static void __init build_socket_tables(void)
 		_pnode_to_socket[i] = SOCK_EMPTY;
 
 	/* Fill in pnode/node/addr conversion list values: */
-	pr_debug("UV: GAM Building socket/pnode conversion tables\n");
+	pr_info("UV: GAM Building socket/pnode conversion tables\n");
 	for (; gre->type != UV_GAM_RANGE_TYPE_UNUSED; gre++) {
 		if (gre->type == UV_GAM_RANGE_TYPE_HOLE)
 			continue;
@@ -1364,7 +1364,7 @@ static void __init build_socket_tables(void)
 		i = gre->pnode - minpnode;
 		_pnode_to_socket[i] = gre->sockid;
 
-		pr_debug("UV: sid:%02x type:%d nasid:%04x pn:%02x pn2s:%2x\n",
+		pr_info("UV: sid:%02x type:%d nasid:%04x pn:%02x pn2s:%2x\n",
 			gre->sockid, gre->type, gre->nasid,
 			_socket_to_pnode[gre->sockid - minsock],
 			_pnode_to_socket[gre->pnode - minpnode]);
@@ -1382,7 +1382,7 @@ static void __init build_socket_tables(void)
 		apicid = per_cpu(x86_cpu_to_apicid, cpu);
 		sockid = apicid >> uv_cpuid.socketid_shift;
 		_socket_to_node[sockid - minsock] = nid;
-		pr_debug("UV: sid:%02x: apicid:%04x node:%2d\n",
+		pr_info("UV: sid:%02x: apicid:%04x node:%2d\n",
 			sockid, apicid, nid);
 	}
 
@@ -1410,7 +1410,7 @@ static void __init build_socket_tables(void)
 	 * If socket id == pnode or socket id == node for all nodes,
 	 *   system runs faster by removing corresponding conversion table.
 	 */
-	pr_debug("UV: Checking socket->node/pnode for identity maps\n");
+	pr_info("UV: Checking socket->node/pnode for identity maps\n");
 	if (minsock == 0) {
 		for (i = 0; i < num; i++)
 			if (_socket_to_node[i] == SOCK_EMPTY || i != _socket_to_node[i])
@@ -1418,7 +1418,7 @@ static void __init build_socket_tables(void)
 		if (i >= num) {
 			kfree(_socket_to_node);
 			_socket_to_node = NULL;
-			pr_debug("UV: 1:1 socket_to_node table removed\n");
+			pr_info("UV: 1:1 socket_to_node table removed\n");
 		}
 	}
 	if (minsock == minpnode) {
@@ -1429,7 +1429,7 @@ static void __init build_socket_tables(void)
 		if (i >= num) {
 			kfree(_socket_to_pnode);
 			_socket_to_pnode = NULL;
-			pr_debug("UV: 1:1 socket_to_pnode table removed\n");
+			pr_info("UV: 1:1 socket_to_pnode table removed\n");
 		}
 	}
 }
@@ -1448,7 +1448,7 @@ static void __init uv_system_init_hub(void)
 		pr_err("UV: Unknown/unsupported UV hub\n");
 		return;
 	}
-	pr_debug("UV: Found %s hub\n", hub);
+	pr_info("UV: Found %s hub\n", hub);
 
 	map_low_mmrs();
 
@@ -1468,7 +1468,7 @@ static void __init uv_system_init_hub(void)
 		boot_init_possible_blades(&hub_info);
 
 	/* uv_num_possible_blades() is really the hub count: */
-	pr_debug("UV: Found %d hubs, %d nodes, %d CPUs\n", uv_num_possible_blades(), num_possible_nodes(), num_possible_cpus());
+	pr_info("UV: Found %d hubs, %d nodes, %d CPUs\n", uv_num_possible_blades(), num_possible_nodes(), num_possible_cpus());
 
 	uv_bios_get_sn_info(0, &uv_type, &sn_partition_id, &sn_coherency_id, &sn_region_size, &system_serial_number);
 	hub_info.coherency_domain_number = sn_coherency_id;
@@ -1545,13 +1545,13 @@ static void __init uv_system_init_hub(void)
 		}
 		min_pnode = min(pnode, min_pnode);
 		max_pnode = max(pnode, max_pnode);
-		pr_debug("UV: UVHUB node:%2d pn:%02x nrcpus:%d\n",
+		pr_info("UV: UVHUB node:%2d pn:%02x nrcpus:%d\n",
 			nodeid,
 			uv_hub_info_list(nodeid)->pnode,
 			uv_hub_info_list(nodeid)->nr_possible_cpus);
 	}
 
-	pr_debug("UV: min_pnode:%02x max_pnode:%02x\n", min_pnode, max_pnode);
+	pr_info("UV: min_pnode:%02x max_pnode:%02x\n", min_pnode, max_pnode);
 	map_gru_high(max_pnode);
 	map_mmr_high(max_pnode);
 	map_mmioh_high(min_pnode, max_pnode);

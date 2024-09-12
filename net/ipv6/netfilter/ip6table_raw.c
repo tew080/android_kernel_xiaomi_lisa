@@ -86,7 +86,7 @@ static int __init ip6table_raw_init(void)
 	if (raw_before_defrag) {
 		table = &packet_raw_before_defrag;
 
-		pr_debug("Enabling raw table before defrag\n");
+		pr_info("Enabling raw table before defrag\n");
 	}
 
 	/* Register hooks */

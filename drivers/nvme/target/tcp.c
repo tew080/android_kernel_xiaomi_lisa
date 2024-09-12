@@ -1686,7 +1686,7 @@ static int nvmet_tcp_add_port(struct nvmet_port *nport)
 	}
 
 	nport->priv = port;
-	pr_debug("enabling port %d (%pISpc)\n",
+	pr_info("enabling port %d (%pISpc)\n",
 		le16_to_cpu(nport->disc_addr.portid), &port->addr);
 
 	return 0;

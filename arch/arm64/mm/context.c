@@ -261,7 +261,7 @@ static int asids_init(void)
 		panic("Failed to allocate bitmap for %lu ASIDs\n",
 		      NUM_USER_ASIDS);
 
-	pr_debug("ASID allocator initialised with %lu entries\n", NUM_USER_ASIDS);
+	pr_info("ASID allocator initialised with %lu entries\n", NUM_USER_ASIDS);
 	return 0;
 }
 early_initcall(asids_init);

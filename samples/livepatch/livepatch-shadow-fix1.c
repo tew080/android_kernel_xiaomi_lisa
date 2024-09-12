@@ -85,7 +85,7 @@ static struct dummy *livepatch_fix1_dummy_alloc(void)
 	klp_shadow_alloc(d, SV_LEAK, sizeof(leak), GFP_KERNEL,
 			 shadow_leak_ctor, leak);
 
-	pr_debug("%s: dummy @ %p, expires @ %lx\n",
+	pr_info("%s: dummy @ %p, expires @ %lx\n",
 		__func__, d, d->jiffies_expire);
 
 	return d;
@@ -97,7 +97,7 @@ static void livepatch_fix1_dummy_leak_dtor(void *obj, void *shadow_data)
 	void **shadow_leak = shadow_data;
 
 	kfree(*shadow_leak);
-	pr_debug("%s: dummy @ %p, prevented leak @ %p\n",
+	pr_info("%s: dummy @ %p, prevented leak @ %p\n",
 			 __func__, d, *shadow_leak);
 }
 
@@ -115,7 +115,7 @@ static void livepatch_fix1_dummy_free(struct dummy *d)
 	if (shadow_leak)
 		klp_shadow_free(d, SV_LEAK, livepatch_fix1_dummy_leak_dtor);
 	else
-		pr_debug("%s: dummy @ %p leaked!\n", __func__, d);
+		pr_info("%s: dummy @ %p leaked!\n", __func__, d);
 
 	kfree(d);
 }

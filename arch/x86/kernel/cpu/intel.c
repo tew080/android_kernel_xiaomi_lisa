@@ -237,7 +237,7 @@ static void detect_tme_early(struct cpuinfo_x86 *c)
 	if (mktme_status != MKTME_UNINITIALIZED)
 		goto detect_keyid_bits;
 
-	pr_debug("x86/tme: enabled by BIOS\n");
+	pr_info("x86/tme: enabled by BIOS\n");
 
 	tme_policy = TME_ACTIVATE_POLICY(tme_activate);
 	if (tme_policy != TME_ACTIVATE_POLICY_AES_XTS_128)
@@ -380,7 +380,7 @@ static void early_init_intel(struct cpuinfo_x86 *c)
 	if (c->x86 > 6 || (c->x86 == 6 && c->x86_model >= 0xd)) {
 		rdmsrl(MSR_IA32_MISC_ENABLE, misc_enable);
 		if (!(misc_enable & MSR_IA32_MISC_ENABLE_FAST_STRING)) {
-			pr_debug("Disabled fast string operations\n");
+			pr_info("Disabled fast string operations\n");
 			setup_clear_cpu_cap(X86_FEATURE_REP_GOOD);
 			setup_clear_cpu_cap(X86_FEATURE_ERMS);
 		}
@@ -397,7 +397,7 @@ static void early_init_intel(struct cpuinfo_x86 *c)
 	 * to be modified.
 	 */
 	if (c->x86 == 5 && c->x86_model == 9) {
-		pr_debug("Disabling PGE capability bit\n");
+		pr_info("Disabling PGE capability bit\n");
 		setup_clear_cpu_cap(X86_FEATURE_PGE);
 	}
 
@@ -446,7 +446,7 @@ int ppro_with_ram_bug(void)
 	    boot_cpu_data.x86 == 6 &&
 	    boot_cpu_data.x86_model == 1 &&
 	    boot_cpu_data.x86_stepping < 8) {
-		pr_debug("Pentium Pro with Errata#50 detected. Taking evasive action.\n");
+		pr_info("Pentium Pro with Errata#50 detected. Taking evasive action.\n");
 		return 1;
 	}
 	return 0;
@@ -526,8 +526,8 @@ static void intel_workarounds(struct cpuinfo_x86 *c)
 	if ((c->x86 == 15) && (c->x86_model == 1) && (c->x86_stepping == 1)) {
 		if (msr_set_bit(MSR_IA32_MISC_ENABLE,
 				MSR_IA32_MISC_ENABLE_PREFETCH_DISABLE_BIT) > 0) {
-			pr_debug("CPU: C0 stepping P4 Xeon detected.\n");
-			pr_debug("CPU: Disabling hardware prefetching (Erratum 037)\n");
+			pr_info("CPU: C0 stepping P4 Xeon detected.\n");
+			pr_info("CPU: Disabling hardware prefetching (Erratum 037)\n");
 		}
 	}
 

@@ -51,12 +51,12 @@ typedef void *(*unittest_fptr)(void);
 static inline void exec_unittests(const char *name,
 				  const unittest_fptr *unit_tests)
 {
-	pr_debug("begin comedi:\"%s\" unittests\n", name);
+	pr_info("begin comedi:\"%s\" unittests\n", name);
 
 	for (; (*unit_tests) != NULL; ++unit_tests)
 		(*unit_tests)();
 
-	pr_debug("end of comedi:\"%s\" unittests - %i passed, %i failed\n", name,
+	pr_info("end of comedi:\"%s\" unittests - %i passed, %i failed\n", name,
 		unittest_results.passed, unittest_results.failed);
 }
 

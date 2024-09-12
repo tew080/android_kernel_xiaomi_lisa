@@ -102,7 +102,7 @@ static int dr_poll_cq(struct mlx5dr_cq *dr_cq, int ne)
 
 static void dr_qp_event(struct mlx5_core_qp *mqp, int event)
 {
-	pr_debug("DR QP event %u on QP #%u\n", event, mqp->qpn);
+	pr_info("DR QP event %u on QP #%u\n", event, mqp->qpn);
 }
 
 static struct mlx5dr_qp *dr_create_rc_qp(struct mlx5_core_dev *mdev,
@@ -687,7 +687,7 @@ static int dr_prepare_qp_to_rts(struct mlx5dr_domain *dmn)
 static void dr_cq_event(struct mlx5_core_cq *mcq,
 			enum mlx5_event event)
 {
-	pr_debug("CQ event %u on CQ #%u\n", event, mcq->cqn);
+	pr_info("CQ event %u on CQ #%u\n", event, mcq->cqn);
 }
 
 static void dr_cq_complete(struct mlx5_core_cq *mcq,

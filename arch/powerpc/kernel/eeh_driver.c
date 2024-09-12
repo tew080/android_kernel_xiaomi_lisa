@@ -320,14 +320,14 @@ static void eeh_pe_report(const char *name, struct eeh_pe *root,
 	struct eeh_pe *pe;
 	struct eeh_dev *edev, *tmp;
 
-	pr_debug("EEH: Beginning: '%s'\n", name);
+	pr_info("EEH: Beginning: '%s'\n", name);
 	eeh_for_each_pe(root, pe) eeh_pe_for_each_dev(pe, edev, tmp)
 		eeh_pe_report_edev(edev, fn, result);
 	if (result)
-		pr_debug("EEH: Finished:'%s' with aggregate recovery state:'%s'\n",
+		pr_info("EEH: Finished:'%s' with aggregate recovery state:'%s'\n",
 			name, pci_ers_result_name(*result));
 	else
-		pr_debug("EEH: Finished:'%s'", name);
+		pr_info("EEH: Finished:'%s'", name);
 }
 
 /**
@@ -529,7 +529,7 @@ static void eeh_rmv_device(struct eeh_dev *edev, void *userdata)
 	}
 
 	/* Remove it from PCI subsystem */
-	pr_debug("EEH: Removing %s without EEH sensitive driver\n",
+	pr_info("EEH: Removing %s without EEH sensitive driver\n",
 		pci_name(dev));
 	edev->mode |= EEH_DEV_DISCONNECTED;
 	if (rmv_data)
@@ -704,7 +704,7 @@ static int eeh_reset_device(struct eeh_pe *pe, struct pci_bus *bus,
 	 * potentially weird things happen.
 	 */
 	if (!driver_eeh_aware || rmv_data->removed_dev_count) {
-		pr_debug("EEH: Sleep 5s ahead of %s hotplug\n",
+		pr_info("EEH: Sleep 5s ahead of %s hotplug\n",
 			(driver_eeh_aware ? "partial" : "complete"));
 		ssleep(5);
 
@@ -949,7 +949,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 	if (result != PCI_ERS_RESULT_DISCONNECT) {
 		pr_warn("EEH: This PCI device has failed %d times in the last hour and will be permanently disabled after %d failures.\n",
 			pe->freeze_count, eeh_max_freezes);
-		pr_debug("EEH: Notify device drivers to shutdown\n");
+		pr_info("EEH: Notify device drivers to shutdown\n");
 		eeh_set_channel_state(pe, pci_channel_io_frozen);
 		eeh_set_irq_state(pe, false);
 		eeh_pe_report("error_detected(IO frozen)", pe,
@@ -976,7 +976,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 	 * have been informed.
 	 */
 	if (result != PCI_ERS_RESULT_DISCONNECT) {
-		pr_debug("EEH: Collect temporary log\n");
+		pr_info("EEH: Collect temporary log\n");
 		eeh_slot_error_detail(pe, EEH_LOG_TEMP);
 	}
 
@@ -985,7 +985,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 	 * go down willingly, without panicing the system.
 	 */
 	if (result == PCI_ERS_RESULT_NONE) {
-		pr_debug("EEH: Reset with hotplug activity\n");
+		pr_info("EEH: Reset with hotplug activity\n");
 		rc = eeh_reset_device(pe, bus, NULL, false);
 		if (rc) {
 			pr_warn("%s: Unable to reset, err=%d\n",
@@ -996,7 +996,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 
 	/* If all devices reported they can proceed, then re-enable MMIO */
 	if (result == PCI_ERS_RESULT_CAN_RECOVER) {
-		pr_debug("EEH: Enable I/O for affected devices\n");
+		pr_info("EEH: Enable I/O for affected devices\n");
 		rc = eeh_pci_enable(pe, EEH_OPT_THAW_MMIO);
 
 		if (rc < 0) {
@@ -1004,7 +1004,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 		} else if (rc) {
 			result = PCI_ERS_RESULT_NEED_RESET;
 		} else {
-			pr_debug("EEH: Notify device drivers to resume I/O\n");
+			pr_info("EEH: Notify device drivers to resume I/O\n");
 			eeh_pe_report("mmio_enabled", pe,
 				      eeh_report_mmio_enabled, &result);
 		}
@@ -1012,7 +1012,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 
 	/* If all devices reported they can proceed, then re-enable DMA */
 	if (result == PCI_ERS_RESULT_CAN_RECOVER) {
-		pr_debug("EEH: Enabled DMA for affected devices\n");
+		pr_info("EEH: Enabled DMA for affected devices\n");
 		rc = eeh_pci_enable(pe, EEH_OPT_THAW_DMA);
 
 		if (rc < 0) {
@@ -1032,7 +1032,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 
 	/* If any device called out for a reset, then reset the slot */
 	if (result == PCI_ERS_RESULT_NEED_RESET) {
-		pr_debug("EEH: Reset without hotplug activity\n");
+		pr_info("EEH: Reset without hotplug activity\n");
 		rc = eeh_reset_device(pe, bus, &rmv_data, true);
 		if (rc) {
 			pr_warn("%s: Cannot reset, err=%d\n",
@@ -1060,7 +1060,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 		}
 
 		/* Tell all device drivers that they can resume operations */
-		pr_debug("EEH: Notify device driver to resume\n");
+		pr_info("EEH: Notify device driver to resume\n");
 		eeh_set_channel_state(pe, pci_channel_io_normal);
 		eeh_set_irq_state(pe, true);
 		eeh_pe_report("resume", pe, eeh_report_resume, NULL);
@@ -1071,7 +1071,7 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
 			}
 		}
 
-		pr_debug("EEH: Recovery successful.\n");
+		pr_info("EEH: Recovery successful.\n");
 		goto out;
 	}
 

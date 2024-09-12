@@ -917,7 +917,7 @@ static int synx_util_export_external(struct synx_coredata *synx_obj,
 				pr_err("synx callback could not be removed %pK\n",
 					synx_obj->fence);
 		dma_fence_put(synx_obj->fence);
-		pr_debug("%s: released fence reference %pK, new fence %pK\n",
+		pr_info("%s: released fence reference %pK, new fence %pK\n",
 			__func__, synx_obj->fence, params->fence);
 	}
 
@@ -1051,7 +1051,7 @@ static void synx_client_destroy(struct kref *kref)
 	memset(client_metadata, 0, sizeof(*client_metadata));
 	clear_bit(synx_util_client_index(client->id), synx_dev->bitmap);
 
-	pr_debug("[sess: %u] session destroyed %s, uid: %u\n",
+	pr_info("[sess: %u] session destroyed %s, uid: %u\n",
 		client->id, client->name, client->id);
 	vfree(client);
 }

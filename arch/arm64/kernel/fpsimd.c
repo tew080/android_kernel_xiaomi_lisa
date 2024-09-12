@@ -887,9 +887,9 @@ void __init sve_setup(void)
 	if (sve_max_virtualisable_vl > sve_max_vl)
 		sve_max_virtualisable_vl = sve_max_vl;
 
-	pr_debug("SVE: maximum available vector length %u bytes per vector\n",
+	pr_info("SVE: maximum available vector length %u bytes per vector\n",
 		sve_max_vl);
-	pr_debug("SVE: default vector length %u bytes per vector\n",
+	pr_info("SVE: default vector length %u bytes per vector\n",
 		sve_default_vl);
 
 	/* KVM decides whether to support mismatched systems. Just warn here: */

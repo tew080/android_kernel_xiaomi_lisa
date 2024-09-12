@@ -485,13 +485,13 @@ static void __init md_clear_update_mitigation(void)
 	}
 out:
 	if (boot_cpu_has_bug(X86_BUG_MDS))
-		pr_debug("MDS: %s\n", mds_strings[mds_mitigation]);
+		pr_info("MDS: %s\n", mds_strings[mds_mitigation]);
 	if (boot_cpu_has_bug(X86_BUG_TAA))
-		pr_debug("TAA: %s\n", taa_strings[taa_mitigation]);
+		pr_info("TAA: %s\n", taa_strings[taa_mitigation]);
 	if (boot_cpu_has_bug(X86_BUG_MMIO_STALE_DATA))
-		pr_debug("MMIO Stale Data: %s\n", mmio_strings[mmio_mitigation]);
+		pr_info("MMIO Stale Data: %s\n", mmio_strings[mmio_mitigation]);
 	else if (boot_cpu_has_bug(X86_BUG_MMIO_UNKNOWN))
-		pr_debug("MMIO Stale Data: Unknown: No mitigations\n");
+		pr_info("MMIO Stale Data: Unknown: No mitigations\n");
 }
 
 static void __init md_clear_select_mitigation(void)
@@ -585,7 +585,7 @@ static void __init srbds_select_mitigation(void)
 		srbds_mitigation = SRBDS_MITIGATION_OFF;
 
 	update_srbds_msr();
-	pr_debug("%s\n", srbds_strings[srbds_mitigation]);
+	pr_info("%s\n", srbds_strings[srbds_mitigation]);
 }
 
 static int __init srbds_parse_cmdline(char *str)
@@ -724,7 +724,7 @@ static void __init gds_select_mitigation(void)
 
 	update_gds_msr();
 out:
-	pr_debug("%s\n", gds_strings[gds_mitigation]);
+	pr_info("%s\n", gds_strings[gds_mitigation]);
 }
 
 static int __init gds_parse_cmdline(char *str)
@@ -826,7 +826,7 @@ static void __init spectre_v1_select_mitigation(void)
 		}
 	}
 
-	pr_debug("%s\n", spectre_v1_strings[spectre_v1_mitigation]);
+	pr_info("%s\n", spectre_v1_strings[spectre_v1_mitigation]);
 }
 
 static int __init nospectre_v1_cmdline(char *str)
@@ -927,7 +927,7 @@ static void __init retbleed_select_mitigation(void)
 		}
 	}
 
-	pr_debug("%s\n", retbleed_strings[retbleed_mitigation]);
+	pr_info("%s\n", retbleed_strings[retbleed_mitigation]);
 }
 
 #undef pr_fmt
@@ -1042,7 +1042,7 @@ static const struct {
 static void __init spec_v2_user_print_cond(const char *reason, bool secure)
 {
 	if (boot_cpu_has_bug(X86_BUG_SPECTRE_V2) != secure)
-		pr_debug("spectre_v2_user=%s forced on command line.\n", reason);
+		pr_info("spectre_v2_user=%s forced on command line.\n", reason);
 }
 
 static __ro_after_init enum spectre_v2_mitigation_cmd spectre_v2_cmd;
@@ -1147,7 +1147,7 @@ spectre_v2_user_select_mitigation(void)
 			break;
 		}
 
-		pr_debug("mitigation: Enabling %s Indirect Branch Prediction Barrier\n",
+		pr_info("mitigation: Enabling %s Indirect Branch Prediction Barrier\n",
 			static_key_enabled(&switch_mm_always_ibpb) ?
 			"always-on" : "conditional");
 	}
@@ -1182,7 +1182,7 @@ spectre_v2_user_select_mitigation(void)
 	spectre_v2_user_stibp = mode;
 
 set_mode:
-	pr_debug("%s\n", spectre_v2_user_strings[mode]);
+	pr_info("%s\n", spectre_v2_user_strings[mode]);
 }
 
 static const char * const spectre_v2_strings[] = {
@@ -1216,7 +1216,7 @@ static const struct {
 static void __init spec_v2_print_cond(const char *reason, bool secure)
 {
 	if (boot_cpu_has_bug(X86_BUG_SPECTRE_V2) != secure)
-		pr_debug("%s selected on command line.\n", reason);
+		pr_info("%s selected on command line.\n", reason);
 }
 
 static enum spectre_v2_mitigation_cmd __init spectre_v2_parse_cmdline(void)
@@ -1352,7 +1352,7 @@ static void __init spectre_v2_determine_rsb_fill_type_at_vmexit(enum spectre_v2_
 	case SPECTRE_V2_EIBRS:
 		if (boot_cpu_has_bug(X86_BUG_EIBRS_PBRSB)) {
 			setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT_LITE);
-			pr_debug("Spectre v2 / PBRSB-eIBRS: Retire a single CALL on VMEXIT\n");
+			pr_info("Spectre v2 / PBRSB-eIBRS: Retire a single CALL on VMEXIT\n");
 		}
 		return;
 
@@ -1361,7 +1361,7 @@ static void __init spectre_v2_determine_rsb_fill_type_at_vmexit(enum spectre_v2_
 	case SPECTRE_V2_LFENCE:
 	case SPECTRE_V2_IBRS:
 		setup_force_cpu_cap(X86_FEATURE_RSB_VMEXIT);
-		pr_debug("Spectre v2 / SpectreRSB : Filling RSB on VMEXIT\n");
+		pr_info("Spectre v2 / SpectreRSB : Filling RSB on VMEXIT\n");
 		return;
 	}
 
@@ -1479,7 +1479,7 @@ static void __init spectre_v2_select_mitigation(void)
 		spec_ctrl_disable_kernel_rrsba();
 
 	spectre_v2_enabled = mode;
-	pr_debug("%s\n", spectre_v2_strings[mode]);
+	pr_info("%s\n", spectre_v2_strings[mode]);
 
 	/*
 	 * If Spectre v2 protection has been enabled, fill the RSB during a
@@ -1520,7 +1520,7 @@ static void __init spectre_v2_select_mitigation(void)
 	 * FIXME: Is this pointless for retbleed-affected AMD?
 	 */
 	setup_force_cpu_cap(X86_FEATURE_RSB_CTXSW);
-	pr_debug("Spectre v2 / SpectreRSB mitigation: Filling RSB on context switch\n");
+	pr_info("Spectre v2 / SpectreRSB mitigation: Filling RSB on context switch\n");
 
 	spectre_v2_determine_rsb_fill_type_at_vmexit(mode);
 
@@ -1537,7 +1537,7 @@ static void __init spectre_v2_select_mitigation(void)
 	 */
 	if (boot_cpu_has(X86_FEATURE_IBRS) && !spectre_v2_in_ibrs_mode(mode)) {
 		setup_force_cpu_cap(X86_FEATURE_USE_IBRS_FW);
-		pr_debug("Enabling Restricted Speculation for firmware calls\n");
+		pr_info("Enabling Restricted Speculation for firmware calls\n");
 	}
 
 	/* Set up IBPB and STIBP depending on the general spectre V2 command */
@@ -1561,7 +1561,7 @@ static void update_stibp_strict(void)
 	if (mask == x86_spec_ctrl_base)
 		return;
 
-	pr_debug("Update user space SMT mitigation: STIBP %s\n",
+	pr_info("Update user space SMT mitigation: STIBP %s\n",
 		mask & SPEC_CTRL_STIBP ? "always-on" : "off");
 	x86_spec_ctrl_base = mask;
 	on_each_cpu(update_stibp_msr, NULL, 1);
@@ -1792,7 +1792,7 @@ static void ssb_select_mitigation(void)
 	ssb_mode = __ssb_select_mitigation();
 
 	if (boot_cpu_has_bug(X86_BUG_SPEC_STORE_BYPASS))
-		pr_debug("%s\n", ssb_strings[ssb_mode]);
+		pr_info("%s\n", ssb_strings[ssb_mode]);
 }
 
 #undef pr_fmt
@@ -2095,10 +2095,10 @@ static void __init l1tf_select_mitigation(void)
 	if (l1tf_mitigation != L1TF_MITIGATION_OFF &&
 			e820__mapped_any(half_pa, ULLONG_MAX - half_pa, E820_TYPE_RAM)) {
 		pr_warn("System has more than MAX_PA/2 memory. L1TF mitigation not effective.\n");
-		pr_debug("You may make it effective by booting the kernel with mem=%llu parameter.\n",
+		pr_info("You may make it effective by booting the kernel with mem=%llu parameter.\n",
 				half_pa);
-		pr_debug("However, doing so will make a part of your RAM unusable.\n");
-		pr_debug("Reading https://www.kernel.org/doc/html/latest/admin-guide/hw-vuln/l1tf.html might help you decide.\n");
+		pr_info("However, doing so will make a part of your RAM unusable.\n");
+		pr_info("Reading https://www.kernel.org/doc/html/latest/admin-guide/hw-vuln/l1tf.html might help you decide.\n");
 		return;
 	}
 

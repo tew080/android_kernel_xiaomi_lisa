@@ -91,7 +91,7 @@ static int live_nop_switch(void *arg)
 
 		times[1] = ktime_get_raw();
 
-		pr_debug("Populated %d contexts on %s in %lluns\n",
+		pr_info("Populated %d contexts on %s in %lluns\n",
 			nctx, engine->name, ktime_to_ns(times[1] - times[0]));
 
 		err = igt_live_test_begin(&t, i915, __func__, engine->name);
@@ -144,7 +144,7 @@ static int live_nop_switch(void *arg)
 		if (err)
 			goto out_unlock;
 
-		pr_debug("Switch latencies on %s: 1 = %lluns, %lu = %lluns\n",
+		pr_info("Switch latencies on %s: 1 = %lluns, %lu = %lluns\n",
 			engine->name,
 			ktime_to_ns(times[0]),
 			prime - 1, div64_u64(ktime_to_ns(times[1]), prime - 1));
@@ -426,7 +426,7 @@ static int igt_ctx_exec(void *arg)
 			ncontexts++;
 		}
 
-		pr_debug("Submitted %lu contexts to %s, filling %lu dwords\n",
+		pr_info("Submitted %lu contexts to %s, filling %lu dwords\n",
 			ncontexts, engine->name, ndwords);
 
 		ncontexts = dw = 0;
@@ -547,7 +547,7 @@ static int igt_shared_ctx_exec(void *arg)
 
 			kernel_context_close(ctx);
 		}
-		pr_debug("Submitted %lu contexts to %s, filling %lu dwords\n",
+		pr_info("Submitted %lu contexts to %s, filling %lu dwords\n",
 			ncontexts, engine->name, ndwords);
 
 		ncontexts = dw = 0;
@@ -819,7 +819,7 @@ __check_rpcs(const char *name, u32 rpcs, int slices, unsigned int expected,
 	pr_err("%s: %s slice count %d is not %u%s\n",
 	       name, prefix, slices, expected, suffix);
 
-	pr_debug("RPCS=0x%x; %u%sx%u%s\n",
+	pr_info("RPCS=0x%x; %u%sx%u%s\n",
 		rpcs, slices,
 		(rpcs & GEN8_RPCS_S_CNT_ENABLE) ? "*" : "",
 		(rpcs & GEN8_RPCS_SS_CNT_MASK) >> GEN8_RPCS_SS_CNT_SHIFT,
@@ -934,7 +934,7 @@ __igt_ctx_sseu(struct drm_i915_private *i915,
 	pg_sseu.subslice_mask =
 		~(~0 << (hweight32(engine->sseu.subslice_mask) / 2));
 
-	pr_debug("SSEU subtest '%s', flags=%x, def_slices=%u, pg_slices=%u\n",
+	pr_info("SSEU subtest '%s', flags=%x, def_slices=%u, pg_slices=%u\n",
 		name, flags, hweight32(engine->sseu.slice_mask),
 		hweight32(pg_sseu.slice_mask));
 
@@ -1116,7 +1116,7 @@ static int igt_ctx_readonly(void *arg)
 			ndwords++;
 		}
 	}
-	pr_debug("Submitted %lu dwords (across %u engines)\n",
+	pr_info("Submitted %lu dwords (across %u engines)\n",
 		ndwords, RUNTIME_INFO(i915)->num_engines);
 
 	dw = 0;
@@ -1452,7 +1452,7 @@ static int igt_vm_isolation(void *arg)
 		}
 		count += this;
 	}
-	pr_debug("Checked %lu scratch offsets across %d engines\n",
+	pr_info("Checked %lu scratch offsets across %d engines\n",
 		count, RUNTIME_INFO(i915)->num_engines);
 
 out_unlock:

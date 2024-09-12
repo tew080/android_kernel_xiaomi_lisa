@@ -341,7 +341,7 @@ void __init ixp4xx_irq_init(resource_size_t irqbase,
 	for (i = 0; i < nr_chunks; i++) {
 		const struct ixp4xx_irq_chunk *chunk = &ixp4xx_irq_chunks[i];
 
-		pr_debug("Allocate Linux IRQs %d..%d HW IRQs %d..%d\n",
+		pr_info("Allocate Linux IRQs %d..%d HW IRQs %d..%d\n",
 			chunk->irq, chunk->irq + chunk->nr_irqs - 1,
 			chunk->hwirq, chunk->hwirq + chunk->nr_irqs - 1);
 		fwspec.fwnode = fwnode;

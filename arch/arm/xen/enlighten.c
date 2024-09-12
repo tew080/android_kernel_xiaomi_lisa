@@ -148,7 +148,7 @@ static int xen_starting_cpu(unsigned int cpu)
 	if (per_cpu(xen_vcpu, cpu) != NULL)
 		goto after_register_vcpu_info;
 
-	pr_debug("Xen: initializing cpu%d\n", cpu);
+	pr_info("Xen: initializing cpu%d\n", cpu);
 	vcpup = per_cpu_ptr(xen_vcpu_info, cpu);
 
 	info.mfn = virt_to_gfn(vcpup);
@@ -263,7 +263,7 @@ void __init xen_early_init(void)
 		return;
 	}
 
-	pr_debug("Xen %s support found\n", hyper_node.version);
+	pr_info("Xen %s support found\n", hyper_node.version);
 
 	xen_domain_type = XEN_HVM_DOMAIN;
 

@@ -587,7 +587,7 @@ void reload_ucode_amd(unsigned int cpu)
 	if (rev < mc->hdr.patch_id) {
 		if (!__apply_microcode_amd(mc)) {
 			ucode_new_rev = mc->hdr.patch_id;
-			pr_debug("reload patch_level=0x%08x\n", ucode_new_rev);
+			pr_info("reload patch_level=0x%08x\n", ucode_new_rev);
 		}
 	}
 }
@@ -672,7 +672,7 @@ static int collect_cpu_info_amd(int cpu, struct cpu_signature *csig)
 	if (p && (p->patch_id == csig->rev))
 		uci->mc = p->data;
 
-	pr_debug("CPU%d: patch_level=0x%08x\n", cpu, csig->rev);
+	pr_info("CPU%d: patch_level=0x%08x\n", cpu, csig->rev);
 
 	return 0;
 }
@@ -714,7 +714,7 @@ static enum ucode_state apply_microcode_amd(int cpu)
 	rev = mc_amd->hdr.patch_id;
 	ret = UCODE_UPDATED;
 
-	pr_debug("CPU%d: new patch_level=0x%08x\n", cpu, rev);
+	pr_info("CPU%d: new patch_level=0x%08x\n", cpu, rev);
 
 out:
 	uci->cpu_sig.rev = rev;

@@ -94,7 +94,7 @@ static int __init iommu_setup(char *str)
 	while (*str) {
 		if (!strncmp(str, "nobypass", 8)) {
 			pnv_iommu_bypass_disabled = true;
-			pr_debug("PowerNV: IOMMU bypass window disabled.\n");
+			pr_info("PowerNV: IOMMU bypass window disabled.\n");
 			break;
 		}
 		str += strcspn(str, ",");
@@ -438,18 +438,18 @@ static void __init pnv_ioda_parse_m64_window(struct pnv_phb *phb)
 	u64 pci_addr;
 
 	if (phb->type != PNV_PHB_IODA1 && phb->type != PNV_PHB_IODA2) {
-		pr_debug("  Not support M64 window\n");
+		pr_info("  Not support M64 window\n");
 		return;
 	}
 
 	if (!firmware_has_feature(FW_FEATURE_OPAL)) {
-		pr_debug("  Firmware too old to support M64 window\n");
+		pr_info("  Firmware too old to support M64 window\n");
 		return;
 	}
 
 	r = of_get_property(dn, "ibm,opal-m64-window", NULL);
 	if (!r) {
-		pr_debug("  No <ibm,opal-m64-window> on %pOF\n",
+		pr_info("  No <ibm,opal-m64-window> on %pOF\n",
 			dn);
 		return;
 	}
@@ -491,7 +491,7 @@ static void __init pnv_ioda_parse_m64_window(struct pnv_phb *phb)
 	phb->ioda.m64_base = pci_addr;
 
 	/* This lines up nicely with the display from processing OF ranges */
-	pr_debug(" MEM 0x%016llx..0x%016llx -> 0x%016llx (M64 #%d..%d)\n",
+	pr_info(" MEM 0x%016llx..0x%016llx -> 0x%016llx (M64 #%d..%d)\n",
 		res->start, res->end, pci_addr, m64_range[0],
 		m64_range[0] + m64_range[1] - 1);
 
@@ -502,7 +502,7 @@ static void __init pnv_ioda_parse_m64_window(struct pnv_phb *phb)
 	m64_range[1]--;
 	phb->ioda.m64_bar_idx = m64_range[0] + m64_range[1];
 
-	pr_debug(" Using M64 #%d as default window\n", phb->ioda.m64_bar_idx);
+	pr_info(" Using M64 #%d as default window\n", phb->ioda.m64_bar_idx);
 
 	/* Mark remaining ones free */
 	for (i = m64_range[0]; i < m64_range[1]; i++)
@@ -2884,7 +2884,7 @@ static void pnv_pci_init_ioda_msis(struct pnv_phb *phb)
 
 	phb->msi_setup = pnv_pci_ioda_msi_setup;
 	phb->msi32_support = 1;
-	pr_debug("  Allocated bitmap for %d MSIs (base IRQ 0x%x)\n",
+	pr_info("  Allocated bitmap for %d MSIs (base IRQ 0x%x)\n",
 		count, phb->msi_base);
 }
 
@@ -3678,7 +3678,7 @@ static void __init pnv_pci_init_ioda_phb(struct device_node *np,
 	if (!of_device_is_available(np))
 		return;
 
-	pr_debug("Initializing %s PHB (%pOF)\n",	pnv_phb_names[ioda_type], np);
+	pr_info("Initializing %s PHB (%pOF)\n",	pnv_phb_names[ioda_type], np);
 
 	prop64 = of_get_property(np, "ibm,opal-phbid", NULL);
 	if (!prop64) {
@@ -3852,14 +3852,14 @@ static void __init pnv_pci_init_ioda_phb(struct device_node *np,
 					 segment_size);
 #endif
 
-	pr_debug("  %03d (%03d) PE's M32: 0x%x [segment=0x%x]\n",
+	pr_info("  %03d (%03d) PE's M32: 0x%x [segment=0x%x]\n",
 		phb->ioda.total_pe_num, phb->ioda.reserved_pe_idx,
 		phb->ioda.m32_size, phb->ioda.m32_segsize);
 	if (phb->ioda.m64_size)
-		pr_debug("                 M64: 0x%lx [segment=0x%lx]\n",
+		pr_info("                 M64: 0x%lx [segment=0x%lx]\n",
 			phb->ioda.m64_size, phb->ioda.m64_segsize);
 	if (phb->ioda.io_size)
-		pr_debug("                  IO: 0x%x [segment=0x%x]\n",
+		pr_info("                  IO: 0x%x [segment=0x%x]\n",
 			phb->ioda.io_size, phb->ioda.io_segsize);
 
 
@@ -3919,7 +3919,7 @@ static void __init pnv_pci_init_ioda_phb(struct device_node *np,
 	 * boot.
 	 */
 	if (is_kdump_kernel() || pci_reset_phbs || rc) {
-		pr_debug("  Issue PHB reset ...\n");
+		pr_info("  Issue PHB reset ...\n");
 		pnv_eeh_phb_reset(hose, EEH_RESET_FUNDAMENTAL);
 		pnv_eeh_phb_reset(hose, EEH_RESET_DEACTIVATE);
 	}
@@ -3963,7 +3963,7 @@ void __init pnv_pci_init_ioda_hub(struct device_node *np)
 	const __be64 *prop64;
 	u64 hub_id;
 
-	pr_debug("Probing IODA IO-Hub %pOF\n", np);
+	pr_info("Probing IODA IO-Hub %pOF\n", np);
 
 	prop64 = of_get_property(np, "ibm,opal-hubid", NULL);
 	if (!prop64) {

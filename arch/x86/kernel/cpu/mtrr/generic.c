@@ -512,8 +512,8 @@ void __init mtrr_state_warn(void)
 	if (mask & MTRR_CHANGE_MASK_DEFTYPE)
 		pr_warn("mtrr: your CPUs had inconsistent MTRRdefType settings\n");
 
-	pr_debug("mtrr: probably your BIOS does not setup all CPUs.\n");
-	pr_debug("mtrr: corrected configuration.\n");
+	pr_info("mtrr: probably your BIOS does not setup all CPUs.\n");
+	pr_info("mtrr: corrected configuration.\n");
 }
 
 /*

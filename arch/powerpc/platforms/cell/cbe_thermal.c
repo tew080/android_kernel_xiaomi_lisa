@@ -340,14 +340,14 @@ static int __init init_default_values(void)
 		dev = get_cpu_device(cpu);
 
 		if (!dev) {
-			pr_debug("invalid dev pointer for cbe_thermal\n");
+			pr_info("invalid dev pointer for cbe_thermal\n");
 			return -EINVAL;
 		}
 
 		pmd_regs = cbe_get_cpu_pmd_regs(dev->id);
 
 		if (!pmd_regs) {
-			pr_debug("invalid CBE regs pointer for cbe_thermal\n");
+			pr_info("invalid CBE regs pointer for cbe_thermal\n");
 			return -EINVAL;
 		}
 

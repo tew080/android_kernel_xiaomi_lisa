@@ -141,7 +141,7 @@ void __init efi_find_mirror(void)
 		}
 	}
 	if (mirror_size)
-		pr_debug("Memory: %lldM/%lldM mirrored memory\n",
+		pr_info("Memory: %lldM/%lldM mirrored memory\n",
 			mirror_size>>20, total_size>>20);
 }
 
@@ -310,7 +310,7 @@ void __init efi_print_memmap(void)
 	for_each_efi_memory_desc(md) {
 		char buf[64];
 
-		pr_debug("mem%02u: %s range=[0x%016llx-0x%016llx] (%lluMB)\n",
+		pr_info("mem%02u: %s range=[0x%016llx-0x%016llx] (%lluMB)\n",
 			i++, efi_md_typeattr_format(buf, sizeof(buf), md),
 			md->phys_addr,
 			md->phys_addr + (md->num_pages << EFI_PAGE_SHIFT) - 1,
@@ -510,7 +510,7 @@ void __init efi_init(void)
 #ifdef CONFIG_X86_32
 	if (boot_params.efi_info.efi_systab_hi ||
 	    boot_params.efi_info.efi_memmap_hi) {
-		pr_debug("Table located above 4GB, disabling EFI.\n");
+		pr_info("Table located above 4GB, disabling EFI.\n");
 		return;
 	}
 	efi_phys.systab = (efi_system_table_t *)boot_params.efi_info.efi_systab;
@@ -541,7 +541,7 @@ void __init efi_init(void)
 		pr_err("Could not map the firmware vendor!\n");
 	}
 
-	pr_debug("EFI v%u.%.02u by %s\n",
+	pr_info("EFI v%u.%.02u by %s\n",
 		efi.systab->hdr.revision >> 16,
 		efi.systab->hdr.revision & 0xffff, vendor);
 
@@ -557,7 +557,7 @@ void __init efi_init(void)
 	 */
 
 	if (!efi_runtime_supported())
-		pr_debug("No EFI runtime due to 32/64-bit mismatch with kernel\n");
+		pr_info("No EFI runtime due to 32/64-bit mismatch with kernel\n");
 	else {
 		if (efi_runtime_disabled() || efi_runtime_init()) {
 			efi_memmap_unmap();
@@ -981,7 +981,7 @@ static void __init __efi_enter_virtual_mode(void)
 	}
 
 	if (efi_enabled(EFI_DBG)) {
-		pr_debug("EFI runtime memory map:\n");
+		pr_info("EFI runtime memory map:\n");
 		efi_print_memmap();
 	}
 

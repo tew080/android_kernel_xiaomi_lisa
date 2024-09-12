@@ -423,7 +423,7 @@ void pci_process_bridge_OF_ranges(struct pci_controller *hose,
 	struct of_pci_range range;
 	struct of_pci_range_parser parser;
 
-	pr_debug("PCI host bridge %pOF %s ranges:\n",
+	pr_info("PCI host bridge %pOF %s ranges:\n",
 	       dev, primary ? "(primary)" : "");
 
 	/* Check for ranges property */
@@ -450,13 +450,13 @@ void pci_process_bridge_OF_ranges(struct pci_controller *hose,
 		res = NULL;
 		switch (range.flags & IORESOURCE_TYPE_BITS) {
 		case IORESOURCE_IO:
-			pr_debug("  IO 0x%016llx..0x%016llx -> 0x%016llx\n",
+			pr_info("  IO 0x%016llx..0x%016llx -> 0x%016llx\n",
 				range.cpu_addr, range.cpu_addr + range.size - 1,
 				range.pci_addr);
 
 			/* We support only one IO range */
 			if (hose->pci_io_size) {
-				pr_debug(" \\--> Skipped (too many) !\n");
+				pr_info(" \\--> Skipped (too many) !\n");
 				continue;
 			}
 			/* On 32 bits, limit I/O space to 16MB */
@@ -483,7 +483,7 @@ void pci_process_bridge_OF_ranges(struct pci_controller *hose,
 
 			break;
 		case IORESOURCE_MEM:
-			pr_debug(" MEM 0x%016llx..0x%016llx -> 0x%016llx %s\n",
+			pr_info(" MEM 0x%016llx..0x%016llx -> 0x%016llx %s\n",
 				range.cpu_addr, range.cpu_addr + range.size - 1,
 				range.pci_addr,
 				(range.pci_space & 0x40000000) ?
@@ -491,7 +491,7 @@ void pci_process_bridge_OF_ranges(struct pci_controller *hose,
 
 			/* We support only 3 memory ranges */
 			if (memno >= 3) {
-				pr_debug(" \\--> Skipped (too many) !\n");
+				pr_info(" \\--> Skipped (too many) !\n");
 				continue;
 			}
 			/* Handles ISA memory hole space here */
@@ -516,7 +516,7 @@ void pci_process_bridge_OF_ranges(struct pci_controller *hose,
 			else if (range.pci_addr != 0 &&
 				 hose->pci_mem_offset != range.cpu_addr -
 							range.pci_addr) {
-				pr_debug(" \\--> Skipped (offset mismatch) !\n");
+				pr_info(" \\--> Skipped (offset mismatch) !\n");
 				continue;
 			}
 
@@ -539,7 +539,7 @@ void pci_process_bridge_OF_ranges(struct pci_controller *hose,
 	 */
 	if (isa_hole >= 0 && hose->pci_mem_offset != isa_mb) {
 		unsigned int next = isa_hole + 1;
-		pr_debug(" Removing ISA hole at 0x%016llx\n", isa_mb);
+		pr_info(" Removing ISA hole at 0x%016llx\n", isa_mb);
 		if (next < memno)
 			memmove(&hose->mem_resources[isa_hole],
 				&hose->mem_resources[next],
@@ -989,7 +989,7 @@ static int __init pcibios_init(void)
 	struct pci_controller *hose, *tmp;
 	int next_busno = 0;
 
-	pr_debug("PCI: Probing PCI hardware\n");
+	pr_info("PCI: Probing PCI hardware\n");
 
 	/* Scan all of the recorded PCI controllers.  */
 	list_for_each_entry_safe(hose, tmp, &hose_list, list_node) {

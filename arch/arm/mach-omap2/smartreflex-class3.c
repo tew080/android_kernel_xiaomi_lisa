@@ -53,7 +53,7 @@ static struct omap_sr_class_data class3_data = {
 /* Smartreflex Class3 init API to be called from board file */
 static int __init sr_class3_init(void)
 {
-	pr_debug("SmartReflex Class3 initialized\n");
+	pr_info("SmartReflex Class3 initialized\n");
 	return sr_register_class(&class3_data);
 }
 omap_late_initcall(sr_class3_init);

@@ -895,7 +895,7 @@ void __init da8xx_rproc_reserve_cma(void)
 		return;
 	}
 
-	pr_debug("%s: reserving 0x%lx @ 0x%lx...\n",
+	pr_info("%s: reserving 0x%lx @ 0x%lx...\n",
 		__func__, rproc_size, (unsigned long)rproc_base);
 
 	ret = dma_declare_contiguous(&da8xx_dsp.dev, rproc_size, rproc_base, 0);

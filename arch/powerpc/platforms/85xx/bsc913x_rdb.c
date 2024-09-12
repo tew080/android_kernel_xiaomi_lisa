@@ -35,7 +35,7 @@ static void __init bsc913x_rdb_setup_arch(void)
 	if (ppc_md.progress)
 		ppc_md.progress("bsc913x_rdb_setup_arch()", 0);
 
-	pr_debug("bsc913x board from Freescale Semiconductor\n");
+	pr_info("bsc913x board from Freescale Semiconductor\n");
 }
 
 machine_device_initcall(bsc9131_rdb, mpc85xx_common_publish_devices);

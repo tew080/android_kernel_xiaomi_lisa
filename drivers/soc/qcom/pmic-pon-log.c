@@ -432,7 +432,7 @@ static int pmic_pon_log_parse_entry(const struct pmic_pon_log_entry *entry,
 	}
 
 	if (is_important)
-		pr_debug("PMIC PON log: %s\n", buf);
+		pr_info("PMIC PON log: %s\n", buf);
 	else
 		pr_debug("PMIC PON log: %s\n", buf);
 

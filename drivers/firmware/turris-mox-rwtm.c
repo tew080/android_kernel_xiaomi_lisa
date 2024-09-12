@@ -211,10 +211,10 @@ static int mox_get_board_info(struct mox_rwtm *rwtm)
 				  reply->status[7]);
 		rwtm->has_board_info = 1;
 
-		pr_debug("Turris Mox serial number %016llX\n",
+		pr_info("Turris Mox serial number %016llX\n",
 			rwtm->serial_number);
-		pr_debug("           board version %i\n", rwtm->board_version);
-		pr_debug("           burned RAM size %i MiB\n", rwtm->ram_size);
+		pr_info("           board version %i\n", rwtm->board_version);
+		pr_info("           burned RAM size %i MiB\n", rwtm->ram_size);
 	}
 
 	msg.command = MBOX_CMD_ECDSA_PUB_KEY;

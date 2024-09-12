@@ -680,12 +680,12 @@ static void zeus_udc_command(int cmd)
 {
 	switch (cmd) {
 	case PXA2XX_UDC_CMD_DISCONNECT:
-		pr_debug("zeus: disconnecting USB client\n");
+		pr_info("zeus: disconnecting USB client\n");
 		UP2OCR = UP2OCR_HXOE | UP2OCR_HXS | UP2OCR_DMPDE | UP2OCR_DPPDE;
 		break;
 
 	case PXA2XX_UDC_CMD_CONNECT:
-		pr_debug("zeus: connecting USB client\n");
+		pr_info("zeus: connecting USB client\n");
 		UP2OCR = UP2OCR_HXOE | UP2OCR_DPPUE;
 		break;
 	}
@@ -863,7 +863,7 @@ static void __init zeus_init(void)
 	u32 msc0, msc1;
 
 	system_rev = __raw_readw(ZEUS_CPLD_VERSION);
-	pr_debug("Zeus CPLD V%dI%d\n", (system_rev & 0xf0) >> 4, (system_rev & 0x0f));
+	pr_info("Zeus CPLD V%dI%d\n", (system_rev & 0xf0) >> 4, (system_rev & 0x0f));
 
 	/* Fix timings for dm9000s (CS1/CS2)*/
 	msc0 = (__raw_readl(MSC0) & 0x0000ffff) | (dm9000_msc << 16);

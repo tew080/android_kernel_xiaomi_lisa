@@ -1162,7 +1162,7 @@ cont:
 		if (!err) {
 			host->cqe_enabled = true;
 			host->hsq_enabled = true;
-			pr_debug("%s: Host Software Queue enabled\n",
+			pr_info("%s: Host Software Queue enabled\n",
 				mmc_hostname(host));
 		}
 	}

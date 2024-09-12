@@ -34,7 +34,7 @@ void __init add_to_platform_keyring(const char *source, const void *data,
 	rc = integrity_load_cert(INTEGRITY_KEYRING_PLATFORM, source, data, len,
 				 perm);
 	if (rc)
-		pr_debug("Error adding keys to platform keyring %s\n", source);
+		pr_info("Error adding keys to platform keyring %s\n", source);
 }
 
 /*

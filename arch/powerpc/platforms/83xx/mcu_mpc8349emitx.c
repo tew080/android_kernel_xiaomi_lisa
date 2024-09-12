@@ -86,7 +86,7 @@ static void mcu_power_off(void)
 {
 	struct mcu *mcu = glob_mcu;
 
-	pr_debug("Sending power-off request to the MCU...\n");
+	pr_info("Sending power-off request to the MCU...\n");
 	mutex_lock(&mcu->lock);
 	i2c_smbus_write_byte_data(mcu->client, MCU_REG_CTRL,
 				  mcu->reg_ctrl | MCU_CTRL_POFF);

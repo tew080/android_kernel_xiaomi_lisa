@@ -145,7 +145,7 @@ void bt_info(const char *format, ...)
 	vaf.fmt = format;
 	vaf.va = &args;
 
-	pr_debug("%pV", &vaf);
+	pr_info("%pV", &vaf);
 
 	va_end(args);
 }

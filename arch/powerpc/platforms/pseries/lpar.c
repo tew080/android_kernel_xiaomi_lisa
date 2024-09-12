@@ -812,7 +812,7 @@ static void manual_hpte_clear_all(void)
 	for (i = 0; i < hpte_count; i += 4) {
 		lpar_rc = plpar_pte_read_4_raw(0, i, (void *)ptes);
 		if (lpar_rc != H_SUCCESS) {
-			pr_debug("Failed to read hash page table at %ld err %ld\n",
+			pr_info("Failed to read hash page table at %ld err %ld\n",
 				i, lpar_rc);
 			continue;
 		}
@@ -915,7 +915,7 @@ static long __pSeries_lpar_hpte_find(unsigned long want_v, unsigned long hpte_gr
 
 		lpar_rc = plpar_pte_read_4(0, hpte_group, (void *)ptes);
 		if (lpar_rc != H_SUCCESS) {
-			pr_debug("Failed to read hash page table at %ld err %ld\n",
+			pr_info("Failed to read hash page table at %ld err %ld\n",
 				hpte_group, lpar_rc);
 			continue;
 		}
@@ -1471,7 +1471,7 @@ void __init pseries_lpar_read_hblkrm_characteristics(void)
 	for (bpsize = 0; bpsize < MMU_PAGE_COUNT; bpsize++)
 		for (idx = 0; idx < MMU_PAGE_COUNT; idx++)
 			if (hblkrm_size[bpsize][idx])
-				pr_debug("H_BLOCK_REMOVE supports base psize:%d psize:%d block size:%d",
+				pr_info("H_BLOCK_REMOVE supports base psize:%d psize:%d block size:%d",
 					bpsize, idx, hblkrm_size[bpsize][idx]);
 }
 
@@ -1546,7 +1546,7 @@ static int __init disable_bulk_remove(char *str)
 {
 	if (strcmp(str, "off") == 0 &&
 	    firmware_has_feature(FW_FEATURE_BULK_REMOVE)) {
-		pr_debug("Disabling BULK_REMOVE firmware feature");
+		pr_info("Disabling BULK_REMOVE firmware feature");
 		powerpc_firmware_features &= ~FW_FEATURE_BULK_REMOVE;
 	}
 	return 1;
@@ -1596,7 +1596,7 @@ static int pseries_lpar_resize_hpt(unsigned long shift)
 	if (!firmware_has_feature(FW_FEATURE_HPT_RESIZE))
 		return -ENODEV;
 
-	pr_debug("Attempting to resize HPT to shift %lu\n", shift);
+	pr_info("Attempting to resize HPT to shift %lu\n", shift);
 
 	t0 = ktime_get();
 
@@ -1651,7 +1651,7 @@ static int pseries_lpar_resize_hpt(unsigned long shift)
 		};
 	}
 
-	pr_debug("HPT resize to shift %lu complete (%lld ms / %lld ms)\n",
+	pr_info("HPT resize to shift %lu complete (%lld ms / %lld ms)\n",
 		shift, (long long) ktime_ms_delta(t1, t0),
 		(long long) ktime_ms_delta(t2, t1));
 
@@ -1709,7 +1709,7 @@ void __init hpte_init_pseries(void)
 
 void radix_init_pseries(void)
 {
-	pr_debug("Using radix MMU under hypervisor\n");
+	pr_info("Using radix MMU under hypervisor\n");
 
 	pseries_lpar_register_process_table(__pa(process_tb),
 						0, PRTB_SIZE_SHIFT - 12);
@@ -1725,13 +1725,13 @@ static int __init cmo_free_hint(char *str)
 	parm = strstrip(str);
 
 	if (strcasecmp(parm, "no") == 0 || strcasecmp(parm, "off") == 0) {
-		pr_debug("%s: CMO free page hinting is not active.\n", __func__);
+		pr_info("%s: CMO free page hinting is not active.\n", __func__);
 		cmo_free_hint_flag = 0;
 		return 1;
 	}
 
 	cmo_free_hint_flag = 1;
-	pr_debug("%s: CMO free page hinting is active.\n", __func__);
+	pr_info("%s: CMO free page hinting is active.\n", __func__);
 
 	if (strcasecmp(parm, "yes") == 0 || strcasecmp(parm, "on") == 0)
 		return 1;

@@ -369,7 +369,7 @@ Typical usage
 		/* try to take it, but don't spin on it */
 		ret = hwspin_trylock(hwlock);
 		if (!ret) {
-			pr_debug("lock is already taken\n");
+			pr_info("lock is already taken\n");
 			return -EBUSY;
 		}
 

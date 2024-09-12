@@ -412,7 +412,7 @@ kvm_irqfd_assign(struct kvm *kvm, struct kvm_irqfd *args)
 		irqfd->consumer.start = kvm_arch_irq_bypass_start;
 		ret = irq_bypass_register_consumer(&irqfd->consumer);
 		if (ret)
-			pr_debug("irq bypass consumer (token %p) registration fails: %d\n",
+			pr_info("irq bypass consumer (token %p) registration fails: %d\n",
 				irqfd->consumer.token, ret);
 	}
 #endif

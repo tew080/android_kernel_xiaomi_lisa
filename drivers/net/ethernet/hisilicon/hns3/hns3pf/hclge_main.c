@@ -10276,7 +10276,7 @@ static struct hnae3_ae_algo ae_algo = {
 
 static int hclge_init(void)
 {
-	pr_debug("%s is initializing\n", HCLGE_NAME);
+	pr_info("%s is initializing\n", HCLGE_NAME);
 
 	hnae3_register_ae_algo(&ae_algo);
 

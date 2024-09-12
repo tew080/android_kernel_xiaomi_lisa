@@ -283,7 +283,7 @@ int __init pcibios_init(void)
 	int ret = platform_driver_register(&rt288x_pci_driver);
 
 	if (ret)
-		pr_debug("rt288x-pci: Error registering platform driver!");
+		pr_info("rt288x-pci: Error registering platform driver!");
 
 	return ret;
 }

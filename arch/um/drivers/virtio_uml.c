@@ -1073,7 +1073,7 @@ static int vu_cmdline_set(const char *device, const struct kernel_param *kp)
 	pdata.virtio_device_id = (u32) virtio_device_id;
 	pdata.socket_path = socket_path;
 
-	pr_debug("Registering device virtio-uml.%d id=%d at %s\n",
+	pr_info("Registering device virtio-uml.%d id=%d at %s\n",
 		vu_cmdline_id, virtio_device_id, socket_path);
 
 	pdev = platform_device_register_data(&vu_cmdline_parent, "virtio-uml",

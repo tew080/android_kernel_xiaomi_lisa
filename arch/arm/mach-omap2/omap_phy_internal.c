@@ -85,7 +85,7 @@ void am35x_musb_phy_power(u8 on)
 
 		omap_ctrl_writel(devconf2, AM35XX_CONTROL_DEVCONF2);
 
-		pr_debug("Waiting for PHY clock good...\n");
+		pr_info("Waiting for PHY clock good...\n");
 		while (!(omap_ctrl_readl(AM35XX_CONTROL_DEVCONF2)
 				& CONF2_PHYCLKGD)) {
 			cpu_relax();
@@ -133,7 +133,7 @@ void am35x_set_mode(u8 musb_mode)
 		devconf2 |= CONF2_NO_OVERRIDE;
 		break;
 	default:
-		pr_debug("Unsupported mode %u\n", musb_mode);
+		pr_info("Unsupported mode %u\n", musb_mode);
 	}
 
 	omap_ctrl_writel(devconf2, AM35XX_CONTROL_DEVCONF2);

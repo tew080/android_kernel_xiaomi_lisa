@@ -418,7 +418,7 @@ void llvm__dump_obj(const char *path, void *obj_buf, size_t size)
 		goto out;
 	}
 
-	pr_debug("LLVM: dumping %s\n", obj_path);
+	pr_info("LLVM: dumping %s\n", obj_path);
 	if (fwrite(obj_buf, size, 1, fp) != 1)
 		pr_warning("WARNING: failed to write to file '%s': %s, skip object dumping\n",
 			   obj_path, strerror(errno));

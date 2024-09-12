@@ -247,7 +247,7 @@ int hab_msg_recv(struct physical_channel *pchan,
 			return -EINVAL;
 		} else if (vchan->otherend_closed) {
 			hab_vchan_put(vchan);
-			pr_debug("vchan remote is closed payload type %d, vchan id %x, sizebytes %zx, session %d\n",
+			pr_info("vchan remote is closed payload type %d, vchan id %x, sizebytes %zx, session %d\n",
 				payload_type, vchan_id,
 				sizebytes, session_id);
 			if (sizebytes) {
@@ -299,7 +299,7 @@ int hab_msg_recv(struct physical_channel *pchan,
 		break;
 
 	case HAB_PAYLOAD_TYPE_INIT_CANCEL:
-		pr_debug("remote open cancel header vcid %X session %d local %d remote %d\n",
+		pr_info("remote open cancel header vcid %X session %d local %d remote %d\n",
 			vchan_id, session_id, pchan->vmid_local,
 			pchan->vmid_remote);
 		ret = hab_open_receive_cancel(pchan, sizebytes);

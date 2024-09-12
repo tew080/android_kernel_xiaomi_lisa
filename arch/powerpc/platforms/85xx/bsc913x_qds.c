@@ -45,7 +45,7 @@ static void __init bsc913x_qds_setup_arch(void)
 
 	fsl_pci_assign_primary();
 
-	pr_debug("bsc913x board from Freescale Semiconductor\n");
+	pr_info("bsc913x board from Freescale Semiconductor\n");
 }
 
 machine_arch_initcall(bsc9132_qds, mpc85xx_common_publish_devices);

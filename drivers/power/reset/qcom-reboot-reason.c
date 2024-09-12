@@ -97,7 +97,7 @@ static int qcom_restart_reason_reboot(struct notifier_block *this,
 			nvmem_cell_write(reboot->nvmem_cell,
 					 &reason->pon_reason,
 					 sizeof(reason->pon_reason));
-			pr_debug("restart reason: %s\n", cmd);
+			pr_info("restart reason: %s\n", cmd);
 			return NOTIFY_OK;
 		}
 	}

@@ -298,13 +298,13 @@ static bool sanity_check(struct ce_array *ca)
 	if (!ret)
 		return ret;
 
-	pr_debug("Sanity check dump:\n{ n: %d\n", ca->n);
+	pr_info("Sanity check dump:\n{ n: %d\n", ca->n);
 	for (i = 0; i < ca->n; i++) {
 		u64 this = PFN(ca->array[i]);
 
-		pr_debug(" %03d: [%016llx|%03llx]\n", i, this, FULL_COUNT(ca->array[i]));
+		pr_info(" %03d: [%016llx|%03llx]\n", i, this, FULL_COUNT(ca->array[i]));
 	}
-	pr_debug("}\n");
+	pr_info("}\n");
 
 	return ret;
 }
@@ -555,7 +555,7 @@ void __init cec_init(void)
 	INIT_DELAYED_WORK(&cec_work, cec_work_fn);
 	queue_delayed_work(system_power_efficient_wq,&cec_work, CEC_DECAY_DEFAULT_INTERVAL);
 
-	pr_debug("Correctable Errors collector initialized.\n");
+	pr_info("Correctable Errors collector initialized.\n");
 }
 
 int __init parse_cec_param(char *str)

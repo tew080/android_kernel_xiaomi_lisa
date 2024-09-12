@@ -2650,7 +2650,7 @@ static int fsl_udc_otg_suspend(struct device *dev, pm_message_t state)
 
 	udc->stopped = 1;
 
-	pr_debug("USB Gadget suspended\n");
+	pr_info("USB Gadget suspended\n");
 
 	return 0;
 }
@@ -2670,7 +2670,7 @@ static int fsl_udc_otg_resume(struct device *dev)
 		return 0;
 	}
 
-	pr_debug("USB Gadget resume\n");
+	pr_info("USB Gadget resume\n");
 
 	return fsl_udc_resume(NULL);
 }

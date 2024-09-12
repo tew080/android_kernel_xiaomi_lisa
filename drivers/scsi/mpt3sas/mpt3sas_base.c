@@ -171,7 +171,7 @@ _scsih_set_fwfault_debug(const char *val, const struct kernel_param *kp)
 		return ret;
 
 	/* global ioc spinlock to protect controller list on list operations */
-	pr_debug("setting fwfault_debug(%d)\n", mpt3sas_fwfault_debug);
+	pr_info("setting fwfault_debug(%d)\n", mpt3sas_fwfault_debug);
 	spin_lock(&gioc_lock);
 	list_for_each_entry(ioc, &mpt3sas_ioc_list, list)
 		ioc->fwfault_debug = mpt3sas_fwfault_debug;
@@ -3088,7 +3088,7 @@ _base_enable_msix(struct MPT3SAS_ADAPTER *ioc)
 		goto try_ioapic;
 
 	ioc_info(ioc, "MSI-X vectors supported: %d\n", ioc->msix_vector_count);
-	pr_debug("\t no of cores: %d, max_msix_vectors: %d\n",
+	pr_info("\t no of cores: %d, max_msix_vectors: %d\n",
 		ioc->cpu_count, max_msix_vectors);
 	if (ioc->is_aero_ioc)
 		_base_check_and_enable_high_iops_queues(ioc,
@@ -3210,11 +3210,11 @@ _base_check_for_fault_and_issue_reset(struct MPT3SAS_ADAPTER *ioc)
 	u32 ioc_state;
 	int rc = -EFAULT;
 
-	dinitprintk(ioc, pr_debug("%s\n", __func__));
+	dinitprintk(ioc, pr_info("%s\n", __func__));
 	if (ioc->pci_error_recovery)
 		return 0;
 	ioc_state = mpt3sas_base_get_iocstate(ioc, 0);
-	dhsprintk(ioc, pr_debug("%s: ioc_state(0x%08x)\n", __func__, ioc_state));
+	dhsprintk(ioc, pr_info("%s: ioc_state(0x%08x)\n", __func__, ioc_state));
 
 	if ((ioc_state & MPI2_IOC_STATE_MASK) == MPI2_IOC_STATE_FAULT) {
 		mpt3sas_base_fault_info(ioc, ioc_state &
@@ -3355,7 +3355,7 @@ mpt3sas_base_map_resources(struct MPT3SAS_ADAPTER *ioc)
 	}
 
 	list_for_each_entry(reply_q, &ioc->reply_queue_list, list)
-		pr_debug("%s: %s enabled: IRQ %d\n",
+		pr_info("%s: %s enabled: IRQ %d\n",
 			reply_q->name,
 			ioc->msix_enable ? "PCI-MSI-X" : "IO-APIC",
 			pci_irq_vector(ioc->pdev, reply_q->msix_index));
@@ -4364,7 +4364,7 @@ _base_display_ioc_capabilities(struct MPT3SAS_ADAPTER *ioc)
 	_base_display_OEMs_branding(ioc);
 
 	if (ioc->facts.ProtocolFlags & MPI2_IOCFACTS_PROTOCOL_NVME_DEVICES) {
-		pr_debug("%sNVMe", i ? "," : "");
+		pr_info("%sNVMe", i ? "," : "");
 		i++;
 	}
 
@@ -5779,9 +5779,9 @@ _base_handshake_req_reply_wait(struct MPT3SAS_ADAPTER *ioc, int request_bytes,
 
 	if (ioc->logging_level & MPT_DEBUG_INIT) {
 		mfp = (__le32 *)reply;
-		pr_debug("\toffset:data\n");
+		pr_info("\toffset:data\n");
 		for (i = 0; i < reply_bytes/4; i++)
-			pr_debug("\t[0x%02x]:%08x\n", i*4,
+			pr_info("\t[0x%02x]:%08x\n", i*4,
 			    le32_to_cpu(mfp[i]));
 	}
 	return 0;
@@ -6221,9 +6221,9 @@ _base_send_ioc_init(struct MPT3SAS_ADAPTER *ioc)
 		int i;
 
 		mfp = (__le32 *)&mpi_request;
-		pr_debug("\toffset:data\n");
+		pr_info("\toffset:data\n");
 		for (i = 0; i < sizeof(Mpi2IOCInitRequest_t)/4; i++)
-			pr_debug("\t[0x%02x]:%08x\n", i*4,
+			pr_info("\t[0x%02x]:%08x\n", i*4,
 			    le32_to_cpu(mfp[i]));
 	}
 

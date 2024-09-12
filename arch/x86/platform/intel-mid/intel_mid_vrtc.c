@@ -76,7 +76,7 @@ void vrtc_get_time(struct timespec64 *now)
 	/* vRTC YEAR reg contains the offset to 1972 */
 	year += 1972;
 
-	pr_debug("vRTC: sec: %d min: %d hour: %d day: %d "
+	pr_info("vRTC: sec: %d min: %d hour: %d day: %d "
 		"mon: %d year: %d\n", sec, min, hour, mday, mon, year);
 
 	now->tv_sec = mktime64(year, mon, mday, hour, min, sec);

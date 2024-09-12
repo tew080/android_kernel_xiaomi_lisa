@@ -557,7 +557,7 @@ static int __init amd_uncore_init(void)
 		if (ret)
 			goto fail_nb;
 
-		pr_debug("%s NB counters detected\n",
+		pr_info("%s NB counters detected\n",
 			boot_cpu_data.x86_vendor == X86_VENDOR_HYGON ?
 				"HYGON" : "AMD");
 		ret = 0;
@@ -573,7 +573,7 @@ static int __init amd_uncore_init(void)
 		if (ret)
 			goto fail_llc;
 
-		pr_debug("%s LLC counters detected\n",
+		pr_info("%s LLC counters detected\n",
 			boot_cpu_data.x86_vendor == X86_VENDOR_HYGON ?
 				"HYGON" : "AMD");
 		ret = 0;

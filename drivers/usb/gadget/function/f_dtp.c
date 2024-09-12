@@ -48,7 +48,7 @@
 }while (0)
 
 #define log_info(fmt, ...) do {\
-	pr_debug("%s: {%s} " fmt, DRIVER_NAME, __func__, ##__VA_ARGS__);\
+	pr_info("%s: {%s} " fmt, DRIVER_NAME, __func__, ##__VA_ARGS__);\
 }while (0)
 
 #define log_err(fmt, ...) do {\

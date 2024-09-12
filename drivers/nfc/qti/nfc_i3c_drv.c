@@ -695,7 +695,7 @@ int nfc_i3c_dev_probe(struct i3c_device *device)
 	device_init_wakeup(&device->dev, true);
 	nfc_dev->i3c_dev.is_probe_done = true;
 
-	pr_debug("%s success\n", __func__);
+	pr_info("%s success\n", __func__);
 
 	return 0;
 

@@ -40,7 +40,7 @@ int i915_mock_sanitycheck(void)
 
 int i915_live_sanitycheck(struct drm_i915_private *i915)
 {
-	pr_debug("%s: %s() - ok!\n", i915->drm.driver->name, __func__);
+	pr_info("%s: %s() - ok!\n", i915->drm.driver->name, __func__);
 	return 0;
 }
 

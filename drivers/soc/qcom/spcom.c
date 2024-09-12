@@ -686,7 +686,7 @@ static int spcom_handle_restart_sp_command(void *cmd_buf, int cmd_size)
 				ret = -ENODEV;
 				goto disable_pmic_vote;
 			}
-			spcom_pr_debug("restart - spss started.\n");
+			spcom_pr_info("restart - spss started.\n");
 		}
 	}
 	spcom_pr_dbg("restart - PIL FW loading process is complete\n");
@@ -1225,7 +1225,7 @@ static int spcom_handle_unlock_ion_buf_command(struct spcom_channel *ch,
  */
 static int spcom_handle_enable_ssr_command(void)
 {
-	spcom_pr_debug("TBD: SSR is enabled after FOTA\n");
+	spcom_pr_info("TBD: SSR is enabled after FOTA\n");
 	return 0;
 }
 
@@ -1919,7 +1919,7 @@ static inline int handle_poll(struct file *file,
 		ret = -EINVAL;
 	}
 	if (ready < 0) { /* wait was interrupted */
-		spcom_pr_debug("interrupted wait retval=%d\n", op->retval);
+		spcom_pr_info("interrupted wait retval=%d\n", op->retval);
 		ret = -EINTR;
 	}
 	return ret;
@@ -2389,7 +2389,7 @@ static int spcom_rpdev_probe(struct rpmsg_device *rpdev)
 	/* used to evaluate underlying transport link up/down */
 	atomic_inc(&spcom_dev->rpmsg_dev_count);
 	if (atomic_read(&spcom_dev->rpmsg_dev_count) == 1) {
-		spcom_pr_debug("Signal link up\n");
+		spcom_pr_info("Signal link up\n");
 		complete_all(&spcom_dev->rpmsg_state_change);
 	}
 

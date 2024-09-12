@@ -73,7 +73,7 @@ static int __init crc_test_init(void)
 			goto free_32;
 		}
 
-		pr_debug("crc-vpmsum_test begins, %lu iterations\n", iterations);
+		pr_info("crc-vpmsum_test begins, %lu iterations\n", iterations);
 		for (i=0; i<iterations; i++) {
 			size_t offset = prandom_u32_max(16);
 			size_t len = prandom_u32_max(MAX_CRC_LENGTH);
@@ -104,7 +104,7 @@ static int __init crc_test_init(void)
 				break;
 			}
 		}
-		pr_debug("crc-vpmsum_test done, completed %lu iterations\n", i);
+		pr_info("crc-vpmsum_test done, completed %lu iterations\n", i);
 	} while (0);
 
 free_32:

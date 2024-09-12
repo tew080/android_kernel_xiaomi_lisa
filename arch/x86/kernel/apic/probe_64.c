@@ -25,7 +25,7 @@ void __init default_setup_apic_routing(void)
 		if ((*drv)->probe && (*drv)->probe()) {
 			if (apic != *drv) {
 				apic = *drv;
-				pr_debug("Switched APIC routing to %s.\n",
+				pr_info("Switched APIC routing to %s.\n",
 					apic->name);
 			}
 			break;
@@ -44,7 +44,7 @@ int __init default_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
 		if ((*drv)->acpi_madt_oem_check(oem_id, oem_table_id)) {
 			if (apic != *drv) {
 				apic = *drv;
-				pr_debug("Setting APIC routing to %s.\n",
+				pr_info("Setting APIC routing to %s.\n",
 					apic->name);
 			}
 			return 1;

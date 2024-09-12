@@ -115,7 +115,7 @@ void __init prom_init(void)
 	mips_cpc_probe();
 	register_cps_smp_ops();
 
-	pr_debug("SoC Type: %s\n", get_system_type());
+	pr_info("SoC Type: %s\n", get_system_type());
 }
 
 void __init prom_free_prom_memory(void)

@@ -419,7 +419,7 @@ void do_barrier_nospec_fixups_range(bool enable, void *fixup_start, void *fixup_
 	instr = 0x60000000; /* nop */
 
 	if (enable) {
-		pr_debug("barrier-nospec: using ORI speculation barrier\n");
+		pr_info("barrier-nospec: using ORI speculation barrier\n");
 		instr = 0x63ff0000; /* ori 31,31,0 speculation barrier */
 	}
 
@@ -461,7 +461,7 @@ void do_barrier_nospec_fixups_range(bool enable, void *fixup_start, void *fixup_
 	instr[1] = PPC_INST_NOP;
 
 	if (enable) {
-		pr_debug("barrier-nospec: using isync; sync as speculation barrier\n");
+		pr_info("barrier-nospec: using isync; sync as speculation barrier\n");
 		instr[0] = PPC_INST_ISYNC;
 		instr[1] = PPC_INST_SYNC;
 	}

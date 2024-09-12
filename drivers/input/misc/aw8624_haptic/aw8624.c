@@ -4574,7 +4574,7 @@ static int __init aw8624_i2c_init(void)
 {
 	int ret = 0;
 
-	pr_debug("%s: aw8624 driver version %s\n", __func__, AW8624_VERSION);
+	pr_info("%s: aw8624 driver version %s\n", __func__, AW8624_VERSION);
 
 	ret = i2c_add_driver(&aw8624_i2c_driver);
 	if (ret) {

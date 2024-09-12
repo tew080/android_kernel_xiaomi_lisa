@@ -2648,7 +2648,7 @@ ql_log(uint level, scsi_qla_host_t *vha, uint id, const char *fmt, ...)
 		pr_warn("%s%pV", pbuf, &vaf);
 		break;
 	default:
-		pr_debug("%s%pV", pbuf, &vaf);
+		pr_info("%s%pV", pbuf, &vaf);
 		break;
 	}
 
@@ -2702,7 +2702,7 @@ ql_log_pci(uint level, struct pci_dev *pdev, uint id, const char *fmt, ...)
 		pr_warn("%s%pV", pbuf, &vaf);
 		break;
 	default:
-		pr_debug("%s%pV", pbuf, &vaf);
+		pr_info("%s%pV", pbuf, &vaf);
 		break;
 	}
 
@@ -2807,7 +2807,7 @@ ql_log_qp(uint32_t level, struct qla_qpair *qpair, int32_t id,
 		pr_warn("%s%pV", pbuf, &vaf);
 		break;
 	default:
-		pr_debug("%s%pV", pbuf, &vaf);
+		pr_info("%s%pV", pbuf, &vaf);
 		break;
 	}
 

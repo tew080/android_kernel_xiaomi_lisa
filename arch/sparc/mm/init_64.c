@@ -2026,11 +2026,11 @@ static void __init setup_page_offset(void)
 	VMALLOC_END = ((sparc64_va_hole_bottom >> 1) +
 		       (sparc64_va_hole_bottom >> 2));
 
-	pr_debug("MM: PAGE_OFFSET is 0x%016lx (max_phys_bits == %lu)\n",
+	pr_info("MM: PAGE_OFFSET is 0x%016lx (max_phys_bits == %lu)\n",
 		PAGE_OFFSET, max_phys_bits);
-	pr_debug("MM: VMALLOC [0x%016lx --> 0x%016lx]\n",
+	pr_info("MM: VMALLOC [0x%016lx --> 0x%016lx]\n",
 		VMALLOC_START, VMALLOC_END);
-	pr_debug("MM: VMEMMAP [0x%016lx --> 0x%016lx]\n",
+	pr_info("MM: VMEMMAP [0x%016lx --> 0x%016lx]\n",
 		VMEMMAP_BASE, VMEMMAP_BASE << 1);
 }
 

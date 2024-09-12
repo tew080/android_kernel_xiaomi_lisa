@@ -8118,7 +8118,7 @@ static int __init vmx_init(void)
 		}
 
 		if (enlightened_vmcs) {
-			pr_debug("KVM: vmx: using Hyper-V Enlightened VMCS\n");
+			pr_info("KVM: vmx: using Hyper-V Enlightened VMCS\n");
 			static_branch_enable(&enable_evmcs);
 		}
 

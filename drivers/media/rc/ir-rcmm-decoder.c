@@ -236,7 +236,7 @@ static int __init ir_rcmm_decode_init(void)
 {
 	ir_raw_handler_register(&rcmm_handler);
 
-	pr_debug("IR RCMM protocol handler initialized\n");
+	pr_info("IR RCMM protocol handler initialized\n");
 	return 0;
 }
 

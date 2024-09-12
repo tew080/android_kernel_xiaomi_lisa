@@ -69,14 +69,14 @@ int __init amd_numa_init(void)
 	if (nb < 0)
 		return nb;
 
-	pr_debug("Scanning NUMA topology in Northbridge %d\n", nb);
+	pr_info("Scanning NUMA topology in Northbridge %d\n", nb);
 
 	reg = read_pci_config(0, nb, 0, 0x60);
 	numnodes = ((reg >> 4) & 0xF) + 1;
 	if (numnodes <= 1)
 		return -ENOENT;
 
-	pr_debug("Number of physical nodes %d\n", numnodes);
+	pr_info("Number of physical nodes %d\n", numnodes);
 
 	prevbase = 0;
 	for (i = 0; i < 8; i++) {
@@ -88,17 +88,17 @@ int __init amd_numa_init(void)
 		nodeids[i] = nodeid = limit & 7;
 		if ((base & 3) == 0) {
 			if (i < numnodes)
-				pr_debug("Skipping disabled node %d\n", i);
+				pr_info("Skipping disabled node %d\n", i);
 			continue;
 		}
 		if (nodeid >= numnodes) {
-			pr_debug("Ignoring excess node %d (%Lx:%Lx)\n", nodeid,
+			pr_info("Ignoring excess node %d (%Lx:%Lx)\n", nodeid,
 				base, limit);
 			continue;
 		}
 
 		if (!limit) {
-			pr_debug("Skipping node entry %d (base %Lx)\n",
+			pr_info("Skipping node entry %d (base %Lx)\n",
 				i, base);
 			continue;
 		}
@@ -108,7 +108,7 @@ int __init amd_numa_init(void)
 			return -EINVAL;
 		}
 		if (node_isset(nodeid, numa_nodes_parsed)) {
-			pr_debug("Node %d already present, skipping\n",
+			pr_info("Node %d already present, skipping\n",
 				nodeid);
 			continue;
 		}
@@ -146,7 +146,7 @@ int __init amd_numa_init(void)
 			return -EINVAL;
 		}
 
-		pr_debug("Node %d MemBase %016Lx Limit %016Lx\n",
+		pr_info("Node %d MemBase %016Lx Limit %016Lx\n",
 			nodeid, base, limit);
 
 		prevbase = base;
@@ -171,7 +171,7 @@ int __init amd_numa_init(void)
 	early_get_smp_config();
 
 	if (boot_cpu_physical_apicid > 0) {
-		pr_debug("BSP APIC ID: %02x\n", boot_cpu_physical_apicid);
+		pr_info("BSP APIC ID: %02x\n", boot_cpu_physical_apicid);
 		apicid_base = boot_cpu_physical_apicid;
 	}
 

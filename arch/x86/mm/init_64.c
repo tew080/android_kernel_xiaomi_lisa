@@ -481,7 +481,7 @@ phys_pte_init(pte_t *pte_page, unsigned long paddr, unsigned long paddr_end,
 		}
 
 		if (0)
-			pr_debug("   pte=%p addr=%lx pte=%016lx\n", pte, paddr,
+			pr_info("   pte=%p addr=%lx pte=%016lx\n", pte, paddr,
 				pfn_pte(paddr >> PAGE_SHIFT, PAGE_KERNEL).pte);
 		pages++;
 		set_pte_init(pte, pfn_pte(paddr >> PAGE_SHIFT, prot), init);
@@ -1424,7 +1424,7 @@ static unsigned long probe_memory_block_size(void)
 			break;
 	}
 done:
-	pr_debug("x86/mm: Memory block size: %ldMB\n", bz >> 20);
+	pr_info("x86/mm: Memory block size: %ldMB\n", bz >> 20);
 
 	return bz;
 }

@@ -532,7 +532,7 @@ int ionic_port_reset(struct ionic *ionic)
 
 static int __init ionic_init_module(void)
 {
-	pr_debug("%s %s, ver %s\n",
+	pr_info("%s %s, ver %s\n",
 		IONIC_DRV_NAME, IONIC_DRV_DESCRIPTION, IONIC_DRV_VERSION);
 	ionic_debugfs_create();
 	return ionic_bus_register_driver();
@@ -543,7 +543,7 @@ static void __exit ionic_cleanup_module(void)
 	ionic_bus_unregister_driver();
 	ionic_debugfs_destroy();
 
-	pr_debug("%s removed\n", IONIC_DRV_NAME);
+	pr_info("%s removed\n", IONIC_DRV_NAME);
 }
 
 module_init(ionic_init_module);

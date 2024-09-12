@@ -4514,10 +4514,10 @@ static int __init igc_init_module(void)
 {
 	int ret;
 
-	pr_debug("%s - version %s\n",
+	pr_info("%s - version %s\n",
 		igc_driver_string, igc_driver_version);
 
-	pr_debug("%s\n", igc_copyright);
+	pr_info("%s\n", igc_copyright);
 
 	ret = pci_register_driver(&igc_driver);
 	return ret;

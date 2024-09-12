@@ -555,7 +555,7 @@ int emac_ipa_hab_export_tx_buf_pool(
 		goto err;
 	}
 
-	pr_debug("%s: Export TX buf pool memory location %p %d\n",
+	pr_info("%s: Export TX buf pool memory location %p %d\n",
 		__func__,
 		veth_emac_mem->tx_buff_pool_base_va,
 		veth_emac_mem->exp_id.tx_buf_pool_exp_id);
@@ -600,7 +600,7 @@ int emac_ipa_hab_export_rx_buf_pool(
 		goto err;
 	}
 
-	pr_debug("%s: Export RX buf pool memory location %p , %d\n",
+	pr_info("%s: Export RX buf pool memory location %p , %d\n",
 		__func__,
 		veth_emac_mem->rx_buff_pool_base_va,
 		veth_emac_mem->exp_id.rx_buf_pool_exp_id);

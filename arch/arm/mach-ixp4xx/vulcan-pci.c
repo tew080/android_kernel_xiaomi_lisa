@@ -33,7 +33,7 @@ void __init vulcan_pci_preinit(void)
 	 * limitation...
 	 */
 	pci_cardbus_mem_size = SZ_8M;
-	pr_debug("Vulcan PCI: limiting CardBus memory size to %dMB\n",
+	pr_info("Vulcan PCI: limiting CardBus memory size to %dMB\n",
 		(int)(pci_cardbus_mem_size >> 20));
 #endif
 	irq_set_irq_type(IXP4XX_GPIO_IRQ(INTA), IRQ_TYPE_LEVEL_LOW);

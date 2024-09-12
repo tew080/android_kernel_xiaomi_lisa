@@ -4595,12 +4595,12 @@ static int __init kvm_s390_init(void)
 	int i;
 
 	if (!sclp.has_sief2) {
-		pr_debug("SIE is not available\n");
+		pr_info("SIE is not available\n");
 		return -ENODEV;
 	}
 
 	if (nested && hpage) {
-		pr_debug("A KVM host that supports nesting cannot back its KVM guests with huge pages\n");
+		pr_info("A KVM host that supports nesting cannot back its KVM guests with huge pages\n");
 		return -EINVAL;
 	}
 

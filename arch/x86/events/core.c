@@ -1371,21 +1371,21 @@ void perf_event_print_debug(void)
 		rdmsrl(MSR_CORE_PERF_GLOBAL_OVF_CTRL, overflow);
 		rdmsrl(MSR_ARCH_PERFMON_FIXED_CTR_CTRL, fixed);
 
-		pr_debug("\n");
-		pr_debug("CPU#%d: ctrl:       %016llx\n", cpu, ctrl);
-		pr_debug("CPU#%d: status:     %016llx\n", cpu, status);
-		pr_debug("CPU#%d: overflow:   %016llx\n", cpu, overflow);
-		pr_debug("CPU#%d: fixed:      %016llx\n", cpu, fixed);
+		pr_info("\n");
+		pr_info("CPU#%d: ctrl:       %016llx\n", cpu, ctrl);
+		pr_info("CPU#%d: status:     %016llx\n", cpu, status);
+		pr_info("CPU#%d: overflow:   %016llx\n", cpu, overflow);
+		pr_info("CPU#%d: fixed:      %016llx\n", cpu, fixed);
 		if (x86_pmu.pebs_constraints) {
 			rdmsrl(MSR_IA32_PEBS_ENABLE, pebs);
-			pr_debug("CPU#%d: pebs:       %016llx\n", cpu, pebs);
+			pr_info("CPU#%d: pebs:       %016llx\n", cpu, pebs);
 		}
 		if (x86_pmu.lbr_nr) {
 			rdmsrl(MSR_IA32_DEBUGCTLMSR, debugctl);
-			pr_debug("CPU#%d: debugctl:   %016llx\n", cpu, debugctl);
+			pr_info("CPU#%d: debugctl:   %016llx\n", cpu, debugctl);
 		}
 	}
-	pr_debug("CPU#%d: active:     %016llx\n", cpu, *(u64 *)cpuc->active_mask);
+	pr_info("CPU#%d: active:     %016llx\n", cpu, *(u64 *)cpuc->active_mask);
 
 	for (idx = 0; idx < x86_pmu.num_counters; idx++) {
 		rdmsrl(x86_pmu_config_addr(idx), pmc_ctrl);
@@ -1393,17 +1393,17 @@ void perf_event_print_debug(void)
 
 		prev_left = per_cpu(pmc_prev_left[idx], cpu);
 
-		pr_debug("CPU#%d:   gen-PMC%d ctrl:  %016llx\n",
+		pr_info("CPU#%d:   gen-PMC%d ctrl:  %016llx\n",
 			cpu, idx, pmc_ctrl);
-		pr_debug("CPU#%d:   gen-PMC%d count: %016llx\n",
+		pr_info("CPU#%d:   gen-PMC%d count: %016llx\n",
 			cpu, idx, pmc_count);
-		pr_debug("CPU#%d:   gen-PMC%d left:  %016llx\n",
+		pr_info("CPU#%d:   gen-PMC%d left:  %016llx\n",
 			cpu, idx, prev_left);
 	}
 	for (idx = 0; idx < x86_pmu.num_counters_fixed; idx++) {
 		rdmsrl(MSR_ARCH_PERFMON_FIXED_CTR0 + idx, pmc_count);
 
-		pr_debug("CPU#%d: fixed-PMC%d count: %016llx\n",
+		pr_info("CPU#%d: fixed-PMC%d count: %016llx\n",
 			cpu, idx, pmc_count);
 	}
 	local_irq_restore(flags);
@@ -1626,8 +1626,8 @@ static void __init pmu_check_apic(void)
 		return;
 
 	x86_pmu.apic = 0;
-	pr_debug("no APIC, boot with the \"lapic\" boot parameter to force-enable it.\n");
-	pr_debug("no hardware sampling interrupt available.\n");
+	pr_info("no APIC, boot with the \"lapic\" boot parameter to force-enable it.\n");
+	pr_info("no hardware sampling interrupt available.\n");
 
 	/*
 	 * If we have a PMU initialized but no APIC
@@ -1781,7 +1781,7 @@ static int __init init_hw_perf_events(void)
 	struct x86_pmu_quirk *quirk;
 	int err;
 
-	pr_debug("Performance Events: ");
+	pr_info("Performance Events: ");
 
 	switch (boot_cpu_data.x86_vendor) {
 	case X86_VENDOR_INTEL:
@@ -1832,13 +1832,13 @@ static int __init init_hw_perf_events(void)
 
 	pmu.attr_update = x86_pmu.attr_update;
 
-	pr_debug("... version:                %d\n",     x86_pmu.version);
-	pr_debug("... bit width:              %d\n",     x86_pmu.cntval_bits);
-	pr_debug("... generic registers:      %d\n",     x86_pmu.num_counters);
-	pr_debug("... value mask:             %016Lx\n", x86_pmu.cntval_mask);
-	pr_debug("... max period:             %016Lx\n", x86_pmu.max_period);
-	pr_debug("... fixed-purpose events:   %d\n",     x86_pmu.num_counters_fixed);
-	pr_debug("... event mask:             %016Lx\n", x86_pmu.intel_ctrl);
+	pr_info("... version:                %d\n",     x86_pmu.version);
+	pr_info("... bit width:              %d\n",     x86_pmu.cntval_bits);
+	pr_info("... generic registers:      %d\n",     x86_pmu.num_counters);
+	pr_info("... value mask:             %016Lx\n", x86_pmu.cntval_mask);
+	pr_info("... max period:             %016Lx\n", x86_pmu.max_period);
+	pr_info("... fixed-purpose events:   %d\n",     x86_pmu.num_counters_fixed);
+	pr_info("... event mask:             %016Lx\n", x86_pmu.intel_ctrl);
 
 	/*
 	 * Install callbacks. Core will call them for each online

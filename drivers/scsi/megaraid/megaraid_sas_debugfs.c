@@ -103,7 +103,7 @@ void megasas_init_debugfs(void)
 {
 	megasas_debugfs_root = debugfs_create_dir("megaraid_sas", NULL);
 	if (!megasas_debugfs_root)
-		pr_debug("Cannot create debugfs root\n");
+		pr_info("Cannot create debugfs root\n");
 }
 
 /*

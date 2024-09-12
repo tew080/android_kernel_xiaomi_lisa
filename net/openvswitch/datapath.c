@@ -2482,7 +2482,7 @@ static int __init dp_init(void)
 
 	BUILD_BUG_ON(sizeof(struct ovs_skb_cb) > FIELD_SIZEOF(struct sk_buff, cb));
 
-	pr_debug("Open vSwitch switching datapath\n");
+	pr_info("Open vSwitch switching datapath\n");
 
 	err = action_fifos_init();
 	if (err)

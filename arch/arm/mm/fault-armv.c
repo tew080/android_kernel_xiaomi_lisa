@@ -232,7 +232,7 @@ void __init check_writebuffer_bugs(void)
 	const char *reason;
 	unsigned long v = 1;
 
-	pr_debug("CPU: Testing write buffer coherency: ");
+	pr_info("CPU: Testing write buffer coherency: ");
 
 	page = alloc_page(GFP_KERNEL);
 	if (page) {

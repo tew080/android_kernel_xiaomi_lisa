@@ -3784,7 +3784,7 @@ static void hardware_enable_nolock(void *junk)
 	if (r) {
 		cpumask_clear_cpu(cpu, cpus_hardware_enabled);
 		atomic_inc(&hardware_enable_failed);
-		pr_debug("kvm: enabling virtualization on CPU%d failed\n", cpu);
+		pr_info("kvm: enabling virtualization on CPU%d failed\n", cpu);
 	}
 }
 
@@ -3863,7 +3863,7 @@ static int kvm_reboot(struct notifier_block *notifier, unsigned long val,
 	 *
 	 * And Intel TXT required VMX off for all cpu when system shutdown.
 	 */
-	pr_debug("kvm: exiting hardware virtualization\n");
+	pr_info("kvm: exiting hardware virtualization\n");
 	kvm_rebooting = true;
 	on_each_cpu(hardware_disable_nolock, NULL, 1);
 	return NOTIFY_OK;

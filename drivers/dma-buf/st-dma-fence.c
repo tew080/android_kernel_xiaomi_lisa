@@ -500,7 +500,7 @@ static int thread_signal_callback(void *arg)
 		pass++;
 	}
 
-	pr_debug("%s[%d] completed %lu passes, %lu misses\n",
+	pr_info("%s[%d] completed %lu passes, %lu misses\n",
 		__func__, t->id, pass, miss);
 	return err;
 }
@@ -558,7 +558,7 @@ int dma_fence(void)
 	};
 	int ret;
 
-	pr_debug("sizeof(dma_fence)=%zu\n", sizeof(struct dma_fence));
+	pr_info("sizeof(dma_fence)=%zu\n", sizeof(struct dma_fence));
 
 	slab_fences = KMEM_CACHE(mock_fence,
 				 SLAB_TYPESAFE_BY_RCU |

@@ -289,7 +289,7 @@ static void __init print_xstate_feature(u64 xstate_mask)
 	const char *feature_name;
 
 	if (cpu_has_xfeatures(xstate_mask, &feature_name))
-		pr_debug("x86/fpu: Supporting XSAVE feature 0x%03Lx: '%s'\n", xstate_mask, feature_name);
+		pr_info("x86/fpu: Supporting XSAVE feature 0x%03Lx: '%s'\n", xstate_mask, feature_name);
 }
 
 /*
@@ -393,7 +393,7 @@ static void __init print_xstate_offset_size(void)
 	for (i = FIRST_EXTENDED_XFEATURE; i < XFEATURE_MAX; i++) {
 		if (!xfeature_enabled(i))
 			continue;
-		pr_debug("x86/fpu: xstate_offset[%d]: %4d, xstate_sizes[%d]: %4d\n",
+		pr_info("x86/fpu: xstate_offset[%d]: %4d, xstate_sizes[%d]: %4d\n",
 			 i, xstate_comp_offsets[i], i, xstate_sizes[i]);
 	}
 }
@@ -752,12 +752,12 @@ void __init fpu__init_system_xstate(void)
 	on_boot_cpu = 0;
 
 	if (!boot_cpu_has(X86_FEATURE_FPU)) {
-		pr_debug("x86/fpu: No FPU detected\n");
+		pr_info("x86/fpu: No FPU detected\n");
 		return;
 	}
 
 	if (!boot_cpu_has(X86_FEATURE_XSAVE)) {
-		pr_debug("x86/fpu: x87 FPU will use %s\n",
+		pr_info("x86/fpu: x87 FPU will use %s\n",
 			boot_cpu_has(X86_FEATURE_FXSR) ? "FXSAVE" : "FSAVE");
 		return;
 	}
@@ -815,7 +815,7 @@ void __init fpu__init_system_xstate(void)
 
 	print_xstate_offset_size();
 
-	pr_debug("x86/fpu: Enabled xstate features 0x%llx, context size is %d bytes, using '%s' format.\n",
+	pr_info("x86/fpu: Enabled xstate features 0x%llx, context size is %d bytes, using '%s' format.\n",
 		xfeatures_mask,
 		fpu_kernel_xstate_size,
 		boot_cpu_has(X86_FEATURE_XSAVES) ? "compacted" : "standard");

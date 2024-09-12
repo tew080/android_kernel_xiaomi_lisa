@@ -198,7 +198,7 @@ static int msm_sharedmem_probe(struct platform_device *pdev)
 	}
 	dev_set_drvdata(&pdev->dev, info);
 
-	pr_debug("Device created for client '%s'\n", clnt_res->name);
+	pr_info("Device created for client '%s'\n", clnt_res->name);
 out:
 	return ret;
 }

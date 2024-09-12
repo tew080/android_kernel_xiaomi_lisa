@@ -801,7 +801,7 @@ static int dr_ste_build_eth_l2_src_des_bit_mask(struct mlx5dr_match_param *value
 	}
 
 	if (mask->cvlan_tag || mask->svlan_tag) {
-		pr_debug("Invalid c/svlan mask configuration\n");
+		pr_info("Invalid c/svlan mask configuration\n");
 		return -EINVAL;
 	}
 
@@ -1078,7 +1078,7 @@ static int dr_ste_build_eth_l2_src_des_tag(struct mlx5dr_match_param *value,
 			MLX5_SET(ste_eth_l2_src_dst, tag, l3_type, STE_IPV6);
 			spec->ip_version = 0;
 		} else {
-			pr_debug("Unsupported ip_version value\n");
+			pr_info("Unsupported ip_version value\n");
 			return -EINVAL;
 		}
 	}
@@ -1342,7 +1342,7 @@ static int dr_ste_build_eth_l2_src_or_dst_tag(struct mlx5dr_match_param *value,
 			MLX5_SET(ste_eth_l2_src, tag, l3_type, STE_IPV6);
 			spec->ip_version = 0;
 		} else {
-			pr_debug("Unsupported ip_version value\n");
+			pr_info("Unsupported ip_version value\n");
 			return -EINVAL;
 		}
 	}

@@ -320,7 +320,7 @@ adbhid_input_keycode(int id, int scancode, int repeat)
 					ahid->flags &= ~FLAG_CAPSLOCK_TRANSLATE;
 				}
 			} else {
-				pr_debug("Spurious caps lock event (scancode 0xff).\n");
+				pr_info("Spurious caps lock event (scancode 0xff).\n");
 			}
 		}
 	}
@@ -396,7 +396,7 @@ adbhid_input_keycode(int id, int scancode, int repeat)
 		input_report_key(adbhid[id]->input, key, !up_flag);
 		input_sync(adbhid[id]->input);
 	} else
-		pr_debug("Unhandled ADB key (scancode %#02x) %s.\n", keycode,
+		pr_info("Unhandled ADB key (scancode %#02x) %s.\n", keycode,
 			up_flag ? "released" : "pressed");
 
 }
@@ -533,7 +533,7 @@ adbhid_buttons_input(unsigned char *data, int nb, int autopoll)
 			break;
 
 		default:
-			pr_debug("Unhandled ADB_MISC event %02x, %02x, %02x, %02x\n",
+			pr_info("Unhandled ADB_MISC event %02x, %02x, %02x, %02x\n",
 				data[0], data[1], data[2], data[3]);
 			break;
 		}
@@ -608,13 +608,13 @@ adbhid_buttons_input(unsigned char *data, int nb, int autopoll)
 				break;
 
 			default:
-				pr_debug("Unhandled ADB_MISC event %02x, %02x, %02x, %02x\n",
+				pr_info("Unhandled ADB_MISC event %02x, %02x, %02x, %02x\n",
 					data[0], data[1], data[2], data[3]);
 				break;
 			}
 			break;
 		default:
-			pr_debug("Unhandled ADB_MISC event %02x, %02x, %02x, %02x\n",
+			pr_info("Unhandled ADB_MISC event %02x, %02x, %02x, %02x\n",
 				data[0], data[1], data[2], data[3]);
 			break;
 		}
@@ -828,7 +828,7 @@ adbhid_input_register(int id, int default_id, int original_handler_id,
 			input_dev->id.version = ADB_KEYBOARD_JIS;
 			break;
 		}
-		pr_debug("Detected ADB keyboard, type %s.\n", keyboard_type);
+		pr_info("Detected ADB keyboard, type %s.\n", keyboard_type);
 
 		for (i = 0; i < 128; i++)
 			if (hid->keycode[i])
@@ -884,7 +884,7 @@ adbhid_input_register(int id, int default_id, int original_handler_id,
 		/* else fall through */
 
 	default:
-		pr_debug("Trying to register unknown ADB device to input layer.\n");
+		pr_info("Trying to register unknown ADB device to input layer.\n");
 		err = -ENODEV;
 		goto fail;
 	}

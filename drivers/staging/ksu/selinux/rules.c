@@ -35,7 +35,7 @@ static struct policydb *get_policydb(void)
 void apply_kernelsu_rules()
 {
 	if (!getenforce()) {
-		pr_debug("SELinux permissive or disabled, apply rules!\n");
+		pr_info("SELinux permissive or disabled, apply rules!\n");
 	}
 
 	rcu_read_lock();
@@ -203,7 +203,7 @@ int handle_sepolicy(unsigned long arg3, void __user *arg4)
 	}
 
 	if (!getenforce()) {
-		pr_debug("SELinux permissive or disabled when handle policy!\n");
+		pr_info("SELinux permissive or disabled when handle policy!\n");
 	}
 
 	struct sepol_data data;

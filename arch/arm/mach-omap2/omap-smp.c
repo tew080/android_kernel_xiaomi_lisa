@@ -344,7 +344,7 @@ static void __init omap4_smp_maybe_reset_cpu1(struct omap_smp_config *c)
 	if (!needs_reset || !c->cpu1_rstctrl_va)
 		return;
 
-	pr_debug("smp: CPU1 parked within kernel, needs reset (0x%lx 0x%lx)\n",
+	pr_info("smp: CPU1 parked within kernel, needs reset (0x%lx 0x%lx)\n",
 		cpu1_startup_pa, cpu1_ns_pa_addr);
 
 	writel_relaxed(1, c->cpu1_rstctrl_va);

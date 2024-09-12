@@ -47,7 +47,7 @@ static int __init setup_mem_sz(char *str)
 	low_mem_sz = memparse(str, NULL) & PAGE_MASK;
 
 	/* early console might not be setup yet - it will show up later */
-	pr_debug("\"mem=%s\": mem sz set to %ldM\n", str, TO_MB(low_mem_sz));
+	pr_info("\"mem=%s\": mem sz set to %ldM\n", str, TO_MB(low_mem_sz));
 
 	return 0;
 }
@@ -71,7 +71,7 @@ void __init early_init_dt_add_memory_arch(u64 base, u64 size)
 #endif
 	}
 
-	pr_debug("Memory @ %llx [%lldM] %s\n",
+	pr_info("Memory @ %llx [%lldM] %s\n",
 		base, TO_MB(size), !in_use ? "Not used":"");
 }
 

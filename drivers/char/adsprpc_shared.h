@@ -148,7 +148,7 @@ do {\
 	pr_err("Error: adsprpc (%d): %s: %s: " fmt, __LINE__,\
 	current->comm, __func__, ##args)
 #define ADSPRPC_INFO(fmt, args...)\
-	pr_debug("Info: adsprpc (%d): %s: %s: " fmt, __LINE__,\
+	pr_info("Info: adsprpc (%d): %s: %s: " fmt, __LINE__,\
 	current->comm, __func__, ##args)
 #define ADSPRPC_WARN(fmt, args...)\
 	pr_warn("Warning: adsprpc (%d): %s: %s: " fmt, __LINE__,\

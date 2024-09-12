@@ -405,8 +405,8 @@ You can also take the handler lock yourself:
 .. code-block:: c
 
 	mutex_lock(&state->ctrl_handler.lock);
-	pr_debug("String value is '%s'\n", ctrl1->p_cur.p_char);
-	pr_debug("Integer value is '%s'\n", ctrl2->cur.val);
+	pr_info("String value is '%s'\n", ctrl1->p_cur.p_char);
+	pr_info("Integer value is '%s'\n", ctrl2->cur.val);
 	mutex_unlock(&state->ctrl_handler.lock);
 
 

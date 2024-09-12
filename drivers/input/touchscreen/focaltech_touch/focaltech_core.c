@@ -466,7 +466,7 @@ static void fts_ts_trusted_touch_tvm_vm_mode_enable(struct fts_ts_data *fts_data
 		goto accept_fail;
 	}
 	atomic_set(&fts_data->trusted_touch_enabled, 1);
-	pr_debug("trusted touch enabled\n");
+	pr_info("trusted touch enabled\n");
 
 	return;
 sgl_cmp_fail:
@@ -609,7 +609,7 @@ static void fts_ts_trusted_touch_tvm_vm_mode_disable(struct fts_ts_data *fts_dat
 	}
 	fts_ts_trusted_touch_set_tvm_driver_state(fts_data, TRUSTED_TOUCH_TVM_INIT);
 	atomic_set(&fts_data->trusted_touch_enabled, 0);
-	pr_debug("trusted touch disabled\n");
+	pr_info("trusted touch disabled\n");
 	return;
 error:
 	fts_ts_trusted_touch_abort_handler(fts_data,
@@ -996,7 +996,7 @@ static int fts_ts_vm_mem_lend(struct fts_ts_data *fts_data)
 		goto error;
 	}
 
-	pr_debug("vm mem lend succeded\n");
+	pr_info("vm mem lend succeded\n");
 
 	fts_ts_trusted_touch_set_pvm_driver_state(fts_data, PVM_IOMEM_LENT);
 
@@ -1056,7 +1056,7 @@ static int fts_ts_trusted_touch_pvm_vm_mode_enable(struct fts_ts_data *fts_data)
 		goto error;
 	}
 
-	pr_debug("vm irq lend succeded for irq:%d\n", fts_data->irq);
+	pr_info("vm irq lend succeded for irq:%d\n", fts_data->irq);
 	fts_ts_trusted_touch_set_pvm_driver_state(fts_data, PVM_IRQ_LENT);
 
 	rc = hh_irq_lend_notify(vm_info->irq_label);

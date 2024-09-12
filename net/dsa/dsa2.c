@@ -555,7 +555,7 @@ static int dsa_tree_setup(struct dsa_switch_tree *dst)
 
 	dst->setup = true;
 
-	pr_debug("DSA: tree %d setup\n", dst->index);
+	pr_info("DSA: tree %d setup\n", dst->index);
 
 	return 0;
 
@@ -578,7 +578,7 @@ static void dsa_tree_teardown(struct dsa_switch_tree *dst)
 
 	dsa_tree_teardown_default_cpu(dst);
 
-	pr_debug("DSA: tree %d torn down\n", dst->index);
+	pr_info("DSA: tree %d torn down\n", dst->index);
 
 	dst->setup = false;
 }

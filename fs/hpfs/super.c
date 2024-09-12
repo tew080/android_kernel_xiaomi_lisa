@@ -321,7 +321,7 @@ static int parse_opts(char *opts, kuid_t *uid, kgid_t *gid, umode_t *umask,
 	if (!opts)
 		return 1;
 
-	/*pr_debug("Parsing opts: '%s'\n",opts);*/
+	/*pr_info("Parsing opts: '%s'\n",opts);*/
 
 	while ((p = strsep(&opts, ",")) != NULL) {
 		substring_t args[MAX_OPT_ARGS];
@@ -416,7 +416,7 @@ static int parse_opts(char *opts, kuid_t *uid, kgid_t *gid, umode_t *umask,
 
 static inline void hpfs_help(void)
 {
-	pr_debug("\n\
+	pr_info("\n\
 HPFS filesystem options:\n\
       help              do not mount and display this text\n\
       uid=xxx           set uid of files that don't have uid specified in eas\n\

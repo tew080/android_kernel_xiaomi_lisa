@@ -18,7 +18,7 @@ static enum efi_secureboot_mode get_sb_mode(void)
 	size = sizeof(secboot);
 
 	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {
-		pr_debug("ima: secureboot mode unknown, no efi\n");
+		pr_info("ima: secureboot mode unknown, no efi\n");
 		return efi_secureboot_mode_unknown;
 	}
 
@@ -26,12 +26,12 @@ static enum efi_secureboot_mode get_sb_mode(void)
 	status = efi.get_variable(L"SecureBoot", &efi_variable_guid,
 				  NULL, &size, &secboot);
 	if (status == EFI_NOT_FOUND) {
-		pr_debug("ima: secureboot mode disabled\n");
+		pr_info("ima: secureboot mode disabled\n");
 		return efi_secureboot_mode_disabled;
 	}
 
 	if (status != EFI_SUCCESS) {
-		pr_debug("ima: secureboot mode unknown\n");
+		pr_info("ima: secureboot mode unknown\n");
 		return efi_secureboot_mode_unknown;
 	}
 
@@ -43,11 +43,11 @@ static enum efi_secureboot_mode get_sb_mode(void)
 		setupmode = 0;
 
 	if (secboot == 0 || setupmode == 1) {
-		pr_debug("ima: secureboot mode disabled\n");
+		pr_info("ima: secureboot mode disabled\n");
 		return efi_secureboot_mode_disabled;
 	}
 
-	pr_debug("ima: secureboot mode enabled\n");
+	pr_info("ima: secureboot mode enabled\n");
 	return efi_secureboot_mode_enabled;
 }
 

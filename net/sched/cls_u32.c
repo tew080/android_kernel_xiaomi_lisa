@@ -1454,13 +1454,13 @@ static int __init init_u32(void)
 {
 	int i, ret;
 
-	pr_debug("u32 classifier\n");
+	pr_info("u32 classifier\n");
 #ifdef CONFIG_CLS_U32_PERF
-	pr_debug("    Performance counters on\n");
+	pr_info("    Performance counters on\n");
 #endif
-	pr_debug("    input device check on\n");
+	pr_info("    input device check on\n");
 #ifdef CONFIG_NET_CLS_ACT
-	pr_debug("    Actions configured\n");
+	pr_info("    Actions configured\n");
 #endif
 	tc_u_common_hash = kvmalloc_array(U32_HASH_SIZE,
 					  sizeof(struct hlist_head),

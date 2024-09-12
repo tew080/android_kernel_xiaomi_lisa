@@ -345,7 +345,7 @@ static int ps3_system_bus_match(struct device *_dev,
 			dev->match_id == drv->match_id;
 
 	if (result)
-		pr_debug("%s:%d: dev=%u.%u(%s), drv=%u.%u(%s): match\n",
+		pr_info("%s:%d: dev=%u.%u(%s), drv=%u.%u(%s): match\n",
 			__func__, __LINE__,
 			dev->match_id, dev->match_sub_id, dev_name(&dev->core),
 			drv->match_id, drv->match_sub_id, drv->core.name);

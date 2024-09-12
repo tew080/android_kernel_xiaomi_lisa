@@ -3942,7 +3942,7 @@ static int skge_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (err)
 		goto err_out_iounmap;
 
-	pr_debug("%s addr 0x%llx irq %d chip %s rev %d\n",
+	pr_info("%s addr 0x%llx irq %d chip %s rev %d\n",
 		DRV_VERSION,
 		(unsigned long long)pci_resource_start(pdev, 0), pdev->irq,
 		skge_board_name(hw), hw->chip_rev);

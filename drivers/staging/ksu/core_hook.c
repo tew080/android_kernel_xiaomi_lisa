@@ -211,7 +211,7 @@ int ksu_handle_rename(struct dentry *old_dentry, struct dentry *new_dentry)
 	if (strcmp(buf, "/system/packages.list")) {
 		return 0;
 	}
-	pr_debug("renameat: %s -> %s, new path: %s\n", old_dentry->d_iname,
+	pr_info("renameat: %s -> %s, new path: %s\n", old_dentry->d_iname,
 		new_dentry->d_iname, buf);
 
 	track_throne();
@@ -247,7 +247,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 	}
 
 #ifdef CONFIG_KSU_DEBUG
-	pr_debug("option: 0x%x, cmd: %ld\n", option, arg2);
+	pr_info("option: 0x%x, cmd: %ld\n", option, arg2);
 #endif
 
 	if (arg2 == CMD_BECOME_MANAGER) {
@@ -262,7 +262,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 
 	if (arg2 == CMD_GRANT_ROOT) {
 		if (is_allow_su()) {
-			pr_debug("allow root for: %d\n", current_uid().val);
+			pr_info("allow root for: %d\n", current_uid().val);
 			escape_to_root();
 			if (copy_to_user(result, &reply_ok, sizeof(reply_ok))) {
 				pr_err("grant_root: prctl reply error\n");
@@ -299,7 +299,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 			static bool post_fs_data_lock = false;
 			if (!post_fs_data_lock) {
 				post_fs_data_lock = true;
-				pr_debug("post-fs-data triggered\n");
+				pr_info("post-fs-data triggered\n");
 				on_post_fs_data();
 			}
 			break;
@@ -308,13 +308,13 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 			static bool boot_complete_lock = false;
 			if (!boot_complete_lock) {
 				boot_complete_lock = true;
-				pr_debug("boot_complete triggered\n");
+				pr_info("boot_complete triggered\n");
 			}
 			break;
 		}
 		case EVENT_MODULE_MOUNTED: {
 			ksu_module_mounted = true;
-			pr_debug("module mounted!\n");
+			pr_info("module mounted!\n");
 			break;
 		}
 		default:
@@ -402,7 +402,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_sus_path((struct st_susfs_sus_path __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_SUS_PATH -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_SUS_PATH -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -418,7 +418,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_sus_mount((struct st_susfs_sus_mount __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_SUS_MOUNT -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_SUS_MOUNT -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -434,7 +434,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_sus_kstat((struct st_susfs_sus_kstat __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_SUS_KSTAT -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_SUS_KSTAT -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -448,7 +448,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_update_sus_kstat((struct st_susfs_sus_kstat __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_UPDATE_SUS_KSTAT -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_UPDATE_SUS_KSTAT -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -462,7 +462,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_sus_kstat((struct st_susfs_sus_kstat __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_SUS_KSTAT_STATICALLY -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
         }
@@ -478,7 +478,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_sus_maps((struct st_susfs_sus_maps __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_SUS_MAPS -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_SUS_MAPS -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -492,7 +492,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_update_sus_maps((struct st_susfs_sus_maps __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_UPDATE_SUS_MAPS -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_UPDATE_SUS_MAPS -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -506,7 +506,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_sus_maps((struct st_susfs_sus_maps __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_SUS_MAPS_STATICALLY -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_SUS_MAPS_STATICALLY -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -522,7 +522,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_sus_proc_fd_link((struct st_susfs_sus_proc_fd_link __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_SUS_PROC_FD_LINK -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_SUS_PROC_FD_LINK -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -538,7 +538,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_sus_memfd((struct st_susfs_sus_memfd __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_SUS_MEMFD -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_SUS_MEMFD -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -554,7 +554,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_add_try_umount((struct st_susfs_try_umount __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_ADD_TRY_UMOUNT -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_ADD_TRY_UMOUNT -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -570,7 +570,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				return 0;
 			}
 			error = susfs_set_uname((struct st_susfs_uname __user*)arg3);
-			pr_debug("susfs: CMD_SUSFS_SET_UNAME -> ret: %d\n", error);
+			pr_info("susfs: CMD_SUSFS_SET_UNAME -> ret: %d\n", error);
 			copy_to_user((void __user*)arg5, &error, sizeof(error));
 			return 0;
 		}
@@ -717,12 +717,12 @@ int ksu_handle_setuid(struct cred *new, const struct cred *old)
 	}
 
 	if (!is_appuid(new_uid) || is_unsupported_uid(new_uid.val)) {
-		// pr_debug("handle setuid ignore non application or isolated uid: %d\n", new_uid.val);
+		// pr_info("handle setuid ignore non application or isolated uid: %d\n", new_uid.val);
 		return 0;
 	}
 
 	if (ksu_is_allow_uid(new_uid.val)) {
-		// pr_debug("handle setuid ignore allowed application: %d\n", new_uid.val);
+		// pr_info("handle setuid ignore allowed application: %d\n", new_uid.val);
 		return 0;
 	}
 
@@ -730,7 +730,7 @@ int ksu_handle_setuid(struct cred *new, const struct cred *old)
 		return 0;
 	} else {
 #ifdef CONFIG_KSU_DEBUG
-		pr_debug("uid: %d should not umount!\n", current_uid().val);
+		pr_info("uid: %d should not umount!\n", current_uid().val);
 #endif
 	}
 
@@ -739,7 +739,7 @@ int ksu_handle_setuid(struct cred *new, const struct cred *old)
 	// when we umount for such process, that is a disaster!
 	bool is_zygote_child = is_zygote(old->security);
 	if (!is_zygote_child) {
-		pr_debug("handle umount ignore non zygote child: %d\n",
+		pr_info("handle umount ignore non zygote child: %d\n",
 			current->pid);
 		return 0;
 	}
@@ -820,12 +820,12 @@ __maybe_unused int ksu_kprobe_init(void)
 	rc = register_kprobe(&prctl_kp);
 
 	if (rc) {
-		pr_debug("prctl kprobe failed: %d.\n", rc);
+		pr_info("prctl kprobe failed: %d.\n", rc);
 		return rc;
 	}
 
 	rc = register_kprobe(&renameat_kp);
-	pr_debug("renameat kp: %d\n", rc);
+	pr_info("renameat kp: %d\n", rc);
 
 	return rc;
 }
@@ -856,7 +856,7 @@ static int ksu_key_permission(key_ref_t key_ref, const struct cred *cred,
 		return 0;
 	}
 	init_session_keyring = cred->session_keyring;
-	pr_debug("kernel_compat: got init_session_keyring\n");
+	pr_info("kernel_compat: got init_session_keyring\n");
 	return 0;
 }
 #endif
@@ -1068,7 +1068,7 @@ void __init ksu_core_init(void)
 void ksu_core_exit(void)
 {
 #ifdef CONFIG_KPROBES
-	pr_debug("ksu_core_kprobe_exit\n");
+	pr_info("ksu_core_kprobe_exit\n");
 	// we dont use this now
 	// ksu_kprobe_exit();
 #endif

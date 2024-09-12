@@ -200,7 +200,7 @@ static void __init ath79_detect_sys_type(void)
 			chip, rev);
 	else
 		sprintf(ath79_sys_type, "Atheros AR%s rev %u", chip, rev);
-	pr_debug("SoC: %s\n", ath79_sys_type);
+	pr_info("SoC: %s\n", ath79_sys_type);
 }
 
 const char *get_system_type(void)
@@ -262,7 +262,7 @@ void __init plat_time_init(void)
 
 	cpu_clk_rate = clk_get_rate(clk);
 
-	pr_debug("CPU clock: %lu.%03lu MHz\n",
+	pr_info("CPU clock: %lu.%03lu MHz\n",
 		cpu_clk_rate / 1000000, (cpu_clk_rate / 1000) % 1000);
 
 	mips_hpt_frequency = cpu_clk_rate / 2;

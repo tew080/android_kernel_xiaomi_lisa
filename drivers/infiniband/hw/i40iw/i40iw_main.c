@@ -1185,7 +1185,7 @@ static void i40iw_add_ipv6_addr(struct i40iw_device *iwdev)
 				break;
 			}
 			list_for_each_entry_safe(ifp, tmp, &idev->addr_list, if_list) {
-				i40iw_pr_debug("IP=%pI6, vlan_id=%d, MAC=%pM\n", &ifp->addr,
+				i40iw_pr_info("IP=%pI6, vlan_id=%d, MAC=%pM\n", &ifp->addr,
 					      rdma_vlan_dev_vlan_id(ip_dev), ip_dev->dev_addr);
 				i40iw_copy_ip_ntohl(local_ipaddr6,
 						    ifp->addr.in6_u.u6_addr32);
@@ -1278,14 +1278,14 @@ static void i40iw_wait_pe_ready(struct i40iw_hw *hw)
 
 	do {
 		statusfw = i40iw_rd32(hw, I40E_GLPE_FWLDSTATUS);
-		i40iw_pr_debug("[%04d] fm load status[x%04X]\n", __LINE__, statusfw);
+		i40iw_pr_info("[%04d] fm load status[x%04X]\n", __LINE__, statusfw);
 		statuscpu0 = i40iw_rd32(hw, I40E_GLPE_CPUSTATUS0);
-		i40iw_pr_debug("[%04d] CSR_CQP status[x%04X]\n", __LINE__, statuscpu0);
+		i40iw_pr_info("[%04d] CSR_CQP status[x%04X]\n", __LINE__, statuscpu0);
 		statuscpu1 = i40iw_rd32(hw, I40E_GLPE_CPUSTATUS1);
-		i40iw_pr_debug("[%04d] I40E_GLPE_CPUSTATUS1 status[x%04X]\n",
+		i40iw_pr_info("[%04d] I40E_GLPE_CPUSTATUS1 status[x%04X]\n",
 			      __LINE__, statuscpu1);
 		statuscpu2 = i40iw_rd32(hw, I40E_GLPE_CPUSTATUS2);
-		i40iw_pr_debug("[%04d] I40E_GLPE_CPUSTATUS2 status[x%04X]\n",
+		i40iw_pr_info("[%04d] I40E_GLPE_CPUSTATUS2 status[x%04X]\n",
 			      __LINE__, statuscpu2);
 		if ((statuscpu0 == 0x80) && (statuscpu1 == 0x80) && (statuscpu2 == 0x80))
 			break;	/* SUCCESS */
@@ -1357,7 +1357,7 @@ static enum i40iw_status_code i40iw_initialize_dev(struct i40iw_device *iwdev,
 		else if ((qset != last_qset) && (qset != I40IW_NO_QSET))
 			iwdev->dcb = true;
 	}
-	i40iw_pr_debug("DCB is set/clear = %d\n", iwdev->dcb);
+	i40iw_pr_info("DCB is set/clear = %d\n", iwdev->dcb);
 	info.vchnl_send = i40iw_virtchnl_send;
 	status = i40iw_device_init(&iwdev->sc_dev, &info);
 
@@ -1482,7 +1482,7 @@ static void i40iw_deinit_device(struct i40iw_device *iwdev)
 
 	struct i40iw_sc_dev *dev = &iwdev->sc_dev;
 
-	i40iw_pr_debug("state = %d\n", iwdev->init_state);
+	i40iw_pr_info("state = %d\n", iwdev->init_state);
 	if (iwdev->param_wq)
 		destroy_workqueue(iwdev->param_wq);
 
@@ -1710,7 +1710,7 @@ static int i40iw_open(struct i40e_info *ldev, struct i40e_client *client)
 		iwdev->param_wq = alloc_ordered_workqueue("l2params", WQ_MEM_RECLAIM);
 		if(iwdev->param_wq == NULL)
 			break;
-		i40iw_pr_debug("i40iw_open completed\n");
+		i40iw_pr_info("i40iw_open completed\n");
 		return 0;
 	} while (0);
 

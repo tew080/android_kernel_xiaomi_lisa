@@ -339,7 +339,7 @@ static const struct xfrm_type_offload esp6_type_offload = {
 static int __init esp6_offload_init(void)
 {
 	if (xfrm_register_type_offload(&esp6_type_offload, AF_INET6) < 0) {
-		pr_debug("%s: can't add xfrm type offload\n", __func__);
+		pr_info("%s: can't add xfrm type offload\n", __func__);
 		return -EAGAIN;
 	}
 

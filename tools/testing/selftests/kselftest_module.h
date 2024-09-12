@@ -24,7 +24,7 @@ static unsigned int failed_tests __initdata
 static inline int kstm_report(unsigned int total_tests, unsigned int failed_tests)
 {
 	if (failed_tests == 0)
-		pr_debug("all %u tests passed\n", total_tests);
+		pr_info("all %u tests passed\n", total_tests);
 	else
 		pr_warn("failed %u out of %u tests\n", failed_tests, total_tests);
 
@@ -34,13 +34,13 @@ static inline int kstm_report(unsigned int total_tests, unsigned int failed_test
 #define KSTM_MODULE_LOADERS(__module)			\
 static int __init __module##_init(void)			\
 {							\
-	pr_debug("loaded.\n");				\
+	pr_info("loaded.\n");				\
 	selftest();					\
 	return kstm_report(total_tests, failed_tests);	\
 }							\
 static void __exit __module##_exit(void)		\
 {							\
-	pr_debug("unloaded.\n");				\
+	pr_info("unloaded.\n");				\
 }							\
 module_init(__module##_init);				\
 module_exit(__module##_exit)

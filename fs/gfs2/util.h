@@ -23,7 +23,7 @@
 #define fs_err(fs, fmt, ...)						\
 	pr_err("fsid=%s: " fmt, (fs)->sd_fsname, ##__VA_ARGS__)
 #define fs_info(fs, fmt, ...)						\
-	pr_debug("fsid=%s: " fmt, (fs)->sd_fsname, ##__VA_ARGS__)
+	pr_info("fsid=%s: " fmt, (fs)->sd_fsname, ##__VA_ARGS__)
 
 void gfs2_assert_i(struct gfs2_sbd *sdp);
 

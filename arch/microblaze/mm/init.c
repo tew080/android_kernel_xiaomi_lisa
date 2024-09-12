@@ -126,7 +126,7 @@ void __init setup_memory(void)
 			((u32)_text <= (memory_start + lowmem_size - 1))) {
 			memory_size = lowmem_size;
 			PAGE_OFFSET = memory_start;
-			pr_debug("%s: Main mem: 0x%x, size 0x%08x\n",
+			pr_info("%s: Main mem: 0x%x, size 0x%08x\n",
 				__func__, (u32) memory_start,
 					(u32) memory_size);
 			break;
@@ -142,7 +142,7 @@ void __init setup_memory(void)
 	kernel_align_start = PAGE_DOWN((u32)_text);
 	/* ALIGN can be remove because _end in vmlinux.lds.S is align */
 	kernel_align_size = PAGE_UP((u32)klimit) - kernel_align_start;
-	pr_debug("%s: kernel addr:0x%08x-0x%08x size=0x%08x\n",
+	pr_info("%s: kernel addr:0x%08x-0x%08x size=0x%08x\n",
 		__func__, kernel_align_start, kernel_align_start
 			+ kernel_align_size, kernel_align_size);
 	memblock_reserve(kernel_align_start, kernel_align_size);
@@ -164,10 +164,10 @@ void __init setup_memory(void)
 	max_low_pfn = ((u64)memory_start + (u64)lowmem_size) >> PAGE_SHIFT;
 	max_pfn = ((u64)memory_start + (u64)memory_size) >> PAGE_SHIFT;
 
-	pr_debug("%s: max_mapnr: %#lx\n", __func__, max_mapnr);
-	pr_debug("%s: min_low_pfn: %#lx\n", __func__, min_low_pfn);
-	pr_debug("%s: max_low_pfn: %#lx\n", __func__, max_low_pfn);
-	pr_debug("%s: max_pfn: %#lx\n", __func__, max_pfn);
+	pr_info("%s: max_mapnr: %#lx\n", __func__, max_mapnr);
+	pr_info("%s: min_low_pfn: %#lx\n", __func__, min_low_pfn);
+	pr_info("%s: max_low_pfn: %#lx\n", __func__, max_low_pfn);
+	pr_info("%s: max_pfn: %#lx\n", __func__, max_pfn);
 
 	/* Add active regions with valid PFNs */
 	for_each_memblock(memory, reg) {
@@ -198,15 +198,15 @@ void __init mem_init(void)
 
 	mem_init_print_info(NULL);
 #ifdef CONFIG_MMU
-	pr_debug("Kernel virtual memory layout:\n");
-	pr_debug("  * 0x%08lx..0x%08lx  : fixmap\n", FIXADDR_START, FIXADDR_TOP);
+	pr_info("Kernel virtual memory layout:\n");
+	pr_info("  * 0x%08lx..0x%08lx  : fixmap\n", FIXADDR_START, FIXADDR_TOP);
 #ifdef CONFIG_HIGHMEM
-	pr_debug("  * 0x%08lx..0x%08lx  : highmem PTEs\n",
+	pr_info("  * 0x%08lx..0x%08lx  : highmem PTEs\n",
 		PKMAP_BASE, PKMAP_ADDR(LAST_PKMAP));
 #endif /* CONFIG_HIGHMEM */
-	pr_debug("  * 0x%08lx..0x%08lx  : early ioremap\n",
+	pr_info("  * 0x%08lx..0x%08lx  : early ioremap\n",
 		ioremap_bot, ioremap_base);
-	pr_debug("  * 0x%08lx..0x%08lx  : vmalloc & ioremap\n",
+	pr_info("  * 0x%08lx..0x%08lx  : vmalloc & ioremap\n",
 		(unsigned long)VMALLOC_START, VMALLOC_END);
 #endif
 	mem_init_done = 1;

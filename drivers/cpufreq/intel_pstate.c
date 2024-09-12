@@ -1292,7 +1292,7 @@ static void intel_pstate_disable_ee(int cpu)
 		return;
 
 	if (!(power_ctl & BIT(MSR_IA32_POWER_CTL_BIT_EE))) {
-		pr_debug("Disabling energy efficiency optimization\n");
+		pr_info("Disabling energy efficiency optimization\n");
 		power_ctl |= BIT(MSR_IA32_POWER_CTL_BIT_EE);
 		wrmsrl_on_cpu(cpu, MSR_IA32_POWER_CTL, power_ctl);
 	}
@@ -2758,7 +2758,7 @@ static int __init intel_pstate_init(void)
 	} else {
 		id = x86_match_cpu(intel_pstate_cpu_ids);
 		if (!id) {
-			pr_debug("CPU model not supported\n");
+			pr_info("CPU model not supported\n");
 			return -ENODEV;
 		}
 
@@ -2766,7 +2766,7 @@ static int __init intel_pstate_init(void)
 	}
 
 	if (intel_pstate_msrs_not_valid()) {
-		pr_debug("Invalid MSRs\n");
+		pr_info("Invalid MSRs\n");
 		return -ENODEV;
 	}
 
@@ -2776,14 +2776,14 @@ hwp_cpu_matched:
 	 * firmware has its own power management modes.
 	 */
 	if (intel_pstate_platform_pwr_mgmt_exists()) {
-		pr_debug("P-states controlled by the platform\n");
+		pr_info("P-states controlled by the platform\n");
 		return -ENODEV;
 	}
 
 	if (!hwp_active && hwp_only)
 		return -ENOTSUPP;
 
-	pr_debug("Intel P-state driver initializing\n");
+	pr_info("Intel P-state driver initializing\n");
 
 	all_cpu_data = vzalloc(array_size(sizeof(void *), num_possible_cpus()));
 	if (!all_cpu_data)
@@ -2800,7 +2800,7 @@ hwp_cpu_matched:
 		return rc;
 
 	if (hwp_active)
-		pr_debug("HWP enabled\n");
+		pr_info("HWP enabled\n");
 
 	return 0;
 }
@@ -2814,12 +2814,12 @@ static int __init intel_pstate_setup(char *str)
 	if (!strcmp(str, "disable")) {
 		no_load = 1;
 	} else if (!strcmp(str, "passive")) {
-		pr_debug("Passive mode enabled\n");
+		pr_info("Passive mode enabled\n");
 		default_driver = &intel_cpufreq;
 		no_hwp = 1;
 	}
 	if (!strcmp(str, "no_hwp")) {
-		pr_debug("HWP disabled\n");
+		pr_info("HWP disabled\n");
 		no_hwp = 1;
 	}
 	if (!strcmp(str, "force"))

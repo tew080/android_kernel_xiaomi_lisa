@@ -928,7 +928,7 @@ static void bnx2fc_indicate_netevent(void *context, unsigned long event,
 		if (link_possible && !bnx2fc_link_ok(lport)) {
 			switch (cdev->enabled) {
 			case FCOE_CTLR_DISABLED:
-				pr_debug("Link up while interface is disabled.\n");
+				pr_info("Link up while interface is disabled.\n");
 				break;
 			case FCOE_CTLR_ENABLED:
 			case FCOE_CTLR_UNUSED:
@@ -945,7 +945,7 @@ static void bnx2fc_indicate_netevent(void *context, unsigned long event,
 		} else if (fcoe_ctlr_link_down(ctlr)) {
 			switch (cdev->enabled) {
 			case FCOE_CTLR_DISABLED:
-				pr_debug("Link down while interface is disabled.\n");
+				pr_info("Link down while interface is disabled.\n");
 				break;
 			case FCOE_CTLR_ENABLED:
 			case FCOE_CTLR_UNUSED:

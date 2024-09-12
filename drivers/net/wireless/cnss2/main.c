@@ -490,7 +490,7 @@ static int cnss_fw_mem_ready_hdlr(struct cnss_plat_data *plat_priv)
 		goto out;
 
 	if (cnss_wlfw_qdss_dnld_send_sync(plat_priv))
-		cnss_pr_debug("Failed to download qdss configuration file");
+		cnss_pr_info("Failed to download qdss configuration file");
 
 	return 0;
 out:
@@ -1456,17 +1456,17 @@ int cnss_force_fw_assert(struct device *dev)
 	}
 
 	if (plat_priv->device_id == QCA6174_DEVICE_ID) {
-		cnss_pr_debug("Forced FW assert is not supported\n");
+		cnss_pr_info("Forced FW assert is not supported\n");
 		return -EOPNOTSUPP;
 	}
 
 	if (cnss_bus_is_device_down(plat_priv)) {
-		cnss_pr_debug("Device is already in bad state, ignore force assert\n");
+		cnss_pr_info("Device is already in bad state, ignore force assert\n");
 		return 0;
 	}
 
 	if (test_bit(CNSS_DRIVER_RECOVERY, &plat_priv->driver_state)) {
-		cnss_pr_debug("Recovery is already in progress, ignore forced FW assert\n");
+		cnss_pr_info("Recovery is already in progress, ignore forced FW assert\n");
 		return 0;
 	}
 
@@ -1493,17 +1493,17 @@ int cnss_force_collect_rddm(struct device *dev)
 	}
 
 	if (plat_priv->device_id == QCA6174_DEVICE_ID) {
-		cnss_pr_debug("Force collect rddm is not supported\n");
+		cnss_pr_info("Force collect rddm is not supported\n");
 		return -EOPNOTSUPP;
 	}
 
 	if (cnss_bus_is_device_down(plat_priv)) {
-		cnss_pr_debug("Device is already in bad state, wait to collect rddm\n");
+		cnss_pr_info("Device is already in bad state, wait to collect rddm\n");
 		goto wait_rddm;
 	}
 
 	if (test_bit(CNSS_DRIVER_RECOVERY, &plat_priv->driver_state)) {
-		cnss_pr_debug("Recovery is already in progress, wait to collect rddm\n");
+		cnss_pr_info("Recovery is already in progress, wait to collect rddm\n");
 		goto wait_rddm;
 	}
 
@@ -1511,7 +1511,7 @@ int cnss_force_collect_rddm(struct device *dev)
 	    test_bit(CNSS_DRIVER_UNLOADING, &plat_priv->driver_state) ||
 	    test_bit(CNSS_DRIVER_IDLE_RESTART, &plat_priv->driver_state) ||
 	    test_bit(CNSS_DRIVER_IDLE_SHUTDOWN, &plat_priv->driver_state)) {
-		cnss_pr_debug("Loading/Unloading/idle restart/shutdown is in progress, ignore forced collect rddm\n");
+		cnss_pr_info("Loading/Unloading/idle restart/shutdown is in progress, ignore forced collect rddm\n");
 		return 0;
 	}
 
@@ -2260,7 +2260,7 @@ static int cnss_register_ramdump_v1(struct cnss_plat_data *plat_priv)
 		    ramdump_info->ramdump_va, &ramdump_info->ramdump_pa);
 
 	if (ramdump_info->ramdump_size == 0) {
-		cnss_pr_debug("Ramdump will not be collected");
+		cnss_pr_info("Ramdump will not be collected");
 		goto out;
 	}
 
@@ -3269,7 +3269,7 @@ retry:
 	if (ret < 0)
 		cnss_pr_err("CNSS genl init failed %d\n", ret);
 
-	cnss_pr_debug("Platform driver probed successfully.\n");
+	cnss_pr_info("Platform driver probed successfully.\n");
 
 	return 0;
 

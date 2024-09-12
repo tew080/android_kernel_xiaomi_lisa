@@ -4702,7 +4702,7 @@ static int nand_detect(struct nand_chip *chip, struct nand_flash_dev *type)
 		return ret;
 
 	if (id_data[0] != maf_id || id_data[1] != dev_id) {
-		pr_debug("second ID read did not match %02x,%02x against %02x,%02x\n",
+		pr_info("second ID read did not match %02x,%02x against %02x,%02x\n",
 			maf_id, dev_id, id_data[0], id_data[1]);
 		return -ENODEV;
 	}
@@ -4788,9 +4788,9 @@ ident_done:
 		 * Check, if buswidth is correct. Hardware drivers should set
 		 * chip correct!
 		 */
-		pr_debug("device found, Manufacturer ID: 0x%02x, Chip ID: 0x%02x\n",
+		pr_info("device found, Manufacturer ID: 0x%02x, Chip ID: 0x%02x\n",
 			maf_id, dev_id);
-		pr_debug("%s %s\n", nand_manufacturer_name(manufacturer),
+		pr_info("%s %s\n", nand_manufacturer_name(manufacturer),
 			mtd->name);
 		pr_warn("bus width %d instead of %d bits\n", busw ? 16 : 8,
 			(chip->options & NAND_BUSWIDTH_16) ? 16 : 8);
@@ -4823,11 +4823,11 @@ ident_done:
 
 	nand_legacy_adjust_cmdfunc(chip);
 
-	pr_debug("device found, Manufacturer ID: 0x%02x, Chip ID: 0x%02x\n",
+	pr_info("device found, Manufacturer ID: 0x%02x, Chip ID: 0x%02x\n",
 		maf_id, dev_id);
-	pr_debug("%s %s\n", nand_manufacturer_name(manufacturer),
+	pr_info("%s %s\n", nand_manufacturer_name(manufacturer),
 		chip->parameters.model);
-	pr_debug("%d MiB, %s, erase size: %d KiB, page size: %d, OOB size: %d\n",
+	pr_info("%d MiB, %s, erase size: %d KiB, page size: %d, OOB size: %d\n",
 		(int)(targetsize >> 20), nand_is_slc(chip) ? "SLC" : "MLC",
 		mtd->erasesize >> 10, mtd->writesize, mtd->oobsize);
 	return 0;
@@ -5070,7 +5070,7 @@ static int nand_scan_ident(struct nand_chip *chip, unsigned int maxchips,
 		nand_deselect_target(chip);
 	}
 	if (i > 1)
-		pr_debug("%d chips detected\n", i);
+		pr_info("%d chips detected\n", i);
 
 	/* Store the number of chips and calc total size for mtd */
 	memorg->ntargets = i;

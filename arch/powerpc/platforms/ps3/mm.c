@@ -644,7 +644,7 @@ static int dma_sb_region_create(struct ps3_dma_region *r)
 	BUG_ON(!r);
 
 	if (!r->dev->bus_id) {
-		pr_debug("%s:%d: %llu:%llu no dma\n", __func__, __LINE__,
+		pr_info("%s:%d: %llu:%llu no dma\n", __func__, __LINE__,
 			r->dev->bus_id, r->dev->dev_id);
 		return 0;
 	}
@@ -713,7 +713,7 @@ static int dma_sb_region_free(struct ps3_dma_region *r)
 	BUG_ON(!r);
 
 	if (!r->dev->bus_id) {
-		pr_debug("%s:%d: %llu:%llu no dma\n", __func__, __LINE__,
+		pr_info("%s:%d: %llu:%llu no dma\n", __func__, __LINE__,
 			r->dev->bus_id, r->dev->dev_id);
 		return 0;
 	}
@@ -974,7 +974,7 @@ static int dma_sb_region_create_linear(struct ps3_dma_region *r)
 	if (r->len > 16*1024*1024) {	/* FIXME: need proper fix */
 		/* force 16M dma pages for linear mapping */
 		if (r->page_size != PS3_DMA_16M) {
-			pr_debug("%s:%d: forcing 16M pages for linear map\n",
+			pr_info("%s:%d: forcing 16M pages for linear map\n",
 				__func__, __LINE__);
 			r->page_size = PS3_DMA_16M;
 			r->len = _ALIGN_UP(r->len, 1 << r->page_size);

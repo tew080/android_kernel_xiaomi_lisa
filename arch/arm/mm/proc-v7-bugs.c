@@ -101,7 +101,7 @@ static unsigned int spectre_v2_install_workaround(unsigned int method)
 	}
 
 	if (spectre_v2_method)
-		pr_debug("CPU%u: Spectre v2: using %s workaround\n",
+		pr_info("CPU%u: Spectre v2: using %s workaround\n",
 			smp_processor_id(), spectre_v2_method);
 
 	return SPECTRE_MITIGATED;
@@ -222,7 +222,7 @@ static int spectre_bhb_install_workaround(int method)
 
 		spectre_bhb_method = method;
 
-		pr_debug("CPU%u: Spectre BHB: enabling %s workaround for all CPUs\n",
+		pr_info("CPU%u: Spectre BHB: enabling %s workaround for all CPUs\n",
 			smp_processor_id(), spectre_bhb_method_name(method));
 	}
 

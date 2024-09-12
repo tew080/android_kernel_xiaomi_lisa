@@ -140,7 +140,7 @@ void pci_load_of_ranges(struct pci_controller *hose, struct device_node *node)
 	struct of_pci_range range;
 	struct of_pci_range_parser parser;
 
-	pr_debug("PCI host bridge %pOF ranges:\n", node);
+	pr_info("PCI host bridge %pOF ranges:\n", node);
 	hose->of_node = node;
 
 	if (of_pci_range_parser_init(&parser, node))
@@ -151,7 +151,7 @@ void pci_load_of_ranges(struct pci_controller *hose, struct device_node *node)
 
 		switch (range.flags & IORESOURCE_TYPE_BITS) {
 		case IORESOURCE_IO:
-			pr_debug("  IO 0x%016llx..0x%016llx\n",
+			pr_info("  IO 0x%016llx..0x%016llx\n",
 				range.cpu_addr,
 				range.cpu_addr + range.size - 1);
 			hose->io_map_base =
@@ -160,7 +160,7 @@ void pci_load_of_ranges(struct pci_controller *hose, struct device_node *node)
 			res = hose->io_resource;
 			break;
 		case IORESOURCE_MEM:
-			pr_debug(" MEM 0x%016llx..0x%016llx\n",
+			pr_info(" MEM 0x%016llx..0x%016llx\n",
 				range.cpu_addr,
 				range.cpu_addr + range.size - 1);
 			res = hose->mem_resource;

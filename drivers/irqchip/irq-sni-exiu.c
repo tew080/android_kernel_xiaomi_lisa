@@ -260,7 +260,7 @@ static int __init exiu_dt_init(struct device_node *node,
 		goto out_unmap;
 	}
 
-	pr_debug("%pOF: %d interrupts forwarded to %pOF\n", node, NUM_IRQS,
+	pr_info("%pOF: %d interrupts forwarded to %pOF\n", node, NUM_IRQS,
 		parent);
 
 	return 0;

@@ -100,7 +100,7 @@ __subtests(const char *caller, const struct subtest *st, int count, void *data)
 		if (!apply_subtest_filter(caller, st->name))
 			continue;
 
-		pr_debug("dma-buf: Running %s/%s\n", caller, st->name);
+		pr_info("dma-buf: Running %s/%s\n", caller, st->name);
 
 		err = st->func(data);
 		if (err && err != -EINTR) {
@@ -136,7 +136,7 @@ static int run_selftests(struct selftest *st, unsigned long count)
 		if (!st->enabled)
 			continue;
 
-		pr_debug("dma-buf: Running %s\n", st->name);
+		pr_info("dma-buf: Running %s\n", st->name);
 		err = st->func();
 		if (err)
 			break;

@@ -552,12 +552,12 @@ static int cnss_configure_ramdump(void)
 		}
 	}
 
-	pr_debug("ramdump addr: %p, phys: %pa subsys:'%s'\n",
+	pr_info("ramdump addr: %p, phys: %pa subsys:'%s'\n",
 		ssr_info->ramdump_addr, &ssr_info->ramdump_phys,
 		ssr_info->subsys_name);
 
 	if (ssr_info->ramdump_size == 0) {
-		pr_debug("CNSS ramdump will not be collected\n");
+		pr_info("CNSS ramdump will not be collected\n");
 		return 0;
 	}
 
@@ -834,7 +834,7 @@ static int cnss_sdio_wlan_inserted(struct sdio_func *func,
 
 	cnss_put_hw_resources(cnss_pdata->cnss_sdio_info.dev);
 
-	pr_debug("SDIO Device is Probed\n");
+	pr_info("SDIO Device is Probed\n");
 	return 0;
 }
 

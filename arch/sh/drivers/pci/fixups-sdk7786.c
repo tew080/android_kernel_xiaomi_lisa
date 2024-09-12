@@ -46,7 +46,7 @@ static int __init sdk7786_pci_init(void)
 	 */
 	slot4en ?: (!(data & PCIECR_PRST4) && (data & PCIECR_PRST3));
 	if (slot4en) {
-		pr_debug("Activating PCIe slot#4 (disabling slot#3)\n");
+		pr_info("Activating PCIe slot#4 (disabling slot#3)\n");
 
 		data &= ~PCIECR_PCIEMUX1;
 		fpga_write_reg(data, PCIECR);
@@ -57,7 +57,7 @@ static int __init sdk7786_pci_init(void)
 			return -EBUSY;
 		}
 	} else
-		pr_debug("PCIe slot#4 disabled\n");
+		pr_info("PCIe slot#4 disabled\n");
 
 	return 0;
 }

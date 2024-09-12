@@ -711,7 +711,7 @@ int do_dump(struct list_head *segs, struct device *dev)
 		return -EINVAL;
 
 	list_for_each_entry(segment, segs, node) {
-		pr_debug("Got segment size %d\n", segment->size);
+		pr_info("Got segment size %d\n", segment->size);
 		data_size += segment->size;
 	}
 

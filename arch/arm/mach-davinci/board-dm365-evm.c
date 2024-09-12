@@ -762,7 +762,7 @@ fail:
 	}
 	__raw_writeb(mux, cpld + CPLD_MUX);
 	__raw_writeb(resets, cpld + CPLD_RESETS);
-	pr_debug("EVM: %s video input\n", label);
+	pr_info("EVM: %s video input\n", label);
 
 	/* REVISIT export switches: NTSC/PAL (SW5.6), EXTRA1 (SW5.2), etc */
 }

@@ -1015,7 +1015,7 @@ static void __init magician_init(void)
 		iounmap(cpld);
 		system_rev = board_id & 0x7;
 		lcd_select = board_id & 0x8;
-		pr_debug("LCD type: %s\n", lcd_select ? "Samsung" : "Toppoly");
+		pr_info("LCD type: %s\n", lcd_select ? "Samsung" : "Toppoly");
 		if (lcd_select && (system_rev < 3))
 			/* NOTICE valid LCD init sequence */
 			gpio_request_one(GPIO75_MAGICIAN_SAMSUNG_POWER,

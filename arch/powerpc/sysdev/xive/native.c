@@ -626,7 +626,7 @@ bool __init xive_native_init(void)
 		opal_xive_reset(OPAL_XIVE_MODE_EMU);
 		return false;
 	}
-	pr_debug("Using %dkB queues\n", 1 << (xive_queue_shift - 10));
+	pr_info("Using %dkB queues\n", 1 << (xive_queue_shift - 10));
 	return true;
 }
 

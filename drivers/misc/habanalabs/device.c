@@ -1406,7 +1406,7 @@ void hl_device_fini(struct hl_device *hdev)
 	/* Hide devices and sysfs nodes from user */
 	device_cdev_sysfs_del(hdev);
 
-	pr_debug("removed device successfully\n");
+	pr_info("removed device successfully\n");
 }
 
 /*

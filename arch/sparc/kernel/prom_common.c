@@ -153,6 +153,6 @@ void __init prom_build_devicetree(void)
 	of_pdt_build_devicetree(prom_root_node, &prom_sparc_ops);
 	of_console_init();
 
-	pr_debug("PROM: Built device tree with %u bytes of memory.\n",
+	pr_info("PROM: Built device tree with %u bytes of memory.\n",
 			prom_early_allocated);
 }

@@ -3432,7 +3432,7 @@ static struct platform_driver sci_driver = {
 
 static int __init sci_init(void)
 {
-	pr_debug("%s\n", banner);
+	pr_info("%s\n", banner);
 
 	return platform_driver_register(&sci_driver);
 }

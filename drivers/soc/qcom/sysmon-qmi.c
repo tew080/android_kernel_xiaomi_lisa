@@ -92,7 +92,7 @@ static void sysmon_ind_cb(struct qmi_handle *qmi, struct sockaddr_qrtr *sq,
 					struct sysmon_qmi_data, clnt_handle);
 	struct subsys_desc *desc = qmi_data->desc;
 
-	pr_debug("%s: Indication received from subsystem\n", qmi_data->name);
+	pr_info("%s: Indication received from subsystem\n", qmi_data->name);
 
 	if (desc)
 		complete_shutdown_ack(desc);
@@ -122,7 +122,7 @@ static int ssctl_new_server(struct qmi_handle *qmi, struct qmi_service *svc)
 	struct sysmon_qmi_data *data = container_of(qmi,
 					struct sysmon_qmi_data, clnt_handle);
 
-	pr_debug("Connection established between QMI handle and %s's SSCTL service\n"
+	pr_info("Connection established between QMI handle and %s's SSCTL service\n"
 								, data->name);
 
 	data->ssctl.sq_family = AF_QIPCRTR;
@@ -137,7 +137,7 @@ static void ssctl_del_server(struct qmi_handle *qmi, struct qmi_service *svc)
 	struct sysmon_qmi_data *data = container_of(qmi,
 					struct sysmon_qmi_data, clnt_handle);
 
-	pr_debug("Connection lost between QMI handle and %s's SSCTL service\n"
+	pr_info("Connection lost between QMI handle and %s's SSCTL service\n"
 								, data->name);
 	data->connected = false;
 }

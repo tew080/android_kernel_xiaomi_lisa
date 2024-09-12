@@ -2135,7 +2135,7 @@ static int init_ipmi_ssif(void)
 	if (initialized)
 		return 0;
 
-	pr_debug("IPMI SSIF Interface driver\n");
+	pr_info("IPMI SSIF Interface driver\n");
 
 	/* build list for i2c from addr list */
 	for (i = 0; i < num_addrs; i++) {

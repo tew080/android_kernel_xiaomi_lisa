@@ -368,7 +368,7 @@ void *hh_msgq_register(enum hh_msgq_label label)
 	cap_table_entry->client_desc = client_desc;
 	spin_unlock(&cap_table_entry->cap_entry_lock);
 
-	pr_debug("hh_msgq: Registered client for label: %d\n", label);
+	pr_info("hh_msgq: Registered client for label: %d\n", label);
 
 	return client_desc;
 }
@@ -405,7 +405,7 @@ int hh_msgq_unregister(void *msgq_client_desc)
 
 	spin_unlock(&cap_table_entry->cap_entry_lock);
 
-	pr_debug("%s: Unregistered client for label: %d\n",
+	pr_info("%s: Unregistered client for label: %d\n",
 		__func__, client_desc->label);
 
 	kfree(client_desc);

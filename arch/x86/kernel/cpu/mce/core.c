@@ -1719,7 +1719,7 @@ static int __mcheck_cpu_apply_quirks(struct cpuinfo_x86 *c)
 	struct mca_config *cfg = &mca_cfg;
 
 	if (c->x86_vendor == X86_VENDOR_UNKNOWN) {
-		pr_debug("unknown CPU type - not enabling MCE support\n");
+		pr_info("unknown CPU type - not enabling MCE support\n");
 		return -EOPNOTSUPP;
 	}
 
@@ -2058,7 +2058,7 @@ static int __init mcheck_enable(char *str)
 		if (get_option(&str, &cfg->tolerant) == 2)
 			get_option(&str, &(cfg->monarch_timeout));
 	} else {
-		pr_debug("mce argument %s ignored. Please use /sys\n", str);
+		pr_info("mce argument %s ignored. Please use /sys\n", str);
 		return 0;
 	}
 	return 1;

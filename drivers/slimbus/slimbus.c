@@ -2945,7 +2945,7 @@ int slim_reconfigure_now(struct slim_device *sb)
 			}
 		}
 		if (list_empty(&sb->mark_removal)) {
-			pr_debug("SLIM_CL: skip reconfig sequence\n");
+			pr_info("SLIM_CL: skip reconfig sequence\n");
 			return 0;
 		}
 	}
@@ -3394,7 +3394,7 @@ int slim_ctrl_clk_pause(struct slim_controller *ctrl, bool wakeup, u8 restart)
 	for (i = 0; i < ctrl->last_tid; i++) {
 		if (ctrl->txnt[i]) {
 			ret = -EBUSY;
-			pr_debug("slim_clk_pause: txn-rsp for %d pending\n", i);
+			pr_info("slim_clk_pause: txn-rsp for %d pending\n", i);
 			mutex_unlock(&ctrl->m_ctrl);
 			return -EBUSY;
 		}
@@ -3405,7 +3405,7 @@ int slim_ctrl_clk_pause(struct slim_controller *ctrl, bool wakeup, u8 restart)
 	mutex_lock(&ctrl->sched.m_reconf);
 	/* Data channels active */
 	if (ctrl->sched.usedslots) {
-		pr_debug("slim_clk_pause: data channel active\n");
+		pr_info("slim_clk_pause: data channel active\n");
 		ret = -EBUSY;
 		goto clk_pause_ret;
 	}

@@ -938,8 +938,8 @@ static void gic_update_rdist_properties(void)
 	gic_iterate_rdists(__gic_update_rdist_properties);
 	if (WARN_ON(gic_data.ppi_nr == UINT_MAX))
 		gic_data.ppi_nr = 0;
-	pr_debug("%d PPIs implemented\n", gic_data.ppi_nr);
-	pr_debug("%sVLPI support, %sdirect LPI support\n",
+	pr_info("%d PPIs implemented\n", gic_data.ppi_nr);
+	pr_info("%sVLPI support, %sdirect LPI support\n",
 		!gic_data.rdists.has_vlpis ? "no " : "",
 		!gic_data.rdists.has_direct_lpi ? "no " : "");
 }
@@ -1606,7 +1606,7 @@ static int __init gic_init_bases(void __iomem *dist_base,
 		static_branch_disable(&supports_deactivate_key);
 
 	if (static_branch_likely(&supports_deactivate_key))
-		pr_debug("GIC: Using split EOI/Deactivate mode\n");
+		pr_info("GIC: Using split EOI/Deactivate mode\n");
 
 	gic_data.fwnode = handle;
 	gic_data.dist_base = dist_base;
@@ -1623,8 +1623,8 @@ static int __init gic_init_bases(void __iomem *dist_base,
 	gic_enable_quirks(readl_relaxed(gic_data.dist_base + GICD_IIDR),
 			  gic_quirks, &gic_data);
 
-	pr_debug("%d SPIs implemented\n", GIC_LINE_NR - 32);
-	pr_debug("%d Extended SPIs implemented\n", GIC_ESPI_NR);
+	pr_info("%d SPIs implemented\n", GIC_LINE_NR - 32);
+	pr_info("%d Extended SPIs implemented\n", GIC_ESPI_NR);
 	gic_data.domain = irq_domain_create_tree(handle, &gic_irq_domain_ops,
 						 &gic_data);
 	irq_domain_update_bus_token(gic_data.domain, DOMAIN_BUS_WIRED);
@@ -1638,7 +1638,7 @@ static int __init gic_init_bases(void __iomem *dist_base,
 	}
 
 	gic_data.has_rss = !!(typer & GICD_TYPER_RSS);
-	pr_debug("Distributor has %sRange Selector support\n",
+	pr_info("Distributor has %sRange Selector support\n",
 		gic_data.has_rss ? "" : "no ");
 
 	if (typer & GICD_TYPER_MBIS) {
@@ -1718,7 +1718,7 @@ static void __init gic_populate_ppi_partitions(struct device_node *gic_node)
 
 		part->partition_id = of_node_to_fwnode(child_part);
 
-		pr_debug("GIC: PPI partition %pOFn[%d] { ",
+		pr_info("GIC: PPI partition %pOFn[%d] { ",
 			child_part, part_idx);
 
 		n = of_property_count_elems_of_size(child_part, "affinity",
@@ -1961,7 +1961,7 @@ static int __init gic_acpi_collect_gicr_base(void)
 	if (acpi_table_parse_madt(type, redist_parser, 0) > 0)
 		return 0;
 
-	pr_debug("No valid GICR entries exist\n");
+	pr_info("No valid GICR entries exist\n");
 	return -ENODEV;
 }
 

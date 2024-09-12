@@ -19,7 +19,7 @@ __setup("no_ipi_broadcast=", apic_ipi_shorthand);
 
 static int __init print_ipi_mode(void)
 {
-	pr_debug("IPI shorthand broadcast: %s\n",
+	pr_info("IPI shorthand broadcast: %s\n",
 		apic_ipi_shorthand_off ? "disabled" : "enabled");
 	return 0;
 }

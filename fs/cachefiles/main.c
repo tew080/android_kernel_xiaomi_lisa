@@ -73,7 +73,7 @@ static int __init cachefiles_init(void)
 	if (ret < 0)
 		goto error_proc;
 
-	pr_debug("Loaded\n");
+	pr_info("Loaded\n");
 	return 0;
 
 error_proc:
@@ -92,7 +92,7 @@ fs_initcall(cachefiles_init);
  */
 static void __exit cachefiles_exit(void)
 {
-	pr_debug("Unloading\n");
+	pr_info("Unloading\n");
 
 	cachefiles_proc_cleanup();
 	kmem_cache_destroy(cachefiles_object_jar);

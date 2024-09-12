@@ -122,7 +122,7 @@ int migor_lcd_qvga_setup(void *sohandle, struct sh_mobile_lcdc_sys_bus_ops *so)
 	if (read_reg16(sohandle, so, 0) != 0x1505)
 		return -ENODEV;
 
-	pr_debug("Migo-R QVGA LCD Module detected.\n");
+	pr_info("Migo-R QVGA LCD Module detected.\n");
 
 	migor_lcd_qvga_seq(sohandle, so, sync_data, ARRAY_SIZE(sync_data));
 	write_reg16(sohandle, so, 0x00A4, 0x0001);

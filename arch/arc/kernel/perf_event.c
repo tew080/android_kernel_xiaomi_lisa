@@ -603,7 +603,7 @@ static int arc_pmu_device_probe(struct platform_device *pdev)
 
 	arc_pmu->max_period = (1ULL << counter_size) / 2 - 1ULL;
 
-	pr_debug("ARC perf\t: %d counters (%d bits), %d conditions%s\n",
+	pr_info("ARC perf\t: %d counters (%d bits), %d conditions%s\n",
 		arc_pmu->n_counters, counter_size, cc_bcr.c,
 		has_interrupts ? ", [overflow IRQ support]" : "");
 

@@ -196,6 +196,6 @@ void __init plat_time_init(void)
 	clk = clk_get_cpu();
 	mips_hpt_frequency = clk_get_rate(clk) / get_counter_resolution();
 	write_c0_compare(read_c0_count());
-	pr_debug("CPU Clock: %ldMHz\n", clk_get_rate(clk) / 1000000);
+	pr_info("CPU Clock: %ldMHz\n", clk_get_rate(clk) / 1000000);
 	clk_put(clk);
 }

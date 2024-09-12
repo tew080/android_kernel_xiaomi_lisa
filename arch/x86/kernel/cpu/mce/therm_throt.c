@@ -196,7 +196,7 @@ static void therm_throt_process(bool new_event, int event, int level)
 	}
 	if (old_event) {
 		if (event == THERMAL_THROTTLING_EVENT)
-			pr_debug("CPU%d: %s temperature/speed normal\n", this_cpu,
+			pr_info("CPU%d: %s temperature/speed normal\n", this_cpu,
 				level == CORE_LEVEL ? "Core" : "Package");
 		return;
 	}

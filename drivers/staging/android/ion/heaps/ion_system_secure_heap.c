@@ -90,7 +90,7 @@ static int ion_system_secure_heap_allocate(struct ion_heap *heap,
 
 	if (!ion_heap_is_system_secure_heap_type(type) ||
 	    !is_cp_flag_present(flags) || (hweight_long(cp_flags) != 1)) {
-		pr_debug("%s: Incorrect heap type or incorrect flags\n",
+		pr_info("%s: Incorrect heap type or incorrect flags\n",
 			__func__);
 		return -EINVAL;
 	}
@@ -98,7 +98,7 @@ static int ion_system_secure_heap_allocate(struct ion_heap *heap,
 	ret = secure_heap->sys_heap->ops->allocate(secure_heap->sys_heap,
 						buffer, size, flags);
 	if (ret) {
-		pr_debug("%s: Failed to get allocation for %s, ret = %d\n",
+		pr_info("%s: Failed to get allocation for %s, ret = %d\n",
 			__func__, heap->name, ret);
 		return ret;
 	}

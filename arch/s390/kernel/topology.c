@@ -547,7 +547,7 @@ void __init topology_init_early(void)
 		      __func__, PAGE_SIZE, PAGE_SIZE);
 	info = tl_info;
 	store_topology(info);
-	pr_debug("The CPU configuration topology of the machine is: %d %d %d %d %d %d / %d\n",
+	pr_info("The CPU configuration topology of the machine is: %d %d %d %d %d %d / %d\n",
 		info->mag[0], info->mag[1], info->mag[2], info->mag[3],
 		info->mag[4], info->mag[5], info->mnest);
 	alloc_masks(info, &socket_info, 1);

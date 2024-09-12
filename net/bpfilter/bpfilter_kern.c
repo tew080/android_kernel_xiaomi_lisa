@@ -83,7 +83,7 @@ static int start_umh(void)
 	if (err)
 		return err;
 	bpfilter_ops.stop = false;
-	pr_debug("Loaded bpfilter_umh pid %d\n", bpfilter_ops.info.pid);
+	pr_info("Loaded bpfilter_umh pid %d\n", bpfilter_ops.info.pid);
 
 	/* health check that usermode process started correctly */
 	if (__bpfilter_process_sockopt(NULL, 0, NULL, 0, 0) != 0) {

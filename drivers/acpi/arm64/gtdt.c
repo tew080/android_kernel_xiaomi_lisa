@@ -316,7 +316,7 @@ int __init acpi_arch_timer_mem_init(struct arch_timer_mem *timer_mem,
 	}
 
 	if (*timer_count)
-		pr_debug("found %d memory-mapped timer block(s).\n",
+		pr_info("found %d memory-mapped timer block(s).\n",
 			*timer_count);
 
 	return 0;
@@ -408,7 +408,7 @@ static int __init gtdt_sbsa_gwdt_init(void)
 	}
 
 	if (gwdt_count)
-		pr_debug("found %d SBSA generic Watchdog(s).\n", gwdt_count);
+		pr_info("found %d SBSA generic Watchdog(s).\n", gwdt_count);
 
 	return ret;
 }

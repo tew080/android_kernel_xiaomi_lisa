@@ -270,7 +270,7 @@ static irqreturn_t arm_smmu_cf_selftest(int irq, void *data)
 	irq_count++;
 	if (irq_data)
 		hwirq = irq_data->hwirq;
-	pr_debug("Interrupt (irq:%d hwirq:%ld) received, fsr:0x%x\n",
+	pr_info("Interrupt (irq:%d hwirq:%ld) received, fsr:0x%x\n",
 				irq, hwirq, fsr);
 
 	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);

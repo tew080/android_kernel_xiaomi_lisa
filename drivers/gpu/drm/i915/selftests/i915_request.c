@@ -490,7 +490,7 @@ static int mock_breadcrumbs_smoketest(void *arg)
 
 		put_task_struct(threads[n]);
 	}
-	pr_debug("Completed %lu waits for %lu fence across %d cpus\n",
+	pr_info("Completed %lu waits for %lu fence across %d cpus\n",
 		atomic_long_read(&t.num_waits),
 		atomic_long_read(&t.num_fences),
 		ncpus);
@@ -601,7 +601,7 @@ static int live_nop_request(void *arg)
 		if (err)
 			goto out_unlock;
 
-		pr_debug("Request latencies on %s: 1 = %lluns, %lu = %lluns\n",
+		pr_info("Request latencies on %s: 1 = %lluns, %lu = %lluns\n",
 			engine->name,
 			ktime_to_ns(times[0]),
 			prime, div64_u64(ktime_to_ns(times[1]), prime));
@@ -743,7 +743,7 @@ static int live_empty_request(void *arg)
 		if (err)
 			goto out_batch;
 
-		pr_debug("Batch latencies on %s: 1 = %lluns, %lu = %lluns\n",
+		pr_info("Batch latencies on %s: 1 = %lluns, %lu = %lluns\n",
 			engine->name,
 			ktime_to_ns(times[0]),
 			prime, div64_u64(ktime_to_ns(times[1]), prime));
@@ -1216,7 +1216,7 @@ out_flush:
 		num_waits += atomic_long_read(&t[id].num_waits);
 		num_fences += atomic_long_read(&t[id].num_fences);
 	}
-	pr_debug("Completed %lu waits for %lu fences across %d engines and %d cpus\n",
+	pr_info("Completed %lu waits for %lu fences across %d engines and %d cpus\n",
 		num_waits, num_fences, RUNTIME_INFO(i915)->num_engines, ncpus);
 
 	mutex_lock(&i915->drm.struct_mutex);

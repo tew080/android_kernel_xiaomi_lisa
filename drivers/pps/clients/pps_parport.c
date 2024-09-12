@@ -175,7 +175,7 @@ static void parport_attach(struct parport *port)
 	port->ops->enable_irq(port);
 	device->index = index;
 
-	pr_debug("attached to %s\n", port->name);
+	pr_info("attached to %s\n", port->name);
 
 	return;
 

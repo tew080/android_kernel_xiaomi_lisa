@@ -72,7 +72,7 @@ int __init db1550_board_setup(void)
 		return -ENODEV;
 	}
 
-	pr_debug("Alchemy/AMD %s Board, CPLD Rev %d Board-ID %d	"	\
+	pr_info("Alchemy/AMD %s Board, CPLD Rev %d Board-ID %d	"	\
 		"Daughtercard ID %d\n", get_system_type(),
 		(whoami >> 4) & 0xf, (whoami >> 8) & 0xf, whoami & 0xf);
 

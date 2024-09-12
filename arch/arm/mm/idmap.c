@@ -85,7 +85,7 @@ static void identity_mapping_add(pgd_t *pgd, const char *text_start,
 
 	addr = virt_to_idmap(text_start);
 	end = virt_to_idmap(text_end);
-	pr_debug("Setting up static identity map for 0x%lx - 0x%lx\n", addr, end);
+	pr_info("Setting up static identity map for 0x%lx - 0x%lx\n", addr, end);
 
 	prot |= PMD_TYPE_SECT | PMD_SECT_AP_WRITE | PMD_SECT_AF;
 

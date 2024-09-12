@@ -178,7 +178,7 @@ static void of_gpio_flags_quirks(struct device_node *np,
 	    of_device_is_compatible(np, "reg-fixed-voltage") &&
 	    of_property_read_bool(np, "gpio-open-drain")) {
 		*flags |= (OF_GPIO_SINGLE_ENDED | OF_GPIO_OPEN_DRAIN);
-		pr_debug("%s uses legacy open drain flag - update the DTS if you can\n",
+		pr_info("%s uses legacy open drain flag - update the DTS if you can\n",
 			of_node_full_name(np));
 	}
 
@@ -218,7 +218,7 @@ static void of_gpio_flags_quirks(struct device_node *np,
 					}
 				} else {
 					if (!(*flags & OF_GPIO_ACTIVE_LOW))
-						pr_debug("%s enforce active low on chipselect handle\n",
+						pr_info("%s enforce active low on chipselect handle\n",
 							of_node_full_name(child));
 					*flags |= OF_GPIO_ACTIVE_LOW;
 				}

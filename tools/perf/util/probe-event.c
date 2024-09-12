@@ -2509,7 +2509,7 @@ int show_perf_probe_event(const char *group, const char *event,
 		if (use_stdout)
 			printf("%s\n", buf.buf);
 		else
-			pr_debug("%s\n", buf.buf);
+			pr_info("%s\n", buf.buf);
 	}
 	strbuf_release(&buf);
 

@@ -1145,22 +1145,22 @@ static void __init pnv_power9_idle_init(void)
 		pr_warn("cpuidle-powernv: No suitable default stop state found. Disabling platform idle.\n");
 	} else {
 		ppc_md.power_save = power9_idle;
-		pr_debug("cpuidle-powernv: Default stop: psscr = 0x%016llx,mask=0x%016llx\n",
+		pr_info("cpuidle-powernv: Default stop: psscr = 0x%016llx,mask=0x%016llx\n",
 			pnv_default_stop_val, pnv_default_stop_mask);
 	}
 
 	if (unlikely(!deepest_stop_found)) {
 		pr_warn("cpuidle-powernv: No suitable stop state for CPU-Hotplug. Offlined CPUs will busy wait");
 	} else {
-		pr_debug("cpuidle-powernv: Deepest stop: psscr = 0x%016llx,mask=0x%016llx\n",
+		pr_info("cpuidle-powernv: Deepest stop: psscr = 0x%016llx,mask=0x%016llx\n",
 			pnv_deepest_stop_psscr_val,
 			pnv_deepest_stop_psscr_mask);
 	}
 
-	pr_debug("cpuidle-powernv: First stop level that may lose SPRs = 0x%llx\n",
+	pr_info("cpuidle-powernv: First stop level that may lose SPRs = 0x%llx\n",
 		pnv_first_spr_loss_level);
 
-	pr_debug("cpuidle-powernv: First stop level that may lose timebase = 0x%llx\n",
+	pr_info("cpuidle-powernv: First stop level that may lose timebase = 0x%llx\n",
 		pnv_first_tb_loss_level);
 }
 

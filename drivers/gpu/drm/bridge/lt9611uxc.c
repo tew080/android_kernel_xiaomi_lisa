@@ -325,7 +325,7 @@ u8 lt9611_get_version(struct lt9611 *pdata)
 	lt9611_write_byte(pdata, 0xFF, 0xB0);
 
 	if (!lt9611_read(pdata, 0x21, &revison, 1))
-		pr_debug("LT9611 revison: 0x%x\n", revison);
+		pr_info("LT9611 revison: 0x%x\n", revison);
 	else
 		pr_err("LT9611 get revison failed\n");
 
@@ -370,7 +370,7 @@ void lt9611_block_erase(struct lt9611 *pdata)
 		{0x5A, 0x00},
 	};
 
-	pr_debug("LT9611 block erase\n");
+	pr_info("LT9611 block erase\n");
 	lt9611_write_array(pdata, reg_cfg, ARRAY_SIZE(reg_cfg));
 	msleep(3000);
 }
@@ -479,7 +479,7 @@ void lt9611_firmware_write(struct lt9611 *pdata, const u8 *f_data,
 	}
 	msleep(20);
 
-	pr_debug("LT9611 FW write over, total size: %d, page: %d, reset: %d\n",
+	pr_info("LT9611 FW write over, total size: %d, page: %d, reset: %d\n",
 		size, total_page, rest_data);
 }
 
@@ -490,7 +490,7 @@ void lt9611_firmware_upgrade(struct lt9611 *pdata,
 	u8 *fw_read_data = NULL;
 	int data_len = (int)cfg->size;
 
-	pr_debug("LT9611 FW total size %d\n", data_len);
+	pr_info("LT9611 FW total size %d\n", data_len);
 
 	fw_read_data = kzalloc(ALIGN(data_len, 32), GFP_KERNEL);
 	if (!fw_read_data)
@@ -553,7 +553,7 @@ static int lt9611_parse_dt_modes(struct device_node *np,
 	if (!root_node) {
 		root_node = of_parse_phandle(np, "lt,customize-modes", 0);
 		if (!root_node) {
-			pr_debug("No entry present for lt,customize-modes\n");
+			pr_info("No entry present for lt,customize-modes\n");
 			goto end;
 		}
 	}
@@ -895,7 +895,7 @@ static int lt9611_read_device_id(struct lt9611 *pdata)
 
 	if (!lt9611_read(pdata, 0x00, &rev0, 1) &&
 		!lt9611_read(pdata, 0x01, &rev1, 1)) {
-		pr_debug("LT9611 id: 0x%x\n", (rev0 << 8) | rev1);
+		pr_info("LT9611 id: 0x%x\n", (rev0 << 8) | rev1);
 	} else {
 		pr_err("LT9611 get id failed\n");
 		ret = -1;
@@ -1040,13 +1040,13 @@ static int lt9611_get_dt_supply(struct device *dev,
 	supply_root_node = of_get_child_by_name(of_node,
 			"lt,supply-entries");
 	if (!supply_root_node) {
-		pr_debug("no supply entry present\n");
+		pr_info("no supply entry present\n");
 		return 0;
 	}
 
 	pdata->num_vreg = of_get_available_child_count(supply_root_node);
 	if (pdata->num_vreg == 0) {
-		pr_debug("no vreg present\n");
+		pr_info("no vreg present\n");
 		return 0;
 	}
 
@@ -1395,7 +1395,7 @@ static int lt9611_get_edid_block(void *data, u8 *buf, unsigned int block,
 				  size_t len)
 {
 
-	pr_debug("get edid block: block=%d, len=%d\n", block, (int)len);
+	pr_info("get edid block: block=%d, len=%d\n", block, (int)len);
 
 	return 0;
 }
@@ -1442,7 +1442,7 @@ static int lt9611_connector_get_modes(struct drm_connector *connector)
 		count = drm_add_edid_modes(connector, edid);
 
 		pdata->hdmi_mode = drm_detect_hdmi_monitor(edid);
-		pr_debug("hdmi_mode = %d\n", pdata->hdmi_mode);
+		pr_info("hdmi_mode = %d\n", pdata->hdmi_mode);
 
 		kfree(edid);
 	}
@@ -1680,7 +1680,7 @@ static ssize_t firmware_upgrade_store(struct device *dev,
 		dev_err(&pdata->i2c_client->dev,
 			"Failed to invoke firmware loader: %d\n", ret);
 	else
-		pr_debug("LT9611 starts upgrade, waiting for about 40s...\n");
+		pr_info("LT9611 starts upgrade, waiting for about 40s...\n");
 
 	return count;
 }
@@ -1803,7 +1803,7 @@ static int lt9611_probe(struct i2c_client *client,
 	chip_version = lt9611_get_version(pdata);
 	pdata->hpd_support = false;
 	if (chip_version) {
-		pr_debug("LT9611 works, no need to upgrade FW\n");
+		pr_info("LT9611 works, no need to upgrade FW\n");
 	} else {
 		ret = request_firmware_nowait(THIS_MODULE, true,
 			"lt9611_fw.bin", &client->dev, GFP_KERNEL, pdata,

@@ -677,7 +677,7 @@ static int tcf_ife_dump(struct sk_buff *skb, struct tc_action *a, int bind,
 
 	if (dump_metalist(skb, ife)) {
 		/*ignore failure to dump metalist */
-		pr_debug("Failed to dump metalist\n");
+		pr_info("Failed to dump metalist\n");
 	}
 
 	spin_unlock_bh(&ife->tcf_lock);

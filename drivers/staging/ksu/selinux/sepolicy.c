@@ -151,7 +151,7 @@ static bool add_rule(struct policydb *db, const char *s, const char *t,
 	if (s) {
 		src = symtab_search(&db->p_types, s);
 		if (src == NULL) {
-			pr_debug("source type %s does not exist\n", s);
+			pr_info("source type %s does not exist\n", s);
 			return false;
 		}
 	}
@@ -159,7 +159,7 @@ static bool add_rule(struct policydb *db, const char *s, const char *t,
 	if (t) {
 		tgt = symtab_search(&db->p_types, t);
 		if (tgt == NULL) {
-			pr_debug("target type %s does not exist\n", t);
+			pr_info("target type %s does not exist\n", t);
 			return false;
 		}
 	}
@@ -167,14 +167,14 @@ static bool add_rule(struct policydb *db, const char *s, const char *t,
 	if (c) {
 		cls = symtab_search(&db->p_classes, c);
 		if (cls == NULL) {
-			pr_debug("class %s does not exist\n", c);
+			pr_info("class %s does not exist\n", c);
 			return false;
 		}
 	}
 
 	if (p) {
 		if (c == NULL) {
-			pr_debug("No class is specified, cannot add perm [%s] \n",
+			pr_info("No class is specified, cannot add perm [%s] \n",
 				p);
 			return false;
 		}
@@ -184,7 +184,7 @@ static bool add_rule(struct policydb *db, const char *s, const char *t,
 			perm = symtab_search(&cls->comdatum->permissions, p);
 		}
 		if (perm == NULL) {
-			pr_debug("perm %s does not exist in class %s\n", p, c);
+			pr_info("perm %s does not exist in class %s\n", p, c);
 			return false;
 		}
 	}
@@ -376,7 +376,7 @@ static bool add_xperm_rule(struct policydb *db, const char *s, const char *t,
 	if (s) {
 		src = symtab_search(&db->p_types, s);
 		if (src == NULL) {
-			pr_debug("source type %s does not exist\n", s);
+			pr_info("source type %s does not exist\n", s);
 			return false;
 		}
 	}
@@ -384,7 +384,7 @@ static bool add_xperm_rule(struct policydb *db, const char *s, const char *t,
 	if (t) {
 		tgt = symtab_search(&db->p_types, t);
 		if (tgt == NULL) {
-			pr_debug("target type %s does not exist\n", t);
+			pr_info("target type %s does not exist\n", t);
 			return false;
 		}
 	}
@@ -392,7 +392,7 @@ static bool add_xperm_rule(struct policydb *db, const char *s, const char *t,
 	if (c) {
 		cls = symtab_search(&db->p_classes, c);
 		if (cls == NULL) {
-			pr_debug("class %s does not exist\n", c);
+			pr_info("class %s does not exist\n", c);
 			return false;
 		}
 	}
@@ -423,22 +423,22 @@ static bool add_type_rule(struct policydb *db, const char *s, const char *t,
 
 	src = symtab_search(&db->p_types, s);
 	if (src == NULL) {
-		pr_debug("source type %s does not exist\n", s);
+		pr_info("source type %s does not exist\n", s);
 		return false;
 	}
 	tgt = symtab_search(&db->p_types, t);
 	if (tgt == NULL) {
-		pr_debug("target type %s does not exist\n", t);
+		pr_info("target type %s does not exist\n", t);
 		return false;
 	}
 	cls = symtab_search(&db->p_classes, c);
 	if (cls == NULL) {
-		pr_debug("class %s does not exist\n", c);
+		pr_info("class %s does not exist\n", c);
 		return false;
 	}
 	def = symtab_search(&db->p_types, d);
 	if (def == NULL) {
-		pr_debug("default type %s does not exist\n", d);
+		pr_info("default type %s does not exist\n", d);
 		return false;
 	}
 
@@ -881,18 +881,18 @@ static bool set_type_state(struct policydb *db, const char *type_name,
 			type = (struct type_datum *)(node->datum);
 			if (ebitmap_set_bit(&db->permissive_map, type->value,
 					    permissive))
-				pr_debug("Could not set bit in permissive map\n");
+				pr_info("Could not set bit in permissive map\n");
 		};
 	} else {
 		type = (struct type_datum *)symtab_search(&db->p_types,
 							  type_name);
 		if (type == NULL) {
-			pr_debug("type %s does not exist\n", type_name);
+			pr_info("type %s does not exist\n", type_name);
 			return false;
 		}
 		if (ebitmap_set_bit(&db->permissive_map, type->value,
 				    permissive)) {
-			pr_debug("Could not set bit in permissive map\n");
+			pr_info("Could not set bit in permissive map\n");
 			return false;
 		}
 	}
@@ -940,19 +940,19 @@ static bool add_typeattribute(struct policydb *db, const char *type,
 {
 	struct type_datum *type_d = symtab_search(&db->p_types, type);
 	if (type_d == NULL) {
-		pr_debug("type %s does not exist\n", type);
+		pr_info("type %s does not exist\n", type);
 		return false;
 	} else if (type_d->attribute) {
-		pr_debug("type %s is an attribute\n", attr);
+		pr_info("type %s is an attribute\n", attr);
 		return false;
 	}
 
 	struct type_datum *attr_d = symtab_search(&db->p_types, attr);
 	if (attr_d == NULL) {
-		pr_debug("attribute %s does not exist\n", type);
+		pr_info("attribute %s does not exist\n", type);
 		return false;
 	} else if (!attr_d->attribute) {
-		pr_debug("type %s is not an attribute \n", attr);
+		pr_info("type %s is not an attribute \n", attr);
 		return false;
 	}
 

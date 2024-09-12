@@ -759,7 +759,7 @@ static void acpi_pci_root_remap_iospace(struct fwnode_handle *fwnode,
 	if (pci_remap_iospace(res, cpu_addr) < 0)
 		goto err;
 
-	pr_debug("Remapped I/O %pa to %pR\n", &cpu_addr, res);
+	pr_info("Remapped I/O %pa to %pR\n", &cpu_addr, res);
 	return;
 err:
 	res->flags |= IORESOURCE_DISABLED;

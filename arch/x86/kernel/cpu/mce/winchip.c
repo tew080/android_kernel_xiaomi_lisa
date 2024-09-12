@@ -42,5 +42,5 @@ void winchip_mcheck_init(struct cpuinfo_x86 *c)
 
 	cr4_set_bits(X86_CR4_MCE);
 
-	pr_debug("Winchip machine check reporting enabled on CPU#0.\n");
+	pr_info("Winchip machine check reporting enabled on CPU#0.\n");
 }

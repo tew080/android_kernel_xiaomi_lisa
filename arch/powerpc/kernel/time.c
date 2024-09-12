@@ -1046,7 +1046,7 @@ static void __init set_decrementer_max(void)
 
 	of_node_put(cpu);
 
-	pr_debug("time_init: %u bit decrementer (max: %llx)\n",
+	pr_info("time_init: %u bit decrementer (max: %llx)\n",
 		bits, decrementer_max);
 }
 

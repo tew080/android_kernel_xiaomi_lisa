@@ -521,7 +521,7 @@ int qbg_batterydata_init(struct device_node *profile_node,
 		goto destroy_device;
 	}
 
-	pr_debug("QBG Battery-profile loaded, id:%d name:%s\n",
+	pr_info("QBG Battery-profile loaded, id:%d name:%s\n",
 		battery->bp.bp_batt_id, battery->bp.bp_profile_name);
 
 	return 0;

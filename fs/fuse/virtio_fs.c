@@ -1096,7 +1096,7 @@ static int virtio_fs_fill_super(struct super_block *sb)
 	 */
 	err = -EINVAL;
 	if (list_empty(&fs->list)) {
-		pr_debug("virtio-fs: tag <%s> not found\n", fs->tag);
+		pr_info("virtio-fs: tag <%s> not found\n", fs->tag);
 		goto err;
 	}
 
@@ -1202,7 +1202,7 @@ static int virtio_fs_get_tree(struct fs_context *fsc)
 	 */
 	fs = virtio_fs_find_instance(fsc->source);
 	if (!fs) {
-		pr_debug("virtio-fs: tag <%s> not found\n", fsc->source);
+		pr_info("virtio-fs: tag <%s> not found\n", fsc->source);
 		return -EINVAL;
 	}
 

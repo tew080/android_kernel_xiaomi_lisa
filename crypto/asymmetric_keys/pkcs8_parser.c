@@ -41,7 +41,7 @@ int pkcs8_note_OID(void *context, size_t hdrlen,
 		char buffer[50];
 
 		sprint_oid(value, vlen, buffer, sizeof(buffer));
-		pr_debug("Unknown OID: [%lu] %s\n",
+		pr_info("Unknown OID: [%lu] %s\n",
 			(unsigned long)value - ctx->data, buffer);
 	}
 	return 0;

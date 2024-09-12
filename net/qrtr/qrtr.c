@@ -288,7 +288,7 @@ static void qrtr_log_resume_pkt(struct qrtr_cb *cb, u64 pl_buf)
 	if (glink_resume_pkt) {
 		glink_resume_pkt = false;
 		service_id = qrtr_get_service_id(cb->src_node, cb->src_port);
-		pr_debug("[QRTR RESUME PKT]:src[0x%x:0x%x] dst[0x%x:0x%x] [%08x %08x]: service[0x%x]\n",
+		pr_info("[QRTR RESUME PKT]:src[0x%x:0x%x] dst[0x%x:0x%x] [%08x %08x]: service[0x%x]\n",
 			cb->src_node, cb->src_port,
 			cb->dst_node, cb->dst_port,
 			(unsigned int)pl_buf, (unsigned int)(pl_buf >> 32),

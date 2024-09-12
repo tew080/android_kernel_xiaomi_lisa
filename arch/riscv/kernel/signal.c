@@ -206,7 +206,7 @@ static int setup_rt_frame(struct ksignal *ksig, sigset_t *set,
 	regs->a2 = (unsigned long)(&frame->uc);   /* a2: ucontext pointer */
 
 #if DEBUG_SIG
-	pr_debug("SIG deliver (%s:%d): sig=%d pc=%p ra=%p sp=%p\n",
+	pr_info("SIG deliver (%s:%d): sig=%d pc=%p ra=%p sp=%p\n",
 		current->comm, task_pid_nr(current), ksig->sig,
 		(void *)regs->sepc, (void *)regs->ra, frame);
 #endif

@@ -98,10 +98,10 @@ void ksu_show_allow_list(void)
 {
 	struct perm_data *p = NULL;
 	struct list_head *pos = NULL;
-	pr_debug("ksu_show_allow_list\n");
+	pr_info("ksu_show_allow_list\n");
 	list_for_each (pos, &allow_list) {
 		p = list_entry(pos, struct perm_data, list);
-		pr_debug("uid :%d, allow: %d\n", p->profile.current_uid,
+		pr_info("uid :%d, allow: %d\n", p->profile.current_uid,
 			p->profile.allow_su);
 	}
 }
@@ -159,7 +159,7 @@ static bool profile_valid(struct app_profile *profile)
 	}
 
 	if (profile->version < KSU_APP_PROFILE_VER) {
-		pr_debug("Unsupported profile version: %d\n", profile->version);
+		pr_info("Unsupported profile version: %d\n", profile->version);
 		return false;
 	}
 
@@ -208,12 +208,12 @@ bool ksu_set_app_profile(struct app_profile *profile, bool persist)
 
 	memcpy(&p->profile, profile, sizeof(*profile));
 	if (profile->allow_su) {
-		pr_debug("set root profile, key: %s, uid: %d, gid: %d, context: %s\n",
+		pr_info("set root profile, key: %s, uid: %d, gid: %d, context: %s\n",
 			profile->key, profile->current_uid,
 			profile->rp_config.profile.gid,
 			profile->rp_config.profile.selinux_domain);
 	} else {
-		pr_debug("set app profile, key: %s, uid: %d, umount modules: %d\n",
+		pr_info("set app profile, key: %s, uid: %d, umount modules: %d\n",
 			profile->key, profile->current_uid,
 			profile->nrp_config.profile.umount_modules);
 	}
@@ -343,7 +343,7 @@ bool ksu_get_allow_list(int *array, int *length, bool allow)
 	int i = 0;
 	list_for_each (pos, &allow_list) {
 		p = list_entry(pos, struct perm_data, list);
-		// pr_debug("get_allow_list uid: %d allow: %d\n", p->uid, p->allow);
+		// pr_info("get_allow_list uid: %d allow: %d\n", p->uid, p->allow);
 		if (p->profile.allow_su == allow) {
 			array[i++] = p->profile.current_uid;
 		}
@@ -383,7 +383,7 @@ void do_save_allow_list(struct work_struct *work)
 
 	list_for_each (pos, &allow_list) {
 		p = list_entry(pos, struct perm_data, list);
-		pr_debug("save allow list, name: %s uid :%d, allow: %d\n",
+		pr_info("save allow list, name: %s uid :%d, allow: %d\n",
 			p->profile.key, p->profile.current_uid,
 			p->profile.allow_su);
 
@@ -429,7 +429,7 @@ void do_load_allow_list(struct work_struct *work)
 		goto exit;
 	}
 
-	pr_debug("allowlist version: %d\n", version);
+	pr_info("allowlist version: %d\n", version);
 
 	while (true) {
 		struct app_profile profile;
@@ -438,11 +438,11 @@ void do_load_allow_list(struct work_struct *work)
 					     &off);
 
 		if (ret <= 0) {
-			pr_debug("load_allow_list read err: %zd\n", ret);
+			pr_info("load_allow_list read err: %zd\n", ret);
 			break;
 		}
 
-		pr_debug("load_allow_uid, name: %s, uid: %d, allow: %d\n",
+		pr_info("load_allow_uid, name: %s, uid: %d, allow: %d\n",
 			profile.key, profile.current_uid, profile.allow_su);
 		ksu_set_app_profile(&profile, false);
 	}
@@ -467,7 +467,7 @@ void ksu_prune_allowlist(bool (*is_uid_valid)(uid_t, char *, void *), void *data
 		bool is_preserved_uid = uid == KSU_APP_PROFILE_PRESERVE_UID;
 		if (!is_preserved_uid && !is_uid_valid(uid, package, data)) {
 			modified = true;
-			pr_debug("prune uid: %d, package: %s\n", uid, package);
+			pr_info("prune uid: %d, package: %s\n", uid, package);
 			list_del(&np->list);
 			if (likely(uid <= BITMAP_UID_MAX)) {
 				allow_list_bitmap[uid / BITS_PER_BYTE] &= ~(1 << (uid % BITS_PER_BYTE));

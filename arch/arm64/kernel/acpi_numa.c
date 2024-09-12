@@ -75,7 +75,7 @@ static int __init acpi_parse_gicc_pxm(union acpi_subtable_headers *header,
 		return 0;
 
 	acpi_early_node_map[cpu] = node;
-	pr_debug("SRAT: PXM %d -> MPIDR 0x%llx -> Node %d\n", pxm,
+	pr_info("SRAT: PXM %d -> MPIDR 0x%llx -> Node %d\n", pxm,
 		cpu_logical_map(cpu), node);
 
 	return 0;
@@ -124,7 +124,7 @@ int __init arm64_acpi_numa_init(void)
 
 	ret = acpi_numa_init();
 	if (ret) {
-		pr_debug("Failed to initialise from firmware\n");
+		pr_info("Failed to initialise from firmware\n");
 		return ret;
 	}
 

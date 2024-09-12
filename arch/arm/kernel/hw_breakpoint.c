@@ -1114,7 +1114,7 @@ static int __init arch_hw_breakpoint_init(void)
 	debug_arch = get_debug_arch();
 
 	if (!debug_arch_supported()) {
-		pr_debug("debug architecture 0x%x unsupported.\n", debug_arch);
+		pr_info("debug architecture 0x%x unsupported.\n", debug_arch);
 		return 0;
 	}
 
@@ -1130,7 +1130,7 @@ static int __init arch_hw_breakpoint_init(void)
 	 * Scorpion CPUs to avoid these issues.
 	*/
 	if (read_cpuid_part() == ARM_CPU_PART_SCORPION) {
-		pr_debug("Scorpion CPU detected. Hardware breakpoints and watchpoints disabled\n");
+		pr_info("Scorpion CPU detected. Hardware breakpoints and watchpoints disabled\n");
 		return 0;
 	}
 
@@ -1166,13 +1166,13 @@ static int __init arch_hw_breakpoint_init(void)
 		return 0;
 	}
 
-	pr_debug("found %d " "%s" "breakpoint and %d watchpoint registers.\n",
+	pr_info("found %d " "%s" "breakpoint and %d watchpoint registers.\n",
 		core_num_brps, core_has_mismatch_brps() ? "(+1 reserved) " :
 		"", core_num_wrps);
 
 	/* Work out the maximum supported watchpoint length. */
 	max_watchpoint_len = get_max_wp_len();
-	pr_debug("maximum watchpoint size is %u bytes.\n",
+	pr_info("maximum watchpoint size is %u bytes.\n",
 			max_watchpoint_len);
 
 	/* Register debug fault handler. */

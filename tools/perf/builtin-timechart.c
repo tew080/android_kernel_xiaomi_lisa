@@ -1631,7 +1631,7 @@ static int __cmd_timechart(struct timechart *tchart, const char *output_name)
 
 	write_svg_file(tchart, output_name);
 
-	pr_debug("Written %2.1f seconds of trace to %s.\n",
+	pr_info("Written %2.1f seconds of trace to %s.\n",
 		(tchart->last_time - tchart->first_time) / (double)NSEC_PER_SEC, output_name);
 out_delete:
 	perf_session__delete(session);

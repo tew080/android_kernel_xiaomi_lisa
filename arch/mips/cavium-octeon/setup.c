@@ -803,7 +803,7 @@ void __init prom_init(void)
 
 #ifdef CONFIG_CAVIUM_OCTEON_LOCK_L2
 	if (cvmx_read_csr(CVMX_L2D_FUS3) & (3ull << 34)) {
-		pr_debug("Skipping L2 locking due to reduced L2 cache size\n");
+		pr_info("Skipping L2 locking due to reduced L2 cache size\n");
 	} else {
 		uint32_t __maybe_unused ebase = read_c0_ebase() & 0x3ffff000;
 #ifdef CONFIG_CAVIUM_OCTEON_LOCK_L2_TLB
@@ -1166,14 +1166,14 @@ void __init device_tree_init(void)
 		fdt = (void *)fw_passed_dtb;
 		do_prune = false;
 		fill_mac = true;
-		pr_debug("Using appended Device Tree.\n");
+		pr_info("Using appended Device Tree.\n");
 	} else if (octeon_bootinfo->minor_version >= 3 && octeon_bootinfo->fdt_addr) {
 		fdt = phys_to_virt(octeon_bootinfo->fdt_addr);
 		if (fdt_check_header(fdt))
 			panic("Corrupt Device Tree passed to kernel.");
 		do_prune = false;
 		fill_mac = false;
-		pr_debug("Using passed Device Tree.\n");
+		pr_info("Using passed Device Tree.\n");
 	} else if (OCTEON_IS_MODEL(OCTEON_CN68XX)) {
 		fdt = &__dtb_octeon_68xx_begin;
 		do_prune = true;
@@ -1188,7 +1188,7 @@ void __init device_tree_init(void)
 
 	if (do_prune) {
 		octeon_prune_device_tree();
-		pr_debug("Using internal Device Tree.\n");
+		pr_info("Using internal Device Tree.\n");
 	}
 	if (fill_mac)
 		octeon_fill_mac_addresses();

@@ -92,7 +92,7 @@ static int __init split_nodes_interleave(struct numa_meminfo *ei,
 	if (nr_nodes <= 0)
 		return -1;
 	if (nr_nodes > MAX_NUMNODES) {
-		pr_debug("numa=fake=%d too large, reducing to %d\n",
+		pr_info("numa=fake=%d too large, reducing to %d\n",
 			nr_nodes, MAX_NUMNODES);
 		nr_nodes = MAX_NUMNODES;
 	}
@@ -413,7 +413,7 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
 			if (ret < 0)
 				break;
 			if (ret < n) {
-				pr_debug("%s: phys: %d only got %d of %ld nodes, failing\n",
+				pr_info("%s: phys: %d only got %d of %ld nodes, failing\n",
 						__func__, i, ret, n);
 				ret = -1;
 				break;

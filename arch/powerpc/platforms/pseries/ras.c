@@ -238,18 +238,18 @@ static void rtas_parse_epow_errlog(struct rtas_error_log *log)
 	switch (action_code) {
 	case EPOW_RESET:
 		if (num_epow_events) {
-			pr_debug("Non critical power/cooling issue cleared\n");
+			pr_info("Non critical power/cooling issue cleared\n");
 			num_epow_events--;
 		}
 		break;
 
 	case EPOW_WARN_COOLING:
-		pr_debug("Non-critical cooling issue detected. Check RTAS error"
+		pr_info("Non-critical cooling issue detected. Check RTAS error"
 			" log for details\n");
 		break;
 
 	case EPOW_WARN_POWER:
-		pr_debug("Non-critical power issue detected. Check RTAS error"
+		pr_info("Non-critical power issue detected. Check RTAS error"
 			" log for details\n");
 		break;
 

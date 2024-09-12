@@ -418,7 +418,7 @@ static struct inet6_dev *ipv6_add_dev(struct net_device *dev)
 
 #if IS_ENABLED(CONFIG_IPV6_SIT)
 	if (dev->type == ARPHRD_SIT && (dev->priv_flags & IFF_ISATAP)) {
-		pr_debug("%s: Disabled Multicast RS\n", dev->name);
+		pr_info("%s: Disabled Multicast RS\n", dev->name);
 		ndev->cnf.rtr_solicits = 0;
 	}
 #endif
@@ -1354,7 +1354,7 @@ retry:
 	in6_dev_hold(idev);
 	if (idev->cnf.use_tempaddr <= 0) {
 		write_unlock_bh(&idev->lock);
-		pr_debug("%s: use_tempaddr is disabled\n", __func__);
+		pr_info("%s: use_tempaddr is disabled\n", __func__);
 		in6_dev_put(idev);
 		ret = -1;
 		goto out;
@@ -1437,7 +1437,7 @@ retry:
 	if (IS_ERR(ift)) {
 		in6_ifa_put(ifp);
 		in6_dev_put(idev);
-		pr_debug("%s: retry temporary address regeneration\n", __func__);
+		pr_info("%s: retry temporary address regeneration\n", __func__);
 		tmpaddr = &addr;
 		write_lock_bh(&idev->lock);
 		goto retry;
@@ -3633,7 +3633,7 @@ static int addrconf_notify(struct notifier_block *this, unsigned long event,
 				idev->if_flags |= IF_READY;
 			}
 
-			pr_debug("ADDRCONF(NETDEV_CHANGE): %s: link becomes ready\n",
+			pr_info("ADDRCONF(NETDEV_CHANGE): %s: link becomes ready\n",
 				dev->name);
 
 			run_pending = 1;
@@ -4128,7 +4128,7 @@ static void addrconf_dad_work(struct work_struct *w)
 				/* DAD failed for link-local based on MAC */
 				idev->cnf.disable_ipv6 = 1;
 
-				pr_debug("%s: IPv6 being disabled!\n",
+				pr_info("%s: IPv6 being disabled!\n",
 					ifp->idev->dev->name);
 				disable_ipv6 = true;
 			}

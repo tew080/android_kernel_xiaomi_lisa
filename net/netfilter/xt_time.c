@@ -274,10 +274,10 @@ static int __init time_mt_init(void)
 	int minutes = sys_tz.tz_minuteswest;
 
 	if (minutes < 0) /* east of Greenwich */
-		pr_debug("kernel timezone is +%02d%02d\n",
+		pr_info("kernel timezone is +%02d%02d\n",
 			-minutes / 60, -minutes % 60);
 	else /* west of Greenwich */
-		pr_debug("kernel timezone is -%02d%02d\n",
+		pr_info("kernel timezone is -%02d%02d\n",
 			minutes / 60, minutes % 60);
 
 	return xt_register_match(&xt_time_mt_reg);

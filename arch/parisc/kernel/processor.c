@@ -129,7 +129,7 @@ static int __init processor_probe(struct parisc_device *dev)
 		status = pdc_pat_cpu_get_number(&cpu_info, dev->hpa.start);
 		BUG_ON(PDC_OK != status);
 
-		pr_debug("Logical CPU #%lu is physical cpu #%lu at location "
+		pr_info("Logical CPU #%lu is physical cpu #%lu at location "
 			"0x%lx with hpa %pa\n",
 			cpuid, cpu_info.cpu_num, cpu_info.cpu_loc,
 			&dev->hpa.start);

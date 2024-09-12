@@ -99,7 +99,7 @@ static int __init plat_enable_iocoherency(void)
 	if (mips_revision_sconid == MIPS_REVISION_SCON_BONITO) {
 		if (BONITO_PCICACHECTRL & BONITO_PCICACHECTRL_CPUCOH_PRES) {
 			BONITO_PCICACHECTRL |= BONITO_PCICACHECTRL_CPUCOH_EN;
-			pr_debug("Enabled Bonito CPU coherency\n");
+			pr_info("Enabled Bonito CPU coherency\n");
 			supported = 1;
 		}
 		if (strstr(fw_getcmdline(), "iobcuncached")) {
@@ -107,17 +107,17 @@ static int __init plat_enable_iocoherency(void)
 			BONITO_PCIMEMBASECFG = BONITO_PCIMEMBASECFG &
 				~(BONITO_PCIMEMBASECFG_MEMBASE0_CACHED |
 				  BONITO_PCIMEMBASECFG_MEMBASE1_CACHED);
-			pr_debug("Disabled Bonito IOBC coherency\n");
+			pr_info("Disabled Bonito IOBC coherency\n");
 		} else {
 			BONITO_PCICACHECTRL |= BONITO_PCICACHECTRL_IOBCCOH_EN;
 			BONITO_PCIMEMBASECFG |=
 				(BONITO_PCIMEMBASECFG_MEMBASE0_CACHED |
 				 BONITO_PCIMEMBASECFG_MEMBASE1_CACHED);
-			pr_debug("Enabled Bonito IOBC coherency\n");
+			pr_info("Enabled Bonito IOBC coherency\n");
 		}
 	} else if (mips_cps_numiocu(0) != 0) {
 		/* Nothing special needs to be done to enable coherency */
-		pr_debug("CMP IOCU detected\n");
+		pr_info("CMP IOCU detected\n");
 		cfg = __raw_readl((u32 *)CKSEG1ADDR(ROCIT_CONFIG_GEN0));
 		if (!(cfg & ROCIT_CONFIG_GEN0_PCI_IOCU)) {
 			pr_crit("IOCU OPERATION DISABLED BY SWITCH - DEFAULTING TO SW IO COHERENCY\n");
@@ -133,14 +133,14 @@ static void __init plat_setup_iocoherency(void)
 {
 	if (plat_enable_iocoherency()) {
 		if (coherentio == IO_COHERENCE_DISABLED)
-			pr_debug("Hardware DMA cache coherency disabled\n");
+			pr_info("Hardware DMA cache coherency disabled\n");
 		else
-			pr_debug("Hardware DMA cache coherency enabled\n");
+			pr_info("Hardware DMA cache coherency enabled\n");
 	} else {
 		if (coherentio == IO_COHERENCE_ENABLED)
-			pr_debug("Hardware DMA cache coherency unsupported, but enabled from command line!\n");
+			pr_info("Hardware DMA cache coherency unsupported, but enabled from command line!\n");
 		else
-			pr_debug("Software DMA cache coherency enabled\n");
+			pr_info("Software DMA cache coherency enabled\n");
 	}
 }
 
@@ -200,7 +200,7 @@ static void __init bonito_quirks_setup(void)
 	argptr = fw_getcmdline();
 	if (strstr(argptr, "debug")) {
 		BONITO_BONGENCFG |= BONITO_BONGENCFG_DEBUGMODE;
-		pr_debug("Enabled Bonito debug mode\n");
+		pr_info("Enabled Bonito debug mode\n");
 	} else
 		BONITO_BONGENCFG &= ~BONITO_BONGENCFG_DEBUGMODE;
 }
@@ -220,7 +220,7 @@ void __init plat_mem_setup(void)
 
 	if (IS_ENABLED(CONFIG_EVA))
 		/* EVA has already been configured in mach-malta/kernel-init.h */
-		pr_debug("Enhanced Virtual Addressing (EVA) activated\n");
+		pr_info("Enhanced Virtual Addressing (EVA) activated\n");
 
 	mips_pcibios_init();
 

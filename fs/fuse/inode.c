@@ -1519,7 +1519,7 @@ static int __init fuse_init(void)
 {
 	int res;
 
-	pr_debug("init (API version %i.%i)\n",
+	pr_info("init (API version %i.%i)\n",
 		FUSE_KERNEL_VERSION, FUSE_KERNEL_MINOR_VERSION);
 
 	INIT_LIST_HEAD(&fuse_conn_list);

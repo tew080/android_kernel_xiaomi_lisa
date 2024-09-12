@@ -145,7 +145,7 @@ int test__hists_filter(struct test *test __maybe_unused, int subtest __maybe_unu
 		perf_evsel__output_resort(evsel, NULL);
 
 		if (verbose > 2) {
-			pr_debug("Normal histogram\n");
+			pr_info("Normal histogram\n");
 			print_hists_out(hists);
 		}
 
@@ -169,7 +169,7 @@ int test__hists_filter(struct test *test __maybe_unused, int subtest __maybe_unu
 		hists__filter_by_thread(hists);
 
 		if (verbose > 2) {
-			pr_debug("Histogram for thread filter\n");
+			pr_info("Histogram for thread filter\n");
 			print_hists_out(hists);
 		}
 
@@ -198,7 +198,7 @@ int test__hists_filter(struct test *test __maybe_unused, int subtest __maybe_unu
 		hists__filter_by_dso(hists);
 
 		if (verbose > 2) {
-			pr_debug("Histogram for dso filter\n");
+			pr_info("Histogram for dso filter\n");
 			print_hists_out(hists);
 		}
 
@@ -233,7 +233,7 @@ int test__hists_filter(struct test *test __maybe_unused, int subtest __maybe_unu
 		hists__filter_by_symbol(hists);
 
 		if (verbose > 2) {
-			pr_debug("Histogram for symbol filter\n");
+			pr_info("Histogram for symbol filter\n");
 			print_hists_out(hists);
 		}
 
@@ -262,7 +262,7 @@ int test__hists_filter(struct test *test __maybe_unused, int subtest __maybe_unu
 		hists__filter_by_socket(hists);
 
 		if (verbose > 2) {
-			pr_debug("Histogram for socket filters\n");
+			pr_info("Histogram for socket filters\n");
 			print_hists_out(hists);
 		}
 
@@ -293,7 +293,7 @@ int test__hists_filter(struct test *test __maybe_unused, int subtest __maybe_unu
 		hists__filter_by_dso(hists);
 
 		if (verbose > 2) {
-			pr_debug("Histogram for all filters\n");
+			pr_info("Histogram for all filters\n");
 			print_hists_out(hists);
 		}
 

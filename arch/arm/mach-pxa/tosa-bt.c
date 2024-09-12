@@ -33,13 +33,13 @@ static void tosa_bt_off(struct tosa_bt_data *data)
 
 static int tosa_bt_set_block(void *data, bool blocked)
 {
-	pr_debug("BT_RADIO going: %s\n", blocked ? "off" : "on");
+	pr_info("BT_RADIO going: %s\n", blocked ? "off" : "on");
 
 	if (!blocked) {
-		pr_debug("TOSA_BT: going ON\n");
+		pr_info("TOSA_BT: going ON\n");
 		tosa_bt_on(data);
 	} else {
-		pr_debug("TOSA_BT: going OFF\n");
+		pr_info("TOSA_BT: going OFF\n");
 		tosa_bt_off(data);
 	}
 

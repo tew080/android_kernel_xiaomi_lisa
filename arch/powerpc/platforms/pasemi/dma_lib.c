@@ -609,7 +609,7 @@ int pasemi_dma_init(void)
 	pasemi_write_dma_reg(PAS_DMA_TXF_CFLG0, 0xffffffff);
 	pasemi_write_dma_reg(PAS_DMA_TXF_CFLG1, 0xffffffff);
 
-	pr_debug("PA Semi PWRficient DMA library initialized "
+	pr_info("PA Semi PWRficient DMA library initialized "
 		"(%d tx, %d rx channels)\n", num_txch, num_rxch);
 
 out:

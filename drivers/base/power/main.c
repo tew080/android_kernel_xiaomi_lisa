@@ -2029,7 +2029,7 @@ int dpm_prepare(pm_message_t state)
 				error = 0;
 				continue;
 			}
-			pr_debug("Device %s not prepared for power transition: code %d\n",
+			pr_info("Device %s not prepared for power transition: code %d\n",
 				dev_name(dev), error);
 			log_suspend_abort_reason("Device %s not prepared for power transition: code %d",
 						 dev_name(dev), error);

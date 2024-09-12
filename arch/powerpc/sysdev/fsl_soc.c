@@ -211,7 +211,7 @@ EXPORT_SYMBOL(diu_ops);
  */
 void __noreturn fsl_hv_restart(char *cmd)
 {
-	pr_debug("hv restart\n");
+	pr_info("hv restart\n");
 	fh_partition_restart(-1);
 	while (1) ;
 }
@@ -225,7 +225,7 @@ void __noreturn fsl_hv_restart(char *cmd)
  */
 void __noreturn fsl_hv_halt(void)
 {
-	pr_debug("hv exit\n");
+	pr_info("hv exit\n");
 	fh_partition_stop(-1);
 	while (1) ;
 }

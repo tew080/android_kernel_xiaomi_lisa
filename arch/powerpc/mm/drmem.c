@@ -304,7 +304,7 @@ static int __init init_drmem_lmb_size(struct device_node *dn)
 
 	prop = of_get_property(dn, "ibm,lmb-size", &len);
 	if (!prop || len < dt_root_size_cells * sizeof(__be32)) {
-		pr_debug("Could not determine LMB size\n");
+		pr_info("Could not determine LMB size\n");
 		return -1;
 	}
 
@@ -419,7 +419,7 @@ static int __init drmem_init(void)
 
 	dn = of_find_node_by_path("/ibm,dynamic-reconfiguration-memory");
 	if (!dn) {
-		pr_debug("No dynamic reconfiguration memory found\n");
+		pr_info("No dynamic reconfiguration memory found\n");
 		return 0;
 	}
 

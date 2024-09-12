@@ -201,7 +201,7 @@ int __init gptu_init(void)
 	int ret = platform_driver_register(&dma_driver);
 
 	if (ret)
-		pr_debug("gptu: Error registering platform driver\n");
+		pr_info("gptu: Error registering platform driver\n");
 	return ret;
 }
 

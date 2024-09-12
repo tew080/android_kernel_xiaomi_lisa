@@ -469,20 +469,20 @@ static void check_supported_cpu(void *_rc)
 	if ((eax & CPUID_XFAM) == CPUID_XFAM_K8) {
 		if (((eax & CPUID_USE_XFAM_XMOD) != CPUID_USE_XFAM_XMOD) ||
 		    ((eax & CPUID_XMOD) > CPUID_XMOD_REV_MASK)) {
-			pr_debug("Processor cpuid %x not supported\n", eax);
+			pr_info("Processor cpuid %x not supported\n", eax);
 			return;
 		}
 
 		eax = cpuid_eax(CPUID_GET_MAX_CAPABILITIES);
 		if (eax < CPUID_FREQ_VOLT_CAPABILITIES) {
-			pr_debug("No frequency change capabilities detected\n");
+			pr_info("No frequency change capabilities detected\n");
 			return;
 		}
 
 		cpuid(CPUID_FREQ_VOLT_CAPABILITIES, &eax, &ebx, &ecx, &edx);
 		if ((edx & P_STATE_TRANSITION_CAPABLE)
 			!= P_STATE_TRANSITION_CAPABLE) {
-			pr_debug("Power state transitions not supported\n");
+			pr_info("Power state transitions not supported\n");
 			return;
 		}
 		*rc = 0;
@@ -546,14 +546,14 @@ static void print_basics(struct powernow_k8_data *data)
 	for (j = 0; j < data->numps; j++) {
 		if (data->powernow_table[j].frequency !=
 				CPUFREQ_ENTRY_INVALID) {
-			pr_debug("fid 0x%x (%d MHz), vid 0x%x\n",
+			pr_info("fid 0x%x (%d MHz), vid 0x%x\n",
 				data->powernow_table[j].driver_data & 0xff,
 				data->powernow_table[j].frequency/1000,
 				data->powernow_table[j].driver_data >> 8);
 		}
 	}
 	if (data->batps)
-		pr_debug("Only %d pstates on battery\n", data->batps);
+		pr_info("Only %d pstates on battery\n", data->batps);
 }
 
 static int fill_powernow_table(struct powernow_k8_data *data,
@@ -840,7 +840,7 @@ static int fill_powernow_table_fidvid(struct powernow_k8_data *data,
 		}
 
 		if (freq != (data->acpi_data.states[i].core_frequency * 1000)) {
-			pr_debug("invalid freq entries %u kHz vs. %u kHz\n",
+			pr_info("invalid freq entries %u kHz vs. %u kHz\n",
 				freq, (unsigned int)
 				(data->acpi_data.states[i].core_frequency
 				 * 1000));
@@ -957,7 +957,7 @@ static long powernowk8_target_fn(void *arg)
 
 	if ((checkvid != data->currvid) ||
 	    (checkfid != data->currfid)) {
-		pr_debug("error - out of sync, fix 0x%x 0x%x, vid 0x%x 0x%x\n",
+		pr_info("error - out of sync, fix 0x%x 0x%x, vid 0x%x 0x%x\n",
 		       checkfid, data->currfid,
 		       checkvid, data->currvid);
 	}
@@ -1198,7 +1198,7 @@ static int powernowk8_init(void)
 	if (ret)
 		return ret;
 
-	pr_debug("Found %d %s (%d cpu cores) (" VERSION ")\n",
+	pr_info("Found %d %s (%d cpu cores) (" VERSION ")\n",
 		num_online_nodes(), boot_cpu_data.x86_model_id, supported_cpus);
 
 	return ret;

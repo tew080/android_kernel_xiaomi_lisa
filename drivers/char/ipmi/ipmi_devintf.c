@@ -857,7 +857,7 @@ static int __init init_ipmi_devintf(void)
 	if (ipmi_major < 0)
 		return -EINVAL;
 
-	pr_debug("ipmi device interface\n");
+	pr_info("ipmi device interface\n");
 
 	ipmi_class = class_create(THIS_MODULE, "ipmi");
 	if (IS_ERR(ipmi_class)) {

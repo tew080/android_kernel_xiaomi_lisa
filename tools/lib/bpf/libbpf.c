@@ -4609,7 +4609,7 @@ int libbpf_prog_type_by_name(const char *name, enum bpf_prog_type *prog_type,
 	pr_warning("failed to guess program type based on ELF section name '%s'\n", name);
 	type_names = libbpf_get_type_names(false);
 	if (type_names != NULL) {
-		pr_debug("supported section(type) names are:%s\n", type_names);
+		pr_info("supported section(type) names are:%s\n", type_names);
 		free(type_names);
 	}
 
@@ -4636,7 +4636,7 @@ int libbpf_attach_type_by_name(const char *name,
 	pr_warning("failed to guess attach type based on ELF section name '%s'\n", name);
 	type_names = libbpf_get_type_names(true);
 	if (type_names != NULL) {
-		pr_debug("attachable section(type) names are:%s\n", type_names);
+		pr_info("attachable section(type) names are:%s\n", type_names);
 		free(type_names);
 	}
 

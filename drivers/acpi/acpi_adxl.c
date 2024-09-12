@@ -43,28 +43,28 @@ static union acpi_object *adxl_dsm(int cmd, union acpi_object argv[])
 	obj = acpi_evaluate_dsm_typed(handle, &adxl_guid, ADXL_REVISION,
 				      cmd, argv, ACPI_TYPE_PACKAGE);
 	if (!obj) {
-		pr_debug("DSM call failed for cmd=%d\n", cmd);
+		pr_info("DSM call failed for cmd=%d\n", cmd);
 		return NULL;
 	}
 
 	if (obj->package.count != 2) {
-		pr_debug("Bad pkg count %d\n", obj->package.count);
+		pr_info("Bad pkg count %d\n", obj->package.count);
 		goto err;
 	}
 
 	o = obj->package.elements;
 	if (o->type != ACPI_TYPE_INTEGER) {
-		pr_debug("Bad 1st element type %d\n", o->type);
+		pr_info("Bad 1st element type %d\n", o->type);
 		goto err;
 	}
 	if (o->integer.value) {
-		pr_debug("Bad ret val %llu\n", o->integer.value);
+		pr_info("Bad ret val %llu\n", o->integer.value);
 		goto err;
 	}
 
 	o = obj->package.elements + 1;
 	if (o->type != ACPI_TYPE_PACKAGE) {
-		pr_debug("Bad 2nd element type %d\n", o->type);
+		pr_info("Bad 2nd element type %d\n", o->type);
 		goto err;
 	}
 	return obj;
@@ -149,27 +149,27 @@ static int __init adxl_init(void)
 	}
 
 	if (!acpi_has_method(handle, "_DSM")) {
-		pr_debug("No DSM method\n");
+		pr_info("No DSM method\n");
 		return -ENODEV;
 	}
 
 	if (!acpi_check_dsm(handle, &adxl_guid, ADXL_REVISION,
 			    ADXL_IDX_GET_ADDR_PARAMS |
 			    ADXL_IDX_FORWARD_TRANSLATE)) {
-		pr_debug("DSM method does not support forward translate\n");
+		pr_info("DSM method does not support forward translate\n");
 		return -ENODEV;
 	}
 
 	params = adxl_dsm(ADXL_IDX_GET_ADDR_PARAMS, NULL);
 	if (!params) {
-		pr_debug("Failed to get component names\n");
+		pr_info("Failed to get component names\n");
 		return -ENODEV;
 	}
 
 	p = params->package.elements + 1;
 	adxl_count = p->package.count;
 	if (adxl_count > ADXL_MAX_COMPONENTS) {
-		pr_debug("Insane number of address component names %d\n", adxl_count);
+		pr_info("Insane number of address component names %d\n", adxl_count);
 		ACPI_FREE(params);
 		return -ENODEV;
 	}

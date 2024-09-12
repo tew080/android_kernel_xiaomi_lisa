@@ -378,7 +378,7 @@ static int convert_variable_type(Dwarf_Die *vr_die,
 
 	/* Check the bitwidth */
 	if (ret > MAX_BASIC_TYPE_BITS) {
-		pr_debug("%s exceeds max-bitwidth. Cut down to %d bits.\n",
+		pr_info("%s exceeds max-bitwidth. Cut down to %d bits.\n",
 			dwarf_diename(&type), MAX_BASIC_TYPE_BITS);
 		ret = MAX_BASIC_TYPE_BITS;
 	}
@@ -933,7 +933,7 @@ static void skip_prologue(Dwarf_Die *sp_die, struct probe_finder *pf)
 	if (!perf_probe_with_var(pf->pev))
 		return;
 
-	pr_debug("Target program is compiled without optimization. Skipping prologue.\n"
+	pr_info("Target program is compiled without optimization. Skipping prologue.\n"
 		"Probe on address 0x%" PRIx64 " to force probing at the function entry.\n\n",
 		pf->addr);
 

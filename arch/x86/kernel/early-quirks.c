@@ -615,7 +615,7 @@ static void __init force_disable_hpet(int num, int slot, int func)
 {
 #ifdef CONFIG_HPET_TIMER
 	boot_hpet_disable = true;
-	pr_debug("x86/hpet: Will disable the HPET for this platform because it's not reliable\n");
+	pr_info("x86/hpet: Will disable the HPET for this platform because it's not reliable\n");
 #endif
 }
 
@@ -661,7 +661,7 @@ static void __init apple_airport_reset(int bus, int slot, int func)
 		return;
 	}
 
-	pr_debug("Resetting Apple AirPort card (left enabled by EFI)\n");
+	pr_info("Resetting Apple AirPort card (left enabled by EFI)\n");
 
 	for (i = 0; bcma_aread32(BCMA_RESET_ST) && i < 30; i++)
 		udelay(10);

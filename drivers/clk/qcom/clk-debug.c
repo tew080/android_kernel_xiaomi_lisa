@@ -589,7 +589,7 @@ void qcom_clk_dump(struct clk *clk, struct regulator *regulator,
 	if (IS_ERR_OR_NULL(hw))
 		return;
 
-	pr_debug("Dumping %s Registers:\n", clk_hw_get_name(hw));
+	pr_info("Dumping %s Registers:\n", clk_hw_get_name(hw));
 	WARN_CLK(hw, calltrace, "");
 }
 EXPORT_SYMBOL(qcom_clk_dump);

@@ -1084,7 +1084,7 @@ static int pmu_config_term(struct list_head *formats,
 	} else if (term->type_val == PARSE_EVENTS__TERM_TYPE_STR) {
 		if (strcmp(term->val.str, "?")) {
 			if (verbose > 0) {
-				pr_debug("Invalid sysfs entry %s=%s\n",
+				pr_info("Invalid sysfs entry %s=%s\n",
 						term->config, term->val.str);
 			}
 			if (err) {

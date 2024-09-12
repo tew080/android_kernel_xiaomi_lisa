@@ -563,7 +563,7 @@ int vega10_thermal_setup_fan_table(struct pp_hwmgr *hwmgr)
 				(uint8_t *)(&(data->smc_state_table.pp_table)),
 				PPTABLE, false);
 	if (ret)
-		pr_debug("Failed to update Fan Control Table in PPTable!");
+		pr_info("Failed to update Fan Control Table in PPTable!");
 
 	return ret;
 }
@@ -588,19 +588,19 @@ int vega10_enable_mgpu_fan_boost(struct pp_hwmgr *hwmgr)
 				(uint8_t *)(&(data->smc_state_table.pp_table)),
 				PPTABLE, false);
 	if (ret) {
-		pr_debug("Failed to update fan control table in pptable!");
+		pr_info("Failed to update fan control table in pptable!");
 		return ret;
 	}
 
 	ret = vega10_disable_fan_control_feature(hwmgr);
 	if (ret) {
-		pr_debug("Attempt to disable SMC fan control feature failed!");
+		pr_info("Attempt to disable SMC fan control feature failed!");
 		return ret;
 	}
 
 	ret = vega10_enable_fan_control_feature(hwmgr);
 	if (ret)
-		pr_debug("Attempt to enable SMC fan control feature failed!");
+		pr_info("Attempt to enable SMC fan control feature failed!");
 
 	return ret;
 }

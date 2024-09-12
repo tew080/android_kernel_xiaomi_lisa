@@ -171,7 +171,7 @@ void __init check_for_initrd(void)
 	return;
 
 disable:
-	pr_debug("initrd disabled\n");
+	pr_info("initrd disabled\n");
 	initrd_start = initrd_end = 0;
 #endif
 }
@@ -408,7 +408,7 @@ void __init arch_cpu_finalize_init(void)
 		break;
 	}
 
-	pr_debug("CPU: %s\n", get_cpu_subtype(&current_cpu_data));
+	pr_info("CPU: %s\n", get_cpu_subtype(&current_cpu_data));
 
 #ifndef __LITTLE_ENDIAN__
 	/* 'eb' means 'Endian Big' */

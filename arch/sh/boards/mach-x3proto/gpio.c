@@ -113,7 +113,7 @@ int __init x3proto_gpio_setup(void)
 	if (unlikely(!x3proto_irq_domain))
 		goto err_irq;
 
-	pr_debug("registering '%s' support, handling GPIOs %u -> %u, "
+	pr_info("registering '%s' support, handling GPIOs %u -> %u, "
 		"bound to IRQ %u\n",
 		x3proto_gpio_chip.label, x3proto_gpio_chip.base,
 		x3proto_gpio_chip.base + x3proto_gpio_chip.ngpio,

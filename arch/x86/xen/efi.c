@@ -138,7 +138,7 @@ static enum efi_secureboot_mode xen_efi_get_secureboot(void)
 		return efi_secureboot_mode_disabled;
 
  secure_boot_enabled:
-	pr_debug("UEFI Secure Boot is enabled.\n");
+	pr_info("UEFI Secure Boot is enabled.\n");
 	return efi_secureboot_mode_enabled;
 
  out_efi_err:

@@ -376,10 +376,10 @@ void __init bcm63xx_cpu_init(void)
 	bcm63xx_cpu_freq = detect_cpu_clock();
 	bcm63xx_memory_size = detect_memory_size();
 
-	pr_debug("Detected Broadcom 0x%04x CPU revision %02x\n",
+	pr_info("Detected Broadcom 0x%04x CPU revision %02x\n",
 		bcm63xx_cpu_id, bcm63xx_cpu_rev);
-	pr_debug("CPU frequency is %u MHz\n",
+	pr_info("CPU frequency is %u MHz\n",
 		bcm63xx_cpu_freq / 1000000);
-	pr_debug("%uMB of RAM installed\n",
+	pr_info("%uMB of RAM installed\n",
 		bcm63xx_memory_size >> 20);
 }

@@ -52,7 +52,7 @@ static void __init cps_smp_setup(void)
 	/* Detect & record VPE topology */
 	nvpes = 0;
 	nclusters = mips_cps_numclusters();
-	pr_debug("%s topology ", cpu_has_mips_r6 ? "VP" : "VPE");
+	pr_info("%s topology ", cpu_has_mips_r6 ? "VP" : "VPE");
 	for (cl = 0; cl < nclusters; cl++) {
 		if (cl > 0)
 			pr_cont(",");

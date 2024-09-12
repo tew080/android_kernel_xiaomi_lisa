@@ -569,12 +569,12 @@ static int msm_ion_probe(struct platform_device *pdev)
 			continue;
 		} else {
 			if (heap_data->size)
-				pr_debug("ION heap %s created at %pa with size %zx\n",
+				pr_info("ION heap %s created at %pa with size %zx\n",
 					heap_data->name,
 					&heap_data->base,
 					heap_data->size);
 			else
-				pr_debug("ION heap %s created\n",
+				pr_info("ION heap %s created\n",
 					heap_data->name);
 		}
 

@@ -604,7 +604,7 @@ static int __init msm_minidump_init(void)
 	pendings = 0;
 	spin_unlock_irqrestore(&mdt_lock, flags);
 
-	pr_debug("Enabled with max number of regions %d\n",
+	pr_info("Enabled with max number of regions %d\n",
 		CONFIG_MINIDUMP_MAX_ENTRIES);
 
 	/* All updates above should be visible, before init completes */

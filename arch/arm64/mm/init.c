@@ -110,7 +110,7 @@ static void __init reserve_crashkernel(void)
 	}
 	memblock_reserve(crash_base, crash_size);
 
-	pr_debug("crashkernel reserved: 0x%016llx - 0x%016llx (%lld MB)\n",
+	pr_info("crashkernel reserved: 0x%016llx - 0x%016llx (%lld MB)\n",
 		crash_base, crash_base + crash_size, crash_size >> 20);
 
 	crashk_res.start = crash_base;
@@ -164,7 +164,7 @@ static void __init reserve_elfcorehdr(void)
 
 	memblock_reserve(elfcorehdr_addr, elfcorehdr_size);
 
-	pr_debug("Reserving %lldKB of memory at 0x%llx for elfcorehdr\n",
+	pr_info("Reserving %lldKB of memory at 0x%llx for elfcorehdr\n",
 		elfcorehdr_size >> 10, elfcorehdr_addr);
 }
 #else
@@ -305,7 +305,7 @@ static void __init update_memory_limit(void)
 
 	status = (char *)fdt_getprop(initial_boot_params, node, "status", NULL);
 	if (status && !strcmp(status, "disabled")) {
-		pr_debug("mem-offline device is disabled\n");
+		pr_info("mem-offline device is disabled\n");
 		return;
 	}
 
@@ -330,7 +330,7 @@ static void __init update_memory_limit(void)
 					min_ddr_sz = tmp_min_ddr_sz;
 					offline_sz = tmp_offline_sz;
 				} else {
-					pr_debug("mem-offline: invalid offline size:%pa\n",
+					pr_info("mem-offline: invalid offline size:%pa\n",
 						 &tmp_offline_sz);
 				}
 			}
@@ -342,7 +342,7 @@ static void __init update_memory_limit(void)
 	}
 
 	if (offline_sz == 0) {
-		pr_debug("mem-offline: no memory to offline for DDR size:%llu\n",
+		pr_info("mem-offline: no memory to offline for DDR size:%llu\n",
 			ram_sz);
 		return;
 	}

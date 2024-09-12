@@ -1198,10 +1198,10 @@ static int dsi_panel_parse_misc_host_config(struct dsi_host_common_cfg *host,
 	rc = utils->read_u32(utils->data, "qcom,mdss-dsi-clk-strength", &val);
 	if (!rc) {
 		host->clk_strength = val;
-		pr_debug("[%s] clk_strength = %d\n", name, val);
+		pr_info("[%s] clk_strength = %d\n", name, val);
 	} else {
 		host->clk_strength = 0;
-		pr_debug("[%s] clk_strength default value = %d\n", name, val);
+		pr_info("[%s] clk_strength default value = %d\n", name, val);
 	}
 
 	DSI_DEBUG("[%s] DMA scheduling parameters Line: %d Window: %d\n", name,

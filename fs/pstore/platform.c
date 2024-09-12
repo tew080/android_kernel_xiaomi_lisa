@@ -333,7 +333,7 @@ static void allocate_buf_for_compression(void)
 	big_oops_buf_sz = size;
 	big_oops_buf = buf;
 
-	pr_debug("Using crash dump compression: %s\n", zbackend->name);
+	pr_info("Using crash dump compression: %s\n", zbackend->name);
 }
 
 static void free_buf_for_compression(void)
@@ -627,7 +627,7 @@ int pstore_register(struct pstore_info *psi)
 	 */
 	backend = psi->name;
 
-	pr_debug("Registered %s as persistent store backend\n", psi->name);
+	pr_info("Registered %s as persistent store backend\n", psi->name);
 
 	module_put(owner);
 

@@ -141,7 +141,7 @@ static int __init load_uefi_certs(void)
 		if (status == EFI_NOT_FOUND)
 			pr_debug("MokListRT variable wasn't found\n");
 		else
-			pr_debug("Couldn't get UEFI MokListRT\n");
+			pr_info("Couldn't get UEFI MokListRT\n");
 	} else {
 		rc = parse_efi_signature_list("UEFI:MokListRT",
 					      mok, moksize, get_handler_for_db);
@@ -155,7 +155,7 @@ static int __init load_uefi_certs(void)
 		if (status == EFI_NOT_FOUND)
 			pr_debug("dbx variable wasn't found\n");
 		else
-			pr_debug("Couldn't get UEFI dbx list\n");
+			pr_info("Couldn't get UEFI dbx list\n");
 	} else {
 		rc = parse_efi_signature_list("UEFI:dbx",
 					      dbx, dbxsize,

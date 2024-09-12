@@ -42,7 +42,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
 		return -EINVAL;
 
 	if (!info->has_path && !info->has_classid) {
-		pr_debug("xt_cgroup: no path or classid specified\n");
+		pr_info("xt_cgroup: no path or classid specified\n");
 		return -EINVAL;
 	}
 
@@ -74,7 +74,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
 		return -EINVAL;
 
 	if (!info->has_path && !info->has_classid) {
-		pr_debug("xt_cgroup: no path or classid specified\n");
+		pr_info("xt_cgroup: no path or classid specified\n");
 		return -EINVAL;
 	}
 

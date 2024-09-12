@@ -1686,7 +1686,7 @@ init_hw_perf_events(void)
 	int counters, irq;
 	int counter_bits;
 
-	pr_debug("Performance counters: ");
+	pr_info("Performance counters: ");
 
 	counters = n_counters();
 	if (counters == 0) {

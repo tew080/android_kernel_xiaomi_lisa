@@ -363,7 +363,7 @@ int register_sh_pmu(struct sh_pmu *_pmu)
 		return -EBUSY;
 	sh_pmu = _pmu;
 
-	pr_debug("Performance Events: %s support registered\n", _pmu->name);
+	pr_info("Performance Events: %s support registered\n", _pmu->name);
 
 	/*
 	 * All of the on-chip counters are "limited", in that they have

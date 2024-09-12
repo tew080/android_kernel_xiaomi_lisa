@@ -150,7 +150,7 @@ static int __init ioei_init(void)
 	np = of_find_node_by_path("/event-sources/ibm,io-events");
 	if (np) {
 		request_event_sources_irqs(np, ioei_interrupt, "IO_EVENT");
-		pr_debug("IBM I/O event interrupts enabled\n");
+		pr_info("IBM I/O event interrupts enabled\n");
 		of_node_put(np);
 	} else {
 		return -ENODEV;

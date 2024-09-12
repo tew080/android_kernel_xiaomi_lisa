@@ -177,7 +177,7 @@ out:
 			cfpkt_destroy(rfml->incomplete_frm);
 		rfml->incomplete_frm = NULL;
 
-		pr_debug("Connection error %d triggered on RFM link\n", err);
+		pr_info("Connection error %d triggered on RFM link\n", err);
 
 		/* Trigger connection error upon failure.*/
 		layr->up->ctrlcmd(layr->up, CAIF_CTRLCMD_REMOTE_SHUTDOWN_IND,
@@ -282,7 +282,7 @@ static int cfrfml_transmit(struct cflayer *layr, struct cfpkt *pkt)
 out:
 
 	if (err != 0) {
-		pr_debug("Connection error %d triggered on RFM link\n", err);
+		pr_info("Connection error %d triggered on RFM link\n", err);
 		/* Trigger connection error upon failure.*/
 
 		layr->up->ctrlcmd(layr->up, CAIF_CTRLCMD_REMOTE_SHUTDOWN_IND,

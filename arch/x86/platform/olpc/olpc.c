@@ -213,7 +213,7 @@ static bool __init platform_detect(void)
 		olpc_platform_info.boardrev = get_board_revision(root);
 		olpc_platform_info.flags |= OLPC_F_PRESENT;
 
-		pr_debug("OLPC board revision %s%X\n",
+		pr_info("OLPC board revision %s%X\n",
 			((olpc_platform_info.boardrev & 0xf) < 8) ? "pre" : "",
 			olpc_platform_info.boardrev >> 4);
 	}

@@ -1010,7 +1010,7 @@ static int qtnf_topaz_fw_upload(struct qtnf_pcie_topaz_state *ts,
 		return -1;
 	}
 
-	pr_debug("starting firmware upload: %s\n", fwname);
+	pr_info("starting firmware upload: %s\n", fwname);
 
 	ret = request_firmware(&fw, fwname, &pdev->dev);
 	if (ret < 0) {
@@ -1051,7 +1051,7 @@ static void qtnf_topaz_fw_work_handler(struct work_struct *work)
 	}
 
 	if (ts->base.flashboot) {
-		pr_debug("booting firmware from flash\n");
+		pr_info("booting firmware from flash\n");
 
 		ret = qtnf_poll_state(&ts->bda->bda_bootstate,
 				      QTN_BDA_FW_FLASH_BOOT,
@@ -1088,7 +1088,7 @@ static void qtnf_topaz_fw_work_handler(struct work_struct *work)
 		goto fw_load_exit;
 	}
 
-	pr_debug("firmware is up and running\n");
+	pr_info("firmware is up and running\n");
 
 	ret = qtnf_pcie_fw_boot_done(bus);
 	if (ret)

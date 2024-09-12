@@ -1387,7 +1387,7 @@ static int decode_new_primary_affinity(void **p, void *end,
 		if (ret)
 			return ret;
 
-		pr_debug("osd%d primary-affinity 0x%x\n", osd, aff);
+		pr_info("osd%d primary-affinity 0x%x\n", osd, aff);
 	}
 
 	return 0;
@@ -1672,7 +1672,7 @@ static int decode_new_up_state_weight(void **p, void *end, u8 struct_v,
 		osd = ceph_decode_32(p);
 		w = ceph_decode_32(p);
 		BUG_ON(osd >= map->max_osd);
-		pr_debug("osd%d weight 0x%x %s\n", osd, w,
+		pr_info("osd%d weight 0x%x %s\n", osd, w,
 		     w == CEPH_OSD_IN ? "(in)" :
 		     (w == CEPH_OSD_OUT ? "(out)" : ""));
 		map->osd_weight[osd] = w;
@@ -1707,10 +1707,10 @@ static int decode_new_up_state_weight(void **p, void *end, u8 struct_v,
 		BUG_ON(osd >= map->max_osd);
 		if ((map->osd_state[osd] & CEPH_OSD_UP) &&
 		    (xorstate & CEPH_OSD_UP))
-			pr_debug("osd%d down\n", osd);
+			pr_info("osd%d down\n", osd);
 		if ((map->osd_state[osd] & CEPH_OSD_EXISTS) &&
 		    (xorstate & CEPH_OSD_EXISTS)) {
-			pr_debug("osd%d does not exist\n", osd);
+			pr_info("osd%d does not exist\n", osd);
 			ret = set_primary_affinity(map, osd,
 						   CEPH_OSD_DEFAULT_PRIMARY_AFFINITY);
 			if (ret)
@@ -1733,7 +1733,7 @@ static int decode_new_up_state_weight(void **p, void *end, u8 struct_v,
 		BUG_ON(osd >= map->max_osd);
 		if (ceph_decode_entity_addr(p, end, &addr))
 			goto e_inval;
-		pr_debug("osd%d up\n", osd);
+		pr_info("osd%d up\n", osd);
 		map->osd_state[osd] |= CEPH_OSD_EXISTS | CEPH_OSD_UP;
 		map->osd_addr[osd] = addr;
 	}

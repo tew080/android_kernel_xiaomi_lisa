@@ -76,7 +76,7 @@ void __init tboot_probe(void)
 		return;
 	}
 
-	pr_debug("found shared page at phys addr 0x%llx:\n",
+	pr_info("found shared page at phys addr 0x%llx:\n",
 		boot_params.tboot_addr);
 	pr_debug("version: %d\n", tboot->version);
 	pr_debug("log_addr: 0x%08x\n", tboot->log_addr);

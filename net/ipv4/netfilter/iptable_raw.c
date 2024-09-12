@@ -87,7 +87,7 @@ static int __init iptable_raw_init(void)
 	if (raw_before_defrag) {
 		table = &packet_raw_before_defrag;
 
-		pr_debug("Enabling raw table before defrag\n");
+		pr_info("Enabling raw table before defrag\n");
 	}
 
 	rawtable_ops = xt_hook_ops_alloc(table, iptable_raw_hook);

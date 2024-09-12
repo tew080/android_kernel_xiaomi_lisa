@@ -70,7 +70,7 @@ static int __init pci_stub_init(void)
 			continue;
 		}
 
-		pr_debug("pci-stub: add %04X:%04X sub=%04X:%04X cls=%08X/%08X\n",
+		pr_info("pci-stub: add %04X:%04X sub=%04X:%04X cls=%08X/%08X\n",
 		       vendor, device, subvendor, subdevice, class, class_mask);
 
 		rc = pci_add_dynid(&stub_driver, vendor, device,

@@ -320,7 +320,7 @@ int record__parse_freq(const struct option *opt, const char *str, int unset __ma
 			pr_err("couldn't read /proc/sys/kernel/perf_event_max_sample_rate\n");
 			return -1;
 		}
-		pr_debug("info: Using a maximum frequency rate of %'d Hz\n", freq);
+		pr_info("info: Using a maximum frequency rate of %'d Hz\n", freq);
 	} else {
 		freq = atoi(str);
 	}

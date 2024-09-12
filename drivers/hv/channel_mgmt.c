@@ -181,7 +181,7 @@ static u16 hv_get_dev_type(const struct vmbus_channel *channel)
 		if (guid_equal(guid, &vmbus_devs[i].guid))
 			return i;
 	}
-	pr_debug("Unknown GUID: %pUl\n", guid);
+	pr_info("Unknown GUID: %pUl\n", guid);
 	return i;
 }
 

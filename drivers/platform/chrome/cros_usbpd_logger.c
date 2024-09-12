@@ -159,7 +159,7 @@ static void cros_usbpd_print_log_entry(struct ec_response_pd_log *r,
 	}
 
 	div_s64_rem(ktime_to_ms(tstamp), MSEC_PER_SEC, &rem);
-	pr_debug("PDLOG %d/%02d/%02d %02d:%02d:%02d.%03d P%d %s\n",
+	pr_info("PDLOG %d/%02d/%02d %02d:%02d:%02d.%03d P%d %s\n",
 		rt.tm_year + 1900, rt.tm_mon + 1, rt.tm_mday,
 		rt.tm_hour, rt.tm_min, rt.tm_sec, rem,
 		PD_LOG_PORT(r->size_port), buf);

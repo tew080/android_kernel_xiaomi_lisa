@@ -478,10 +478,10 @@ static bool __init sparc64_has_aes_opcode(void)
 static int __init aes_sparc64_mod_init(void)
 {
 	if (sparc64_has_aes_opcode()) {
-		pr_debug("Using sparc64 aes opcodes optimized AES implementation\n");
+		pr_info("Using sparc64 aes opcodes optimized AES implementation\n");
 		return crypto_register_algs(algs, ARRAY_SIZE(algs));
 	}
-	pr_debug("sparc64 aes opcodes not available.\n");
+	pr_info("sparc64 aes opcodes not available.\n");
 	return -ENODEV;
 }
 

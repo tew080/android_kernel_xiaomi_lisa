@@ -653,7 +653,7 @@ static int ppc_core_imc_cpu_online(unsigned int cpu)
 	if (!is_core_imc_mem_inited(cpu)) {
 		ret = core_imc_mem_init(cpu, core_imc_pmu->counter_mem_size);
 		if (ret) {
-			pr_debug("core_imc memory allocation for cpu %d failed\n", cpu);
+			pr_info("core_imc memory allocation for cpu %d failed\n", cpu);
 			return ret;
 		}
 	}
@@ -1215,7 +1215,7 @@ static int trace_imc_mem_alloc(int cpu_id, int size)
 		rc = opal_imc_counters_init(OPAL_IMC_COUNTERS_TRACE, __pa((void *)local_mem),
 					    get_hard_smp_processor_id(cpu_id));
 		if (rc) {
-			pr_debug("IMC:opal init failed for trace imc\n");
+			pr_info("IMC:opal init failed for trace imc\n");
 			return rc;
 		}
 	}

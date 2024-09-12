@@ -97,7 +97,7 @@ void __init prom_init(void)
 	snprintf(soc_info.sys_type, LTQ_SYS_TYPE_LEN - 1, "%s rev %s",
 		soc_info.name, soc_info.rev_type);
 	soc_info.sys_type[LTQ_SYS_TYPE_LEN - 1] = '\0';
-	pr_debug("SoC: %s\n", soc_info.sys_type);
+	pr_info("SoC: %s\n", soc_info.sys_type);
 	prom_init_cmdline();
 
 #if defined(CONFIG_MIPS_MT_SMP)

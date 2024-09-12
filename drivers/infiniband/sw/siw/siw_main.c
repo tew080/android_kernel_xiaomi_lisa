@@ -573,7 +573,7 @@ static __init int siw_init_module(void)
 	int nr_cpu;
 
 	if (SENDPAGE_THRESH < SIW_MAX_INLINE) {
-		pr_debug("siw: sendpage threshold too small: %u\n",
+		pr_info("siw: sendpage threshold too small: %u\n",
 			(int)SENDPAGE_THRESH);
 		rv = -EINVAL;
 		goto out_error;
@@ -587,7 +587,7 @@ static __init int siw_init_module(void)
 		goto out_error;
 
 	if (!siw_create_tx_threads()) {
-		pr_debug("siw: Could not start any TX thread\n");
+		pr_info("siw: Could not start any TX thread\n");
 		rv = -ENOMEM;
 		goto out_error;
 	}
@@ -597,7 +597,7 @@ static __init int siw_init_module(void)
 	 */
 	siw_crypto_shash = crypto_alloc_shash("crc32c", 0, 0);
 	if (IS_ERR(siw_crypto_shash)) {
-		pr_debug("siw: Loading CRC32c failed: %ld\n",
+		pr_info("siw: Loading CRC32c failed: %ld\n",
 			PTR_ERR(siw_crypto_shash));
 		siw_crypto_shash = NULL;
 		if (mpa_crc_required) {
@@ -611,7 +611,7 @@ static __init int siw_init_module(void)
 
 	rdma_link_register(&siw_link_ops);
 
-	pr_debug("SoftiWARP attached\n");
+	pr_info("SoftiWARP attached\n");
 	return 0;
 
 out_error:
@@ -624,7 +624,7 @@ out_error:
 	if (siw_crypto_shash)
 		crypto_free_shash(siw_crypto_shash);
 
-	pr_debug("SoftIWARP attach failed. Error: %d\n", rv);
+	pr_info("SoftIWARP attach failed. Error: %d\n", rv);
 
 	siw_cm_exit();
 	siw_destroy_cpulist();
@@ -653,7 +653,7 @@ static void __exit siw_exit_module(void)
 	if (siw_crypto_shash)
 		crypto_free_shash(siw_crypto_shash);
 
-	pr_debug("SoftiWARP detached\n");
+	pr_info("SoftiWARP detached\n");
 }
 
 module_init(siw_init_module);

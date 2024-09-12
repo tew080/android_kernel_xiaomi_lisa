@@ -289,7 +289,7 @@ static void __init ordered_lsm_init(void)
 
 	if (chosen_lsm_order) {
 		if (chosen_major_lsm) {
-			pr_debug("security= is ignored because it is superseded by lsm=\n");
+			pr_info("security= is ignored because it is superseded by lsm=\n");
 			chosen_major_lsm = NULL;
 		}
 		ordered_lsm_parse(chosen_lsm_order, "cmdline");
@@ -355,7 +355,7 @@ int __init security_init(void)
 {
 	struct lsm_info *lsm;
 
-	pr_debug("Security Framework initializing\n");
+	pr_info("Security Framework initializing\n");
 
 	/*
 	 * Append the names of the early LSM modules now that kmalloc() is

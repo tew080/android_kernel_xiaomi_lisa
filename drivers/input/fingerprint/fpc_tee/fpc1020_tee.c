@@ -573,7 +573,7 @@ static int device_prepare(struct fpc1020_data *fpc1020, bool enable)
 		select_pin_ctl(fpc1020, "fpc1020_reset_reset");
 
 		if (power_cfg == 1) {
-			pr_debug("Try to enable fp_vdd_vreg\n");
+			pr_info("Try to enable fp_vdd_vreg\n");
 			vreg = regulator_get(dev, "fp_vdd_vreg");
 
 			if (vreg == NULL) {
@@ -582,7 +582,7 @@ static int device_prepare(struct fpc1020_data *fpc1020, bool enable)
 			}
 
 			if (regulator_is_enabled(vreg)) {
-				pr_debug("fp_vdd_vreg is already enabled!\n");
+				pr_info("fp_vdd_vreg is already enabled!\n");
 			} else {
 				rc = regulator_enable(vreg);
 				if (rc) {
@@ -593,7 +593,7 @@ static int device_prepare(struct fpc1020_data *fpc1020, bool enable)
 				}
 			}
 
-			pr_debug("fp_vdd_vreg is enabled!\n");
+			pr_info("fp_vdd_vreg is enabled!\n");
 		} else {
 			rc = vreg_setup(fpc1020, "vdd_ana", true);
 			if (rc) {
@@ -873,7 +873,7 @@ static const struct attribute_group attribute_group = {
 #ifndef FPC_DRM_INTERFACE_WA
 static void notification_work(struct work_struct *work)
 {
-	pr_debug("%s: unblank\n", __func__);
+	pr_info("%s: unblank\n", __func__);
 	dsi_bridge_interface_enable(FP_UNLOCK_REJECTION_TIMEOUT);
 }
 #endif
@@ -893,7 +893,7 @@ static irqreturn_t fpc1020_irq_handler(int irq, void *handle)
 
 	sysfs_notify(&fpc1020->dev->kobj, NULL, dev_attr_irq.attr.name);
 	if (fpc1020->wait_finger_down && fpc1020->fb_black && fpc1020->prepared) {
-		pr_debug("%s enter fingerdown & fb_black then schedule_work\n", __func__);
+		pr_info("%s enter fingerdown & fb_black then schedule_work\n", __func__);
 		fpc1020->wait_finger_down = false;
 #ifndef FPC_DRM_INTERFACE_WA
 		schedule_work(&fpc1020->work);
@@ -1121,7 +1121,7 @@ static int __init fpc1020_init(void)
 
 	rc = platform_driver_register(&fpc1020_driver);
 	if (!rc)
-		pr_debug("%s OK\n", __func__);
+		pr_info("%s OK\n", __func__);
 	else
 		pr_err("%s %d\n", __func__, rc);
 
@@ -1130,7 +1130,7 @@ static int __init fpc1020_init(void)
 
 static void __exit fpc1020_exit(void)
 {
-	pr_debug("%s\n", __func__);
+	pr_info("%s\n", __func__);
 	platform_driver_unregister(&fpc1020_driver);
 }
 

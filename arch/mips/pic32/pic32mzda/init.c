@@ -50,11 +50,11 @@ void __init plat_mem_setup(void)
 	 */
 	__dt_setup_arch(dtb);
 
-	pr_debug("Found following command lines\n");
-	pr_debug(" boot_command_line: %s\n", boot_command_line);
-	pr_debug(" arcs_cmdline     : %s\n", arcs_cmdline);
+	pr_info("Found following command lines\n");
+	pr_info(" boot_command_line: %s\n", boot_command_line);
+	pr_info(" arcs_cmdline     : %s\n", arcs_cmdline);
 #ifdef CONFIG_CMDLINE_BOOL
-	pr_debug(" builtin_cmdline  : %s\n", CONFIG_CMDLINE);
+	pr_info(" builtin_cmdline  : %s\n", CONFIG_CMDLINE);
 #endif
 	if (dtb != __dtb_start)
 		strlcpy(arcs_cmdline, boot_command_line, COMMAND_LINE_SIZE);

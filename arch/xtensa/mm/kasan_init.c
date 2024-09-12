@@ -102,5 +102,5 @@ void __init kasan_init(void)
 
 	/* At this point kasan is fully initialized. Enable error messages. */
 	current->kasan_depth = 0;
-	pr_debug("KernelAddressSanitizer initialized\n");
+	pr_info("KernelAddressSanitizer initialized\n");
 }

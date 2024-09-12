@@ -211,13 +211,13 @@ fsl_rio_tx_handler(int irq, void *dev_instance)
 	osr = in_be32(&rmu->msg_regs->osr);
 
 	if (osr & RIO_MSG_OSR_TE) {
-		pr_debug("RIO: outbound message transmission error\n");
+		pr_info("RIO: outbound message transmission error\n");
 		out_be32(&rmu->msg_regs->osr, RIO_MSG_OSR_TE);
 		goto out;
 	}
 
 	if (osr & RIO_MSG_OSR_QOI) {
-		pr_debug("RIO: outbound message queue overflow\n");
+		pr_info("RIO: outbound message queue overflow\n");
 		out_be32(&rmu->msg_regs->osr, RIO_MSG_OSR_QOI);
 		goto out;
 	}
@@ -256,7 +256,7 @@ fsl_rio_rx_handler(int irq, void *dev_instance)
 	isr = in_be32(&rmu->msg_regs->isr);
 
 	if (isr & RIO_MSG_ISR_TE) {
-		pr_debug("RIO: inbound message reception error\n");
+		pr_info("RIO: inbound message reception error\n");
 		out_be32((void *)&rmu->msg_regs->isr, RIO_MSG_ISR_TE);
 		goto out;
 	}
@@ -299,13 +299,13 @@ fsl_rio_dbell_handler(int irq, void *dev_instance)
 	dsr = in_be32(&fsl_dbell->dbell_regs->dsr);
 
 	if (dsr & DOORBELL_DSR_TE) {
-		pr_debug("RIO: doorbell reception error\n");
+		pr_info("RIO: doorbell reception error\n");
 		out_be32(&fsl_dbell->dbell_regs->dsr, DOORBELL_DSR_TE);
 		goto out;
 	}
 
 	if (dsr & DOORBELL_DSR_QFI) {
-		pr_debug("RIO: doorbell queue full\n");
+		pr_info("RIO: doorbell queue full\n");
 		out_be32(&fsl_dbell->dbell_regs->dsr, DOORBELL_DSR_QFI);
 	}
 

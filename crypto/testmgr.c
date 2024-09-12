@@ -5311,7 +5311,7 @@ test_done:
 	}
 
 	if (fips_enabled && !rc)
-		pr_debug("alg: self-tests for %s (%s) passed\n", driver, alg);
+		pr_info("alg: self-tests for %s (%s) passed\n", driver, alg);
 
 	return rc;
 

@@ -991,7 +991,7 @@ static int __init arch_hw_breakpoint_init(void)
 	core_num_brps = get_num_brps();
 	core_num_wrps = get_num_wrps();
 
-	pr_debug("found %d breakpoint and %d watchpoint registers.\n",
+	pr_info("found %d breakpoint and %d watchpoint registers.\n",
 		core_num_brps, core_num_wrps);
 
 	/* Register debug fault handlers. */

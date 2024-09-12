@@ -34,7 +34,7 @@ spinlock_t susfs_mnt_id_recorder_spin_lock;
 
 bool is_log_enable = true;
 #ifdef CONFIG_KSU_SUSFS_ENABLE_LOG
-#define SUSFS_LOGI(fmt, ...) if (is_log_enable) pr_debug("susfs:[%u][%u][%s] " fmt, current_uid().val, current->pid, __func__, ##__VA_ARGS__)
+#define SUSFS_LOGI(fmt, ...) if (is_log_enable) pr_info("susfs:[%u][%u][%s] " fmt, current_uid().val, current->pid, __func__, ##__VA_ARGS__)
 #define SUSFS_LOGE(fmt, ...) if (is_log_enable) pr_err("susfs:[%u][%u][%s]" fmt, current_uid().val, current->pid, __func__, ##__VA_ARGS__)
 #else
 #define SUSFS_LOGI(fmt, ...) 
@@ -1249,9 +1249,9 @@ void susfs_set_log(bool enabled) {
 	is_log_enable = enabled;
 	spin_unlock(&susfs_spin_lock);
 	if (is_log_enable) {
-		pr_debug("susfs: enable logging to kernel");
+		pr_info("susfs: enable logging to kernel");
 	} else {
-		pr_debug("susfs: disable logging to kernel");
+		pr_info("susfs: disable logging to kernel");
 	}
 }
 

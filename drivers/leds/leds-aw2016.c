@@ -671,7 +671,7 @@ static struct i2c_driver aw2016_led_driver = {
 
 static int __init aw2016_led_init(void)
 {
-	pr_debug("%s: driver version: %s\n", __func__, AW2016_DRIVER_VERSION);
+	pr_info("%s: driver version: %s\n", __func__, AW2016_DRIVER_VERSION);
 	return i2c_add_driver(&aw2016_led_driver);
 }
 module_init(aw2016_led_init);

@@ -280,7 +280,7 @@ static int __init exynos_mcpm_init(void)
 
 	mcpm_smp_set_ops();
 
-	pr_debug("Exynos MCPM support installed\n");
+	pr_info("Exynos MCPM support installed\n");
 
 	/*
 	 * On Exynos5420/5800 for the A15 and A7 clusters:

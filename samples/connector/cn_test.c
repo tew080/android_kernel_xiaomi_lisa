@@ -24,7 +24,7 @@ static struct timer_list cn_test_timer;
 
 static void cn_test_callback(struct cn_msg *msg, struct netlink_skb_parms *nsp)
 {
-	pr_debug("%s: %lu: idx=%x, val=%x, seq=%u, ack=%u, len=%d: %s.\n",
+	pr_info("%s: %lu: idx=%x, val=%x, seq=%u, ack=%u, len=%d: %s.\n",
 	        __func__, jiffies, msg->id.idx, msg->id.val,
 	        msg->seq, msg->ack, msg->len,
 	        msg->len ? (char *)msg->data : "");
@@ -105,7 +105,7 @@ static int cn_test_want_notify(void)
 	//netlink_broadcast(nls, skb, 0, ctl->group, GFP_ATOMIC);
 	netlink_unicast(nls, skb, 0, 0);
 
-	pr_debug("request was sent: group=0x%x\n", ctl->group);
+	pr_info("request was sent: group=0x%x\n", ctl->group);
 
 	return 0;
 }
@@ -158,7 +158,7 @@ static int cn_test_init(void)
 	timer_setup(&cn_test_timer, cn_test_timer_func, 0);
 	mod_timer(&cn_test_timer, jiffies + msecs_to_jiffies(1000));
 
-	pr_debug("initialized with id={%u.%u}\n",
+	pr_info("initialized with id={%u.%u}\n",
 		cn_test_id.idx, cn_test_id.val);
 
 	return 0;

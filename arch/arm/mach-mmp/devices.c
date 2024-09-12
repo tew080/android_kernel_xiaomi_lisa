@@ -119,7 +119,7 @@ static int usb_phy_init_internal(void __iomem *base)
 {
 	int loops;
 
-	pr_debug("Init usb phy!!!\n");
+	pr_info("Init usb phy!!!\n");
 
 	/* Initialize the USB PHY power */
 	if (cpu_is_pxa910()) {
@@ -198,7 +198,7 @@ static int usb_phy_init_internal(void __iomem *base)
 
 static int usb_phy_deinit_internal(void __iomem *base)
 {
-	pr_debug("Deinit usb phy!!!\n");
+	pr_info("Deinit usb phy!!!\n");
 
 	if (cpu_is_pxa168())
 		u2o_clear(base, UTMI_OTG_ADDON, UTMI_OTG_ADDON_OTG_ON);

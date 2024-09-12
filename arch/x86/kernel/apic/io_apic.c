@@ -2898,7 +2898,7 @@ int mp_register_ioapic(int id, u32 address, u32 gsi_base,
 	/* Set nr_registers to mark entry present */
 	ioapics[idx].nr_registers = entries;
 
-	pr_debug("IOAPIC[%d]: apic_id %d, version %d, address 0x%x, GSI %d-%d\n",
+	pr_info("IOAPIC[%d]: apic_id %d, version %d, address 0x%x, GSI %d-%d\n",
 		idx, mpc_ioapic_id(idx),
 		mpc_ioapic_ver(idx), mpc_ioapic_addr(idx),
 		gsi_cfg->gsi_base, gsi_cfg->gsi_end);

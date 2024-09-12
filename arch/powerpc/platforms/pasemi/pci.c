@@ -124,7 +124,7 @@ static void sb600_set_flag(int bus)
 			return;
 		}
 
-		pr_debug("NEMO SB600 IOB base %08llx\n",res.start);
+		pr_info("NEMO SB600 IOB base %08llx\n",res.start);
 
 		iob_mapbase = ioremap(res.start + 0x100, 0x94);
 	}
@@ -253,7 +253,7 @@ static int __init pas_add_bridge(struct device_node *dev)
 
 	setup_pa_pxp(hose);
 
-	pr_debug("Found PA-PXP PCI host bridge.\n");
+	pr_info("Found PA-PXP PCI host bridge.\n");
 
 	/* Interpret the "ranges" property */
 	pci_process_bridge_OF_ranges(hose, dev, 1);

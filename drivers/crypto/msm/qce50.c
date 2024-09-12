@@ -1128,11 +1128,11 @@ static void _qce_dump_descr_fifos(struct qce_device *pce_dev, int req_info)
 
 	pce_sps_data = &pce_dev->ce_request_info[req_info].ce_sps;
 	iovec = pce_sps_data->in_transfer.iovec;
-	pr_debug("==============================================\n");
-	pr_debug("CONSUMER (TX/IN/DEST) PIPE DESCRIPTOR\n");
-	pr_debug("==============================================\n");
+	pr_info("==============================================\n");
+	pr_info("CONSUMER (TX/IN/DEST) PIPE DESCRIPTOR\n");
+	pr_info("==============================================\n");
 	for (i = 0; i <  pce_sps_data->in_transfer.iovec_count; i++) {
-		pr_debug(" [%d] addr=0x%x  size=0x%x  flags=0x%x\n", i,
+		pr_info(" [%d] addr=0x%x  size=0x%x  flags=0x%x\n", i,
 					iovec->addr, iovec->size, iovec->flags);
 		if (iovec->flags & cmd_flags) {
 			struct sps_command_element *pced;
@@ -1141,7 +1141,7 @@ static void _qce_dump_descr_fifos(struct qce_device *pce_dev, int req_info)
 					(GET_VIRT_ADDR(iovec->addr));
 			ents = iovec->size/(sizeof(struct sps_command_element));
 			for (j = 0; j < ents; j++) {
-				pr_debug("      [%d] [0x%x] 0x%x\n", j,
+				pr_info("      [%d] [0x%x] 0x%x\n", j,
 					pced->addr, pced->data);
 				pced++;
 			}
@@ -1149,12 +1149,12 @@ static void _qce_dump_descr_fifos(struct qce_device *pce_dev, int req_info)
 		iovec++;
 	}
 
-	pr_debug("==============================================\n");
-	pr_debug("PRODUCER (RX/OUT/SRC) PIPE DESCRIPTOR\n");
-	pr_debug("==============================================\n");
+	pr_info("==============================================\n");
+	pr_info("PRODUCER (RX/OUT/SRC) PIPE DESCRIPTOR\n");
+	pr_info("==============================================\n");
 	iovec =  pce_sps_data->out_transfer.iovec;
 	for (i = 0; i <   pce_sps_data->out_transfer.iovec_count; i++) {
-		pr_debug(" [%d] addr=0x%x  size=0x%x  flags=0x%x\n", i,
+		pr_info(" [%d] addr=0x%x  size=0x%x  flags=0x%x\n", i,
 				iovec->addr, iovec->size, iovec->flags);
 		iovec++;
 	}
@@ -1169,7 +1169,7 @@ static void _qce_dump_descr_fifos_dbg(struct qce_device *pce_dev, int req_info)
 
 #define QCE_WRITE_REG(val, addr)					\
 {									\
-	pr_debug("      [0x%pK] 0x%x\n", addr, (uint32_t)val);		\
+	pr_info("      [0x%pK] 0x%x\n", addr, (uint32_t)val);		\
 	writel_relaxed(val, addr);					\
 }
 
@@ -2868,7 +2868,7 @@ static int qce_sps_get_bam(struct qce_device *pce_dev)
 	pbam->support_cmd_dscr =  (bam_cfg & CRYPTO_BAM_CD_ENABLE_MASK) ?
 					true : false;
 	if (!pbam->support_cmd_dscr) {
-		pr_debug("qce50 don't support command descriptor. bam_cfg%x\n",
+		pr_info("qce50 don't support command descriptor. bam_cfg%x\n",
 							bam_cfg);
 		pce_dev->no_get_around = false;
 	}
@@ -2958,7 +2958,7 @@ static int qce_sps_init(struct qce_device *pce_dev)
 	if (rc)
 		goto sps_connect_consumer_err;
 
-	pr_debug(" QTI MSM CE-BAM at 0x%016llx irq %d\n",
+	pr_info(" QTI MSM CE-BAM at 0x%016llx irq %d\n",
 		(unsigned long long)pce_dev->ce_bam_info.bam_mem,
 		(unsigned int)pce_dev->ce_bam_info.bam_irq);
 	return rc;
@@ -3094,15 +3094,15 @@ void qce_get_driver_stats(void *handle)
 
 	if (!_qce50_disp_stats)
 		return;
-	pr_debug("Engine %d timeout occuured %d\n", pce_dev->dev_no,
+	pr_info("Engine %d timeout occuured %d\n", pce_dev->dev_no,
 			pce_dev->qce_stats.no_of_timeouts);
-	pr_debug("Engine %d dummy request inserted %d\n", pce_dev->dev_no,
+	pr_info("Engine %d dummy request inserted %d\n", pce_dev->dev_no,
 			pce_dev->qce_stats.no_of_dummy_reqs);
 	if (pce_dev->mode)
-		pr_debug("Engine %d is in BUNCH MODE\n", pce_dev->dev_no);
+		pr_info("Engine %d is in BUNCH MODE\n", pce_dev->dev_no);
 	else
-		pr_debug("Engine %d is in INTERRUPT MODE\n", pce_dev->dev_no);
-	pr_debug("Engine %d outstanding request %d\n", pce_dev->dev_no,
+		pr_info("Engine %d is in INTERRUPT MODE\n", pce_dev->dev_no);
+	pr_info("Engine %d outstanding request %d\n", pce_dev->dev_no,
 			atomic_read(&pce_dev->no_of_queued_req));
 }
 EXPORT_SYMBOL(qce_get_driver_stats);
@@ -5701,13 +5701,13 @@ static int __qce_get_device_tree_data(struct platform_device *pdev,
 	if (of_property_read_u32((&pdev->dev)->of_node,
 				"qcom,bam-ee",
 				&pce_dev->ce_bam_info.bam_ee)) {
-		pr_debug("BAM Apps EE is not defined, setting to default 1\n");
+		pr_info("BAM Apps EE is not defined, setting to default 1\n");
 		pce_dev->ce_bam_info.bam_ee = 1;
 	}
 	if (of_property_read_u32((&pdev->dev)->of_node,
 				"qcom,ce-opp-freq",
 				&pce_dev->ce_opp_freq_hz)) {
-		pr_debug("CE operating frequency is not defined, setting to default 100MHZ\n");
+		pr_info("CE operating frequency is not defined, setting to default 100MHZ\n");
 		pce_dev->ce_opp_freq_hz = CE_CLK_100MHZ;
 	}
 
@@ -6187,7 +6187,7 @@ void qce_dump_req(void *handle)
 
 	for (i = 0; i < MAX_QCE_BAM_REQ; i++) {
 		req_in_use = atomic_read(&pce_dev->ce_request_info[i].in_use);
-		pr_debug("%s: %d %d\n", __func__, i, req_in_use);
+		pr_info("%s: %d %d\n", __func__, i, req_in_use);
 		if (req_in_use)
 			_qce_dump_descr_fifos(pce_dev, i);
 	}

@@ -1320,17 +1320,17 @@ static int dump_ring(struct net_device *ndev, struct genl_info *info,
 	pr_debug(ATL_FWDNL_PREFIX "Dumping ring %d (%p)\n", nl_ring_index(ring),
 		 ring);
 
-	pr_debug("[%d] head=%d tail=%d", ring->idx, head, tail);
+	pr_info("[%d] head=%d tail=%d", ring->idx, head, tail);
 
 	for (j = 0; j != ring->hw.size; j++) {
 		if (dir_tx) {
-			pr_debug("[%d] [%d] 0x%llx, DD=%d", ring->idx, j,
+			pr_info("[%d] [%d] 0x%llx, DD=%d", ring->idx, j,
 				ring->hw.descs[j].tx.daddr,
 				ring->hw.descs[j].tx.dd);
 			trace_atl_tx_descr(ring->idx, j,
 					   (u64 *)ring->hw.descs[j].raw);
 		} else {
-			pr_debug("[%d] [%d] 0x%llx, DD=%d", ring->idx, j,
+			pr_info("[%d] [%d] 0x%llx, DD=%d", ring->idx, j,
 				ring->hw.descs[j].rx.daddr,
 				ring->hw.descs[j].rx.dd);
 			trace_atl_rx_descr(ring->idx, j,

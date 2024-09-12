@@ -72,7 +72,7 @@ int nand_jedec_detect(struct nand_chip *chip)
 		jedec_version = 1; /* vendor specific version */
 
 	if (!jedec_version) {
-		pr_debug("unsupported JEDEC version: %d\n", val);
+		pr_info("unsupported JEDEC version: %d\n", val);
 		goto free_jedec_param_page;
 	}
 

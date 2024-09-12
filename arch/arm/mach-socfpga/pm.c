@@ -132,7 +132,7 @@ static int __init socfpga_pm_init(void)
 		return ret;
 
 	suspend_set_ops(&socfpga_pm_ops);
-	pr_debug("SoCFPGA initialized for DDR self-refresh during suspend.\n");
+	pr_info("SoCFPGA initialized for DDR self-refresh during suspend.\n");
 
 	return 0;
 }

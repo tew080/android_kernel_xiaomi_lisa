@@ -556,7 +556,7 @@ static struct config_group *most_sound_make_group(struct config_group *group,
 
 	list_for_each_entry(most, &ms->soundcard_list, list) {
 		if (!most->create_card) {
-			pr_debug("adapter configuration still in progress.\n");
+			pr_info("adapter configuration still in progress.\n");
 			return ERR_PTR(-EPROTO);
 		}
 	}

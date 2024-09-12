@@ -216,10 +216,10 @@ void __init setup_cpuinfo(void)
 void __init or32_early_setup(void *fdt)
 {
 	if (fdt)
-		pr_debug("FDT at %p\n", fdt);
+		pr_info("FDT at %p\n", fdt);
 	else {
 		fdt = __dtb_start;
-		pr_debug("Compiled-in FDT at %p\n", fdt);
+		pr_info("Compiled-in FDT at %p\n", fdt);
 	}
 	early_init_devtree(fdt);
 }

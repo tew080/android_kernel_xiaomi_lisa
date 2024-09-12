@@ -2829,7 +2829,7 @@ static bool __init tegra_pmc_detect_tz_only(struct tegra_pmc *pmc)
 
 	/* if we read all-zeroes, access is restricted to TZ only */
 	if (value == 0) {
-		pr_debug("access to PMC is restricted to TZ\n");
+		pr_info("access to PMC is restricted to TZ\n");
 		return true;
 	}
 

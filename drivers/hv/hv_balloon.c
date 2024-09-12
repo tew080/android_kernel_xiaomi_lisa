@@ -1075,7 +1075,7 @@ static void process_info(struct hv_dynmem_device *dm, struct dm_info_msg *msg)
 		if (info_hdr->data_size == sizeof(__u64)) {
 			__u64 *max_page_count = (__u64 *)&info_hdr[1];
 
-			pr_debug("Max. dynamic memory size: %llu MB\n",
+			pr_info("Max. dynamic memory size: %llu MB\n",
 				(*max_page_count) >> (20 - PAGE_SHIFT));
 		}
 
@@ -1277,7 +1277,7 @@ static void balloon_up(struct work_struct *dummy)
 
 	/* Refuse to balloon below the floor. */
 	if (avail_pages < num_pages || avail_pages - num_pages < floor) {
-		pr_debug("Balloon request will be partially fulfilled. %s\n",
+		pr_info("Balloon request will be partially fulfilled. %s\n",
 			avail_pages < num_pages ? "Not enough memory." :
 			"Balloon floor reached.");
 
@@ -1604,7 +1604,7 @@ static int balloon_connect_vsp(struct hv_device *dev)
 		goto out;
 	}
 
-	pr_debug("Using Dynamic Memory protocol version %u.%u\n",
+	pr_info("Using Dynamic Memory protocol version %u.%u\n",
 		DYNMEM_MAJOR_VERSION(dm_device.version),
 		DYNMEM_MINOR_VERSION(dm_device.version));
 

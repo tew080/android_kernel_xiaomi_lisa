@@ -189,7 +189,7 @@ static int __init tzic_init_dt(struct device_node *np, struct device_node *p)
 	init_FIQ(FIQ_START);
 #endif
 
-	pr_debug("TrustZone Interrupt Controller (TZIC) initialized\n");
+	pr_info("TrustZone Interrupt Controller (TZIC) initialized\n");
 
 	return 0;
 }

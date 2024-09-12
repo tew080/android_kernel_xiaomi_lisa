@@ -218,7 +218,7 @@ static int __init opal_register_exception_handlers(void)
 	 * For newer firmware we catch/handle the HMI directly in Linux.
 	 */
 	if (!opal_check_token(OPAL_HANDLE_HMI)) {
-		pr_debug("Old firmware detected, OPAL handles HMIs.\n");
+		pr_info("Old firmware detected, OPAL handles HMIs.\n");
 		opal_register_exception_handler(
 				OPAL_HYPERVISOR_MAINTENANCE_HANDLER,
 				0, glue);

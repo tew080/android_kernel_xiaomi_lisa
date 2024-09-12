@@ -190,10 +190,10 @@ void __init reserve_crashkernel(void)
 	 */
 	if ((memblock_end_of_DRAM() - memory_limit) <= crashk_res.end) {
 		memory_limit = 0;
-		pr_debug("Disabled memory limit for crashkernel\n");
+		pr_info("Disabled memory limit for crashkernel\n");
 	}
 
-	pr_debug("Reserving %ldMB of memory at 0x%08lx "
+	pr_info("Reserving %ldMB of memory at 0x%08lx "
 		"for crashkernel (System RAM: %ldMB)\n",
 		(unsigned long)(crash_size >> 20),
 		(unsigned long)(crashk_res.start),

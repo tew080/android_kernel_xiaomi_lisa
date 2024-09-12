@@ -574,7 +574,7 @@ void __init efi_apply_memmap_quirks(void)
 	 * services.
 	 */
 	if (!efi_runtime_supported()) {
-		pr_debug("Setup done, disabling due to 32/64-bit mismatch\n");
+		pr_info("Setup done, disabling due to 32/64-bit mismatch\n");
 		efi_memmap_unmap();
 	}
 
@@ -746,7 +746,7 @@ void efi_recover_from_page_fault(unsigned long phys_addr)
 	 * on a need by basis.
 	 */
 	if (efi_rts_work.efi_rts_id == EFI_RESET_SYSTEM) {
-		pr_debug("efi_reset_system() buggy! Reboot through BIOS\n");
+		pr_info("efi_reset_system() buggy! Reboot through BIOS\n");
 		machine_real_restart(MRR_BIOS);
 		return;
 	}
@@ -762,7 +762,7 @@ void efi_recover_from_page_fault(unsigned long phys_addr)
 	complete(&efi_rts_work.efi_rts_comp);
 
 	clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
-	pr_debug("Froze efi_rts_wq and disabled EFI Runtime Services\n");
+	pr_info("Froze efi_rts_wq and disabled EFI Runtime Services\n");
 
 	/*
 	 * Call schedule() in an infinite loop, so that any spurious wake ups

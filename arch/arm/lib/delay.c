@@ -78,7 +78,7 @@ void __init register_current_timer_delay(const struct delay_timer *timer)
 	}
 
 	if (!delay_calibrated && (!delay_res || (res < delay_res))) {
-		pr_debug("Switching to timer-based delay loop, resolution %lluns\n", res);
+		pr_info("Switching to timer-based delay loop, resolution %lluns\n", res);
 		delay_timer			= timer;
 		lpj_fine			= timer->freq / HZ;
 		delay_res			= res;
@@ -89,7 +89,7 @@ void __init register_current_timer_delay(const struct delay_timer *timer)
 		arm_delay_ops.const_udelay	= __timer_const_udelay;
 		arm_delay_ops.udelay		= __timer_udelay;
 	} else {
-		pr_debug("Ignoring duplicate/late registration of read_current_timer delay\n");
+		pr_info("Ignoring duplicate/late registration of read_current_timer delay\n");
 	}
 }
 

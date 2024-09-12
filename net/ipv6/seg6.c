@@ -467,7 +467,7 @@ int __init seg6_init(void)
 		goto out_unregister_iptun;
 #endif
 
-	pr_debug("Segment Routing with IPv6\n");
+	pr_info("Segment Routing with IPv6\n");
 
 out:
 	return err;

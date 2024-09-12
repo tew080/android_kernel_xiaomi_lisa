@@ -371,7 +371,7 @@ setup_rt_frame(struct ksignal *ksig, struct pt_regs *regs)
 
 	if (invalid_frame_pointer (sf)) {
 		if (show_unhandled_signals)
-			pr_debug("%s[%d] bad frame in setup_rt_frame: %016lx TPC %016lx O7 %016lx\n",
+			pr_info("%s[%d] bad frame in setup_rt_frame: %016lx TPC %016lx O7 %016lx\n",
 				current->comm, current->pid, (unsigned long)sf,
 				regs->tpc, regs->u_regs[UREG_I7]);
 		force_sigsegv(ksig->sig);

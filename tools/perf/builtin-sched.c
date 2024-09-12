@@ -2943,7 +2943,7 @@ static int timehist_check_attr(struct perf_sched *sched,
 		}
 
 		if (sched->show_callchain && !evsel__has_callchain(evsel)) {
-			pr_debug("Samples do not have callchains.\n");
+			pr_info("Samples do not have callchains.\n");
 			sched->show_callchain = 0;
 			symbol_conf.use_callchain = 0;
 		}

@@ -3387,7 +3387,7 @@ static int msm_hs_probe(struct platform_device *pdev)
 	wakeup_irqres = platform_get_irq_byname(pdev, "wakeup_irq");
 	if (wakeup_irqres < 0) {
 		wakeup_irqres = -1;
-		pr_debug("Wakeup irq not specified\n");
+		pr_info("Wakeup irq not specified\n");
 	}
 
 	uport->mapbase = core_resource->start;

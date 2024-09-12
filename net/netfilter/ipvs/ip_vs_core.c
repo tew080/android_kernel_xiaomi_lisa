@@ -2489,7 +2489,7 @@ static int __init ip_vs_init(void)
 		goto cleanup_dev;
 	}
 
-	pr_debug("ipvs loaded.\n");
+	pr_info("ipvs loaded.\n");
 
 	return ret;
 
@@ -2514,7 +2514,7 @@ static void __exit ip_vs_cleanup(void)
 	ip_vs_conn_cleanup();
 	ip_vs_protocol_cleanup();
 	ip_vs_control_cleanup();
-	pr_debug("ipvs unloaded.\n");
+	pr_info("ipvs unloaded.\n");
 }
 
 module_init(ip_vs_init);

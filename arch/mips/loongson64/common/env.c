@@ -63,7 +63,7 @@ void __init prom_init_env(void)
 
 	loongson_sysconf.nr_uarts = 1;
 
-	pr_debug("memsize=%u, highmemsize=%u\n", memsize, highmemsize);
+	pr_info("memsize=%u, highmemsize=%u\n", memsize, highmemsize);
 #else
 	struct boot_params *boot_p;
 	struct loongson_params *loongson_p;
@@ -208,5 +208,5 @@ void __init prom_init_env(void)
 			break;
 		}
 	}
-	pr_debug("CpuClock = %u\n", cpu_clock_freq);
+	pr_info("CpuClock = %u\n", cpu_clock_freq);
 }

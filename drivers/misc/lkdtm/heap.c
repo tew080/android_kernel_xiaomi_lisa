@@ -41,8 +41,8 @@ void lkdtm_WRITE_AFTER_FREE(void)
 	base = kmalloc(len, GFP_KERNEL);
 	if (!base)
 		return;
-	pr_debug("Allocated memory %p-%p\n", base, &base[offset * 2]);
-	pr_debug("Attempting bad write to freed memory at %p\n",
+	pr_info("Allocated memory %p-%p\n", base, &base[offset * 2]);
+	pr_info("Attempting bad write to freed memory at %p\n",
 		&base[offset]);
 	kfree(base);
 	base[offset] = 0x0abcdef0;
@@ -50,7 +50,7 @@ void lkdtm_WRITE_AFTER_FREE(void)
 	again = kmalloc(len, GFP_KERNEL);
 	kfree(again);
 	if (again != base)
-		pr_debug("Hmm, didn't get the same memory range.\n");
+		pr_info("Hmm, didn't get the same memory range.\n");
 }
 
 void lkdtm_READ_AFTER_FREE(void)
@@ -67,31 +67,31 @@ void lkdtm_READ_AFTER_FREE(void)
 
 	base = kmalloc(len, GFP_KERNEL);
 	if (!base) {
-		pr_debug("Unable to allocate base memory.\n");
+		pr_info("Unable to allocate base memory.\n");
 		return;
 	}
 
 	val = kmalloc(len, GFP_KERNEL);
 	if (!val) {
-		pr_debug("Unable to allocate val memory.\n");
+		pr_info("Unable to allocate val memory.\n");
 		kfree(base);
 		return;
 	}
 
 	*val = 0x12345678;
 	base[offset] = *val;
-	pr_debug("Value in memory before free: %x\n", base[offset]);
+	pr_info("Value in memory before free: %x\n", base[offset]);
 
 	kfree(base);
 
-	pr_debug("Attempting bad read from freed memory\n");
+	pr_info("Attempting bad read from freed memory\n");
 	saw = base[offset];
 	if (saw != *val) {
 		/* Good! Poisoning happened, so declare a win. */
-		pr_debug("Memory correctly poisoned (%x)\n", saw);
+		pr_info("Memory correctly poisoned (%x)\n", saw);
 		BUG();
 	}
-	pr_debug("Memory was not poisoned\n");
+	pr_info("Memory was not poisoned\n");
 
 	kfree(val);
 }
@@ -100,15 +100,15 @@ void lkdtm_WRITE_BUDDY_AFTER_FREE(void)
 {
 	unsigned long p = __get_free_page(GFP_KERNEL);
 	if (!p) {
-		pr_debug("Unable to allocate free page\n");
+		pr_info("Unable to allocate free page\n");
 		return;
 	}
 
-	pr_debug("Writing to the buddy page before free\n");
+	pr_info("Writing to the buddy page before free\n");
 	memset((void *)p, 0x3, PAGE_SIZE);
 	free_page(p);
 	schedule();
-	pr_debug("Attempting bad write to the buddy page after free\n");
+	pr_info("Attempting bad write to the buddy page after free\n");
 	memset((void *)p, 0x78, PAGE_SIZE);
 	/* Attempt to notice the overwrite. */
 	p = __get_free_page(GFP_KERNEL);
@@ -123,13 +123,13 @@ void lkdtm_READ_BUDDY_AFTER_FREE(void)
 	int *base;
 
 	if (!p) {
-		pr_debug("Unable to allocate free page\n");
+		pr_info("Unable to allocate free page\n");
 		return;
 	}
 
 	val = kmalloc(1024, GFP_KERNEL);
 	if (!val) {
-		pr_debug("Unable to allocate val memory.\n");
+		pr_info("Unable to allocate val memory.\n");
 		free_page(p);
 		return;
 	}
@@ -138,16 +138,16 @@ void lkdtm_READ_BUDDY_AFTER_FREE(void)
 
 	*val = 0x12345678;
 	base[0] = *val;
-	pr_debug("Value in memory before free: %x\n", base[0]);
+	pr_info("Value in memory before free: %x\n", base[0]);
 	free_page(p);
-	pr_debug("Attempting to read from freed memory\n");
+	pr_info("Attempting to read from freed memory\n");
 	saw = base[0];
 	if (saw != *val) {
 		/* Good! Poisoning happened, so declare a win. */
-		pr_debug("Memory correctly poisoned (%x)\n", saw);
+		pr_info("Memory correctly poisoned (%x)\n", saw);
 		BUG();
 	}
-	pr_debug("Buddy page was not poisoned\n");
+	pr_info("Buddy page was not poisoned\n");
 
 	kfree(val);
 }
@@ -158,13 +158,13 @@ void lkdtm_SLAB_FREE_DOUBLE(void)
 
 	val = kmem_cache_alloc(double_free_cache, GFP_KERNEL);
 	if (!val) {
-		pr_debug("Unable to allocate double_free_cache memory.\n");
+		pr_info("Unable to allocate double_free_cache memory.\n");
 		return;
 	}
 
 	/* Just make sure we got real memory. */
 	*val = 0x12345678;
-	pr_debug("Attempting double slab free ...\n");
+	pr_info("Attempting double slab free ...\n");
 	kmem_cache_free(double_free_cache, val);
 	kmem_cache_free(double_free_cache, val);
 }
@@ -175,13 +175,13 @@ void lkdtm_SLAB_FREE_CROSS(void)
 
 	val = kmem_cache_alloc(a_cache, GFP_KERNEL);
 	if (!val) {
-		pr_debug("Unable to allocate a_cache memory.\n");
+		pr_info("Unable to allocate a_cache memory.\n");
 		return;
 	}
 
 	/* Just make sure we got real memory. */
 	*val = 0x12345679;
-	pr_debug("Attempting cross-cache slab free ...\n");
+	pr_info("Attempting cross-cache slab free ...\n");
 	kmem_cache_free(b_cache, val);
 }
 
@@ -189,7 +189,7 @@ void lkdtm_SLAB_FREE_PAGE(void)
 {
 	unsigned long p = __get_free_page(GFP_KERNEL);
 
-	pr_debug("Attempting non-Slab slab free ...\n");
+	pr_info("Attempting non-Slab slab free ...\n");
 	kmem_cache_free(NULL, (void *)p);
 	free_page(p);
 }

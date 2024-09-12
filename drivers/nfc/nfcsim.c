@@ -461,7 +461,7 @@ static int __init nfcsim_init(void)
 		goto exit_err;
 	}
 
-	pr_debug("nfcsim " NFCSIM_VERSION " initialized\n");
+	pr_info("nfcsim " NFCSIM_VERSION " initialized\n");
 
 	return 0;
 

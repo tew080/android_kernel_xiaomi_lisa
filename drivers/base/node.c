@@ -200,7 +200,7 @@ void node_set_perf_attrs(unsigned int nid, struct node_hmem_attrs *hmem_attrs,
 	for (i = 0; access_attrs[i] != NULL; i++) {
 		if (sysfs_add_file_to_group(&c->dev.kobj, access_attrs[i],
 					    "initiators")) {
-			pr_debug("failed to add performance attribute to node %d\n",
+			pr_info("failed to add performance attribute to node %d\n",
 				nid);
 			break;
 		}

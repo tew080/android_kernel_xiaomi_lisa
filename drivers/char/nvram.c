@@ -529,7 +529,7 @@ static int __init nvram_module_init(void)
 	}
 #endif
 
-	pr_debug("Non-volatile memory driver v" NVRAM_VERSION "\n");
+	pr_info("Non-volatile memory driver v" NVRAM_VERSION "\n");
 	return 0;
 }
 

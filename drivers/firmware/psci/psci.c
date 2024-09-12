@@ -247,7 +247,7 @@ static int get_set_conduit_method(struct device_node *np)
 {
 	const char *method;
 
-	pr_debug("probing for conduit method from DT.\n");
+	pr_info("probing for conduit method from DT.\n");
 
 	if (of_property_read_string(np, "method", &method)) {
 		pr_warn("missing \"method\" property\n");
@@ -379,12 +379,12 @@ static void __init psci_init_migrate(void)
 	type = psci_ops.migrate_info_type();
 
 	if (type == PSCI_0_2_TOS_MP) {
-		pr_debug("Trusted OS migration not required\n");
+		pr_info("Trusted OS migration not required\n");
 		return;
 	}
 
 	if (type == PSCI_RET_NOT_SUPPORTED) {
-		pr_debug("MIGRATE_INFO_TYPE not supported.\n");
+		pr_info("MIGRATE_INFO_TYPE not supported.\n");
 		return;
 	}
 
@@ -404,7 +404,7 @@ static void __init psci_init_migrate(void)
 	cpu = get_logical_index(cpuid);
 	resident_cpu = cpu >= 0 ? cpu : -1;
 
-	pr_debug("Trusted OS resident on physical CPU 0x%lx\n", cpuid);
+	pr_info("Trusted OS resident on physical CPU 0x%lx\n", cpuid);
 }
 
 static void __init psci_init_smccc(void)
@@ -427,14 +427,14 @@ static void __init psci_init_smccc(void)
 	 * Conveniently, the SMCCC and PSCI versions are encoded the
 	 * same way. No, this isn't accidental.
 	 */
-	pr_debug("SMC Calling Convention v%d.%d\n",
+	pr_info("SMC Calling Convention v%d.%d\n",
 		PSCI_VERSION_MAJOR(ver), PSCI_VERSION_MINOR(ver));
 
 }
 
 static void __init psci_0_2_set_functions(void)
 {
-	pr_debug("Using standard PSCI v0.2 function IDs\n");
+	pr_info("Using standard PSCI v0.2 function IDs\n");
 	psci_ops.get_version = psci_get_version;
 
 	psci_function_id[PSCI_FN_CPU_SUSPEND] =
@@ -466,7 +466,7 @@ static int __init psci_probe(void)
 {
 	u32 ver = psci_get_version();
 
-	pr_debug("PSCIv%d.%d detected in firmware.\n",
+	pr_info("PSCIv%d.%d detected in firmware.\n",
 			PSCI_VERSION_MAJOR(ver),
 			PSCI_VERSION_MINOR(ver));
 
@@ -526,7 +526,7 @@ static int __init psci_0_1_init(struct device_node *np)
 	if (err)
 		return err;
 
-	pr_debug("Using PSCI v0.1 Function IDs from DT\n");
+	pr_info("Using PSCI v0.1 Function IDs from DT\n");
 
 	if (!of_property_read_u32(np, "cpu_suspend", &id)) {
 		psci_function_id[PSCI_FN_CPU_SUSPEND] = id;
@@ -562,7 +562,7 @@ static int psci_set_osi_mode(void)
 	 */
 	err = psci_features(PSCI_1_0_FN_SET_SUSPEND_MODE);
 	if (err == PSCI_RET_NOT_SUPPORTED) {
-		pr_debug("Assuming FW runs OSI.\n");
+		pr_info("Assuming FW runs OSI.\n");
 		return 0;
 	}
 
@@ -582,13 +582,13 @@ static int __init psci_1_0_init(struct device_node *np)
 
 #ifdef CONFIG_QGKI_PSCI_OSI_SUPPORT
 	if (psci_has_osi_support()) {
-		pr_debug("OSI mode supported.\n");
+		pr_info("OSI mode supported.\n");
 		if (!psci_set_osi_mode())
-			pr_debug("Switched to OSI mode.\n");
+			pr_info("Switched to OSI mode.\n");
 	}
 #else
 	if (psci_has_osi_support())
-		pr_debug("OSI mode supported.\n");
+		pr_info("OSI mode supported.\n");
 #endif /* CONFIG_QGKI_PSCI_OSI_SUPPORT */
 
 	return 0;
@@ -628,11 +628,11 @@ int __init psci_dt_init(void)
 int __init psci_acpi_init(void)
 {
 	if (!acpi_psci_present()) {
-		pr_debug("is not implemented in ACPI.\n");
+		pr_info("is not implemented in ACPI.\n");
 		return -EOPNOTSUPP;
 	}
 
-	pr_debug("probing for conduit method from ACPI.\n");
+	pr_info("probing for conduit method from ACPI.\n");
 
 	if (acpi_psci_use_hvc())
 		set_conduit(PSCI_CONDUIT_HVC);

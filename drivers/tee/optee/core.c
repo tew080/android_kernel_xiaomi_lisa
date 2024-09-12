@@ -353,10 +353,10 @@ static void optee_msg_get_os_revision(optee_invoke_fn *invoke_fn)
 		  &res.smccc);
 
 	if (res.result.build_id)
-		pr_debug("revision %lu.%lu (%08lx)", res.result.major,
+		pr_info("revision %lu.%lu (%08lx)", res.result.major,
 			res.result.minor, res.result.build_id);
 	else
-		pr_debug("revision %lu.%lu", res.result.major, res.result.minor);
+		pr_info("revision %lu.%lu", res.result.major, res.result.minor);
 }
 
 static bool optee_msg_api_revision_is_compatible(optee_invoke_fn *invoke_fn)
@@ -529,7 +529,7 @@ static optee_invoke_fn *get_invoke_func(struct device_node *np)
 {
 	const char *method;
 
-	pr_debug("probing for conduit method from DT.\n");
+	pr_info("probing for conduit method from DT.\n");
 
 	if (of_property_read_string(np, "method", &method)) {
 		pr_warn("missing \"method\" property\n");
@@ -651,7 +651,7 @@ static struct optee *optee_probe(struct device_node *np)
 	optee_enable_shm_cache(optee);
 
 	if (optee->sec_caps & OPTEE_SMC_SEC_CAP_DYNAMIC_SHM)
-		pr_debug("dynamic shared memory is enabled\n");
+		pr_info("dynamic shared memory is enabled\n");
 
 	return optee;
 err:
@@ -736,7 +736,7 @@ static int __init optee_driver_init(void)
 		return rc;
 	}
 
-	pr_debug("initialized driver\n");
+	pr_info("initialized driver\n");
 
 	optee_svc = optee;
 

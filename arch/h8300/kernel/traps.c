@@ -59,43 +59,43 @@ static void dump(struct pt_regs *fp)
 	unsigned char	*tp;
 	int		i;
 
-	pr_debug("\nCURRENT PROCESS:\n\n");
-	pr_debug("COMM=%s PID=%d\n", current->comm, current->pid);
+	pr_info("\nCURRENT PROCESS:\n\n");
+	pr_info("COMM=%s PID=%d\n", current->comm, current->pid);
 	if (current->mm) {
-		pr_debug("TEXT=%08x-%08x DATA=%08x-%08x BSS=%08x-%08x\n",
+		pr_info("TEXT=%08x-%08x DATA=%08x-%08x BSS=%08x-%08x\n",
 			(int) current->mm->start_code,
 			(int) current->mm->end_code,
 			(int) current->mm->start_data,
 			(int) current->mm->end_data,
 			(int) current->mm->end_data,
 			(int) current->mm->brk);
-		pr_debug("USER-STACK=%08x  KERNEL-STACK=%08lx\n\n",
+		pr_info("USER-STACK=%08x  KERNEL-STACK=%08lx\n\n",
 			(int) current->mm->start_stack,
 			(int) PAGE_SIZE+(unsigned long)current);
 	}
 
 	show_regs(fp);
-	pr_debug("\nCODE:");
+	pr_info("\nCODE:");
 	tp = ((unsigned char *) fp->pc) - 0x20;
 	for (sp = (unsigned long *) tp, i = 0; (i < 0x40);  i += 4) {
 		if ((i % 0x10) == 0)
-			pr_debug("\n%08x: ", (int) (tp + i));
-		pr_debug("%08x ", (int) *sp++);
+			pr_info("\n%08x: ", (int) (tp + i));
+		pr_info("%08x ", (int) *sp++);
 	}
-	pr_debug("\n");
+	pr_info("\n");
 
-	pr_debug("\nKERNEL STACK:");
+	pr_info("\nKERNEL STACK:");
 	tp = ((unsigned char *) fp) - 0x40;
 	for (sp = (unsigned long *) tp, i = 0; (i < 0xc0); i += 4) {
 		if ((i % 0x10) == 0)
-			pr_debug("\n%08x: ", (int) (tp + i));
-		pr_debug("%08x ", (int) *sp++);
+			pr_info("\n%08x: ", (int) (tp + i));
+		pr_info("%08x ", (int) *sp++);
 	}
-	pr_debug("\n");
+	pr_info("\n");
 	if (STACK_MAGIC != *(unsigned long *)((unsigned long)current+PAGE_SIZE))
-		pr_debug("(Possibly corrupted stack page??)\n");
+		pr_info("(Possibly corrupted stack page??)\n");
 
-	pr_debug("\n\n");
+	pr_info("\n\n");
 }
 
 void die(const char *str, struct pt_regs *fp, unsigned long err)
@@ -126,17 +126,17 @@ void show_stack(struct task_struct *task, unsigned long *esp)
 
 	stack = esp;
 
-	pr_debug("Stack from %08lx:", (unsigned long)stack);
+	pr_info("Stack from %08lx:", (unsigned long)stack);
 	for (i = 0; i < kstack_depth_to_print; i++) {
 		if (((unsigned long)stack & (THREAD_SIZE - 1)) >=
 		    THREAD_SIZE-4)
 			break;
 		if (i % 8 == 0)
-			pr_debug(" ");
+			pr_info(" ");
 		pr_cont(" %08lx", *stack++);
 	}
 
-	pr_debug("\nCall Trace:\n");
+	pr_info("\nCall Trace:\n");
 	i = 0;
 	stack = esp;
 	while (((unsigned long)stack & (THREAD_SIZE - 1)) < THREAD_SIZE-4) {
@@ -151,10 +151,10 @@ void show_stack(struct task_struct *task, unsigned long *esp)
 		 */
 		if (check_kernel_text(addr)) {
 			if (i % 4 == 0)
-				pr_debug("       ");
+				pr_info("       ");
 			pr_cont(" [<%08lx>]", addr);
 			i++;
 		}
 	}
-	pr_debug("\n");
+	pr_info("\n");
 }

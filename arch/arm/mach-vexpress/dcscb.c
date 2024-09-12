@@ -158,7 +158,7 @@ static int __init dcscb_init(void)
 		return ret;
 	}
 
-	pr_debug("VExpress DCSCB support installed\n");
+	pr_info("VExpress DCSCB support installed\n");
 
 	/*
 	 * Future entries into the kernel can now go

@@ -329,7 +329,7 @@ static int __init l2tp_debugfs_init(void)
 
 	debugfs_create_file("tunnels", 0600, rootdir, NULL, &l2tp_dfs_fops);
 
-	pr_debug("L2TP debugfs support\n");
+	pr_info("L2TP debugfs support\n");
 
 	return 0;
 }

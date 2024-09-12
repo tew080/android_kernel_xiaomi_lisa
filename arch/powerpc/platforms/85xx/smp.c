@@ -409,7 +409,7 @@ void mpc85xx_smp_kexec_cpu_down(int crash_shutdown, int secondary)
 			barrier();
 			now = mftb();
 			if (!notified && now - start > 1000000) {
-				pr_debug("%s/%d: waiting for cpu %d to enter KEXEC_STATE_REAL_MODE (%d)\n",
+				pr_info("%s/%d: waiting for cpu %d to enter KEXEC_STATE_REAL_MODE (%d)\n",
 					__func__, smp_processor_id(),
 					disable_cpu,
 					paca_ptrs[disable_cpu]->kexec_state);
@@ -418,7 +418,7 @@ void mpc85xx_smp_kexec_cpu_down(int crash_shutdown, int secondary)
 		}
 
 		if (notified) {
-			pr_debug("%s: cpu %d done waiting\n",
+			pr_info("%s: cpu %d done waiting\n",
 				__func__, disable_cpu);
 		}
 

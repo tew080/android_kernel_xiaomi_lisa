@@ -134,7 +134,7 @@ static int ciintf_read_attribute_mem(struct dvb_ca_en50221 *ca, int slot, int ad
 	result = ttpci_budget_debiread(&budget_av->budget, DEBICICAM, address & 0xfff, 1, 0, 1);
 	if (result == -ETIMEDOUT) {
 		ciintf_slot_shutdown(ca, slot);
-		pr_debug("cam ejected 1\n");
+		pr_info("cam ejected 1\n");
 	}
 	return result;
 }
@@ -153,7 +153,7 @@ static int ciintf_write_attribute_mem(struct dvb_ca_en50221 *ca, int slot, int a
 	result = ttpci_budget_debiwrite(&budget_av->budget, DEBICICAM, address & 0xfff, 1, value, 0, 1);
 	if (result == -ETIMEDOUT) {
 		ciintf_slot_shutdown(ca, slot);
-		pr_debug("cam ejected 2\n");
+		pr_info("cam ejected 2\n");
 	}
 	return result;
 }
@@ -172,7 +172,7 @@ static int ciintf_read_cam_control(struct dvb_ca_en50221 *ca, int slot, u8 addre
 	result = ttpci_budget_debiread(&budget_av->budget, DEBICICAM, address & 3, 1, 0, 0);
 	if (result == -ETIMEDOUT) {
 		ciintf_slot_shutdown(ca, slot);
-		pr_debug("cam ejected 3\n");
+		pr_info("cam ejected 3\n");
 		return -ETIMEDOUT;
 	}
 	return result;
@@ -192,7 +192,7 @@ static int ciintf_write_cam_control(struct dvb_ca_en50221 *ca, int slot, u8 addr
 	result = ttpci_budget_debiwrite(&budget_av->budget, DEBICICAM, address & 3, 1, value, 0, 0);
 	if (result == -ETIMEDOUT) {
 		ciintf_slot_shutdown(ca, slot);
-		pr_debug("cam ejected 5\n");
+		pr_info("cam ejected 5\n");
 	}
 	return result;
 }
@@ -274,7 +274,7 @@ static int ciintf_poll_slot_status(struct dvb_ca_en50221 *ca, int slot, int open
 		if (saa7146_read(saa, PSR) & MASK_06) {
 			if (budget_av->slot_status == SLOTSTATUS_NONE) {
 				budget_av->slot_status = SLOTSTATUS_PRESENT;
-				pr_debug("cam inserted A\n");
+				pr_info("cam inserted A\n");
 			}
 		}
 		saa7146_setgpio(saa, 3, SAA7146_GPIO_OUTLO);
@@ -291,11 +291,11 @@ static int ciintf_poll_slot_status(struct dvb_ca_en50221 *ca, int slot, int open
 		result = ttpci_budget_debiread(&budget_av->budget, DEBICICAM, 0, 1, 0, 1);
 		if ((result >= 0) && (budget_av->slot_status == SLOTSTATUS_NONE)) {
 			budget_av->slot_status = SLOTSTATUS_PRESENT;
-			pr_debug("cam inserted B\n");
+			pr_info("cam inserted B\n");
 		} else if (result < 0) {
 			if (budget_av->slot_status != SLOTSTATUS_NONE) {
 				ciintf_slot_shutdown(ca, slot);
-				pr_debug("cam ejected 5\n");
+				pr_info("cam ejected 5\n");
 				return 0;
 			}
 		}
@@ -354,7 +354,7 @@ static int ciintf_init(struct budget_av *budget_av)
 		goto error;
 	}
 
-	pr_debug("ci interface initialised\n");
+	pr_info("ci interface initialised\n");
 	return 0;
 
 error:
@@ -1495,7 +1495,7 @@ static int budget_av_attach(struct saa7146_dev *dev, struct saa7146_pci_extensio
 		       budget_av->budget.dvb_adapter.num);
 		eth_zero_addr(mac);
 	} else {
-		pr_debug("KNC1-%d: MAC addr = %pM\n",
+		pr_info("KNC1-%d: MAC addr = %pM\n",
 			budget_av->budget.dvb_adapter.num, mac);
 	}
 

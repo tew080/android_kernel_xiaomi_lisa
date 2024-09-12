@@ -201,7 +201,7 @@ static struct megamod_pic * __init init_megamod_pic(struct device_node *np)
 	int i, irq;
 	int mapping[NR_MUX_OUTPUTS];
 
-	pr_debug("Initializing C64x+ Megamodule PIC\n");
+	pr_info("Initializing C64x+ Megamodule PIC\n");
 
 	pic = kzalloc(sizeof(struct megamod_pic), GFP_KERNEL);
 	if (!pic) {

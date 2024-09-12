@@ -348,7 +348,7 @@ static int host_error_hdlr(struct npu_device *npu_dev, bool force)
 		return 0;
 
 	if (host_ctx->wdg_irq_sts)
-		pr_debug("watchdog irq triggered\n");
+		pr_info("watchdog irq triggered\n");
 
 	fw_deinit(npu_dev, true, force);
 	host_ctx->wdg_irq_sts = 0;

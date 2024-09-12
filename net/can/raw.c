@@ -940,7 +940,7 @@ static __init int raw_module_init(void)
 {
 	int err;
 
-	pr_debug("can: raw protocol (rev " CAN_RAW_VERSION ")\n");
+	pr_info("can: raw protocol (rev " CAN_RAW_VERSION ")\n");
 
 	err = can_proto_register(&raw_can_proto);
 	if (err < 0)

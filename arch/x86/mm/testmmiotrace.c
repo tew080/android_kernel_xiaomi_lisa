@@ -33,7 +33,7 @@ static unsigned v32(unsigned i)
 static void do_write_test(void __iomem *p)
 {
 	unsigned int i;
-	pr_debug("write test.\n");
+	pr_info("write test.\n");
 	mmiotrace_printk("Write test.\n");
 
 	for (i = 0; i < 256; i++)
@@ -50,7 +50,7 @@ static void do_read_test(void __iomem *p)
 {
 	unsigned int i;
 	unsigned errs[3] = { 0 };
-	pr_debug("read test.\n");
+	pr_info("read test.\n");
 	mmiotrace_printk("Read test.\n");
 
 	for (i = 0; i < 256; i++)
@@ -71,7 +71,7 @@ static void do_read_test(void __iomem *p)
 
 static void do_read_far_test(void __iomem *p)
 {
-	pr_debug("read far test.\n");
+	pr_info("read far test.\n");
 	mmiotrace_printk("Read far test.\n");
 
 	ioread32(p + read_far);
@@ -132,7 +132,7 @@ static int __init init(void)
 		   size >> 10, mmio_address);
 	do_test(size);
 	do_test_bulk_ioremapping();
-	pr_debug("All done.\n");
+	pr_info("All done.\n");
 	return 0;
 }
 

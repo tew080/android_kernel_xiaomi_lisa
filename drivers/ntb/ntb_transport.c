@@ -2477,7 +2477,7 @@ static int __init ntb_transport_init(void)
 {
 	int rc;
 
-	pr_debug("%s, version %s\n", NTB_TRANSPORT_DESC, NTB_TRANSPORT_VER);
+	pr_info("%s, version %s\n", NTB_TRANSPORT_DESC, NTB_TRANSPORT_VER);
 
 	if (debugfs_initialized())
 		nt_debugfs_dir = debugfs_create_dir(KBUILD_MODNAME, NULL);

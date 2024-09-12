@@ -120,14 +120,14 @@ static int __init cmx2xx_pci_map_irq(const struct pci_dev *dev, u8 slot, u8 pin)
 
 static void cmx2xx_pci_preinit(void)
 {
-	pr_debug("Initializing CM-X2XX PCI subsystem\n");
+	pr_info("Initializing CM-X2XX PCI subsystem\n");
 
 	pcibios_min_io = 0;
 	pcibios_min_mem = 0;
 
 	__raw_writel(0x800, IT8152_PCI_CFG_ADDR);
 	if (__raw_readl(IT8152_PCI_CFG_DATA) == 0x81521283) {
-		pr_debug("PCI Bridge found.\n");
+		pr_info("PCI Bridge found.\n");
 
 		/* set PCI I/O base at 0 */
 		writel(0x848, IT8152_PCI_CFG_ADDR);
@@ -142,7 +142,7 @@ static void cmx2xx_pci_preinit(void)
 		/* CardBus Controller on ATXbase baseboard */
 		writel(0x4000, IT8152_PCI_CFG_ADDR);
 		if (readl(IT8152_PCI_CFG_DATA) == 0xAC51104C) {
-			pr_debug("CardBus Bridge found.\n");
+			pr_info("CardBus Bridge found.\n");
 
 			/* Configure socket 0 */
 			writel(0x408C, IT8152_PCI_CFG_ADDR);

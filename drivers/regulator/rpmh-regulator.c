@@ -452,14 +452,14 @@ rpmh_regulator_mode_map[RPMH_REGULATOR_HW_TYPE_MAX] = {
 #define vreg_err(vreg, message, ...) \
 	pr_err("%s: " message, (vreg)->rdesc.name, ##__VA_ARGS__)
 #define vreg_info(vreg, message, ...) \
-	pr_debug("%s: " message, (vreg)->rdesc.name, ##__VA_ARGS__)
+	pr_info("%s: " message, (vreg)->rdesc.name, ##__VA_ARGS__)
 #define vreg_debug(vreg, message, ...) \
 	pr_debug("%s: " message, (vreg)->rdesc.name, ##__VA_ARGS__)
 
 #define aggr_vreg_err(aggr_vreg, message, ...) \
 	pr_err("%s: " message, (aggr_vreg)->resource_name, ##__VA_ARGS__)
 #define aggr_vreg_info(aggr_vreg, message, ...) \
-	pr_debug("%s: " message, (aggr_vreg)->resource_name, ##__VA_ARGS__)
+	pr_info("%s: " message, (aggr_vreg)->resource_name, ##__VA_ARGS__)
 #define aggr_vreg_debug(aggr_vreg, message, ...) \
 	pr_debug("%s: " message, (aggr_vreg)->resource_name, ##__VA_ARGS__)
 

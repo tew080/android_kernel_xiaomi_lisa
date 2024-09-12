@@ -344,11 +344,11 @@ static struct ocrdma_dev *ocrdma_add(struct be_dev_info *dev_info)
 	INIT_DELAYED_WORK(&dev->eqd_work, ocrdma_eqd_set_task);
 	queue_delayed_work(system_power_efficient_wq,&dev->eqd_work, msecs_to_jiffies(1000));
 
-	pr_debug("%s %s: %s \"%s\" port %d\n",
+	pr_info("%s %s: %s \"%s\" port %d\n",
 		dev_name(&dev->nic_info.pdev->dev), hca_name(dev),
 		port_speed_string(dev), dev->model_number,
 		dev->hba_port_num);
-	pr_debug("%s ocrdma%d driver loaded successfully\n",
+	pr_info("%s ocrdma%d driver loaded successfully\n",
 		dev_name(&dev->nic_info.pdev->dev), dev->id);
 	return dev;
 

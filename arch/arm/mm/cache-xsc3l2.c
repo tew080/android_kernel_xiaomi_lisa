@@ -195,7 +195,7 @@ static int __init xsc3_l2_init(void)
 		return 0;
 
 	if (get_cr() & CR_L2) {
-		pr_debug("XScale3 L2 cache enabled.\n");
+		pr_info("XScale3 L2 cache enabled.\n");
 		xsc3_l2_inv_all();
 
 		outer_cache.inv_range = xsc3_l2_inv_range;

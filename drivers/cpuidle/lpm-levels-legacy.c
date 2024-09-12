@@ -1381,7 +1381,7 @@ static int lpm_probe(struct platform_device *pdev)
 	md_entry.phys_addr = lpm_debug_phys;
 	md_entry.size = size;
 	if (msm_minidump_add_region(&md_entry))
-		pr_debug("Failed to add lpm_debug in Minidump\n");
+		pr_info("Failed to add lpm_debug in Minidump\n");
 
 	node = of_find_node_by_name(NULL, "qcom,ipc-spinlock");
 	if (!node) {
@@ -1431,7 +1431,7 @@ static int __init lpm_levels_module_init(void)
 
 	rc = platform_driver_register(&lpm_driver);
 	if (rc) {
-		pr_debug("Error registering %s\n", lpm_driver.driver.name);
+		pr_info("Error registering %s\n", lpm_driver.driver.name);
 		goto fail;
 	}
 

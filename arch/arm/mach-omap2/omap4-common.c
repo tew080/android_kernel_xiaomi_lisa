@@ -163,7 +163,7 @@ void __init omap_barriers_init(void)
 	iotable_init(dram_io_desc, ARRAY_SIZE(dram_io_desc));
 	dram_sync = (void __iomem *) dram_io_desc[0].virtual;
 
-	pr_debug("OMAP4: Map %pa to %p for dram barrier\n",
+	pr_info("OMAP4: Map %pa to %p for dram barrier\n",
 		&dram_sync_paddr, dram_sync);
 
 	soc_mb = omap4_mb;

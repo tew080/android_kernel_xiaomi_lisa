@@ -385,7 +385,7 @@ void __init check_for_initrd(void)
 		initrd_start = initrd_end = 0;
 
 	if (initrd_start)
-		pr_debug("Found initrd at 0x%lx:0x%lx\n", initrd_start, initrd_end);
+		pr_info("Found initrd at 0x%lx:0x%lx\n", initrd_start, initrd_end);
 
 	DBG(" <- check_for_initrd()\n");
 #endif /* CONFIG_BLK_DEV_INITRD */
@@ -775,35 +775,35 @@ arch_initcall(powerpc_debugfs_init);
 
 void ppc_printk_progress(char *s, unsigned short hex)
 {
-	pr_debug("%s\n", s);
+	pr_info("%s\n", s);
 }
 
 static __init void print_system_info(void)
 {
-	pr_debug("-----------------------------------------------------\n");
-	pr_debug("phys_mem_size     = 0x%llx\n",
+	pr_info("-----------------------------------------------------\n");
+	pr_info("phys_mem_size     = 0x%llx\n",
 		(unsigned long long)memblock_phys_mem_size());
 
-	pr_debug("dcache_bsize      = 0x%x\n", dcache_bsize);
-	pr_debug("icache_bsize      = 0x%x\n", icache_bsize);
+	pr_info("dcache_bsize      = 0x%x\n", dcache_bsize);
+	pr_info("icache_bsize      = 0x%x\n", icache_bsize);
 	if (ucache_bsize != 0)
-		pr_debug("ucache_bsize      = 0x%x\n", ucache_bsize);
+		pr_info("ucache_bsize      = 0x%x\n", ucache_bsize);
 
-	pr_debug("cpu_features      = 0x%016lx\n", cur_cpu_spec->cpu_features);
-	pr_debug("  possible        = 0x%016lx\n",
+	pr_info("cpu_features      = 0x%016lx\n", cur_cpu_spec->cpu_features);
+	pr_info("  possible        = 0x%016lx\n",
 		(unsigned long)CPU_FTRS_POSSIBLE);
-	pr_debug("  always          = 0x%016lx\n",
+	pr_info("  always          = 0x%016lx\n",
 		(unsigned long)CPU_FTRS_ALWAYS);
-	pr_debug("cpu_user_features = 0x%08x 0x%08x\n",
+	pr_info("cpu_user_features = 0x%08x 0x%08x\n",
 		cur_cpu_spec->cpu_user_features,
 		cur_cpu_spec->cpu_user_features2);
-	pr_debug("mmu_features      = 0x%08x\n", cur_cpu_spec->mmu_features);
+	pr_info("mmu_features      = 0x%08x\n", cur_cpu_spec->mmu_features);
 #ifdef CONFIG_PPC64
-	pr_debug("firmware_features = 0x%016lx\n", powerpc_firmware_features);
+	pr_info("firmware_features = 0x%016lx\n", powerpc_firmware_features);
 #ifdef CONFIG_PPC_BOOK3S
-	pr_debug("vmalloc start     = 0x%lx\n", KERN_VIRT_START);
-	pr_debug("IO start          = 0x%lx\n", KERN_IO_START);
-	pr_debug("vmemmap start     = 0x%lx\n", (unsigned long)vmemmap);
+	pr_info("vmalloc start     = 0x%lx\n", KERN_VIRT_START);
+	pr_info("IO start          = 0x%lx\n", KERN_IO_START);
+	pr_info("vmemmap start     = 0x%lx\n", (unsigned long)vmemmap);
 #endif
 #endif
 
@@ -811,9 +811,9 @@ static __init void print_system_info(void)
 		print_system_hash_info();
 
 	if (PHYSICAL_START > 0)
-		pr_debug("physical_start    = 0x%llx\n",
+		pr_info("physical_start    = 0x%llx\n",
 		       (unsigned long long)PHYSICAL_START);
-	pr_debug("-----------------------------------------------------\n");
+	pr_info("-----------------------------------------------------\n");
 }
 
 #ifdef CONFIG_SMP

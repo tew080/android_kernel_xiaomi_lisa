@@ -704,7 +704,7 @@ void __init ima_init_policy(void)
 	 */
 	arch_entries = ima_init_arch_policy();
 	if (!arch_entries)
-		pr_debug("No architecture policies found\n");
+		pr_info("No architecture policies found\n");
 	else
 		add_rules(arch_policy_entry, arch_entries,
 			  IMA_DEFAULT_POLICY | IMA_CUSTOM_POLICY);

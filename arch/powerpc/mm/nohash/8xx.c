@@ -215,7 +215,7 @@ void __init setup_kuep(bool disabled)
 	if (disabled)
 		return;
 
-	pr_debug("Activating Kernel Userspace Execution Prevention\n");
+	pr_info("Activating Kernel Userspace Execution Prevention\n");
 
 	mtspr(SPRN_MI_AP, MI_APG_KUEP);
 }
@@ -224,7 +224,7 @@ void __init setup_kuep(bool disabled)
 #ifdef CONFIG_PPC_KUAP
 void __init setup_kuap(bool disabled)
 {
-	pr_debug("Activating Kernel Userspace Access Protection\n");
+	pr_info("Activating Kernel Userspace Access Protection\n");
 
 	if (disabled)
 		pr_warn("KUAP cannot be disabled yet on 8xx when compiled in\n");

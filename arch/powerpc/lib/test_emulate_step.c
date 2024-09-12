@@ -84,13 +84,13 @@ static void __init init_pt_regs(struct pt_regs *regs)
 
 static void __init show_result(char *mnemonic, char *result)
 {
-	pr_debug("%-14s : %s\n", mnemonic, result);
+	pr_info("%-14s : %s\n", mnemonic, result);
 }
 
 static void __init show_result_with_descr(char *mnemonic, char *descr,
 					  char *result)
 {
-	pr_debug("%-14s : %-50s %s\n", mnemonic, descr, result);
+	pr_info("%-14s : %-50s %s\n", mnemonic, descr, result);
 }
 
 static void __init test_ld(void)
@@ -850,7 +850,7 @@ static int __init emulate_compute_instr(struct pt_regs *regs,
 
 	if (analyse_instr(&op, regs, instr) != 1 ||
 	    GETTYPE(op.type) != COMPUTE) {
-		pr_debug("emulation failed, instruction = 0x%08x\n", instr);
+		pr_info("emulation failed, instruction = 0x%08x\n", instr);
 		return -EFAULT;
 	}
 
@@ -870,7 +870,7 @@ static int __init execute_compute_instr(struct pt_regs *regs,
 	/* Patch the NOP with the actual instruction */
 	patch_instruction_site(&patch__exec_instr, instr);
 	if (exec_instr(regs)) {
-		pr_debug("execution failed, instruction = 0x%08x\n", instr);
+		pr_info("execution failed, instruction = 0x%08x\n", instr);
 		return -EFAULT;
 	}
 
@@ -878,11 +878,11 @@ static int __init execute_compute_instr(struct pt_regs *regs,
 }
 
 #define gpr_mismatch(gprn, exp, got)	\
-	pr_debug("GPR%u mismatch, exp = 0x%016lx, got = 0x%016lx\n",	\
+	pr_info("GPR%u mismatch, exp = 0x%016lx, got = 0x%016lx\n",	\
 		gprn, exp, got)
 
 #define reg_mismatch(name, exp, got)	\
-	pr_debug("%s mismatch, exp = 0x%016lx, got = 0x%016lx\n",	\
+	pr_info("%s mismatch, exp = 0x%016lx, got = 0x%016lx\n",	\
 		name, exp, got)
 
 static void __init run_tests_compute(void)

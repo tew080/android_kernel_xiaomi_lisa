@@ -110,7 +110,7 @@ static int __init mvme5100_add_bridge(struct device_node *dev)
 	struct pci_controller	*hose;
 	unsigned short		devid;
 
-	pr_debug("Adding PCI host bridge %pOF\n", dev);
+	pr_info("Adding PCI host bridge %pOF\n", dev);
 
 	bus_range = of_get_property(dev, "bus-range", &len);
 
@@ -139,7 +139,7 @@ static int __init mvme5100_add_bridge(struct device_node *dev)
 		return 0;
 	}
 
-	pr_debug("mvme5100_pic_init: pci_membase: %x\n", pci_membase);
+	pr_info("mvme5100_pic_init: pci_membase: %x\n", pci_membase);
 
 	return 0;
 }

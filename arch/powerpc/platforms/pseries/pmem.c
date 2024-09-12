@@ -61,7 +61,7 @@ static ssize_t pmem_drc_add_node(u32 drc_index)
 		return rc;
 	}
 
-	pr_debug("Successfully added %pOF, drc index: %x\n", dn, drc_index);
+	pr_info("Successfully added %pOF, drc index: %x\n", dn, drc_index);
 
 	return 0;
 }
@@ -99,7 +99,7 @@ static ssize_t pmem_drc_remove_node(u32 drc_index)
 		return rc;
 	}
 
-	pr_debug("Successfully removed PMEM with drc index: %x\n", drc_index);
+	pr_info("Successfully removed PMEM with drc index: %x\n", drc_index);
 
 	return 0;
 }

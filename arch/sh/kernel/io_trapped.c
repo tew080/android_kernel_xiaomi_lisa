@@ -77,7 +77,7 @@ int register_trapped_io(struct trapped_io *tiop)
 	len = 0;
 	for (k = 0; k < tiop->num_resources; k++) {
 		res = tiop->resource + k;
-		pr_debug("trapped io 0x%08lx overrides %s 0x%08lx\n",
+		pr_info("trapped io 0x%08lx overrides %s 0x%08lx\n",
 		       (unsigned long)(tiop->virt_base + len),
 		       res->flags & IORESOURCE_IO ? "io" : "mmio",
 		       (unsigned long)res->start);

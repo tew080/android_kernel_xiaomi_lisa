@@ -227,7 +227,7 @@ static void __init setup_node_data(int nid, u64 start_pfn, u64 end_pfn)
 	int tnid;
 
 	if (start_pfn >= end_pfn)
-		pr_debug("Initmem setup node %d [<memory-less node>]\n", nid);
+		pr_info("Initmem setup node %d [<memory-less node>]\n", nid);
 
 	nd_pa = memblock_phys_alloc_try_nid(nd_size, SMP_CACHE_BYTES, nid);
 	if (!nd_pa)
@@ -237,11 +237,11 @@ static void __init setup_node_data(int nid, u64 start_pfn, u64 end_pfn)
 	nd = __va(nd_pa);
 
 	/* report and initialize */
-	pr_debug("NODE_DATA [mem %#010Lx-%#010Lx]\n",
+	pr_info("NODE_DATA [mem %#010Lx-%#010Lx]\n",
 		nd_pa, nd_pa + nd_size - 1);
 	tnid = early_pfn_to_nid(nd_pa >> PAGE_SHIFT);
 	if (tnid != nid)
-		pr_debug("NODE_DATA(%d) on node %d\n", nid, tnid);
+		pr_info("NODE_DATA(%d) on node %d\n", nid, tnid);
 
 	node_data[nid] = nd;
 	memset(NODE_DATA(nid), 0, sizeof(pg_data_t));
@@ -394,7 +394,7 @@ static int __init numa_init(int (*init_func)(void))
 		goto out_free_distance;
 
 	if (nodes_empty(numa_nodes_parsed)) {
-		pr_debug("No NUMA configuration found\n");
+		pr_info("No NUMA configuration found\n");
 		ret = -EINVAL;
 		goto out_free_distance;
 	}
@@ -428,8 +428,8 @@ static int __init dummy_numa_init(void)
 	struct memblock_region *mblk;
 
 	if (numa_off)
-		pr_debug("NUMA disabled\n"); /* Forced off on command line. */
-	pr_debug("Faking a node at [mem %#018Lx-%#018Lx]\n",
+		pr_info("NUMA disabled\n"); /* Forced off on command line. */
+	pr_info("Faking a node at [mem %#018Lx-%#018Lx]\n",
 		memblock_start_of_DRAM(), memblock_end_of_DRAM() - 1);
 
 	for_each_memblock(memory, mblk) {

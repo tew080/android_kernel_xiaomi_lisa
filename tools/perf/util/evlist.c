@@ -834,7 +834,7 @@ static long parse_pages_arg(const char *str, unsigned long min,
 			return -EINVAL;
 
 		unit_number__scnprintf(buf, sizeof(buf), pages * page_size);
-		pr_debug("rounding mmap pages size to %s (%lu pages)\n",
+		pr_info("rounding mmap pages size to %s (%lu pages)\n",
 			buf, pages);
 	}
 

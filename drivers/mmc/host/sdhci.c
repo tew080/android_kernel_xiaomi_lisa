@@ -2634,7 +2634,7 @@ static int __sdhci_execute_tuning(struct sdhci_host *host, u32 opcode)
 
 	}
 
-	pr_debug("%s: Tuning failed, falling back to fixed sampling clock\n",
+	pr_info("%s: Tuning failed, falling back to fixed sampling clock\n",
 		mmc_hostname(host->mmc));
 	sdhci_reset_tuning(host);
 	return -EAGAIN;
@@ -4032,7 +4032,7 @@ static void sdhci_allocate_bounce_buffer(struct sdhci_host *host)
 	mmc->max_seg_size = bounce_size;
 	mmc->max_req_size = bounce_size;
 
-	pr_debug("%s bounce up to %u segments into one, max segment size %u bytes\n",
+	pr_info("%s bounce up to %u segments into one, max segment size %u bytes\n",
 		mmc_hostname(mmc), max_blocks, bounce_size);
 }
 
@@ -4673,7 +4673,7 @@ int __sdhci_add_host(struct sdhci_host *host)
 	if (ret)
 		goto unled;
 
-	pr_debug("%s: SDHCI controller on %s [%s] using %s\n",
+	pr_info("%s: SDHCI controller on %s [%s] using %s\n",
 		mmc_hostname(mmc), host->hw_name, dev_name(mmc_dev(mmc)),
 		(host->flags & SDHCI_USE_ADMA) ?
 		(host->flags & SDHCI_USE_64_BIT_DMA) ? "ADMA 64-bit" : "ADMA" :

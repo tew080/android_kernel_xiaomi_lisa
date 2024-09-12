@@ -852,7 +852,7 @@ static int __sa1111_probe(struct device *me, struct resource *mem, int irq)
 		goto err_unmap;
 	}
 
-	pr_debug("SA1111 Microprocessor Companion Chip: silicon revision %lx, metal revision %lx\n",
+	pr_info("SA1111 Microprocessor Companion Chip: silicon revision %lx, metal revision %lx\n",
 		(id & SKID_SIREV_MASK) >> 4, id & SKID_MTREV_MASK);
 
 	/*

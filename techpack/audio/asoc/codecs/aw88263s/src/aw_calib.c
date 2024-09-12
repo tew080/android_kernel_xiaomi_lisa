@@ -78,7 +78,7 @@ static int aw_cali_write_cali_re_to_file(int32_t cali_re, int channel)
 
 	set_fs(fs);
 
-	pr_debug("%s: channel:%d buf:%s cali_re:%d\n",
+	pr_info("%s: channel:%d buf:%s cali_re:%d\n",
 		__func__, channel, buf, cali_re);
 
 	filp_close(fp, NULL);
@@ -128,7 +128,7 @@ static int aw_cali_get_read_cali_re(int32_t *cali_re, int channel)
 	else
 		*cali_re = AW_ERRO_CALI_VALUE;
 
-	pr_debug("%s: channel:%d buf:%s int_cali_re: %d\n",
+	pr_info("%s: channel:%d buf:%s int_cali_re: %d\n",
 		__func__, channel, buf, int_cali_re);
 
 	kfree(buf);

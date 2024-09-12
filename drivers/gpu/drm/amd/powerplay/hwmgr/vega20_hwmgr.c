@@ -946,9 +946,9 @@ static int vega20_enable_all_smu_features(struct pp_hwmgr *hwmgr)
 
 #if 0
 		if (data->smu_features[i].allowed && !enabled)
-			pr_debug("[EnableAllSMUFeatures] feature %d is expected enabled!", i);
+			pr_info("[EnableAllSMUFeatures] feature %d is expected enabled!", i);
 		else if (!data->smu_features[i].allowed && enabled)
-			pr_debug("[EnableAllSMUFeatures] feature %d is expected disabled!", i);
+			pr_info("[EnableAllSMUFeatures] feature %d is expected disabled!", i);
 #endif
 	}
 
@@ -2062,7 +2062,7 @@ static int vega20_get_metrics_table(struct pp_hwmgr *hwmgr, SmuMetrics_t *metric
 		ret = smum_smc_table_manager(hwmgr, (uint8_t *)metrics_table,
 				TABLE_SMU_METRICS, true);
 		if (ret) {
-			pr_debug("Failed to export SMU metrics table!\n");
+			pr_info("Failed to export SMU metrics table!\n");
 			return ret;
 		}
 		memcpy(&data->metrics_table, metrics_table, sizeof(SmuMetrics_t));
@@ -2245,7 +2245,7 @@ int vega20_display_clock_voltage_request(struct pp_hwmgr *hwmgr,
 			clk_select = PPCLK_PHYCLK;
 			break;
 		default:
-			pr_debug("[DisplayClockVoltageRequest]Invalid Clock Type!");
+			pr_info("[DisplayClockVoltageRequest]Invalid Clock Type!");
 			result = -EINVAL;
 			break;
 		}
@@ -2294,7 +2294,7 @@ static int vega20_notify_smc_display_config_after_ps_adjustment(
 					"Attempt to set divider for DCEFCLK Failed!",
 					return ret);
 		} else {
-			pr_debug("Attempt to set Hard Min for DCEFCLK Failed!");
+			pr_info("Attempt to set Hard Min for DCEFCLK Failed!");
 		}
 	}
 
@@ -2906,13 +2906,13 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 	case PP_OD_EDIT_SCLK_VDDC_TABLE:
 		if (!(od8_settings[OD8_SETTING_GFXCLK_FMIN].feature_id &&
 		      od8_settings[OD8_SETTING_GFXCLK_FMAX].feature_id)) {
-			pr_debug("Sclk min/max frequency overdrive not supported\n");
+			pr_info("Sclk min/max frequency overdrive not supported\n");
 			return -EOPNOTSUPP;
 		}
 
 		for (i = 0; i < size; i += 2) {
 			if (i + 2 > size) {
-				pr_debug("invalid number of input parameters %d\n",
+				pr_info("invalid number of input parameters %d\n",
 					size);
 				return -EINVAL;
 			}
@@ -2921,14 +2921,14 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 			input_clk = input[i + 1];
 
 			if (input_index != 0 && input_index != 1) {
-				pr_debug("Invalid index %d\n", input_index);
-				pr_debug("Support min/max sclk frequency setting only which index by 0/1\n");
+				pr_info("Invalid index %d\n", input_index);
+				pr_info("Support min/max sclk frequency setting only which index by 0/1\n");
 				return -EINVAL;
 			}
 
 			if (input_clk < od8_settings[OD8_SETTING_GFXCLK_FMIN].min_value ||
 			    input_clk > od8_settings[OD8_SETTING_GFXCLK_FMAX].max_value) {
-				pr_debug("clock freq %d is not within allowed range [%d - %d]\n",
+				pr_info("clock freq %d is not within allowed range [%d - %d]\n",
 					input_clk,
 					od8_settings[OD8_SETTING_GFXCLK_FMIN].min_value,
 					od8_settings[OD8_SETTING_GFXCLK_FMAX].max_value);
@@ -2949,13 +2949,13 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 
 	case PP_OD_EDIT_MCLK_VDDC_TABLE:
 		if (!od8_settings[OD8_SETTING_UCLK_FMAX].feature_id) {
-			pr_debug("Mclk max frequency overdrive not supported\n");
+			pr_info("Mclk max frequency overdrive not supported\n");
 			return -EOPNOTSUPP;
 		}
 
 		for (i = 0; i < size; i += 2) {
 			if (i + 2 > size) {
-				pr_debug("invalid number of input parameters %d\n",
+				pr_info("invalid number of input parameters %d\n",
 					size);
 				return -EINVAL;
 			}
@@ -2964,14 +2964,14 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 			input_clk = input[i + 1];
 
 			if (input_index != 1) {
-				pr_debug("Invalid index %d\n", input_index);
-				pr_debug("Support max Mclk frequency setting only which index by 1\n");
+				pr_info("Invalid index %d\n", input_index);
+				pr_info("Support max Mclk frequency setting only which index by 1\n");
 				return -EINVAL;
 			}
 
 			if (input_clk < od8_settings[OD8_SETTING_UCLK_FMAX].min_value ||
 			    input_clk > od8_settings[OD8_SETTING_UCLK_FMAX].max_value) {
-				pr_debug("clock freq %d is not within allowed range [%d - %d]\n",
+				pr_info("clock freq %d is not within allowed range [%d - %d]\n",
 					input_clk,
 					od8_settings[OD8_SETTING_UCLK_FMAX].min_value,
 					od8_settings[OD8_SETTING_UCLK_FMAX].max_value);
@@ -2993,13 +2993,13 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 		    od8_settings[OD8_SETTING_GFXCLK_VOLTAGE1].feature_id &&
 		    od8_settings[OD8_SETTING_GFXCLK_VOLTAGE2].feature_id &&
 		    od8_settings[OD8_SETTING_GFXCLK_VOLTAGE3].feature_id)) {
-			pr_debug("Voltage curve calibrate not supported\n");
+			pr_info("Voltage curve calibrate not supported\n");
 			return -EOPNOTSUPP;
 		}
 
 		for (i = 0; i < size; i += 3) {
 			if (i + 3 > size) {
-				pr_debug("invalid number of input parameters %d\n",
+				pr_info("invalid number of input parameters %d\n",
 					size);
 				return -EINVAL;
 			}
@@ -3009,16 +3009,16 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 			input_vol = input[i + 2];
 
 			if (input_index > 2) {
-				pr_debug("Setting for point %d is not supported\n",
+				pr_info("Setting for point %d is not supported\n",
 						input_index + 1);
-				pr_debug("Three supported points index by 0, 1, 2\n");
+				pr_info("Three supported points index by 0, 1, 2\n");
 				return -EINVAL;
 			}
 
 			od8_id = OD8_SETTING_GFXCLK_FREQ1 + 2 * input_index;
 			if (input_clk < od8_settings[od8_id].min_value ||
 			    input_clk > od8_settings[od8_id].max_value) {
-				pr_debug("clock freq %d is not within allowed range [%d - %d]\n",
+				pr_info("clock freq %d is not within allowed range [%d - %d]\n",
 					input_clk,
 					od8_settings[od8_id].min_value,
 					od8_settings[od8_id].max_value);
@@ -3028,7 +3028,7 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
 			od8_id = OD8_SETTING_GFXCLK_VOLTAGE1 + 2 * input_index;
 			if (input_vol < od8_settings[od8_id].min_value ||
 			    input_vol > od8_settings[od8_id].max_value) {
-				pr_debug("clock voltage %d is not within allowed range [%d - %d]\n",
+				pr_info("clock voltage %d is not within allowed range [%d - %d]\n",
 					input_vol,
 					od8_settings[od8_id].min_value,
 					od8_settings[od8_id].max_value);

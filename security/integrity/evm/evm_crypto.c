@@ -61,7 +61,7 @@ int evm_set_key(void *key, size_t keylen)
 		goto inval;
 	memcpy(evmkey, key, keylen);
 	evm_initialized |= EVM_INIT_HMAC;
-	pr_debug("key initialized\n");
+	pr_info("key initialized\n");
 	return 0;
 inval:
 	clear_bit(EVM_SET_KEY_BUSY, &evm_set_key_flags);
@@ -337,7 +337,7 @@ int evm_init_hmac(struct inode *inode, const struct xattr *lsm_xattr,
 
 	desc = init_desc(EVM_XATTR_HMAC, HASH_ALGO_SHA1);
 	if (IS_ERR(desc)) {
-		pr_debug("init_desc failed\n");
+		pr_info("init_desc failed\n");
 		return PTR_ERR(desc);
 	}
 

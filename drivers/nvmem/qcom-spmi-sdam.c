@@ -152,7 +152,7 @@ static int sdam_probe(struct platform_device *pdev)
 	}
 	platform_set_drvdata(pdev, nvmem);
 
-	pr_debug("SDAM base=0x%04x size=%d registered successfully\n",
+	pr_info("SDAM base=0x%04x size=%d registered successfully\n",
 						sdam->base, sdam->size);
 
 	return 0;

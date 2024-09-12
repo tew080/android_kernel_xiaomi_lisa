@@ -213,7 +213,7 @@ static void nlm_init_node_irqs(int node)
 	struct nlm_soc_info *nodep;
 	int i, irt;
 
-	pr_debug("Init IRQ for node %d\n", node);
+	pr_info("Init IRQ for node %d\n", node);
 	nodep = nlm_get_node(node);
 	nodep->irqmask = PERCPU_IRQ_MASK;
 	for (i = PIC_IRT_FIRST_IRQ; i <= PIC_IRT_LAST_IRQ; i++) {
@@ -329,7 +329,7 @@ static int __init xlp_of_pic_init(struct device_node *node,
 		pr_err("PIC %pOFn: Creating legacy domain failed!\n", node);
 		return -EINVAL;
 	}
-	pr_debug("Node %d: IRQ domain created for PIC@%pR\n", socid, &res);
+	pr_info("Node %d: IRQ domain created for PIC@%pR\n", socid, &res);
 	return 0;
 }
 

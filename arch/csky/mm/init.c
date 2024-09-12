@@ -77,7 +77,7 @@ void free_initmem(void)
 		addr += PAGE_SIZE;
 	}
 
-	pr_debug("Freeing unused kernel memory: %dk freed\n",
+	pr_info("Freeing unused kernel memory: %dk freed\n",
 	((unsigned int)&__init_end - (unsigned int)&__init_begin) >> 10);
 }
 

@@ -62,7 +62,7 @@ static int scx200_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (pdev->device == PCI_DEVICE_ID_NS_SCx200_BRIDGE ||
 	    pdev->device == PCI_DEVICE_ID_NS_SC1100_BRIDGE) {
 		base = pci_resource_start(pdev, 0);
-		pr_debug("GPIO base 0x%x\n", base);
+		pr_info("GPIO base 0x%x\n", base);
 
 		if (!request_region(base, SCx200_GPIO_SIZE,
 				    "NatSemi SCx200 GPIO")) {
@@ -86,7 +86,7 @@ static int scx200_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 				return -ENODEV;
 			}
 		}
-		pr_debug("Configuration Block base 0x%x\n", scx200_cb_base);
+		pr_info("Configuration Block base 0x%x\n", scx200_cb_base);
 	}
 
 	return 0;
@@ -111,7 +111,7 @@ u32 scx200_gpio_configure(unsigned index, u32 mask, u32 bits)
 
 static int __init scx200_init(void)
 {
-	pr_debug("NatSemi SCx200 Driver\n");
+	pr_info("NatSemi SCx200 Driver\n");
 	return pci_register_driver(&scx200_pci_driver);
 }
 

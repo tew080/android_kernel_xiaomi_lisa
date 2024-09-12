@@ -734,13 +734,13 @@ static void __perf_evsel__config_callchain(struct evsel *evsel,
 			attr->sample_stack_user = param->dump_size;
 			attr->exclude_callchain_user = 1;
 		} else {
-			pr_debug("Cannot use DWARF unwind for function trace event,"
+			pr_info("Cannot use DWARF unwind for function trace event,"
 				" falling back to framepointers.\n");
 		}
 	}
 
 	if (function) {
-		pr_debug("Disabling user space callchains for function trace event.\n");
+		pr_info("Disabling user space callchains for function trace event.\n");
 		attr->exclude_callchain_user = 1;
 	}
 }

@@ -1499,7 +1499,7 @@ static int tc_dump_action(struct sk_buff *skb, struct netlink_callback *cb)
 
 	kind = find_dump_kind(tb);
 	if (kind == NULL) {
-		pr_debug("tc_dump_action: action bad kind\n");
+		pr_info("tc_dump_action: action bad kind\n");
 		return 0;
 	}
 

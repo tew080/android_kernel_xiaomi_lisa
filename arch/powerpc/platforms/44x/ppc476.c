@@ -240,12 +240,12 @@ static int __init ppc47x_get_board_rev(void)
 		goto fail;
 
 	board_rev = ioread8(fpga + reg) & 0x03;
-	pr_debug("%s: Found board revision %d\n", __func__, board_rev);
+	pr_info("%s: Found board revision %d\n", __func__, board_rev);
 	iounmap(fpga);
 	return 0;
 
 fail:
-	pr_debug("%s: Unable to find board revision\n", __func__);
+	pr_info("%s: Unable to find board revision\n", __func__);
 	return 0;
 }
 machine_arch_initcall(ppc47x, ppc47x_get_board_rev);
@@ -257,10 +257,10 @@ static void ppc47x_pci_irq_fixup(struct pci_dev *dev)
 				      dev->device == 0x00e0)) {
 		if (board_rev == 0) {
 			dev->irq = irq_create_mapping(NULL, 47);
-			pr_debug("%s: Mapping irq %d\n", __func__, dev->irq);
+			pr_info("%s: Mapping irq %d\n", __func__, dev->irq);
 		} else if (board_rev == 2) {
 			dev->irq = irq_create_mapping(NULL, 49);
-			pr_debug("%s: Mapping irq %d\n", __func__, dev->irq);
+			pr_info("%s: Mapping irq %d\n", __func__, dev->irq);
 		} else {
 			pr_alert("%s: Unknown board revision\n", __func__);
 		}

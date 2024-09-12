@@ -255,7 +255,7 @@ static int __init tc2_pm_init(void)
 		mcpm_sync_init(tc2_pm_power_up_setup);
 		/* test if we can (re)enable the CCI on our own */
 		BUG_ON(mcpm_loopback(tc2_pm_cluster_cache_disable) != 0);
-		pr_debug("TC2 power management initialized\n");
+		pr_info("TC2 power management initialized\n");
 	}
 	return ret;
 }

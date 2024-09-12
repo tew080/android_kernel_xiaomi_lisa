@@ -1025,7 +1025,7 @@ int __init add_special_device(u8 type, u8 id, u16 *devid, bool cmd_line)
 		if (!(entry->id == id && entry->cmd_line))
 			continue;
 
-		pr_debug("Command-line override present for %s id %d - ignoring\n",
+		pr_info("Command-line override present for %s id %d - ignoring\n",
 			type == IVHD_SPECIAL_IOAPIC ? "IOAPIC" : "HPET", id);
 
 		*devid = entry->devid;
@@ -1058,7 +1058,7 @@ static int __init add_acpi_hid_device(u8 *hid, u8 *uid, u16 *devid,
 		    !entry->cmd_line)
 			continue;
 
-		pr_debug("Command-line override for hid:%s uid:%s\n",
+		pr_info("Command-line override for hid:%s uid:%s\n",
 			hid, uid);
 		*devid = entry->devid;
 		return 0;
@@ -1074,7 +1074,7 @@ static int __init add_acpi_hid_device(u8 *hid, u8 *uid, u16 *devid,
 	entry->cmd_line	= cmd_line;
 	entry->root_devid = (entry->devid & (~0x7));
 
-	pr_debug("%s, add hid:%s, uid:%s, rdevid:%d\n",
+	pr_info("%s, add hid:%s, uid:%s, rdevid:%d\n",
 		entry->cmd_line ? "cmd" : "ivrs",
 		entry->hid, entry->uid, entry->root_devid);
 
@@ -1872,11 +1872,11 @@ static void print_iommu_info(void)
 		}
 	}
 	if (irq_remapping_enabled) {
-		pr_debug("Interrupt remapping enabled\n");
+		pr_info("Interrupt remapping enabled\n");
 		if (AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))
-			pr_debug("Virtual APIC enabled\n");
+			pr_info("Virtual APIC enabled\n");
 		if (amd_iommu_xt_mode == IRQ_REMAP_X2APIC_MODE)
-			pr_debug("X2APIC enabled\n");
+			pr_info("X2APIC enabled\n");
 	}
 }
 
@@ -2337,7 +2337,7 @@ static void early_enable_iommus(void)
 			early_enable_iommu(iommu);
 		}
 	} else {
-		pr_debug("Copied DEV table from previous kernel.\n");
+		pr_info("Copied DEV table from previous kernel.\n");
 		free_pages((unsigned long)amd_iommu_dev_table,
 				get_order(dev_table_size));
 		amd_iommu_dev_table = old_dev_tbl_cpy;
@@ -2630,7 +2630,7 @@ static int __init early_amd_iommu_init(void)
 	for (i = 0; i < 32; i++) {
 		pci_id = read_pci_config(0, i, 0, 0);
 		if ((pci_id & 0xffff) == 0x1002 && (pci_id >> 16) == 0x98e4) {
-			pr_debug("Disable IOMMU on Stoney Ridge\n");
+			pr_info("Disable IOMMU on Stoney Ridge\n");
 			amd_iommu_disabled = true;
 			break;
 		}
@@ -2744,7 +2744,7 @@ static int __init state_next(void)
 		ret = early_amd_iommu_init();
 		init_state = ret ? IOMMU_INIT_ERROR : IOMMU_ACPI_FINISHED;
 		if (init_state == IOMMU_ACPI_FINISHED && amd_iommu_disabled) {
-			pr_debug("AMD IOMMU disabled\n");
+			pr_info("AMD IOMMU disabled\n");
 			init_state = IOMMU_CMDLINE_DISABLED;
 			ret = -EINVAL;
 		}

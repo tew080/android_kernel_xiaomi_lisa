@@ -189,7 +189,7 @@ setup_machine_tags(void *atags_vaddr, unsigned int machine_nr)
 	 */
 	for_each_machine_desc(p)
 		if (machine_nr == p->nr) {
-			pr_debug("Machine: %s\n", p->name);
+			pr_info("Machine: %s\n", p->name);
 			mdesc = p;
 			break;
 		}

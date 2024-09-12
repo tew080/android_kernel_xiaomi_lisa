@@ -38,7 +38,7 @@ static void __init mvme2500_setup_arch(void)
 	if (ppc_md.progress)
 		ppc_md.progress("mvme2500_setup_arch()", 0);
 	fsl_pci_assign_primary();
-	pr_debug("MVME2500 board from Artesyn\n");
+	pr_info("MVME2500 board from Artesyn\n");
 }
 
 machine_arch_initcall(mvme2500, mpc85xx_common_publish_devices);

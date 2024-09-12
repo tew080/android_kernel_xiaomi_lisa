@@ -2302,7 +2302,7 @@ static void intel_pmu_reset(void)
 
 	local_irq_save(flags);
 
-	pr_debug("clearing PMU state on CPU#%d\n", smp_processor_id());
+	pr_info("clearing PMU state on CPU#%d\n", smp_processor_id());
 
 	for (idx = 0; idx < x86_pmu.num_counters; idx++) {
 		wrmsrl_safe(x86_pmu_config_addr(idx), 0ull);
@@ -4058,10 +4058,10 @@ static void intel_snb_check_microcode(void)
 	 * Serialized by the microcode lock..
 	 */
 	if (x86_pmu.pebs_broken) {
-		pr_debug("PEBS enabled due to microcode update\n");
+		pr_info("PEBS enabled due to microcode update\n");
 		x86_pmu.pebs_broken = 0;
 	} else {
-		pr_debug("PEBS disabled due to CPU errata, please upgrade microcode\n");
+		pr_info("PEBS disabled due to CPU errata, please upgrade microcode\n");
 		x86_pmu.pebs_broken = 1;
 	}
 }
@@ -4171,7 +4171,7 @@ static __init void intel_nehalem_quirk(void)
 		intel_perfmon_event_map[PERF_COUNT_HW_BRANCH_MISSES] = 0x7f89;
 		ebx.split.no_branch_misses_retired = 0;
 		x86_pmu.events_maskl = ebx.full;
-		pr_debug("CPU erratum AAJ80 worked around\n");
+		pr_info("CPU erratum AAJ80 worked around\n");
 	}
 }
 
@@ -4201,7 +4201,7 @@ static __init void intel_counter_freezing_quirk(void)
 	 * counter-freezing feature permanently disabled.
 	 */
 	if (intel_counter_freezing_broken()) {
-		pr_debug("PMU counter freezing disabled due to CPU errata,"
+		pr_info("PMU counter freezing disabled due to CPU errata,"
 			"please upgrade microcode\n");
 		x86_pmu.counter_freezing = false;
 		x86_pmu.handle_irq = intel_pmu_handle_irq;
@@ -5199,7 +5199,7 @@ static __init int fixup_ht_bug(void)
 		return 0;
 
 	if (topology_max_smt_threads() > 1) {
-		pr_debug("PMU erratum BJ122, BV98, HSD29 worked around, HT is on\n");
+		pr_info("PMU erratum BJ122, BV98, HSD29 worked around, HT is on\n");
 		return 0;
 	}
 
@@ -5219,7 +5219,7 @@ static __init int fixup_ht_bug(void)
 		free_excl_cntrs(&per_cpu(cpu_hw_events, c));
 
 	cpus_read_unlock();
-	pr_debug("PMU erratum BJ122, BV98, HSD29 workaround disabled, HT off\n");
+	pr_info("PMU erratum BJ122, BV98, HSD29 workaround disabled, HT off\n");
 	return 0;
 }
 subsys_initcall(fixup_ht_bug)

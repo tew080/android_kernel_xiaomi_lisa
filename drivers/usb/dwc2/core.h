@@ -1235,7 +1235,7 @@ static inline void dwc2_writel(struct dwc2_hsotg *hsotg, u32 value, u32 offset)
 		writel(value, hsotg->regs + offset);
 
 #ifdef DWC2_LOG_WRITES
-	pr_debug("info:: wrote %08x to %p\n", value, hsotg->regs + offset);
+	pr_info("info:: wrote %08x to %p\n", value, hsotg->regs + offset);
 #endif
 }
 

@@ -970,12 +970,12 @@ static int __init msm_jtag_dbg_init(void)
 			if (version < TZ_DBG_ETM_VER)
 				dbg.save_restore_enabled = true;
 			else {
-				pr_debug("dbg save-restore supported by TZ\n");
+				pr_info("dbg save-restore supported by TZ\n");
 				goto dbg_out;
 			}
 		}
 	} else {
-		pr_debug("dbg arch %u not supported\n", dbg.arch);
+		pr_info("dbg arch %u not supported\n", dbg.arch);
 		goto dbg_out;
 	}
 

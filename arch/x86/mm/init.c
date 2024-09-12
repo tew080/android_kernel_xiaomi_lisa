@@ -238,7 +238,7 @@ static void setup_pcid(void)
 		return;
 
 	if (x86_match_cpu(invlpg_miss_ids)) {
-		pr_debug("Incomplete global flushes, disabling PCID");
+		pr_info("Incomplete global flushes, disabling PCID");
 		setup_clear_cpu_cap(X86_FEATURE_PCID);
 		return;
 	}
@@ -830,7 +830,7 @@ void free_init_pages(const char *what, unsigned long begin, unsigned long end)
 	 * create a kernel page fault:
 	 */
 	if (debug_pagealloc_enabled()) {
-		pr_debug("debug: unmapping init [mem %#010lx-%#010lx]\n",
+		pr_info("debug: unmapping init [mem %#010lx-%#010lx]\n",
 			begin, end - 1);
 		/*
 		 * Inform kmemleak about the hole in the memory since the

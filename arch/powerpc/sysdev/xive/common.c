@@ -1430,7 +1430,7 @@ static void xive_flush_cpu_queue(unsigned int cpu, struct xive_cpu *xc)
 		 * it reach is new destination.
 		 */
 #ifdef DEBUG_FLUSH
-		pr_debug("CPU %d: Got irq %d while offline, re-sending...\n",
+		pr_info("CPU %d: Got irq %d while offline, re-sending...\n",
 			cpu, irq);
 #endif
 		raw_spin_lock(&desc->lock);
@@ -1535,9 +1535,9 @@ bool __init xive_core_init(const struct xive_ops *ops, void __iomem *area, u32 o
 	/* Get ready for interrupts */
 	xive_setup_cpu();
 
-	pr_debug("Interrupt handling initialized with %s backend\n",
+	pr_info("Interrupt handling initialized with %s backend\n",
 		xive_ops->name);
-	pr_debug("Using priority %d for all interrupts\n", max_prio);
+	pr_info("Using priority %d for all interrupts\n", max_prio);
 
 	return true;
 }

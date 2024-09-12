@@ -53,7 +53,7 @@ void __init plat_time_init(void)
 
 	of_clk_init(NULL);
 
-	pr_debug("CPU Clock: %ldMHz\n", rate / 1000000);
+	pr_info("CPU Clock: %ldMHz\n", rate / 1000000);
 	mips_hpt_frequency = rate / 2;
 
 	timer_probe();
