@@ -261,7 +261,7 @@ static void __init ls_hgl_init(void)
 	/* register power-off method */
 	pm_power_off = ls_hgl_power_off;
 
-	pr_info("%s: finished\n", __func__);
+	pr_debug("%s: finished\n", __func__);
 }
 
 MACHINE_START(LINKSTATION_LS_HGL, "Buffalo Linkstation LS-HGL")

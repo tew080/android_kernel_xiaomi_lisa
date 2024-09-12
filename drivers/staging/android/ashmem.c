@@ -354,7 +354,7 @@ static int __init ashmem_init(void)
 		goto out_free1;
 	}
 
-	pr_info("initialized\n");
+	pr_debug("initialized\n");
 
 	return 0;
 

@@ -313,22 +313,22 @@ void __init setup_arch(char **cmdline_p)
 
 	switch(sparc_cpu_model) {
 	case sun4m:
-		pr_info("ARCH: SUN4M\n");
+		pr_debug("ARCH: SUN4M\n");
 		break;
 	case sun4d:
-		pr_info("ARCH: SUN4D\n");
+		pr_debug("ARCH: SUN4D\n");
 		break;
 	case sun4e:
-		pr_info("ARCH: SUN4E\n");
+		pr_debug("ARCH: SUN4E\n");
 		break;
 	case sun4u:
-		pr_info("ARCH: SUN4U\n");
+		pr_debug("ARCH: SUN4U\n");
 		break;
 	case sparc_leon:
-		pr_info("ARCH: LEON\n");
+		pr_debug("ARCH: LEON\n");
 		break;
 	default:
-		pr_info("ARCH: UNKNOWN!\n");
+		pr_debug("ARCH: UNKNOWN!\n");
 		break;
 	}
 

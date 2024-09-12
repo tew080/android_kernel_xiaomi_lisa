@@ -44,7 +44,7 @@ static int noinline recursive_loop(int remaining)
 	volatile char buf[REC_STACK_SIZE];
 
 	memset((void *)buf, remaining & 0xFF, sizeof(buf));
-	pr_info("loop %d/%d ...\n", (int)buf[remaining % sizeof(buf)],
+	pr_debug("loop %d/%d ...\n", (int)buf[remaining % sizeof(buf)],
 		recur_count);
 	if (!remaining)
 		return 0;
@@ -96,10 +96,10 @@ void lkdtm_LOOP(void)
 
 void lkdtm_EXHAUST_STACK(void)
 {
-	pr_info("Calling function with %lu frame size to depth %d ...\n",
+	pr_debug("Calling function with %lu frame size to depth %d ...\n",
 		REC_STACK_SIZE, recur_count);
 	recursive_loop(recur_count);
-	pr_info("FAIL: survived without exhausting stack?!\n");
+	pr_debug("FAIL: survived without exhausting stack?!\n");
 }
 
 static noinline void __lkdtm_CORRUPT_STACK(void *stack)
@@ -113,7 +113,7 @@ noinline void lkdtm_CORRUPT_STACK(void)
 	/* Use default char array length that triggers stack protection. */
 	char data[8] __aligned(sizeof(void *));
 
-	pr_info("Corrupting stack containing char array ...\n");
+	pr_debug("Corrupting stack containing char array ...\n");
 	__lkdtm_CORRUPT_STACK((void *)&data);
 }
 
@@ -125,7 +125,7 @@ noinline void lkdtm_CORRUPT_STACK_STRONG(void)
 		unsigned long *ptr;
 	} data __aligned(sizeof(void *));
 
-	pr_info("Corrupting stack containing union ...\n");
+	pr_debug("Corrupting stack containing union ...\n");
 	__lkdtm_CORRUPT_STACK((void *)&data);
 }
 
@@ -181,7 +181,7 @@ void lkdtm_CORRUPT_LIST_ADD(void)
 	void *target[2] = { };
 	void *redirection = &target;
 
-	pr_info("attempting good list addition\n");
+	pr_debug("attempting good list addition\n");
 
 	/*
 	 * Adding to the list performs these actions:
@@ -192,7 +192,7 @@ void lkdtm_CORRUPT_LIST_ADD(void)
 	 */
 	list_add(&good.node, &test_head);
 
-	pr_info("attempting corrupted list addition\n");
+	pr_debug("attempting corrupted list addition\n");
 	/*
 	 * In simulating this "write what where" primitive, the "what" is
 	 * the address of &bad.node, and the "where" is the address held
@@ -216,10 +216,10 @@ void lkdtm_CORRUPT_LIST_DEL(void)
 
 	list_add(&item.node, &test_head);
 
-	pr_info("attempting good list removal\n");
+	pr_debug("attempting good list removal\n");
 	list_del(&item.node);
 
-	pr_info("attempting corrupted list removal\n");
+	pr_debug("attempting corrupted list removal\n");
 	list_add(&item.node, &test_head);
 
 	/* As with the list_add() test above, this corrupts "next". */
@@ -235,7 +235,7 @@ void lkdtm_CORRUPT_LIST_DEL(void)
 /* Test if unbalanced set_fs(KERNEL_DS)/set_fs(USER_DS) check exists. */
 void lkdtm_CORRUPT_USER_DS(void)
 {
-	pr_info("setting bad task size limit\n");
+	pr_debug("setting bad task size limit\n");
 	set_fs(KERNEL_DS);
 
 	/* Make sure we do not keep running with a KERNEL_DS! */
@@ -249,7 +249,7 @@ void lkdtm_STACK_GUARD_PAGE_LEADING(void)
 	const unsigned char *ptr = stack - 1;
 	volatile unsigned char byte;
 
-	pr_info("attempting bad read from page below current stack\n");
+	pr_debug("attempting bad read from page below current stack\n");
 
 	byte = *ptr;
 
@@ -263,7 +263,7 @@ void lkdtm_STACK_GUARD_PAGE_TRAILING(void)
 	const unsigned char *ptr = stack + THREAD_SIZE;
 	volatile unsigned char byte;
 
-	pr_info("attempting bad read from page above current stack\n");
+	pr_debug("attempting bad read from page above current stack\n");
 
 	byte = *ptr;
 
@@ -287,16 +287,16 @@ void lkdtm_UNSET_SMEP(void)
 	}
 	cr4 &= ~(X86_CR4_SMEP);
 
-	pr_info("trying to clear SMEP normally\n");
+	pr_debug("trying to clear SMEP normally\n");
 	native_write_cr4(cr4);
 	if (cr4 == native_read_cr4()) {
 		pr_err("FAIL: pinning SMEP failed!\n");
 		cr4 |= X86_CR4_SMEP;
-		pr_info("restoring SMEP\n");
+		pr_debug("restoring SMEP\n");
 		native_write_cr4(cr4);
 		return;
 	}
-	pr_info("ok: SMEP did not get cleared\n");
+	pr_debug("ok: SMEP did not get cleared\n");
 
 	/*
 	 * To test the post-write pinning verification we need to call
@@ -316,19 +316,19 @@ void lkdtm_UNSET_SMEP(void)
 			break;
 	}
 	if (i >= MOV_CR4_DEPTH) {
-		pr_info("ok: cannot locate cr4 writing call gadget\n");
+		pr_debug("ok: cannot locate cr4 writing call gadget\n");
 		return;
 	}
 	direct_write_cr4 = (void *)(insn + i);
 
-	pr_info("trying to clear SMEP with call gadget\n");
+	pr_debug("trying to clear SMEP with call gadget\n");
 	direct_write_cr4(cr4);
 	if (native_read_cr4() & X86_CR4_SMEP) {
-		pr_info("ok: SMEP removal was reverted\n");
+		pr_debug("ok: SMEP removal was reverted\n");
 	} else {
 		pr_err("FAIL: cleared SMEP not detected!\n");
 		cr4 |= X86_CR4_SMEP;
-		pr_info("restoring SMEP\n");
+		pr_debug("restoring SMEP\n");
 		native_write_cr4(cr4);
 	}
 #else

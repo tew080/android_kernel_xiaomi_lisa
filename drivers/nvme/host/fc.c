@@ -3537,9 +3537,9 @@ static void __exit nvme_fc_exit_module(void)
 	}
 	spin_unlock_irqrestore(&nvme_fc_lock, flags);
 	if (need_cleanup) {
-		pr_info("%s: waiting for ctlr deletes\n", __func__);
+		pr_debug("%s: waiting for ctlr deletes\n", __func__);
 		wait_for_completion(&nvme_fc_unload_proceed);
-		pr_info("%s: ctrl deletes complete\n", __func__);
+		pr_debug("%s: ctrl deletes complete\n", __func__);
 	}
 
 	nvmf_unregister_transport(&nvme_fc_transport);

@@ -109,7 +109,7 @@ static struct clk *clk_register_dummy(struct device *dev, const char *name,
 	if (devm_reset_controller_register(dev, &dummy->reset))
 		pr_err("Failed to register reset controller for %s\n", name);
 	else
-		pr_info("Successfully registered dummy reset controller for %s\n",
+		pr_debug("Successfully registered dummy reset controller for %s\n",
 								name);
 
 	return clk;

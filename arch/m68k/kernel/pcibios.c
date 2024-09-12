@@ -76,7 +76,7 @@ int pcibios_enable_device(struct pci_dev *dev, int mask)
 
 
 	if (newcmd != cmd) {
-		pr_info("PCI: enabling device %s (0x%04x -> 0x%04x)\n",
+		pr_debug("PCI: enabling device %s (0x%04x -> 0x%04x)\n",
 			pci_name(dev), cmd, newcmd);
 		pci_write_config_word(dev, PCI_COMMAND, newcmd);
 	}

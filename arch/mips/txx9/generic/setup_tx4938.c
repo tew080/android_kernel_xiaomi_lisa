@@ -196,14 +196,14 @@ void __init tx4938_setup(void)
 	if (!(____raw_readq(&tx4938_ccfgptr->ccfg) & TX4938_CCFG_PCIARB))
 		txx9_clear64(&tx4938_ccfgptr->pcfg, TX4938_PCFG_PCICLKEN_ALL);
 
-	pr_info("%s -- %dMHz(M%dMHz) CRIR:%08x CCFG:%llx PCFG:%llx\n",
+	pr_debug("%s -- %dMHz(M%dMHz) CRIR:%08x CCFG:%llx PCFG:%llx\n",
 		txx9_pcode_str, (cpuclk + 500000) / 1000000,
 		(txx9_master_clock + 500000) / 1000000,
 		(__u32)____raw_readq(&tx4938_ccfgptr->crir),
 		____raw_readq(&tx4938_ccfgptr->ccfg),
 		____raw_readq(&tx4938_ccfgptr->pcfg));
 
-	pr_info("%s SDRAMC --", txx9_pcode_str);
+	pr_debug("%s SDRAMC --", txx9_pcode_str);
 	for (i = 0; i < 4; i++) {
 		__u64 cr = TX4938_SDRAMC_CR(i);
 		unsigned long base, size;
@@ -252,20 +252,20 @@ void __init tx4938_setup(void)
 			txx9_clear64(&tx4938_ccfgptr->clkctr,
 				     TX4938_CLKCTR_PCIC1RST);
 		} else {
-			pr_info("%s: stop PCIC1\n", txx9_pcode_str);
+			pr_debug("%s: stop PCIC1\n", txx9_pcode_str);
 			/* stop PCIC1 */
 			txx9_set64(&tx4938_ccfgptr->clkctr,
 				   TX4938_CLKCTR_PCIC1CKD);
 		}
 		if (!(pcfg & TX4938_PCFG_ETH0_SEL)) {
-			pr_info("%s: stop ETH0\n", txx9_pcode_str);
+			pr_debug("%s: stop ETH0\n", txx9_pcode_str);
 			txx9_set64(&tx4938_ccfgptr->clkctr,
 				   TX4938_CLKCTR_ETH0RST);
 			txx9_set64(&tx4938_ccfgptr->clkctr,
 				   TX4938_CLKCTR_ETH0CKD);
 		}
 		if (!(pcfg & TX4938_PCFG_ETH1_SEL)) {
-			pr_info("%s: stop ETH1\n", txx9_pcode_str);
+			pr_debug("%s: stop ETH1\n", txx9_pcode_str);
 			txx9_set64(&tx4938_ccfgptr->clkctr,
 				   TX4938_CLKCTR_ETH1RST);
 			txx9_set64(&tx4938_ccfgptr->clkctr,
@@ -472,7 +472,7 @@ static void __init tx4938_stop_unused_modules(void)
 	}
 	local_irq_enable();
 	if (buf[0])
-		pr_info("%s: stop%s\n", txx9_pcode_str, buf);
+		pr_debug("%s: stop%s\n", txx9_pcode_str, buf);
 }
 
 static int __init tx4938_late_init(void)

@@ -45,7 +45,7 @@ int __init db1000_board_setup(void)
 	case BCSR_WHOAMI_PB1500:
 	case BCSR_WHOAMI_PB1500R2:
 	case BCSR_WHOAMI_PB1100:
-		pr_info("AMD Alchemy %s Board\n", get_system_type());
+		pr_debug("AMD Alchemy %s Board\n", get_system_type());
 		return 0;
 	}
 	return -ENODEV;

@@ -375,7 +375,7 @@ void kvm_set_ipa_limit(void)
 	 * limit of the CPUs, report the reason.
 	 */
 	if (ipa_max < pa_max)
-		pr_info("kvm: Limiting the IPA size due to kernel %s Address limit\n",
+		pr_debug("kvm: Limiting the IPA size due to kernel %s Address limit\n",
 			(va_max < pa_max) ? "Virtual" : "Physical");
 
 	kvm_ipa_limit = ipa_max;

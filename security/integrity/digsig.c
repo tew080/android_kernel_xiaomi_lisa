@@ -106,7 +106,7 @@ static int __init __integrity_init_keyring(const unsigned int id,
 				    KEY_ALLOC_NOT_IN_QUOTA, restriction, NULL);
 	if (IS_ERR(keyring[id])) {
 		err = PTR_ERR(keyring[id]);
-		pr_info("Can't allocate %s keyring (%d)\n",
+		pr_debug("Can't allocate %s keyring (%d)\n",
 			keyring_name[id], err);
 		keyring[id] = NULL;
 	} else {
@@ -189,7 +189,7 @@ int __init integrity_load_x509(const unsigned int id, const char *path)
 
 	perm = (KEY_POS_ALL & ~KEY_POS_SETATTR) | KEY_USR_VIEW | KEY_USR_READ;
 
-	pr_info("Loading X.509 certificate: %s\n", path);
+	pr_debug("Loading X.509 certificate: %s\n", path);
 	rc = integrity_add_key(id, (const void *)data, size, perm);
 
 	vfree(data);
@@ -202,6 +202,6 @@ int __init integrity_load_cert(const unsigned int id, const char *source,
 	if (!data)
 		return -EINVAL;
 
-	pr_info("Loading X.509 certificate: %s\n", source);
+	pr_debug("Loading X.509 certificate: %s\n", source);
 	return integrity_add_key(id, data, len, perm);
 }

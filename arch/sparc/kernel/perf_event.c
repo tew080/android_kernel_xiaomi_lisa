@@ -1599,12 +1599,12 @@ void perf_event_print_debug(void)
 
 	cpu = smp_processor_id();
 
-	pr_info("\n");
+	pr_debug("\n");
 	for (i = 0; i < sparc_pmu->num_pcrs; i++)
-		pr_info("CPU#%d: PCR%d[%016llx]\n",
+		pr_debug("CPU#%d: PCR%d[%016llx]\n",
 			cpu, i, pcr_ops->read_pcr(i));
 	for (i = 0; i < sparc_pmu->num_pic_regs; i++)
-		pr_info("CPU#%d: PIC%d[%016llx]\n",
+		pr_debug("CPU#%d: PIC%d[%016llx]\n",
 			cpu, i, pcr_ops->read_pic(i));
 
 	local_irq_restore(flags);
@@ -1717,7 +1717,7 @@ static int __init init_hw_perf_events(void)
 {
 	int err;
 
-	pr_info("Performance events: ");
+	pr_debug("Performance events: ");
 
 	err = pcr_arch_init();
 	if (err || !supported_pmu()) {

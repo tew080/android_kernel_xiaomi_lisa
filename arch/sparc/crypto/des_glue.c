@@ -504,10 +504,10 @@ static bool __init sparc64_has_des_opcode(void)
 static int __init des_sparc64_mod_init(void)
 {
 	if (sparc64_has_des_opcode()) {
-		pr_info("Using sparc64 des opcodes optimized DES implementation\n");
+		pr_debug("Using sparc64 des opcodes optimized DES implementation\n");
 		return crypto_register_algs(algs, ARRAY_SIZE(algs));
 	}
-	pr_info("sparc64 des opcodes not available.\n");
+	pr_debug("sparc64 des opcodes not available.\n");
 	return -ENODEV;
 }
 

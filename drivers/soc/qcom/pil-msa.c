@@ -789,7 +789,7 @@ int pil_mss_debug_reset(struct pil_desc *pil)
 	 * Need to Wait for timeout for debug reset sequence to
 	 * complete before returning
 	 */
-	pr_info("Minidump: waiting encryption to complete\n");
+	pr_debug("Minidump: waiting encryption to complete\n");
 	msleep(13000);
 	if (pil->minidump_ss) {
 		writel_relaxed(0x2, drv->reg_base + QDSP6SS_NMI_CFG);

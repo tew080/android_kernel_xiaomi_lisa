@@ -30,13 +30,13 @@ void lkdtm_CFI_FORWARD_PROTO(void)
 	 */
 	void (*func)(int *);
 
-	pr_info("Calling matched prototype ...\n");
+	pr_debug("Calling matched prototype ...\n");
 	func = lkdtm_increment_void;
 	func(&called_count);
 
-	pr_info("Calling mismatched prototype ...\n");
+	pr_debug("Calling mismatched prototype ...\n");
 	func = (void *)lkdtm_increment_int;
 	func(&called_count);
 
-	pr_info("Fail: survived mismatched prototype function call!\n");
+	pr_debug("Fail: survived mismatched prototype function call!\n");
 }

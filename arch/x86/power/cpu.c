@@ -470,7 +470,7 @@ static int msr_initialize_bdw(const struct dmi_system_id *d)
 	/* Add any extra MSR ids into this array. */
 	u32 bdw_msr_id[] = { MSR_IA32_THERM_CONTROL };
 
-	pr_info("x86/pm: %s detected, MSR saving is needed during suspending.\n", d->ident);
+	pr_debug("x86/pm: %s detected, MSR saving is needed during suspending.\n", d->ident);
 	return msr_build_context(bdw_msr_id, ARRAY_SIZE(bdw_msr_id));
 }
 
@@ -492,7 +492,7 @@ static int msr_save_cpuid_features(const struct x86_cpu_id *c)
 		MSR_AMD64_CPUID_FN_1,
 	};
 
-	pr_info("x86/pm: family %#hx cpu detected, MSR saving is needed during suspending.\n",
+	pr_debug("x86/pm: family %#hx cpu detected, MSR saving is needed during suspending.\n",
 		c->family);
 
 	return msr_build_context(cpuid_msr_id, ARRAY_SIZE(cpuid_msr_id));

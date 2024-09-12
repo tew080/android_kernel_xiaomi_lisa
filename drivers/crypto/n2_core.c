@@ -840,7 +840,7 @@ static int __n2_crypt_chunk(struct crypto_tfm *tfm, struct n2_crypto_chunk *cp,
 
 	ent = spu_queue_alloc(qp, cp->arr_len);
 	if (!ent) {
-		pr_info("queue_alloc() of %d fails\n",
+		pr_debug("queue_alloc() of %d fails\n",
 			cp->arr_len);
 		return -EBUSY;
 	}
@@ -1407,7 +1407,7 @@ static int __n2_register_one_cipher(const struct n2_cipher_tmpl *tmpl)
 		list_del(&p->entry);
 		kfree(p);
 	} else {
-		pr_info("%s alg registered\n", alg->cra_name);
+		pr_debug("%s alg registered\n", alg->cra_name);
 	}
 	return err;
 }
@@ -1445,7 +1445,7 @@ static int __n2_register_one_hmac(struct n2_ahash_alg *n2ahash)
 		list_del(&p->derived.entry);
 		kfree(p);
 	} else {
-		pr_info("%s alg registered\n", base->cra_name);
+		pr_debug("%s alg registered\n", base->cra_name);
 	}
 	return err;
 }
@@ -1500,7 +1500,7 @@ static int __n2_register_one_ahash(const struct n2_hash_tmpl *tmpl)
 		list_del(&p->entry);
 		kfree(p);
 	} else {
-		pr_info("%s alg registered\n", base->cra_name);
+		pr_debug("%s alg registered\n", base->cra_name);
 	}
 	if (!err && p->hmac_type != AUTH_TYPE_RESERVED)
 		err = __n2_register_one_hmac(p);
@@ -1884,7 +1884,7 @@ static int n2_spu_hvapi_register(void)
 				   &n2_spu_hvapi_minor);
 
 	if (!err)
-		pr_info("Registered NCS HVAPI version %lu.%lu\n",
+		pr_debug("Registered NCS HVAPI version %lu.%lu\n",
 			n2_spu_hvapi_major,
 			n2_spu_hvapi_minor);
 
@@ -1985,7 +1985,7 @@ static void n2_spu_driver_version(void)
 	static int n2_spu_version_printed;
 
 	if (n2_spu_version_printed++ == 0)
-		pr_info("%s", version);
+		pr_debug("%s", version);
 }
 
 static int n2_crypto_probe(struct platform_device *dev)
@@ -1996,7 +1996,7 @@ static int n2_crypto_probe(struct platform_device *dev)
 
 	n2_spu_driver_version();
 
-	pr_info("Found N2CP at %pOF\n", dev->dev.of_node);
+	pr_debug("Found N2CP at %pOF\n", dev->dev.of_node);
 
 	np = alloc_n2cp();
 	if (!np) {
@@ -2103,7 +2103,7 @@ static int n2_mau_probe(struct platform_device *dev)
 
 	n2_spu_driver_version();
 
-	pr_info("Found NCP at %pOF\n", dev->dev.of_node);
+	pr_debug("Found NCP at %pOF\n", dev->dev.of_node);
 
 	mp = alloc_ncp();
 	if (!mp) {

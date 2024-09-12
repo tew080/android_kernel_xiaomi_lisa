@@ -486,7 +486,7 @@ static int __init toshiba_init(void)
 	if (tosh_probe())
 		return -ENODEV;
 
-	pr_info("Toshiba System Management Mode driver v" TOSH_VERSION "\n");
+	pr_debug("Toshiba System Management Mode driver v" TOSH_VERSION "\n");
 
 	/* set the port to use for Fn status if not specified as a parameter */
 	if (tosh_fn==0x00)

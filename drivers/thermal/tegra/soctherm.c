@@ -1254,7 +1254,7 @@ static const struct irq_domain_ops soctherm_oc_domain_ops = {
 static int soctherm_oc_int_init(struct device_node *np, int num_irqs)
 {
 	if (!num_irqs) {
-		pr_info("%s(): OC interrupts are not enabled\n", __func__);
+		pr_debug("%s(): OC interrupts are not enabled\n", __func__);
 		return 0;
 	}
 

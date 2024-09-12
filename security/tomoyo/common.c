@@ -2776,7 +2776,7 @@ void tomoyo_check_profile(void)
 	const int idx = tomoyo_read_lock();
 
 	tomoyo_policy_loaded = true;
-	pr_info("TOMOYO: 2.6.0\n");
+	pr_debug("TOMOYO: 2.6.0\n");
 	list_for_each_entry_rcu(domain, &tomoyo_domain_list, list,
 				srcu_read_lock_held(&tomoyo_ss)) {
 		const u8 profile = domain->profile;
@@ -2800,7 +2800,7 @@ void tomoyo_check_profile(void)
 		panic("STOP!");
 	}
 	tomoyo_read_unlock(idx);
-	pr_info("Mandatory Access Control activated.\n");
+	pr_debug("Mandatory Access Control activated.\n");
 }
 
 /**

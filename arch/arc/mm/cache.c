@@ -1302,7 +1302,7 @@ void __ref arc_cache_init(void)
 	unsigned int __maybe_unused cpu = smp_processor_id();
 	char str[256];
 
-	pr_info("%s", arc_cache_mumbojumbo(0, str, sizeof(str)));
+	pr_debug("%s", arc_cache_mumbojumbo(0, str, sizeof(str)));
 
 	if (!cpu)
 		arc_cache_init_master();

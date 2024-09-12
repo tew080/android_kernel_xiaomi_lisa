@@ -308,7 +308,7 @@ extern int hantro_debug;
 #define vpu_debug(level, fmt, args...)				\
 	do {							\
 		if (hantro_debug & BIT(level))		\
-			pr_info("%s:%d: " fmt,	                \
+			pr_debug("%s:%d: " fmt,	                \
 				 __func__, __LINE__, ##args);	\
 	} while (0)
 

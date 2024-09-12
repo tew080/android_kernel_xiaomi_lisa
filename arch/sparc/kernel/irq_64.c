@@ -167,7 +167,7 @@ static void __init irq_init_hv(void)
 	else
 		hv_irq_version = 1;
 
-	pr_info("SUN4V: Using IRQ API major %d, cookie only virqs %s\n",
+	pr_debug("SUN4V: Using IRQ API major %d, cookie only virqs %s\n",
 		hv_irq_version,
 		sun4v_cookie_only_virqs() ? "enabled" : "disabled");
 }

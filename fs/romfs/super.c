@@ -622,7 +622,7 @@ static int __init init_romfs_fs(void)
 {
 	int ret;
 
-	pr_info("ROMFS MTD (C) 2007 Red Hat, Inc.\n");
+	pr_debug("ROMFS MTD (C) 2007 Red Hat, Inc.\n");
 
 	romfs_inode_cachep =
 		kmem_cache_create("romfs_i",

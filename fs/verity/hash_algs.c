@@ -93,7 +93,7 @@ struct fsverity_hash_alg *fsverity_get_hash_alg(const struct inode *inode,
 	if (err)
 		goto err_free_tfm;
 
-	pr_info("%s using implementation \"%s\"\n",
+	pr_debug("%s using implementation \"%s\"\n",
 		alg->name, crypto_ahash_driver_name(tfm));
 
 	/* pairs with smp_load_acquire() above */

@@ -93,12 +93,12 @@ void __init smp_init_cpus(void)
 	unsigned int ncpus = get_core_count();
 	unsigned int core_id = get_core_id();
 
-	pr_info("%s: Core Count = %d\n", __func__, ncpus);
-	pr_info("%s: Core Id = %d\n", __func__, core_id);
+	pr_debug("%s: Core Count = %d\n", __func__, ncpus);
+	pr_debug("%s: Core Id = %d\n", __func__, core_id);
 
 	if (ncpus > NR_CPUS) {
 		ncpus = NR_CPUS;
-		pr_info("%s: limiting core count by %d\n", __func__, ncpus);
+		pr_debug("%s: limiting core count by %d\n", __func__, ncpus);
 	}
 
 	for (i = 0; i < ncpus; ++i)

@@ -123,7 +123,7 @@ static void __init p1022_rdk_setup_arch(void)
 
 	swiotlb_detect_4g();
 
-	pr_info("Freescale / iVeia P1022 RDK reference board\n");
+	pr_debug("Freescale / iVeia P1022 RDK reference board\n");
 }
 
 machine_arch_initcall(p1022_rdk, mpc85xx_common_publish_devices);

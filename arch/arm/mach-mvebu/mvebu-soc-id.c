@@ -106,7 +106,7 @@ static int __init get_soc_id_by_pci(void)
 
 	is_id_valid = true;
 
-	pr_info("MVEBU SoC ID=0x%X, Rev=0x%X\n", soc_dev_id, soc_rev);
+	pr_debug("MVEBU SoC ID=0x%X, Rev=0x%X\n", soc_dev_id, soc_rev);
 
 	iounmap(pci_base);
 
@@ -140,7 +140,7 @@ static int __init mvebu_soc_id_init(void)
 	 */
 	if (!mvebu_system_controller_get_soc_id(&soc_dev_id, &soc_rev)) {
 		is_id_valid = true;
-		pr_info("MVEBU SoC ID=0x%X, Rev=0x%X\n", soc_dev_id, soc_rev);
+		pr_debug("MVEBU SoC ID=0x%X, Rev=0x%X\n", soc_dev_id, soc_rev);
 		return 0;
 	}
 

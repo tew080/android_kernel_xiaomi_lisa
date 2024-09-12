@@ -200,14 +200,14 @@ static int __init xlr_flash_init(void)
 		nlm_write_reg(flash_mmio, FLASH_CSTIME_PARMB(cs),
 				FLASH_NAND_CSTIME_PARAMB);
 
-		pr_info("ChipSelect %d: NAND Flash %pR\n", cs, xlr_nand_res);
+		pr_debug("ChipSelect %d: NAND Flash %pR\n", cs, xlr_nand_res);
 		return platform_device_register(&xlr_nand_dev);
 	}
 
 	if (boot_nor) {
 		setup_flash_resource(flash_mmio, flash_map_base, cs,
 			xlr_nor_res);
-		pr_info("ChipSelect %d: NOR Flash %pR\n", cs, xlr_nor_res);
+		pr_debug("ChipSelect %d: NOR Flash %pR\n", cs, xlr_nor_res);
 		return platform_device_register(&xlr_nor_dev);
 	}
 	return 0;

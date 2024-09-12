@@ -77,7 +77,7 @@ void __init opal_fadump_dt_scan(struct fw_dump *fadump_conf, u64 node)
 	fadump_conf->boot_mem_top = be64_to_cpu(addr);
 	pr_debug("Preserve everything above %llx\n", fadump_conf->boot_mem_top);
 
-	pr_info("Firmware-assisted dump is active.\n");
+	pr_debug("Firmware-assisted dump is active.\n");
 	fadump_conf->dump_active = 1;
 }
 
@@ -234,7 +234,7 @@ static int opal_fadump_setup_metadata(struct fw_dump *fadump_conf)
 	fadump_conf->kernel_metadata = (fadump_conf->reserve_dump_area_start +
 					fadump_conf->reserve_dump_area_size -
 					opal_fadump_get_metadata_size());
-	pr_info("Kernel metadata addr: %llx\n", fadump_conf->kernel_metadata);
+	pr_debug("Kernel metadata addr: %llx\n", fadump_conf->kernel_metadata);
 
 	/* Initialize kernel metadata before registering the address with f/w */
 	opal_fdm = __va(fadump_conf->kernel_metadata);
@@ -291,7 +291,7 @@ static int opal_fadump_register(struct fw_dump *fadump_conf)
 
 	switch (rc) {
 	case OPAL_SUCCESS:
-		pr_info("Registration is successful!\n");
+		pr_debug("Registration is successful!\n");
 		fadump_conf->dump_registered = 1;
 		err = 0;
 		break;
@@ -719,7 +719,7 @@ void __init opal_fadump_dt_scan(struct fw_dump *fadump_conf, u64 node)
 		opal_cpu_metadata = __va(addr);
 	}
 
-	pr_info("Firmware-assisted dump is active.\n");
+	pr_debug("Firmware-assisted dump is active.\n");
 	fadump_conf->dump_active = 1;
 	opal_fadump_get_config(fadump_conf, opal_fdm_active);
 }

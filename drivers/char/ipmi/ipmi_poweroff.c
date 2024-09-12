@@ -193,7 +193,7 @@ static void pps_poweroff_atca(struct ipmi_user *user)
 	smi_addr.channel = IPMI_BMC_CHANNEL;
 	smi_addr.lun = 0;
 
-	pr_info("PPS powerdown hook used\n");
+	pr_debug("PPS powerdown hook used\n");
 
 	send_msg.netfn = IPMI_NETFN_OEM;
 	send_msg.cmd = IPMI_ATCA_PPS_GRACEFUL_RESTART;
@@ -234,10 +234,10 @@ static int ipmi_atca_detect(struct ipmi_user *user)
 					    (struct ipmi_addr *) &smi_addr,
 					    &send_msg);
 
-	pr_info("ATCA Detect mfg 0x%X prod 0x%X\n", mfg_id, prod_id);
+	pr_debug("ATCA Detect mfg 0x%X prod 0x%X\n", mfg_id, prod_id);
 	if ((mfg_id == IPMI_MOTOROLA_MANUFACTURER_ID)
 	    && (prod_id == IPMI_MOTOROLA_PPS_IPMC_PRODUCT_ID)) {
-		pr_info("Installing Pigeon Point Systems Poweroff Hook\n");
+		pr_debug("Installing Pigeon Point Systems Poweroff Hook\n");
 		atca_oem_poweroff_hook = pps_poweroff_atca;
 	}
 	return !rv;
@@ -257,7 +257,7 @@ static void ipmi_poweroff_atca(struct ipmi_user *user)
 	smi_addr.channel = IPMI_BMC_CHANNEL;
 	smi_addr.lun = 0;
 
-	pr_info("Powering down via ATCA power command\n");
+	pr_debug("Powering down via ATCA power command\n");
 
 	/*
 	 * Power down
@@ -332,7 +332,7 @@ static void ipmi_poweroff_cpi1(struct ipmi_user *user)
 	smi_addr.channel = IPMI_BMC_CHANNEL;
 	smi_addr.lun = 0;
 
-	pr_info("Powering down via CPI1 power command\n");
+	pr_debug("Powering down via CPI1 power command\n");
 
 	/*
 	 * Get IPMI ipmb address
@@ -480,7 +480,7 @@ static void ipmi_poweroff_chassis(struct ipmi_user *user)
 	smi_addr.lun = 0;
 
  powercyclefailed:
-	pr_info("Powering %s via IPMI chassis control command\n",
+	pr_debug("Powering %s via IPMI chassis control command\n",
 		(poweroff_powercycle ? "cycle" : "down"));
 
 	/*
@@ -623,7 +623,7 @@ static void ipmi_po_new_smi(int if_num, struct device *device)
 	return;
 
  found:
-	pr_info("Found a %s style poweroff function\n",
+	pr_debug("Found a %s style poweroff function\n",
 		poweroff_functions[i].platform_type);
 	specific_poweroff_func = poweroff_functions[i].poweroff_func;
 	old_poweroff_func = pm_power_off;
@@ -687,10 +687,10 @@ static int __init ipmi_poweroff_init(void)
 {
 	int rv;
 
-	pr_info("Copyright (C) 2004 MontaVista Software - IPMI Powerdown via sys_reboot\n");
+	pr_debug("Copyright (C) 2004 MontaVista Software - IPMI Powerdown via sys_reboot\n");
 
 	if (poweroff_powercycle)
-		pr_info("Power cycle is enabled\n");
+		pr_debug("Power cycle is enabled\n");
 
 #ifdef CONFIG_PROC_FS
 	ipmi_table_header = register_sysctl_table(ipmi_root_table);

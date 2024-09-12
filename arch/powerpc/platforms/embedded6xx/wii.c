@@ -89,7 +89,7 @@ static void __iomem *wii_ioremap_hw_regs(char *name, char *compatible)
 
 	hw_regs = ioremap(res.start, resource_size(&res));
 	if (hw_regs) {
-		pr_info("%s at 0x%pa mapped to 0x%p\n", name,
+		pr_debug("%s at 0x%pa mapped to 0x%p\n", name,
 			&res.start, hw_regs);
 	}
 

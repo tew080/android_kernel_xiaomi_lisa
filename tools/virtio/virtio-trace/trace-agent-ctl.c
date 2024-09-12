@@ -58,7 +58,7 @@ static int wait_order(int ctl_fd)
 
 		if (global_signal_val) {
 			global_sig_receive = true;
-			pr_info("Receive interrupt %d\n", global_signal_val);
+			pr_debug("Receive interrupt %d\n", global_signal_val);
 
 			/* Wakes rw-threads when they are sleeping */
 			if (!global_run_operation)
@@ -125,7 +125,7 @@ void *rw_ctl_loop(int ctl_fd)
 			global_run_operation = false;
 			pr_debug("Stop all read/write threads\n");
 		} else
-			pr_info("Invalid host notification: %s\n", buf);
+			pr_debug("Invalid host notification: %s\n", buf);
 	}
 
 	return NULL;

@@ -192,7 +192,7 @@ int as102_fw_upload(struct as10x_bus_adapter_t *bus_adap)
 		goto error;
 	}
 
-	pr_info("%s: firmware: %s loaded with success\n",
+	pr_debug("%s: firmware: %s loaded with success\n",
 		DRIVER_NAME, fw1);
 	release_firmware(firmware);
 	firmware = NULL;
@@ -216,7 +216,7 @@ int as102_fw_upload(struct as10x_bus_adapter_t *bus_adap)
 		goto error;
 	}
 
-	pr_info("%s: firmware: %s loaded with success\n",
+	pr_debug("%s: firmware: %s loaded with success\n",
 		DRIVER_NAME, fw2);
 error:
 	kfree(cmd_buf);

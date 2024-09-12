@@ -316,7 +316,7 @@ static int __init pcibios_init(void)
 			reg &= ~0x1ffu;
 			reg |= (1 << 8) | PIC_PCIE_LINK_LEGACY_IRQ(link);
 			nlm_write_pci_reg(pciebase, 0xf, reg);
-			pr_info("XLP PCIe: Link %d-%d initialized.\n", n, link);
+			pr_debug("XLP PCIe: Link %d-%d initialized.\n", n, link);
 		}
 	}
 
@@ -324,7 +324,7 @@ static int __init pcibios_init(void)
 	nlm_pci_controller.io_map_base = CKSEG1;
 
 	register_pci_controller(&nlm_pci_controller);
-	pr_info("XLP PCIe Controller %pR%pR.\n", &nlm_pci_io_resource,
+	pr_debug("XLP PCIe Controller %pR%pR.\n", &nlm_pci_io_resource,
 		&nlm_pci_mem_resource);
 
 	return 0;

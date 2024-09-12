@@ -2912,7 +2912,7 @@ static void t4_tx_completion_handler(struct sge_rspq *rspq,
 	}
 
 	if (unlikely(opcode != CPL_SGE_EGR_UPDATE)) {
-		pr_info("%s: unexpected FW4/CPL %#x on Rx queue\n",
+		pr_debug("%s: unexpected FW4/CPL %#x on Rx queue\n",
 			__func__, opcode);
 		return;
 	}

@@ -67,7 +67,7 @@ static void __init MP_processor_info(struct mpc_cpu *m)
 		boot_cpu_physical_apicid = m->apicid;
 	}
 
-	pr_info("Processor #%d%s\n", m->apicid, bootup_cpu);
+	pr_debug("Processor #%d%s\n", m->apicid, bootup_cpu);
 	generic_processor_info(apicid, m->apicver);
 }
 
@@ -171,14 +171,14 @@ static int __init smp_check_mpc(struct mpc_table *mpc, char *oem, char *str)
 	}
 	memcpy(oem, mpc->oem, 8);
 	oem[8] = 0;
-	pr_info("MPTABLE: OEM ID: %s\n", oem);
+	pr_debug("MPTABLE: OEM ID: %s\n", oem);
 
 	memcpy(str, mpc->productid, 12);
 	str[12] = 0;
 
-	pr_info("MPTABLE: Product ID: %s\n", str);
+	pr_debug("MPTABLE: Product ID: %s\n", str);
 
-	pr_info("MPTABLE: APIC at: 0x%X\n", mpc->lapic);
+	pr_debug("MPTABLE: APIC at: 0x%X\n", mpc->lapic);
 
 	return 1;
 }
@@ -295,13 +295,13 @@ static void __init construct_default_ioirq_mptable(int mpc_default_type)
 	 *  If it does, we assume it's valid.
 	 */
 	if (mpc_default_type == 5) {
-		pr_info("ISA/PCI bus type with no IRQ information... falling back to ELCR\n");
+		pr_debug("ISA/PCI bus type with no IRQ information... falling back to ELCR\n");
 
 		if (ELCR_trigger(0) || ELCR_trigger(1) || ELCR_trigger(2) ||
 		    ELCR_trigger(13))
 			pr_err("ELCR contains invalid data... not using ELCR\n");
 		else {
-			pr_info("Using ELCR to identify PCI interrupts\n");
+			pr_debug("Using ELCR to identify PCI interrupts\n");
 			ELCR_fallback = 1;
 		}
 	}
@@ -526,14 +526,14 @@ void __init default_get_smp_config(unsigned int early)
 		return;
 	}
 
-	pr_info("Intel MultiProcessor Specification v1.%d\n",
+	pr_debug("Intel MultiProcessor Specification v1.%d\n",
 		mpf->specification);
 #if defined(CONFIG_X86_LOCAL_APIC) && defined(CONFIG_X86_32)
 	if (mpf->feature2 & (1 << 7)) {
-		pr_info("    IMCR and PIC compatibility mode.\n");
+		pr_debug("    IMCR and PIC compatibility mode.\n");
 		pic_mode = 1;
 	} else {
-		pr_info("    Virtual Wire compatibility mode.\n");
+		pr_debug("    Virtual Wire compatibility mode.\n");
 		pic_mode = 0;
 	}
 #endif
@@ -549,7 +549,7 @@ void __init default_get_smp_config(unsigned int early)
 			goto out;
 		}
 
-		pr_info("Default MP configuration #%d\n", mpf->feature1);
+		pr_debug("Default MP configuration #%d\n", mpf->feature1);
 		construct_default_ISA_mptable(mpf->feature1);
 
 	} else if (mpf->physptr) {
@@ -559,7 +559,7 @@ void __init default_get_smp_config(unsigned int early)
 		BUG();
 
 	if (!early)
-		pr_info("Processors: %d\n", num_processors);
+		pr_debug("Processors: %d\n", num_processors);
 	/*
 	 * Only use the first configuration found.
 	 */
@@ -596,7 +596,7 @@ static int __init smp_scan_config(unsigned long base, unsigned long length)
 			mpf_base = base;
 			mpf_found = true;
 
-			pr_info("found SMP MP-table at [mem %#010lx-%#010lx]\n",
+			pr_debug("found SMP MP-table at [mem %#010lx-%#010lx]\n",
 				base, base + sizeof(*mpf) - 1);
 
 			memblock_reserve(base, sizeof(*mpf));
@@ -751,7 +751,7 @@ static int  __init replace_intsrc_all(struct mpc_table *mpc,
 	int nr_m_spare = 0;
 	unsigned char *mpt = ((unsigned char *)mpc) + count;
 
-	pr_info("mpc_length %x\n", mpc->length);
+	pr_debug("mpc_length %x\n", mpc->length);
 	while (count < mpc->length) {
 		switch (*mpt) {
 		case MP_PROCESSOR:
@@ -890,12 +890,12 @@ static int __init update_mp_table(void)
 	if (!smp_check_mpc(mpc, oem, str))
 		goto do_unmap_mpc;
 
-	pr_info("mpf: %llx\n", (u64)mpf_base);
-	pr_info("physptr: %x\n", mpf->physptr);
+	pr_debug("mpf: %llx\n", (u64)mpf_base);
+	pr_debug("physptr: %x\n", mpf->physptr);
 
 	if (mpc_new_phys && mpc->length > mpc_new_length) {
 		mpc_new_phys = 0;
-		pr_info("mpc_new_length is %ld, please use alloc_mptable=8k\n",
+		pr_debug("mpc_new_length is %ld, please use alloc_mptable=8k\n",
 			mpc_new_length);
 	}
 
@@ -907,10 +907,10 @@ static int __init update_mp_table(void)
 		mpc->checksum = 0xff;
 		new = mpf_checksum((unsigned char *)mpc, mpc->length);
 		if (old == new) {
-			pr_info("mpc is readonly, please try alloc_mptable instead\n");
+			pr_debug("mpc is readonly, please try alloc_mptable instead\n");
 			goto do_unmap_mpc;
 		}
-		pr_info("use in-position replacing\n");
+		pr_debug("use in-position replacing\n");
 	} else {
 		mpc_new = early_memremap(mpc_new_phys, mpc_new_length);
 		if (!mpc_new) {
@@ -931,7 +931,7 @@ static int __init update_mp_table(void)
 				pr_err("MPTABLE: new mpf early_memremap() failed\n");
 				goto do_unmap_mpc;
 			}
-			pr_info("mpf new: %x\n", 0x400 - 16);
+			pr_debug("mpf new: %x\n", 0x400 - 16);
 			memcpy(mpf_new, mpf, 16);
 			early_memunmap(mpf, sizeof(*mpf));
 			mpf = mpf_new;
@@ -939,7 +939,7 @@ static int __init update_mp_table(void)
 		}
 		mpf->checksum = 0;
 		mpf->checksum -= mpf_checksum((unsigned char *)mpf, 16);
-		pr_info("physptr new: %x\n", mpf->physptr);
+		pr_debug("physptr new: %x\n", mpf->physptr);
 	}
 
 	/*

@@ -132,7 +132,7 @@ static ssize_t init_dump_store(struct dump_obj *dump_obj,
 
 	rc = dump_fips_init(DUMP_TYPE_FSP);
 	if (rc == OPAL_SUCCESS)
-		pr_info("%s: Initiated FSP dump\n", __func__);
+		pr_debug("%s: Initiated FSP dump\n", __func__);
 
 	return count;
 }
@@ -301,7 +301,7 @@ static ssize_t dump_attr_read(struct file *filep, struct kobject *kobj,
 			 * and rely on userspace to ask us to try
 			 * again.
 			 */
-			pr_info("%s: Platform dump partially read. ID = 0x%x\n",
+			pr_debug("%s: Platform dump partially read. ID = 0x%x\n",
 				__func__, dump->id);
 			return -EIO;
 		}
@@ -368,7 +368,7 @@ static void create_dump_obj(uint32_t id, size_t size, uint32_t type)
 	if (rc == 0) {
 		kobject_uevent(&dump->kobj, KOBJ_ADD);
 
-		pr_info("%s: New platform dump. ID = 0x%x Size %u\n",
+		pr_debug("%s: New platform dump. ID = 0x%x Size %u\n",
 			__func__, dump->id, dump->size);
 	} else {
 		/* Drop reference count taken for bin file */

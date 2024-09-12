@@ -241,7 +241,7 @@ void __init adjust_total_lowmem(void)
 	__max_low_memory = map_mem_in_cams(ram, CONFIG_LOWMEM_CAM_NUM, false);
 	restore_to_as0(i, 0, 0, 1);
 
-	pr_info("Memory CAM mapping: ");
+	pr_debug("Memory CAM mapping: ");
 	for (i = 0; i < tlbcam_index - 1; i++)
 		pr_cont("%lu/", tlbcam_sz(i) >> 20);
 	pr_cont("%lu Mb, residual: %dMb\n", tlbcam_sz(tlbcam_index - 1) >> 20,

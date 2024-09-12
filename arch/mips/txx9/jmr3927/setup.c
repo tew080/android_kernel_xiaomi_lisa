@@ -150,7 +150,7 @@ static void __init jmr3927_board_init(void)
 
 	jmr3927_led_set(0);
 
-	pr_info("JMR-TX3927 (Rev %d) --- IOC(Rev %d) DIPSW:%d,%d,%d,%d\n",
+	pr_debug("JMR-TX3927 (Rev %d) --- IOC(Rev %d) DIPSW:%d,%d,%d,%d\n",
 		jmr3927_ioc_reg_in(JMR3927_IOC_BREV_ADDR) & JMR3927_REV_MASK,
 		jmr3927_ioc_reg_in(JMR3927_IOC_REV_ADDR) & JMR3927_REV_MASK,
 		jmr3927_dipsw1(), jmr3927_dipsw2(),

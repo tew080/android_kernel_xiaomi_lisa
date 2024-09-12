@@ -81,7 +81,7 @@ static void __zpci_event_availability(struct zpci_ccdf_avail *ccdf)
 	if (zdev)
 		pdev = pci_get_slot(zdev->bus, ZPCI_DEVFN);
 
-	pr_info("%s: Event 0x%x reconfigured PCI function 0x%x\n",
+	pr_debug("%s: Event 0x%x reconfigured PCI function 0x%x\n",
 		pdev ? pci_name(pdev) : "n/a", ccdf->pec, ccdf->fid);
 	zpci_err("avail CCDF:\n");
 	zpci_err_hex(ccdf, sizeof(*ccdf));

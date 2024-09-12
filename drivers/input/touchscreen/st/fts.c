@@ -477,7 +477,7 @@ static void fts_trusted_touch_tvm_vm_mode_enable(struct fts_ts_info *info)
 		goto accept_fail;
 	}
 	atomic_set(&info->trusted_touch_enabled, 1);
-	pr_info("trusted touch enabled\n");
+	pr_debug("trusted touch enabled\n");
 
 	return;
 sgl_cmp_fail:
@@ -568,7 +568,7 @@ static int fts_vm_mem_release(struct fts_ts_info *info)
 				HH_MEM_NOTIFIER_TAG_TOUCH, 0);
 	if (rc)
 		pr_err("Failed to notify mem release to PVM: rc=%d\n");
-	pr_info("vm mem release succeded\n");
+	pr_debug("vm mem release succeded\n");
 
 	info->vm_info->vm_mem_handle = 0;
 	return rc;
@@ -601,7 +601,7 @@ static void fts_trusted_touch_tvm_vm_mode_disable(struct fts_ts_info *info)
 	if (rc)
 		pr_err("Failed to notify release irq rc:%d\n", rc);
 
-	pr_info("vm irq release succeded\n");
+	pr_debug("vm irq release succeded\n");
 
 	flushFIFO();
 	release_all_touches(info);
@@ -618,7 +618,7 @@ static void fts_trusted_touch_tvm_vm_mode_disable(struct fts_ts_info *info)
 	}
 	fts_trusted_touch_set_tvm_driver_state(info, TRUSTED_TOUCH_TVM_INIT);
 	atomic_set(&info->trusted_touch_enabled, 0);
-	pr_info("trusted touch disabled\n");
+	pr_debug("trusted touch disabled\n");
 	return;
 error:
 	fts_trusted_touch_abort_handler(info,
@@ -989,7 +989,7 @@ static int fts_vm_mem_lend(struct fts_ts_info *info)
 							rc);
 		goto error;
 	}
-	pr_info("vm mem lend succeded\n");
+	pr_debug("vm mem lend succeded\n");
 
 	fts_trusted_touch_set_pvm_driver_state(info, PVM_IOMEM_LENT);
 
@@ -1050,7 +1050,7 @@ static int fts_trusted_touch_pvm_vm_mode_enable(struct fts_ts_info *info)
 		pr_err("Failed to lend irq\n");
 		goto error;
 	}
-	pr_info("vm irq lend succeded for irq:%d\n", info->client->irq);
+	pr_debug("vm irq lend succeded for irq:%d\n", info->client->irq);
 	fts_trusted_touch_set_pvm_driver_state(info, PVM_IRQ_LENT);
 
 	rc = hh_irq_lend_notify(vm_info->irq_label);

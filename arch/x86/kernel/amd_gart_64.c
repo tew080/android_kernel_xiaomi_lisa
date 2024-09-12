@@ -581,7 +581,7 @@ static void gart_fixup_northbridges(void)
 	if (!amd_nb_has_feature(AMD_NB_GART))
 		return;
 
-	pr_info("PCI-DMA: Restoring GART aperture settings\n");
+	pr_debug("PCI-DMA: Restoring GART aperture settings\n");
 
 	for (i = 0; i < amd_nb_num(); i++) {
 		struct pci_dev *dev = node_to_amd_nb(i)->misc;
@@ -597,7 +597,7 @@ static void gart_fixup_northbridges(void)
 
 static void gart_resume(void)
 {
-	pr_info("PCI-DMA: Resuming GART IOMMU\n");
+	pr_debug("PCI-DMA: Resuming GART IOMMU\n");
 
 	gart_fixup_northbridges();
 
@@ -621,7 +621,7 @@ static __init int init_amd_gatt(struct agp_kern_info *info)
 	void *gatt;
 	int i;
 
-	pr_info("PCI-DMA: Disabling AGP.\n");
+	pr_debug("PCI-DMA: Disabling AGP.\n");
 
 	aper_size = aper_base = info->aper_size = 0;
 	dev = NULL;
@@ -658,7 +658,7 @@ static __init int init_amd_gatt(struct agp_kern_info *info)
 
 	flush_gart();
 
-	pr_info("PCI-DMA: aperture base @ %x size %u KB\n",
+	pr_debug("PCI-DMA: aperture base @ %x size %u KB\n",
 	       aper_base, aper_size>>10);
 
 	return 0;
@@ -748,7 +748,7 @@ int __init gart_iommu_init(void)
 	if (!pfn_range_is_mapped(start_pfn, end_pfn))
 		init_memory_mapping(start_pfn<<PAGE_SHIFT, end_pfn<<PAGE_SHIFT);
 
-	pr_info("PCI-DMA: using GART IOMMU.\n");
+	pr_debug("PCI-DMA: using GART IOMMU.\n");
 	iommu_size = check_iommu_size(info.aper_base, aper_size);
 	iommu_pages = iommu_size >> PAGE_SHIFT;
 
@@ -757,7 +757,7 @@ int __init gart_iommu_init(void)
 	if (!iommu_gart_bitmap)
 		panic("Cannot allocate iommu bitmap\n");
 
-	pr_info("PCI-DMA: Reserving %luMB of IOMMU area in the AGP aperture\n",
+	pr_debug("PCI-DMA: Reserving %luMB of IOMMU area in the AGP aperture\n",
 	       iommu_size >> 20);
 
 	agp_memory_reserved	= iommu_size;

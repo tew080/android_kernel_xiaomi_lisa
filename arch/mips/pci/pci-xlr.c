@@ -342,7 +342,7 @@ static int __init pcibios_init(void)
 	set_io_port_base(CKSEG1);
 	nlm_pci_controller.io_map_base = CKSEG1;
 
-	pr_info("Registering XLR/XLS PCIX/PCIE Controller.\n");
+	pr_debug("Registering XLR/XLS PCIX/PCIE Controller.\n");
 	register_pci_controller(&nlm_pci_controller);
 
 	/*

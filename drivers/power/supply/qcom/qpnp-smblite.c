@@ -1708,7 +1708,7 @@ static int smblite_show_charger_status(struct smblite *chip)
 	}
 	batt_charge_type = val.intval;
 
-	pr_info("SMBLITE: Mode=%s Conn=%s USB Present=%d Battery present=%d health=%d charge=%d\n",
+	pr_debug("SMBLITE: Mode=%s Conn=%s USB Present=%d Battery present=%d health=%d charge=%d\n",
 		chg->ldo_mode ? "LDO" : "SMBC",
 		(chg->connector_type == QTI_POWER_SUPPLY_CONNECTOR_TYPEC) ?
 			"TYPEC" : "uUSB", usb_present, batt_present,
@@ -2023,7 +2023,7 @@ static int smblite_probe(struct platform_device *pdev)
 
 	apsd = smblite_lib_get_apsd_result(chg);
 
-	pr_info("%s charger probed successfully, charger_present=%d, type=%s\n",
+	pr_debug("%s charger probed successfully, charger_present=%d, type=%s\n",
 			chg->name, pval.intval, apsd->name);
 	return rc;
 

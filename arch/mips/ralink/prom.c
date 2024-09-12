@@ -62,7 +62,7 @@ void __init prom_init(void)
 {
 	prom_soc_init(&soc_info);
 
-	pr_info("SoC Type: %s\n", get_system_type());
+	pr_debug("SoC Type: %s\n", get_system_type());
 
 	prom_init_cmdline();
 }

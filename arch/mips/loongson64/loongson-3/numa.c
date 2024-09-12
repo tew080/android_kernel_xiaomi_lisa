@@ -40,13 +40,13 @@ static void enable_lpa(void)
 	value |= 0x00000080;
 	__write_32bit_c0_register($16, 3, value);
 	value = __read_32bit_c0_register($16, 3);
-	pr_info("CP0_Config3: CP0 16.3 (0x%lx)\n", value);
+	pr_debug("CP0_Config3: CP0 16.3 (0x%lx)\n", value);
 
 	value = __read_32bit_c0_register($5, 1);
 	value |= 0x20000000;
 	__write_32bit_c0_register($5, 1, value);
 	value = __read_32bit_c0_register($5, 1);
-	pr_info("CP0_PageGrain: CP0 5.1 (0x%lx)\n", value);
+	pr_debug("CP0_PageGrain: CP0 5.1 (0x%lx)\n", value);
 }
 
 static void cpu_node_probe(void)
@@ -60,7 +60,7 @@ static void cpu_node_probe(void)
 		node_set_online(num_online_nodes());
 	}
 
-	pr_info("NUMA: Discovered %d cpus on %d nodes\n",
+	pr_debug("NUMA: Discovered %d cpus on %d nodes\n",
 		loongson_sysconf.nr_cpus, num_online_nodes());
 }
 
@@ -138,9 +138,9 @@ static void __init szmem(unsigned int node)
 			node_psize = (mem_size << 20) >> PAGE_SHIFT;
 			end_pfn  = start_pfn + node_psize;
 			num_physpages += node_psize;
-			pr_info("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
+			pr_debug("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
 				(u32)node_id, mem_type, mem_start, mem_size);
-			pr_info("       start_pfn:0x%llx, end_pfn:0x%llx, num_physpages:0x%lx\n",
+			pr_debug("       start_pfn:0x%llx, end_pfn:0x%llx, num_physpages:0x%lx\n",
 				start_pfn, end_pfn, num_physpages);
 			memblock_add_node(PFN_PHYS(start_pfn),
 				PFN_PHYS(end_pfn - start_pfn), node);
@@ -150,15 +150,15 @@ static void __init szmem(unsigned int node)
 			node_psize = (mem_size << 20) >> PAGE_SHIFT;
 			end_pfn  = start_pfn + node_psize;
 			num_physpages += node_psize;
-			pr_info("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
+			pr_debug("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
 				(u32)node_id, mem_type, mem_start, mem_size);
-			pr_info("       start_pfn:0x%llx, end_pfn:0x%llx, num_physpages:0x%lx\n",
+			pr_debug("       start_pfn:0x%llx, end_pfn:0x%llx, num_physpages:0x%lx\n",
 				start_pfn, end_pfn, num_physpages);
 			memblock_add_node(PFN_PHYS(start_pfn),
 				PFN_PHYS(end_pfn - start_pfn), node);
 			break;
 		case SYSTEM_RAM_RESERVED:
-			pr_info("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
+			pr_debug("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
 				(u32)node_id, mem_type, mem_start, mem_size);
 			memblock_reserve(((node_id << 44) + mem_start),
 				mem_size << 20);
@@ -173,11 +173,11 @@ static void __init node_mem_init(unsigned int node)
 	unsigned long start_pfn, end_pfn;
 
 	node_addrspace_offset = nid_to_addroffset(node);
-	pr_info("Node%d's addrspace_offset is 0x%lx\n",
+	pr_debug("Node%d's addrspace_offset is 0x%lx\n",
 			node, node_addrspace_offset);
 
 	get_pfn_range_for_nid(node, &start_pfn, &end_pfn);
-	pr_info("Node%d: start_pfn=0x%lx, end_pfn=0x%lx\n",
+	pr_debug("Node%d: start_pfn=0x%lx, end_pfn=0x%lx\n",
 		node, start_pfn, end_pfn);
 
 	__node_data[node] = prealloc__node_data + node;
@@ -232,7 +232,7 @@ static __init void prom_meminit(void)
 			continue;
 
 		cpumask_set_cpu(active_cpu, &__node_data[(node)]->cpumask);
-		pr_info("NUMA: set cpumask cpu %d on node %d\n", active_cpu, node);
+		pr_debug("NUMA: set cpumask cpu %d on node %d\n", active_cpu, node);
 
 		active_cpu++;
 	}

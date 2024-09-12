@@ -2536,7 +2536,7 @@ static void config_htw_params(void)
 	if (IS_ENABLED(CONFIG_64BIT))
 		config |= MIPS_PWCTL_XU_MASK;
 	write_c0_pwctl(config);
-	pr_info("Hardware Page Table Walker enabled\n");
+	pr_debug("Hardware Page Table Walker enabled\n");
 
 	print_htw_config();
 }
@@ -2547,7 +2547,7 @@ static void config_xpa_params(void)
 	unsigned int pagegrain;
 
 	if (mips_xpa_disabled) {
-		pr_info("Extended Physical Addressing (XPA) disabled\n");
+		pr_debug("Extended Physical Addressing (XPA) disabled\n");
 		return;
 	}
 
@@ -2557,7 +2557,7 @@ static void config_xpa_params(void)
 	pagegrain = read_c0_pagegrain();
 
 	if (pagegrain & PG_ELPA)
-		pr_info("Extended Physical Addressing (XPA) enabled\n");
+		pr_debug("Extended Physical Addressing (XPA) enabled\n");
 	else
 		panic("Extended Physical Addressing (XPA) disabled");
 #endif

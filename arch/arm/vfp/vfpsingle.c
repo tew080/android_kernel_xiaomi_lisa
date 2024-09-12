@@ -775,7 +775,7 @@ vfp_single_add(struct vfp_single *vsd, struct vfp_single *vsn,
 
 	if (vsn->significand & 0x80000000 ||
 	    vsm->significand & 0x80000000) {
-		pr_info("VFP: bad FP values in %s\n", __func__);
+		pr_debug("VFP: bad FP values in %s\n", __func__);
 		vfp_single_dump("VSN", vsn);
 		vfp_single_dump("VSM", vsm);
 	}

@@ -312,7 +312,7 @@ void usb_bypass_stop(struct byte_cntr *byte_cntr_data)
 		return;
 	}
 	wake_up(&byte_cntr_data->usb_wait_wq);
-	pr_info("coresight: stop usb bypass\n");
+	pr_debug("coresight: stop usb bypass\n");
 	coresight_csr_set_byte_cntr(byte_cntr_data->csr, 0);
 	mutex_unlock(&byte_cntr_data->usb_bypass_lock);
 

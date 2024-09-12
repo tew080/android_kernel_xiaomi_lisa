@@ -201,7 +201,7 @@ static void nvmet_execute_admin_connect(struct nvmet_req *req)
 		goto out;
 	}
 
-	pr_info("creating controller %d for subsystem %s for NQN %s.\n",
+	pr_debug("creating controller %d for subsystem %s for NQN %s.\n",
 		ctrl->cntlid, ctrl->subsys->subsysnqn, ctrl->hostnqn);
 	req->cqe->result.u16 = cpu_to_le16(ctrl->cntlid);
 

@@ -575,7 +575,7 @@ void __init xen_hvm_init_time_ops(void)
 	 * __this_cpu_read(xen_vcpu) is available.
 	 */
 	if (!__this_cpu_read(xen_vcpu)) {
-		pr_info("Delay xen_init_time_common() as kernel is running on vcpu=%d\n",
+		pr_debug("Delay xen_init_time_common() as kernel is running on vcpu=%d\n",
 			xen_vcpu_nr(0));
 		return;
 	}

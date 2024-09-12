@@ -514,7 +514,7 @@ static int __init reserve_crashkernel_low(void)
 		return ret;
 	}
 
-	pr_info("Reserving %ldMB of low memory at %ldMB for crashkernel (System low RAM: %ldMB)\n",
+	pr_debug("Reserving %ldMB of low memory at %ldMB for crashkernel (System low RAM: %ldMB)\n",
 		(unsigned long)(low_size >> 20),
 		(unsigned long)(low_base >> 20),
 		(unsigned long)(total_low_mem >> 20));
@@ -546,7 +546,7 @@ static void __init reserve_crashkernel(void)
 	}
 
 	if (xen_pv_domain()) {
-		pr_info("Ignoring crashkernel for a Xen PV domain\n");
+		pr_debug("Ignoring crashkernel for a Xen PV domain\n");
 		return;
 	}
 
@@ -569,7 +569,7 @@ static void __init reserve_crashkernel(void)
 						CRASH_ADDR_HIGH_MAX,
 						crash_size, CRASH_ALIGN);
 		if (!crash_base) {
-			pr_info("crashkernel reservation failed - No suitable area found.\n");
+			pr_debug("crashkernel reservation failed - No suitable area found.\n");
 			return;
 		}
 	} else {
@@ -579,7 +579,7 @@ static void __init reserve_crashkernel(void)
 					       crash_base + crash_size,
 					       crash_size, 1 << 20);
 		if (start != crash_base) {
-			pr_info("crashkernel reservation failed - memory is in use.\n");
+			pr_debug("crashkernel reservation failed - memory is in use.\n");
 			return;
 		}
 	}
@@ -594,7 +594,7 @@ static void __init reserve_crashkernel(void)
 		return;
 	}
 
-	pr_info("Reserving %ldMB of memory at %ldMB for crashkernel (System RAM: %ldMB)\n",
+	pr_debug("Reserving %ldMB of memory at %ldMB for crashkernel (System RAM: %ldMB)\n",
 		(unsigned long)(crash_size >> 20),
 		(unsigned long)(crash_base >> 20),
 		(unsigned long)(total_mem >> 20));
@@ -1182,13 +1182,13 @@ void __init setup_arch(char **cmdline_p)
 	if (efi_enabled(EFI_BOOT)) {
 		switch (boot_params.secure_boot) {
 		case efi_secureboot_mode_disabled:
-			pr_info("Secure boot disabled\n");
+			pr_debug("Secure boot disabled\n");
 			break;
 		case efi_secureboot_mode_enabled:
-			pr_info("Secure boot enabled\n");
+			pr_debug("Secure boot enabled\n");
 			break;
 		default:
-			pr_info("Secure boot could not be determined\n");
+			pr_debug("Secure boot could not be determined\n");
 			break;
 		}
 	}

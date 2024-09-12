@@ -59,7 +59,7 @@ static int xive_irq_bitmap_add(int base, int count)
 	}
 	list_add(&xibm->list, &xive_irq_bitmaps);
 
-	pr_info("Using IRQ range [%x-%x]", xibm->base,
+	pr_debug("Using IRQ range [%x-%x]", xibm->base,
 		xibm->base + xibm->count - 1);
 	return 0;
 }
@@ -838,6 +838,6 @@ bool __init xive_spapr_init(void)
 	if (!xive_core_init(&xive_spapr_ops, tima, TM_QW1_OS, max_prio))
 		return false;
 
-	pr_info("Using %dkB queues\n", 1 << (xive_queue_shift - 10));
+	pr_debug("Using %dkB queues\n", 1 << (xive_queue_shift - 10));
 	return true;
 }

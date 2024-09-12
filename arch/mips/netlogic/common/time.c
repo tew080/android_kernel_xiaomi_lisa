@@ -94,7 +94,7 @@ static void nlm_init_pic_timer(void)
 	csrc_pic.rating = 1000;
 	picfreq = pic_timer_freq();
 	clocksource_register_hz(&csrc_pic, picfreq);
-	pr_info("PIC clock source added, frequency %d\n", picfreq);
+	pr_debug("PIC clock source added, frequency %d\n", picfreq);
 }
 
 void __init plat_time_init(void)
@@ -105,6 +105,6 @@ void __init plat_time_init(void)
 		preset_lpj = mips_hpt_frequency / (3 * HZ);
 	else
 		preset_lpj = mips_hpt_frequency / (2 * HZ);
-	pr_info("MIPS counter frequency [%ld]\n",
+	pr_debug("MIPS counter frequency [%ld]\n",
 			(unsigned long)mips_hpt_frequency);
 }

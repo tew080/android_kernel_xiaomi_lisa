@@ -206,7 +206,7 @@ static void init_amd_k6(struct cpuinfo_x86 *c)
 		void (*f_vide)(void);
 		u64 d, d2;
 
-		pr_info("AMD K6 stepping B detected - ");
+		pr_debug("AMD K6 stepping B detected - ");
 
 		/*
 		 * It looks like AMD fixed the 2.6.2 bug and improved indirect
@@ -243,7 +243,7 @@ static void init_amd_k6(struct cpuinfo_x86 *c)
 			wbinvd();
 			wrmsr(MSR_K6_WHCR, l, h);
 			local_irq_restore(flags);
-			pr_info("Enabling old style K6 write allocation for %d Mb\n",
+			pr_debug("Enabling old style K6 write allocation for %d Mb\n",
 				mbytes);
 		}
 		return;
@@ -264,7 +264,7 @@ static void init_amd_k6(struct cpuinfo_x86 *c)
 			wbinvd();
 			wrmsr(MSR_K6_WHCR, l, h);
 			local_irq_restore(flags);
-			pr_info("Enabling new style K6 write allocation for %d Mb\n",
+			pr_debug("Enabling new style K6 write allocation for %d Mb\n",
 				mbytes);
 		}
 
@@ -291,7 +291,7 @@ static void init_amd_k7(struct cpuinfo_x86 *c)
 	 */
 	if (c->x86_model >= 6 && c->x86_model <= 10) {
 		if (!cpu_has(c, X86_FEATURE_XMM)) {
-			pr_info("Enabling disabled K7/SSE Support.\n");
+			pr_debug("Enabling disabled K7/SSE Support.\n");
 			msr_clear_bit(MSR_K7_HWCR, 15);
 			set_cpu_cap(c, X86_FEATURE_XMM);
 		}
@@ -305,7 +305,7 @@ static void init_amd_k7(struct cpuinfo_x86 *c)
 	if ((c->x86_model == 8 && c->x86_stepping >= 1) || (c->x86_model > 8)) {
 		rdmsr(MSR_K7_CLK_CTL, l, h);
 		if ((l & 0xfff00000) != 0x20000000) {
-			pr_info("CPU: CLK_CTL MSR was %x. Reprogramming to %x\n",
+			pr_debug("CPU: CLK_CTL MSR was %x. Reprogramming to %x\n",
 				l, ((l & 0x000fffff)|0x20000000));
 			wrmsr(MSR_K7_CLK_CTL, (l & 0x000fffff)|0x20000000, h);
 		}

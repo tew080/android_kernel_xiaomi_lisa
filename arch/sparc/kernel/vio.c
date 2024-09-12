@@ -393,7 +393,7 @@ static struct vio_dev *vio_create_one(struct mdesc_handle *hp, u64 mp,
 		}
 	}
 
-	pr_info("VIO: Adding device %s (tx_ino = %llx, rx_ino = %llx)\n",
+	pr_debug("VIO: Adding device %s (tx_ino = %llx, rx_ino = %llx)\n",
 		dev_name(&vdev->dev), vdev->tx_ino, vdev->rx_ino);
 
 	err = device_register(&vdev->dev);

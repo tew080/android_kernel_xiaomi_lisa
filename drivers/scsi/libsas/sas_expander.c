@@ -1841,11 +1841,11 @@ static int sas_find_bcast_dev(struct domain_device *dev,
 		if (phy_id != -1) {
 			*src_dev = dev;
 			ex->ex_change_count = ex_change_count;
-			pr_info("ex %016llx phy%02d change count has changed\n",
+			pr_debug("ex %016llx phy%02d change count has changed\n",
 				SAS_ADDR(dev->sas_addr), phy_id);
 			return res;
 		} else
-			pr_info("ex %016llx phys DID NOT change\n",
+			pr_debug("ex %016llx phys DID NOT change\n",
 				SAS_ADDR(dev->sas_addr));
 	}
 	list_for_each_entry(ch, &ex->children, siblings) {
@@ -2050,7 +2050,7 @@ static int sas_rediscover_dev(struct domain_device *dev, int phy_id,
 	}
 
 	/* we always have to delete the old device when we went here */
-	pr_info("ex %016llx phy%02d replace %016llx\n",
+	pr_debug("ex %016llx phy%02d replace %016llx\n",
 		SAS_ADDR(dev->sas_addr), phy_id,
 		SAS_ADDR(phy->attached_sas_addr));
 	sas_unregister_devs_sas_addr(dev, phy_id, last);
@@ -2162,7 +2162,7 @@ void sas_smp_handler(struct bsg_job *job, struct Scsi_Host *shost,
 	/* do we need to support multiple segments? */
 	if (job->request_payload.sg_cnt > 1 ||
 	    job->reply_payload.sg_cnt > 1) {
-		pr_info("%s: multiple segments req %u, rsp %u\n",
+		pr_debug("%s: multiple segments req %u, rsp %u\n",
 			__func__, job->request_payload.payload_len,
 			job->reply_payload.payload_len);
 		goto out;

@@ -384,7 +384,7 @@ void __init MMU_init_hw(void)
 		      __func__, Hash_size, Hash_size);
 	_SDR1 = __pa(Hash) | SDR1_LOW_BITS;
 
-	pr_info("Total memory = %lldMB; using %ldkB for hash table\n",
+	pr_debug("Total memory = %lldMB; using %ldkB for hash table\n",
 		(unsigned long long)(total_memory >> 20), Hash_size >> 10);
 
 
@@ -451,15 +451,15 @@ void setup_initial_memory_limit(phys_addr_t first_memblock_base,
 
 void __init print_system_hash_info(void)
 {
-	pr_info("Hash_size         = 0x%lx\n", Hash_size);
+	pr_debug("Hash_size         = 0x%lx\n", Hash_size);
 	if (Hash_mask)
-		pr_info("Hash_mask         = 0x%lx\n", Hash_mask);
+		pr_debug("Hash_mask         = 0x%lx\n", Hash_mask);
 }
 
 #ifdef CONFIG_PPC_KUEP
 void __init setup_kuep(bool disabled)
 {
-	pr_info("Activating Kernel Userspace Execution Prevention\n");
+	pr_debug("Activating Kernel Userspace Execution Prevention\n");
 
 	if (disabled)
 		pr_warn("KUEP cannot be disabled yet on 6xx when compiled in\n");
@@ -469,7 +469,7 @@ void __init setup_kuep(bool disabled)
 #ifdef CONFIG_PPC_KUAP
 void __init setup_kuap(bool disabled)
 {
-	pr_info("Activating Kernel Userspace Access Protection\n");
+	pr_debug("Activating Kernel Userspace Access Protection\n");
 
 	if (disabled)
 		pr_warn("KUAP cannot be disabled yet on 6xx when compiled in\n");

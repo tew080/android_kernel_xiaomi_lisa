@@ -82,7 +82,7 @@ static void __init console_config(void)
 		sprintf(console_string, " console=ttyS0,%d%c%c%c", baud,
 			parity, bits, flow);
 		strcat(fw_getcmdline(), console_string);
-		pr_info("Config serial console:%s\n", console_string);
+		pr_debug("Config serial console:%s\n", console_string);
 	}
 }
 #endif

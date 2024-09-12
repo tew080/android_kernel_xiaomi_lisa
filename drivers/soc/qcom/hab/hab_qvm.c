@@ -229,7 +229,7 @@ int hab_hypervisor_register(void)
 	if (ret)
 		goto done;
 
-	pr_info("initializing for %s VM\n", hab_driver.b_server_dom ?
+	pr_debug("initializing for %s VM\n", hab_driver.b_server_dom ?
 		"host" : "guest");
 
 	hab_driver.hyp_priv = &qvm_priv_info;
@@ -240,5 +240,5 @@ done:
 
 void hab_hypervisor_unregister(void)
 {
-	pr_info("unregistration is called, but do nothing\n");
+	pr_debug("unregistration is called, but do nothing\n");
 }

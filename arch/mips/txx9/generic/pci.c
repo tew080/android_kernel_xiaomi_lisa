@@ -55,7 +55,7 @@ int __init txx9_pci66_check(struct pci_controller *hose, int top_bus,
 	/* It seems SLC90E66 needs some time after PCI reset... */
 	mdelay(80);
 
-	pr_info("PCI: Checking 66MHz capabilities...\n");
+	pr_debug("PCI: Checking 66MHz capabilities...\n");
 
 	for (pci_devfn = 0; pci_devfn < 0xff; pci_devfn++) {
 		if (PCI_FUNC(pci_devfn))
@@ -208,7 +208,7 @@ txx9_alloc_pci_controller(struct pci_controller *pcic,
 
 	pcic->mem_offset = 0;	/* busaddr == physaddr */
 
-	pr_info("PCI: IO %pR MEM %pR\n", &pcic->mem_resource[1],
+	pr_debug("PCI: IO %pR MEM %pR\n", &pcic->mem_resource[1],
 		&pcic->mem_resource[0]);
 
 	/* register_pci_controller() will request MEM resource */
@@ -259,7 +259,7 @@ static int txx9_i8259_irq_setup(int irq)
 	err = request_irq(irq, &i8259_interrupt, IRQF_SHARED,
 			  "cascade(i8259)", (void *)(long)irq);
 	if (!err)
-		pr_info("PCI-ISA bridge PIC (irq %d)\n", irq);
+		pr_debug("PCI-ISA bridge PIC (irq %d)\n", irq);
 	return err;
 }
 
@@ -307,7 +307,7 @@ static void quirk_slc90e66_ide(struct pci_dev *dev)
 	/* SMSC SLC90E66 IDE uses irq 14, 15 (default) */
 	pci_write_config_byte(dev, PCI_INTERRUPT_LINE, 14);
 	pci_read_config_byte(dev, PCI_INTERRUPT_LINE, &dat);
-	pr_info("PCI: %s: IRQ %02x", pci_name(dev), dat);
+	pr_debug("PCI: %s: IRQ %02x", pci_name(dev), dat);
 	/* enable SMSC SLC90E66 IDE */
 	for (i = 0; i < ARRAY_SIZE(regs); i++) {
 		pci_read_config_byte(dev, regs[i], &dat);
@@ -350,7 +350,7 @@ static void final_fixup(struct pci_dev *dev)
 	    (bist & PCI_BIST_CAPABLE)) {
 		unsigned long timeout;
 		pci_set_power_state(dev, PCI_D0);
-		pr_info("PCI: %s BIST...", pci_name(dev));
+		pr_debug("PCI: %s BIST...", pci_name(dev));
 		pci_write_config_byte(dev, PCI_BIST, PCI_BIST_START);
 		timeout = jiffies + HZ * 2;	/* timeout after 2 sec */
 		do {

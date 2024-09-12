@@ -57,7 +57,7 @@ static void sh_of_smp_probe(void)
 	const char *method = NULL;
 	const struct of_cpu_method *m = __cpu_method_of_table;
 
-	pr_info("SH generic board support: scanning for cpus\n");
+	pr_debug("SH generic board support: scanning for cpus\n");
 
 	init_cpu_possible(cpumask_of(0));
 
@@ -80,7 +80,7 @@ static void sh_of_smp_probe(void)
 		of_node_put(np);
 	}
 
-	pr_info("CPU enable method: %s\n", method);
+	pr_debug("CPU enable method: %s\n", method);
 	if (method)
 		for (; m->method; m++)
 			if (!strcmp(m->method, method)) {
@@ -137,7 +137,7 @@ static int sh_of_irq_demux(int irq)
 
 static void __init sh_of_init_irq(void)
 {
-	pr_info("SH generic board support: scanning for interrupt controllers\n");
+	pr_debug("SH generic board support: scanning for interrupt controllers\n");
 	irqchip_init();
 }
 
@@ -145,7 +145,7 @@ static int __init sh_of_clk_init(void)
 {
 #ifdef CONFIG_COMMON_CLK
 	/* Disabled pending move to COMMON_CLK framework. */
-	pr_info("SH generic board support: scanning for clk providers\n");
+	pr_debug("SH generic board support: scanning for clk providers\n");
 	of_clk_init(NULL);
 #endif
 	return 0;

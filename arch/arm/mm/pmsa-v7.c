@@ -467,7 +467,7 @@ void __init pmsav7_setup(void)
 	if (err) {
 		panic("MPU region initialization failure! %d", err);
 	} else {
-		pr_info("Using ARMv7 PMSA Compliant MPU. "
+		pr_debug("Using ARMv7 PMSA Compliant MPU. "
 			 "Region independence: %s, Used %d of %d regions\n",
 			mpu_iside_independent() ? "Yes" : "No",
 			mpu_rgn_info.used, mpu_max_regions);

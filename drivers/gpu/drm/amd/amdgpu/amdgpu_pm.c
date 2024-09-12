@@ -1685,7 +1685,7 @@ static ssize_t amdgpu_hwmon_set_pwm1(struct device *dev,
 	else
 		pwm_mode = amdgpu_dpm_get_fan_control_mode(adev);
 	if (pwm_mode != AMD_FAN_CTRL_MANUAL) {
-		pr_info("manual fan speed control should be enabled first\n");
+		pr_debug("manual fan speed control should be enabled first\n");
 		return -EINVAL;
 	}
 

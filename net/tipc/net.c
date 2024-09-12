@@ -110,10 +110,10 @@ static void tipc_net_finalize(struct net *net, u32 addr);
 int tipc_net_init(struct net *net, u8 *node_id, u32 addr)
 {
 	if (tipc_own_id(net)) {
-		pr_info("Cannot configure node identity twice\n");
+		pr_debug("Cannot configure node identity twice\n");
 		return -1;
 	}
-	pr_info("Started in network mode\n");
+	pr_debug("Started in network mode\n");
 
 	if (node_id)
 		tipc_set_node_id(net, node_id);
@@ -163,7 +163,7 @@ void tipc_net_stop(struct net *net)
 	tipc_node_stop(net);
 	rtnl_unlock();
 
-	pr_info("Left network mode\n");
+	pr_debug("Left network mode\n");
 }
 
 static int __tipc_nl_add_net(struct net *net, struct tipc_nl_msg *msg)

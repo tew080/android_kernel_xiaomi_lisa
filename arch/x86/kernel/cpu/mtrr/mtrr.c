@@ -101,7 +101,7 @@ static int have_wrcomb(void)
 		if (dev->vendor == PCI_VENDOR_ID_SERVERWORKS &&
 		    dev->device == PCI_DEVICE_ID_SERVERWORKS_LE &&
 		    dev->revision <= 5) {
-			pr_info("Serverworks LE rev < 6 detected. Write-combining disabled.\n");
+			pr_debug("Serverworks LE rev < 6 detected. Write-combining disabled.\n");
 			pci_dev_put(dev);
 			return 0;
 		}
@@ -111,7 +111,7 @@ static int have_wrcomb(void)
 		 */
 		if (dev->vendor == PCI_VENDOR_ID_INTEL &&
 		    dev->device == PCI_DEVICE_ID_INTEL_82451NX) {
-			pr_info("Intel 450NX MMC detected. Write-combining disabled.\n");
+			pr_debug("Intel 450NX MMC detected. Write-combining disabled.\n");
 			pci_dev_put(dev);
 			return 0;
 		}
@@ -395,7 +395,7 @@ int mtrr_add_page(unsigned long base, unsigned long size,
 			}
 		}
 	} else {
-		pr_info("no more MTRRs available\n");
+		pr_debug("no more MTRRs available\n");
 	}
 	error = i;
  out:
@@ -775,7 +775,7 @@ void __init mtrr_bp_init(void)
 	}
 
 	if (!mtrr_enabled()) {
-		pr_info("Disabled\n");
+		pr_debug("Disabled\n");
 
 		/*
 		 * PAT initialization relies on MTRR's rendezvous handler.

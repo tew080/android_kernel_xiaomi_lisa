@@ -121,7 +121,7 @@ static unsigned int read_magic_time(void)
 	unsigned int val;
 
 	mc146818_get_time(&time);
-	pr_info("RTC time: %ptRt, date: %ptRd\n", &time, &time);
+	pr_debug("RTC time: %ptRt, date: %ptRd\n", &time, &time);
 	val = time.tm_year;				/* 100 years */
 	if (val > 100)
 		val -= 100;
@@ -189,7 +189,7 @@ static int show_file_hash(unsigned int value)
 		unsigned int hash = hash_string(lineno, file, FILEHASH);
 		if (hash != value)
 			continue;
-		pr_info("  hash matches %s:%u\n", file, lineno);
+		pr_debug("  hash matches %s:%u\n", file, lineno);
 		match++;
 	}
 	return match;
@@ -293,7 +293,7 @@ static int late_resume_init(void)
 	val = val / FILEHASH;
 	dev = val /* % DEVHASH */;
 
-	pr_info("  Magic number: %d:%d:%d\n", user, file, dev);
+	pr_debug("  Magic number: %d:%d:%d\n", user, file, dev);
 	show_file_hash(file);
 	show_dev_hash(dev);
 	return 0;

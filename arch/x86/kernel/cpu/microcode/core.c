@@ -605,7 +605,7 @@ static int microcode_reload_late(void)
 	if (ret > 0)
 		microcode_check();
 
-	pr_info("Reload completed, microcode revision: 0x%x\n", boot_cpu_data.microcode);
+	pr_debug("Reload completed, microcode revision: 0x%x\n", boot_cpu_data.microcode);
 
 	return ret;
 }
@@ -880,7 +880,7 @@ int __init microcode_init(void)
 	cpuhp_setup_state_nocalls(CPUHP_AP_ONLINE_DYN, "x86/microcode:online",
 				  mc_cpu_online, mc_cpu_down_prep);
 
-	pr_info("Microcode Update Driver: v%s.", DRIVER_VERSION);
+	pr_debug("Microcode Update Driver: v%s.", DRIVER_VERSION);
 
 	return 0;
 

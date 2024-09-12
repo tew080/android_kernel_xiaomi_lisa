@@ -79,7 +79,7 @@ void __init crash_reserve_low_1M(void)
 		return;
 
 	memblock_reserve(0, 1<<20);
-	pr_info("Reserving the low 1M of memory for crashkernel\n");
+	pr_debug("Reserving the low 1M of memory for crashkernel\n");
 }
 
 #if defined(CONFIG_SMP) && defined(CONFIG_X86_LOCAL_APIC)

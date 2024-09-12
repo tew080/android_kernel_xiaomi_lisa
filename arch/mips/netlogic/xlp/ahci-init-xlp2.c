@@ -231,7 +231,7 @@ static void check_phy_register(u64 regbase, u32 addr, u32 physel, u8 xdata)
 	u8 data;
 
 	data = read_phy_reg(regbase, addr, physel);
-	pr_info("PHY read addr = 0x%x physel = %d data = 0x%x %s\n",
+	pr_debug("PHY read addr = 0x%x physel = %d data = 0x%x %s\n",
 		addr, physel, data, data == xdata ? "TRUE" : "FALSE");
 }
 
@@ -256,7 +256,7 @@ static void nlm_sata_firmware_init(int node)
 	u64 regbase;
 	int n;
 
-	pr_info("Initializing XLP9XX On-chip AHCI...\n");
+	pr_debug("Initializing XLP9XX On-chip AHCI...\n");
 	regbase = nlm_get_sata_regbase(node);
 
 	/* Reset port0 */
@@ -319,15 +319,15 @@ static void nlm_sata_firmware_init(int node)
 	} while (--n > 0);
 
 	if (reg_val  & P0_PHY_READY)
-		pr_info("PHY0 is up.\n");
+		pr_debug("PHY0 is up.\n");
 	else
-		pr_info("PHY0 is down.\n");
+		pr_debug("PHY0 is down.\n");
 	if (reg_val  & P1_PHY_READY)
-		pr_info("PHY1 is up.\n");
+		pr_debug("PHY1 is up.\n");
 	else
-		pr_info("PHY1 is down.\n");
+		pr_debug("PHY1 is down.\n");
 
-	pr_info("XLP AHCI Init Done.\n");
+	pr_debug("XLP AHCI Init Done.\n");
 }
 
 static int __init nlm_ahci_init(void)

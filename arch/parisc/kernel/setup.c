@@ -320,10 +320,10 @@ static int __init parisc_init(void)
 
 	processor_init();
 #ifdef CONFIG_SMP
-	pr_info("CPU(s): %d out of %d %s at %d.%06d MHz online\n",
+	pr_debug("CPU(s): %d out of %d %s at %d.%06d MHz online\n",
 		num_online_cpus(), num_present_cpus(),
 #else
-	pr_info("CPU(s): 1 x %s at %d.%06d MHz\n",
+	pr_debug("CPU(s): 1 x %s at %d.%06d MHz\n",
 #endif
 			boot_cpu_data.cpu_name,
 			boot_cpu_data.cpu_hz / 1000000,

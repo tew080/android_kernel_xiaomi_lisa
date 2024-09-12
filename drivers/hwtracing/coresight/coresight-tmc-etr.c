@@ -1539,7 +1539,7 @@ int tmc_etr_bam_init(struct amba_device *adev,
 		iommu_domain_get_attr(domain, DOMAIN_ATTR_S1_BYPASS,
 			&s1_bypass);
 		if (!s1_bypass) {
-			pr_info("%s: setting SPS_BAM_SMMU_EN flag with (%s)\n",
+			pr_debug("%s: setting SPS_BAM_SMMU_EN flag with (%s)\n",
 			__func__, dev_name(dev));
 			bamdata->props.options |= SPS_BAM_SMMU_EN;
 		}

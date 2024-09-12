@@ -211,5 +211,5 @@ void uv_bios_init(void)
 			return;
 		}
 	}
-	pr_info("UV: UVsystab: Revision:%x\n", uv_systab->revision);
+	pr_debug("UV: UVsystab: Revision:%x\n", uv_systab->revision);
 }

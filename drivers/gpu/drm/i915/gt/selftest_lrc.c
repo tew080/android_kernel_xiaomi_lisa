@@ -1550,7 +1550,7 @@ static int smoke_crescendo(struct preempt_smoke *smoke, unsigned int flags)
 
 	mutex_lock(&smoke->i915->drm.struct_mutex);
 
-	pr_info("Submitted %lu crescendo:%x requests across %d engines and %d contexts\n",
+	pr_debug("Submitted %lu crescendo:%x requests across %d engines and %d contexts\n",
 		count, flags,
 		RUNTIME_INFO(smoke->i915)->num_engines, smoke->ncontext);
 	return 0;
@@ -1578,7 +1578,7 @@ static int smoke_random(struct preempt_smoke *smoke, unsigned int flags)
 		}
 	} while (!__igt_timeout(end_time, NULL));
 
-	pr_info("Submitted %lu random:%x requests across %d engines and %d contexts\n",
+	pr_debug("Submitted %lu random:%x requests across %d engines and %d contexts\n",
 		count, flags,
 		RUNTIME_INFO(smoke->i915)->num_engines, smoke->ncontext);
 	return 0;
@@ -1776,7 +1776,7 @@ static int nop_virtual_engine(struct drm_i915_private *i915,
 	if (err)
 		goto out;
 
-	pr_info("Requestx%d latencies on %s: 1 = %lluns, %lu = %lluns\n",
+	pr_debug("Requestx%d latencies on %s: 1 = %lluns, %lu = %lluns\n",
 		nctx, ve[0]->engine->name, ktime_to_ns(times[0]),
 		prime, div64_u64(ktime_to_ns(times[1]), prime));
 

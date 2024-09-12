@@ -202,7 +202,7 @@ void __init arch_init_irq(void)
 {
 	int i;
 
-	pr_info("Initializing IRQ's: %d out of %d\n", RC32434_NR_IRQS, NR_IRQS);
+	pr_debug("Initializing IRQ's: %d out of %d\n", RC32434_NR_IRQS, NR_IRQS);
 
 	for (i = 0; i < RC32434_NR_IRQS; i++)
 		irq_set_chip_and_handler(i, &rc32434_irq_type,

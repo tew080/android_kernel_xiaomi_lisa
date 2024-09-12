@@ -669,7 +669,7 @@ static int mpc52xx_gpt_wdt_init(void)
 	if (err)
 		pr_err("%s: cannot register watchdog device\n", WDT_IDENTITY);
 	else
-		pr_info("%s: watchdog device registered\n", WDT_IDENTITY);
+		pr_debug("%s: watchdog device registered\n", WDT_IDENTITY);
 	return err;
 }
 

@@ -526,7 +526,7 @@ static void __init rbtx4939_setup(void)
 	txx9_7segled_init(RBTX4939_MAX_7SEGLEDS, rbtx4939_7segled_putc);
 	for (i = 0; i < RBTX4939_MAX_7SEGLEDS; i++)
 		txx9_7segled_putc(i, '-');
-	pr_info("RBTX4939 (Rev %02x) --- FPGA(Rev %02x) DIPSW:%02x,%02x\n",
+	pr_debug("RBTX4939 (Rev %02x) --- FPGA(Rev %02x) DIPSW:%02x,%02x\n",
 		readb(rbtx4939_board_rev_addr), readb(rbtx4939_ioc_rev_addr),
 		readb(rbtx4939_udipsw_addr), readb(rbtx4939_bdipsw_addr));
 

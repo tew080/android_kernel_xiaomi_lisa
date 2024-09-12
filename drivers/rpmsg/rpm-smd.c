@@ -1206,7 +1206,7 @@ static void msm_rpm_log_request(struct msm_rpm_request *cdata)
 	}
 
 	pos += scnprintf(buf + pos, buflen - pos, "\n");
-	pr_info("request info %s\n", buf);
+	pr_debug("request info %s\n", buf);
 }
 
 static int msm_rpm_send_data(struct msm_rpm_request *cdata,
@@ -1594,7 +1594,7 @@ static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
 	if (version == V1_PROTOCOL_VERSION)
 		rpm_msg_fmt_ver = RPM_MSG_V1_FMT;
 
-	pr_info("RPM-SMD running version %d\n", rpm_msg_fmt_ver);
+	pr_debug("RPM-SMD running version %d\n", rpm_msg_fmt_ver);
 
 	irq = of_irq_get(p, 0);
 	if (!irq) {
@@ -1622,7 +1622,7 @@ skip_init:
 	probe_status = of_platform_populate(p, NULL, NULL, &rpdev->dev);
 
 	if (standalone)
-		pr_info("RPM running in standalone mode\n");
+		pr_debug("RPM running in standalone mode\n");
 fail:
 	return probe_status;
 }

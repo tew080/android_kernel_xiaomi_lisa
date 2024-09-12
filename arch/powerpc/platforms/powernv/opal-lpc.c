@@ -404,11 +404,11 @@ void __init opal_lpc_init(void)
 
 	/* Does it support direct mapping ? */
 	if (of_get_property(np, "ranges", NULL)) {
-		pr_info("OPAL: Found memory mapped LPC bus on chip %d\n",
+		pr_debug("OPAL: Found memory mapped LPC bus on chip %d\n",
 			opal_lpc_chip_id);
 		isa_bridge_init_non_pci(np);
 	} else {
-		pr_info("OPAL: Found non-mapped LPC bus on chip %d\n",
+		pr_debug("OPAL: Found non-mapped LPC bus on chip %d\n",
 			opal_lpc_chip_id);
 
 		/* Setup special IO ops */

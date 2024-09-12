@@ -710,7 +710,7 @@ static void __init build_mem_type_table(void)
 		mem_types[MT_CACHECLEAN].prot_sect |= PMD_SECT_WB;
 		break;
 	}
-	pr_info("Memory policy: %sData cache %s\n",
+	pr_debug("Memory policy: %sData cache %s\n",
 		ecc_mask ? "ECC enabled, " : "", cp->policy);
 
 	for (i = 0; i < ARRAY_SIZE(mem_types); i++) {
@@ -1610,7 +1610,7 @@ static void __init early_paging_init(const struct machine_desc *mdesc)
 	pa_pgd = __pa(swapper_pg_dir);
 	barrier();
 
-	pr_info("Switching physical address space to 0x%08llx\n",
+	pr_debug("Switching physical address space to 0x%08llx\n",
 		(u64)PHYS_OFFSET + offset);
 
 	/* Re-set the phys pfn offset, and the pv offset */

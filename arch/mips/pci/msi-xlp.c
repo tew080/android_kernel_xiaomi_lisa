@@ -469,7 +469,7 @@ void __init xlp_init_node_msi_irqs(int node, int link)
 	struct xlp_msi_data *md;
 	int irq, i, irt, msixvec, val;
 
-	pr_info("[%d %d] Init node PCI IRT\n", node, link);
+	pr_debug("[%d %d] Init node PCI IRT\n", node, link);
 	nodep = nlm_get_node(node);
 
 	/* Alloc an MSI block for the link */

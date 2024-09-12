@@ -198,7 +198,7 @@ next_pair:
 			pair->priv = 1;
 		} else {
 			if (!header_printed) {
-				pr_info("WARN: Maps only in vmlinux:\n");
+				pr_debug("WARN: Maps only in vmlinux:\n");
 				header_printed = true;
 			}
 			map__fprintf(map, stderr);
@@ -219,16 +219,16 @@ next_pair:
 
 		if (pair->start == mem_start) {
 			if (!header_printed) {
-				pr_info("WARN: Maps in vmlinux with a different name in kallsyms:\n");
+				pr_debug("WARN: Maps in vmlinux with a different name in kallsyms:\n");
 				header_printed = true;
 			}
 
-			pr_info("WARN: %" PRIx64 "-%" PRIx64 " %" PRIx64 " %s in kallsyms as",
+			pr_debug("WARN: %" PRIx64 "-%" PRIx64 " %" PRIx64 " %s in kallsyms as",
 				map->start, map->end, map->pgoff, map->dso->name);
 			if (mem_end != pair->end)
-				pr_info(":\nWARN: *%" PRIx64 "-%" PRIx64 " %" PRIx64,
+				pr_debug(":\nWARN: *%" PRIx64 "-%" PRIx64 " %" PRIx64,
 					pair->start, pair->end, pair->pgoff);
-			pr_info(" %s\n", pair->dso->name);
+			pr_debug(" %s\n", pair->dso->name);
 			pair->priv = 1;
 		}
 	}
@@ -240,7 +240,7 @@ next_pair:
 	for (map = maps__first(maps); map; map = map__next(map)) {
 		if (!map->priv) {
 			if (!header_printed) {
-				pr_info("WARN: Maps only in kallsyms:\n");
+				pr_debug("WARN: Maps only in kallsyms:\n");
 				header_printed = true;
 			}
 			map__fprintf(map, stderr);

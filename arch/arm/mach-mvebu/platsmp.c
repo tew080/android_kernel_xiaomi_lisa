@@ -54,7 +54,7 @@ static int armada_xp_boot_secondary(unsigned int cpu, struct task_struct *idle)
 {
 	int ret, hw_cpu;
 
-	pr_info("Booting CPU %d\n", cpu);
+	pr_debug("Booting CPU %d\n", cpu);
 
 	hw_cpu = cpu_logical_map(cpu);
 	mvebu_pmsu_set_cpu_boot_addr(hw_cpu, armada_xp_secondary_startup);

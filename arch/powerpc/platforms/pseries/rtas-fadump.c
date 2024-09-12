@@ -146,7 +146,7 @@ static int rtas_fadump_register(struct fw_dump *fadump_conf)
 
 	switch (rc) {
 	case 0:
-		pr_info("Registration is successful!\n");
+		pr_debug("Registration is successful!\n");
 		fadump_conf->dump_registered = 1;
 		err = 0;
 		break;
@@ -514,7 +514,7 @@ void __init rtas_fadump_dt_scan(struct fw_dump *fadump_conf, u64 node)
 	 */
 	fdm_active = of_get_flat_dt_prop(node, "ibm,kernel-dump", NULL);
 	if (fdm_active) {
-		pr_info("Firmware-assisted dump is active.\n");
+		pr_debug("Firmware-assisted dump is active.\n");
 		fadump_conf->dump_active = 1;
 		rtas_fadump_get_config(fadump_conf, (void *)__pa(fdm_active));
 	}

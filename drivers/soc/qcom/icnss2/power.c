@@ -85,7 +85,7 @@ static int icnss_get_vreg_single(struct icnss_priv *priv,
 		if (ret == -ENODEV) {
 			return ret;
 		} else if (ret == -EPROBE_DEFER) {
-			icnss_pr_info("EPROBE_DEFER for regulator: %s\n",
+			icnss_pr_debug("EPROBE_DEFER for regulator: %s\n",
 				      vreg->cfg.name);
 			goto out;
 		} else if (priv->device_id == ADRASTEA_DEVICE_ID) {
@@ -851,7 +851,7 @@ static int icnss_get_battery_level(struct icnss_priv *priv)
 		battery_percentage = psp.intval;
 	}
 
-	icnss_pr_info("Battery Percentage: %d\n", battery_percentage);
+	icnss_pr_debug("Battery Percentage: %d\n", battery_percentage);
 out:
 	return battery_percentage;
 }

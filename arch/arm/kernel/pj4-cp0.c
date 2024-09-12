@@ -118,12 +118,12 @@ static int __init pj4_cp0_init(void)
 		return 0;
 
 #ifndef CONFIG_IWMMXT
-	pr_info("PJ4 iWMMXt coprocessor detected, but kernel support is missing.\n");
+	pr_debug("PJ4 iWMMXt coprocessor detected, but kernel support is missing.\n");
 #else
 	cp_access = pj4_cp_access_read() & ~0xf;
 	pj4_cp_access_write(cp_access);
 
-	pr_info("PJ4 iWMMXt v%d coprocessor enabled.\n", vers);
+	pr_debug("PJ4 iWMMXt v%d coprocessor enabled.\n", vers);
 	elf_hwcap |= HWCAP_IWMMXT;
 	thread_register_notifier(&iwmmxt_notifier_block);
 #endif

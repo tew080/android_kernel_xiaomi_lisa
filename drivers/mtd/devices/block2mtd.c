@@ -217,7 +217,7 @@ void diskio_done(struct scsi_cmnd *scmd)
 		put_page(mtd_pages[i]);
 	scsi_normalize_sense(scmd->sense_buffer, sizeof(struct scsi_sense_hdr), &sshr);
 	scsi_put_command(scmd);
-	pr_info("block2mtd panic write: diskio done\n");
+	pr_debug("block2mtd panic write: diskio done\n");
 }
 
 struct scsi_device *get_scsi_device(struct block_device *bdev)
@@ -386,7 +386,7 @@ int do_io(int cmd, struct block_device *bdev,  const u_char *buf, u32 len, u64 o
 	}
 
 	ret = scmd->device->host->hostt->queuecommand(scmd->device->host, scmd);
-	pr_info("queuecommand return %x \n", ret);
+	pr_debug("queuecommand return %x \n", ret);
 
 	return  ret;
 }
@@ -405,7 +405,7 @@ static int _block2mtd_panic_write(struct block2mtd_dev *dev, const u_char *buf,
 	sdev = get_scsi_device(bdev);
 	lba = sectors_to_logical(sdev, dev->blkdev->bd_part->start_sect);
 
-	pr_info("block2mtd_panic_write start sect:%d,lba is: 0x%x\n", dev->blkdev->bd_part->start_sect, lba);
+	pr_debug("block2mtd_panic_write start sect:%d,lba is: 0x%x\n", dev->blkdev->bd_part->start_sect, lba);
 
 	offset += (lba + index); //(bd_part->start_sect+ index);if oops address in lun0 is 32M, lba = 32*1024/4
 	ret = do_io(DISK_WRITE, dev->blkdev, buf, len, offset, 1);
@@ -574,7 +574,7 @@ static struct block2mtd_dev *add_device(char *devname, int erase_size,
 	}
 
 	list_add(&dev->list, &blkmtd_device_list);
-	pr_info("mtd%d: [%s] erase_size = %dKiB [%d]\n",
+	pr_debug("mtd%d: [%s] erase_size = %dKiB [%d]\n",
 		dev->mtd.index,
 		dev->mtd.name + strlen("block2mtd: "),
 		dev->mtd.erasesize >> 10, dev->mtd.erasesize);
@@ -754,7 +754,7 @@ static void block2mtd_exit(void)
 		block2mtd_sync(&dev->mtd);
 		mtd_device_unregister(&dev->mtd);
 		mutex_destroy(&dev->write_mutex);
-		pr_info("mtd%d: [%s] removed\n",
+		pr_debug("mtd%d: [%s] removed\n",
 			dev->mtd.index,
 			dev->mtd.name + strlen("block2mtd: "));
 		list_del(&dev->list);

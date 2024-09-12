@@ -44,7 +44,7 @@ static int __init atl2c_of_init(void)
 	l2clsz =
 	    4 << ((L2C_R_REG(L2_CA_CONF_OFF) & L2_CA_CONF_mskL2CLSZ) >>
 		  L2_CA_CONF_offL2CLSZ);
-	pr_info("L2:%luKB/%luS/%luW/%luB\n",
+	pr_debug("L2:%luKB/%luS/%luW/%luB\n",
 		l2set * l2way * l2clsz / 1024, l2set, l2way, l2clsz);
 
 	tmp = L2C_R_REG(L2CC_PROT_OFF);

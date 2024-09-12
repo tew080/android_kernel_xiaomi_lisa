@@ -1098,11 +1098,11 @@ static bool link_retransmit_failure(struct tipc_link *l, struct tipc_link *r,
 
 	pr_warn("Retransmission failure on link <%s>\n", l->name);
 	link_print(l, "State of link ");
-	pr_info("Failed msg: usr %u, typ %u, len %u, err %u\n",
+	pr_debug("Failed msg: usr %u, typ %u, len %u, err %u\n",
 		msg_user(hdr), msg_type(hdr), msg_size(hdr), msg_errcode(hdr));
-	pr_info("sqno %u, prev: %x, dest: %x\n",
+	pr_debug("sqno %u, prev: %x, dest: %x\n",
 		msg_seqno(hdr), msg_prevnode(hdr), msg_destnode(hdr));
-	pr_info("retr_stamp %d, retr_cnt %d\n",
+	pr_debug("retr_stamp %d, retr_cnt %d\n",
 		jiffies_to_msecs(TIPC_SKB_CB(skb)->retr_stamp),
 		TIPC_SKB_CB(skb)->retr_cnt);
 
@@ -2333,8 +2333,8 @@ static void link_print(struct tipc_link *l, const char *str)
 	u16 head = hskb ? msg_seqno(buf_msg(hskb)) : l->snd_nxt - 1;
 	u16 tail = l->snd_nxt - 1;
 
-	pr_info("%s Link <%s> state %x\n", str, l->name, l->state);
-	pr_info("XMTQ: %u [%u-%u], BKLGQ: %u, SNDNX: %u, RCVNX: %u\n",
+	pr_debug("%s Link <%s> state %x\n", str, l->name, l->state);
+	pr_debug("XMTQ: %u [%u-%u], BKLGQ: %u, SNDNX: %u, RCVNX: %u\n",
 		skb_queue_len(&l->transmq), head, tail,
 		skb_queue_len(&l->backlogq), l->snd_nxt, l->rcv_nxt);
 }

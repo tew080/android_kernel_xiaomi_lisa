@@ -400,7 +400,7 @@ int register_sh_ubc(struct sh_ubc *ubc)
 		return -EBUSY;
 	sh_ubc = ubc;
 
-	pr_info("HW Breakpoints: %s UBC support registered\n", ubc->name);
+	pr_debug("HW Breakpoints: %s UBC support registered\n", ubc->name);
 
 	WARN_ON(ubc->num_events > HBP_NUM);
 

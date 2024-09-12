@@ -656,7 +656,7 @@ early_param("dt_cpu_ftrs", dt_cpu_ftrs_parse);
 
 static void __init cpufeatures_setup_start(u32 isa)
 {
-	pr_info("setup for ISA %d\n", isa);
+	pr_debug("setup for ISA %d\n", isa);
 
 	if (isa >= 3000) {
 		cur_cpu_spec->cpu_features |= CPU_FTR_ARCH_300;
@@ -679,14 +679,14 @@ static bool __init cpufeatures_process_feature(struct dt_cpu_feature *f)
 				break;
 			}
 
-			pr_info("not enabling: %s (disabled or unsupported by kernel)\n",
+			pr_debug("not enabling: %s (disabled or unsupported by kernel)\n",
 				f->name);
 			return false;
 		}
 	}
 
 	if (!known && (!enable_unknown || !feat_try_enable_unknown(f))) {
-		pr_info("not enabling: %s (unknown and unsupported by kernel)\n",
+		pr_debug("not enabling: %s (unknown and unsupported by kernel)\n",
 			f->name);
 		return false;
 	}
@@ -776,7 +776,7 @@ static void __init cpufeatures_setup_finished(void)
 	system_registers.hfscr = mfspr(SPRN_HFSCR);
 	system_registers.fscr = mfspr(SPRN_FSCR);
 
-	pr_info("final cpu/mmu features = 0x%016lx 0x%08x\n",
+	pr_debug("final cpu/mmu features = 0x%016lx 0x%08x\n",
 		cur_cpu_spec->cpu_features, cur_cpu_spec->mmu_features);
 }
 

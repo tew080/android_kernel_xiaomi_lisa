@@ -47,7 +47,7 @@ struct iavf_virt_mem {
 #define iavf_debug(h, m, s, ...)				\
 do {								\
 	if (((m) & (h)->debug_mask))				\
-		pr_info("iavf %02x:%02x.%x " s,			\
+		pr_debug("iavf %02x:%02x.%x " s,			\
 			(h)->bus.bus_id, (h)->bus.device,	\
 			(h)->bus.func, ##__VA_ARGS__);		\
 } while (0)

@@ -125,14 +125,14 @@ static int xilinx_timer_set_next_event(unsigned long delta,
 
 static int xilinx_timer_shutdown(struct clock_event_device *evt)
 {
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 	xilinx_timer0_stop();
 	return 0;
 }
 
 static int xilinx_timer_set_periodic(struct clock_event_device *evt)
 {
-	pr_info("%s\n", __func__);
+	pr_debug("%s\n", __func__);
 	xilinx_timer0_start_periodic(freq_div_hz);
 	return 0;
 }
@@ -290,7 +290,7 @@ static int __init xilinx_timer_init(struct device_node *timer)
 		return -EINVAL;
 	}
 
-	pr_info("%pOF: irq=%d\n", timer, irq);
+	pr_debug("%pOF: irq=%d\n", timer, irq);
 
 	clk = of_clk_get(timer, 0);
 	if (IS_ERR(clk)) {

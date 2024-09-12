@@ -511,7 +511,7 @@ static void emu_setup(void)
 	emu_nodes = emu_setup_nodes_adjust(emu_nodes);
 	for (nid = 0; nid < emu_nodes; nid++)
 		node_set(nid, node_possible_map);
-	pr_info("Creating %d nodes with memory stripe size %ld MB\n",
+	pr_debug("Creating %d nodes with memory stripe size %ld MB\n",
 		emu_nodes, emu_size >> 20);
 }
 

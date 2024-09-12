@@ -348,7 +348,7 @@ static int tipc_enable_bearer(struct net *net, const char *name,
 		return -ENOMEM;
 	}
 
-	pr_info("Enabled bearer <%s>, priority %u\n", name, prio);
+	pr_debug("Enabled bearer <%s>, priority %u\n", name, prio);
 
 	return res;
 rejected:
@@ -361,7 +361,7 @@ rejected:
  */
 static int tipc_reset_bearer(struct net *net, struct tipc_bearer *b)
 {
-	pr_info("Resetting bearer <%s>\n", b->name);
+	pr_debug("Resetting bearer <%s>\n", b->name);
 	tipc_node_delete_links(net, b->identity);
 	tipc_disc_reset(net, b);
 	return 0;
@@ -377,7 +377,7 @@ static void bearer_disable(struct net *net, struct tipc_bearer *b)
 	struct tipc_net *tn = tipc_net(net);
 	int bearer_id = b->identity;
 
-	pr_info("Disabling bearer <%s>\n", b->name);
+	pr_debug("Disabling bearer <%s>\n", b->name);
 	clear_bit_unlock(0, &b->up);
 	tipc_node_delete_links(net, bearer_id);
 	b->media->disable_media(b);
@@ -407,7 +407,7 @@ int tipc_enable_l2_media(struct net *net, struct tipc_bearer *b,
 	}
 	if (dev == net->loopback_dev) {
 		dev_put(dev);
-		pr_info("Enabling <%s> not permitted\n", b->name);
+		pr_debug("Enabling <%s> not permitted\n", b->name);
 		return -EINVAL;
 	}
 

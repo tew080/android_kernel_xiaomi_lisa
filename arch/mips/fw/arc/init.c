@@ -45,7 +45,7 @@ void __init prom_init(void)
 	prom_meminit();
 
 #ifdef DEBUG_PROM_INIT
-	pr_info("Press a key to reboot\n");
+	pr_debug("Press a key to reboot\n");
 	ArcRead(0, &c, 1, &cnt);
 	ArcEnterInteractiveMode();
 #endif

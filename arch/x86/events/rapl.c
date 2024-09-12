@@ -605,12 +605,12 @@ static void __init rapl_advertise(void)
 {
 	int i;
 
-	pr_info("API unit is 2^-32 Joules, %d fixed counters, %llu ms ovfl timer\n",
+	pr_debug("API unit is 2^-32 Joules, %d fixed counters, %llu ms ovfl timer\n",
 		hweight32(rapl_cntr_mask), rapl_timer_ms);
 
 	for (i = 0; i < NR_RAPL_DOMAINS; i++) {
 		if (rapl_cntr_mask & (1 << i)) {
-			pr_info("hw unit of domain %s 2^-%d Joules\n",
+			pr_debug("hw unit of domain %s 2^-%d Joules\n",
 				rapl_domain_names[i], rapl_hw_unit[i]);
 		}
 	}

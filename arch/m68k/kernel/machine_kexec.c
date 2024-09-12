@@ -50,7 +50,7 @@ void machine_kexec(struct kimage *image)
 	 */
 	local_irq_disable();
 
-	pr_info("Will call new kernel at 0x%08lx. Bye...\n", image->start);
+	pr_debug("Will call new kernel at 0x%08lx. Bye...\n", image->start);
 	__flush_cache_all();
 	cpu_mmu_flags = m68k_cputype | m68k_mmutype << 8;
 	((relocate_kernel_t) reboot_code_buffer)(image->head & PAGE_MASK,

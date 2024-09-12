@@ -91,7 +91,7 @@ static void __init xilinx_early_pci_scan(struct pci_controller *hose)
 	for (dev = 0; dev < 2; dev++) {
 		/* List only first function number - up-to 8 functions */
 		for (func = 0; func < 1; func++) {
-			pr_info("%02x:%02x:%02x", bus, dev, func);
+			pr_debug("%02x:%02x:%02x", bus, dev, func);
 			/* read the first 64 standardized bytes */
 			/* Up-to 192 bytes can be list of capabilities */
 			for (offset = 0; offset < 64; offset += 4) {
@@ -106,7 +106,7 @@ static void __init xilinx_early_pci_scan(struct pci_controller *hose)
 
 				pr_cont("%08x  ", val);
 			}
-			pr_info("\n");
+			pr_debug("\n");
 		}
 	}
 }
@@ -165,6 +165,6 @@ void __init xilinx_pci_init(void)
 	pci_process_bridge_OF_ranges(hose, pci_node,
 					INDIRECT_TYPE_SET_CFG_TYPE);
 
-	pr_info("xilinx-pci: Registered PCI host bridge\n");
+	pr_debug("xilinx-pci: Registered PCI host bridge\n");
 	xilinx_early_pci_scan(hose);
 }

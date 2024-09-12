@@ -200,7 +200,7 @@ static int xgpu_ai_get_pp_clk(struct amdgpu_device *adev, u32 type, char *buf)
 
         r = xgpu_ai_poll_msg(adev, IDH_FAIL);
         if(r)
-                pr_info("%s DPM request failed",
+                pr_debug("%s DPM request failed",
                         (type == PP_SCLK)? "SCLK" : "MCLK");
 
 out:
@@ -225,9 +225,9 @@ static int xgpu_ai_force_dpm_level(struct amdgpu_device *adev, u32 level)
 
         r = xgpu_ai_poll_msg(adev, IDH_FAIL);
         if (!r)
-                pr_info("DPM request failed");
+                pr_debug("DPM request failed");
         else
-                pr_info("Mailbox is broken");
+                pr_debug("Mailbox is broken");
 
 out:
         mutex_unlock(&adev->virt.dpm_mutex);

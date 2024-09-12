@@ -435,7 +435,7 @@ int msm_spm_drv_set_low_power_mode(struct msm_spm_driver_data *dev,
 		int i;
 
 		for (i = 0; i < MSM_SPM_REG_NR; i++)
-			pr_info("%s: reg %02x = 0x%08x\n", __func__,
+			pr_debug("%s: reg %02x = 0x%08x\n", __func__,
 				dev->reg_offsets[i], dev->reg_shadow[i]);
 	}
 	msm_spm_drv_load_shadow(dev, MSM_SPM_REG_SAW_SPM_STS);
@@ -524,7 +524,7 @@ static inline int msm_spm_drv_validate_data(struct msm_spm_driver_data *dev,
 	}
 
 	if (msm_spm_debug_mask & MSM_SPM_DEBUG_VCTL)
-		pr_info("%s: done, remaining timeout %u us\n",
+		pr_debug("%s: done, remaining timeout %u us\n",
 			__func__, timeout_us);
 
 	return 0;
@@ -545,7 +545,7 @@ int msm_spm_drv_set_vdd(struct msm_spm_driver_data *dev, unsigned int vlevel)
 		return -ENODEV;
 
 	if (msm_spm_debug_mask & MSM_SPM_DEBUG_VCTL)
-		pr_info("%s: requesting vlevel %#x\n", __func__, vlevel);
+		pr_debug("%s: requesting vlevel %#x\n", __func__, vlevel);
 
 	if (avs_enabled)
 		msm_spm_drv_disable_avs(dev);

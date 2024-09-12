@@ -153,11 +153,11 @@ __setup("eeh=", eeh_setup);
 void eeh_show_enabled(void)
 {
 	if (eeh_has_flag(EEH_FORCE_DISABLED))
-		pr_info("EEH: Recovery disabled by kernel parameter.\n");
+		pr_debug("EEH: Recovery disabled by kernel parameter.\n");
 	else if (eeh_has_flag(EEH_ENABLED))
-		pr_info("EEH: Capable adapter found: recovery enabled.\n");
+		pr_debug("EEH: Capable adapter found: recovery enabled.\n");
 	else
-		pr_info("EEH: No capable adapters found: recovery disabled.\n");
+		pr_debug("EEH: No capable adapters found: recovery disabled.\n");
 }
 
 /*
@@ -882,7 +882,7 @@ static void eeh_pe_refreeze_passed(struct eeh_pe *root)
 			state = eeh_ops->get_state(pe, NULL);
 			if (state &
 			   (EEH_STATE_MMIO_ACTIVE | EEH_STATE_MMIO_ENABLED)) {
-				pr_info("EEH: Passed-through PE PHB#%x-PE#%x was thawed by reset, re-freezing for safety.\n",
+				pr_debug("EEH: Passed-through PE PHB#%x-PE#%x was thawed by reset, re-freezing for safety.\n",
 					pe->phb->global_number, pe->addr);
 				eeh_pe_set_option(pe, EEH_OPT_FREEZE_PE);
 			}
@@ -1649,7 +1649,7 @@ static int eeh_pe_reenable_devices(struct eeh_pe *pe, bool include_passed)
 	if (include_passed || !eeh_pe_passed(pe)) {
 		ret = eeh_unfreeze_pe(pe);
 	} else
-		pr_info("EEH: Note: Leaving passthrough PHB#%x-PE#%x frozen.\n",
+		pr_debug("EEH: Note: Leaving passthrough PHB#%x-PE#%x frozen.\n",
 			pe->phb->global_number, pe->addr);
 	if (!ret)
 		eeh_pe_state_clear(pe, EEH_PE_ISOLATED, include_passed);

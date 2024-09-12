@@ -263,7 +263,7 @@ irqreturn_t mac_nmi_handler(int irq, void *dev_id)
 		return IRQ_HANDLED;
 	in_nmi = 1;
 
-	pr_info("Non-Maskable Interrupt\n");
+	pr_debug("Non-Maskable Interrupt\n");
 	show_registers(get_irq_regs());
 
 	in_nmi = 0;

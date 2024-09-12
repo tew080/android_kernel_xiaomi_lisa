@@ -611,7 +611,7 @@ static void sas_eh_handle_sas_errors(struct Scsi_Host *shost, struct list_head *
 			sas_eh_finish_cmd(cmd);
 			continue;
 		case TASK_IS_AT_LU:
-			pr_info("task 0x%p is at LU: lu recover\n", task);
+			pr_debug("task 0x%p is at LU: lu recover\n", task);
  reset:
 			tmf_resp = sas_recover_lu(task->dev, cmd);
 			if (tmf_resp == TMF_RESP_FUNC_COMPLETE) {

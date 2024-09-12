@@ -302,6 +302,6 @@ void __init pmsav8_setup(void)
 	if (err)
 		pr_warn("MPU region initialization failure! %d", err);
 	else
-		pr_info("Using ARM PMSAv8 Compliant MPU. Used %d of %d regions\n",
+		pr_debug("Using ARM PMSAv8 Compliant MPU. Used %d of %d regions\n",
 			mpu_rgn_info.used, mpu_max_regions);
 }

@@ -1262,7 +1262,7 @@ static int __init ds_init(void)
 	if (tlb_type == hypervisor) {
 		hv_ret = sun4v_get_version(HV_GRP_REBOOT_DATA, &major, &minor);
 		if (hv_ret == HV_EOK) {
-			pr_info("SUN4V: Reboot data supported (maj=%lu,min=%lu).\n",
+			pr_debug("SUN4V: Reboot data supported (maj=%lu,min=%lu).\n",
 				major, minor);
 			reboot_data_supported = 1;
 		}

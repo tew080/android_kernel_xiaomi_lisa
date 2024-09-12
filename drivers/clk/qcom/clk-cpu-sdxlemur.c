@@ -540,9 +540,9 @@ static void cpucc_clk_print_opp_table(int cpu)
 					apc_fmax, true);
 	oppfmin = dev_pm_opp_find_freq_exact(get_cpu_device(cpu),
 					apc_fmin, true);
-	pr_info("Clock_cpu:(cpu %d) OPP voltage for %lu: %ld\n", cpu, apc_fmin,
+	pr_debug("Clock_cpu:(cpu %d) OPP voltage for %lu: %ld\n", cpu, apc_fmin,
 		dev_pm_opp_get_voltage(oppfmin));
-	pr_info("Clock_cpu:(cpu %d) OPP voltage for %lu: %ld\n", cpu, apc_fmax,
+	pr_debug("Clock_cpu:(cpu %d) OPP voltage for %lu: %ld\n", cpu, apc_fmax,
 		dev_pm_opp_get_voltage(oppfmax));
 
 }

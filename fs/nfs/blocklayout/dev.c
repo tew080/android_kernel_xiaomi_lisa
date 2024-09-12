@@ -79,7 +79,7 @@ nfs4_block_decode_volume(struct xdr_stream *xdr, struct pnfs_block_volume *b)
 			p = xdr_decode_hyper(p, &b->simple.sigs[i].offset);
 			b->simple.sigs[i].sig_len = be32_to_cpup(p++);
 			if (b->simple.sigs[i].sig_len > PNFS_BLOCK_UUID_LEN) {
-				pr_info("signature too long: %d\n",
+				pr_debug("signature too long: %d\n",
 					b->simple.sigs[i].sig_len);
 				return -EIO;
 			}
@@ -371,7 +371,7 @@ bl_parse_scsi(struct nfs_server *server, struct pnfs_block_dev *d,
 	d->map = bl_map_simple;
 	d->pr_key = v->scsi.pr_key;
 
-	pr_info("pNFS: using block device %s (reservation key 0x%llx)\n",
+	pr_debug("pNFS: using block device %s (reservation key 0x%llx)\n",
 		d->bdev->bd_disk->disk_name, d->pr_key);
 
 	ops = d->bdev->bd_disk->fops->pr_ops;

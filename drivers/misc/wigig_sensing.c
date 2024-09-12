@@ -519,7 +519,7 @@ static int wigig_sensing_change_state(struct wigig_sensing_ctx *ctx,
 
 skip:
 	if (transition_allowed) {
-		pr_info("state transition (%d) --> (%d)\n", curr_state,
+		pr_debug("state transition (%d) --> (%d)\n", curr_state,
 			new_state);
 		state->state = new_state;
 	} else {
@@ -532,8 +532,8 @@ skip:
 
 static int wigig_sensing_ioc_set_auto_recovery(struct wigig_sensing_ctx *ctx)
 {
-	pr_info("Handling WIGIG_SENSING_IOCTL_SET_AUTO_RECOVERY\n");
-	pr_info("NOT SUPPORTED\n");
+	pr_debug("Handling WIGIG_SENSING_IOCTL_SET_AUTO_RECOVERY\n");
+	pr_debug("NOT SUPPORTED\n");
 
 	ctx->stm.auto_recovery = true;
 
@@ -555,7 +555,7 @@ static int wigig_sensing_ioc_change_mode(struct wigig_sensing_ctx *ctx,
 	if (req == NULL)
 		return -EINVAL;
 
-	pr_info("mode = %d, channel = %d, has_channel = %d\n",
+	pr_debug("mode = %d, channel = %d, has_channel = %d\n",
 		req->mode, req->channel, req->has_channel);
 	if (!ctx)
 		return -EINVAL;
@@ -829,17 +829,17 @@ static long wigig_sensing_ioctl(struct file *file, unsigned int cmd,
 
 	switch (_IOC_NR(cmd)) {
 	case WIGIG_SENSING_IOCTL_SET_AUTO_RECOVERY:
-		pr_info("Received WIGIG_SENSING_IOCTL_SET_AUTO_RECOVERY command\n");
+		pr_debug("Received WIGIG_SENSING_IOCTL_SET_AUTO_RECOVERY command\n");
 		rc = wigig_sensing_ioc_set_auto_recovery(ctx);
 		break;
 	case WIGIG_SENSING_IOCTL_GET_MODE:
-		pr_info("Received WIGIG_SENSING_IOCTL_GET_MODE command\n");
+		pr_debug("Received WIGIG_SENSING_IOCTL_GET_MODE command\n");
 		rc = wigig_sensing_ioc_get_mode(ctx);
 		break;
 	case WIGIG_SENSING_IOCTL_CHANGE_MODE:
 	{
 		struct wigig_sensing_change_mode req;
-		pr_info("Received WIGIG_SENSING_IOCTL_CHANGE_MODE command\n");
+		pr_debug("Received WIGIG_SENSING_IOCTL_CHANGE_MODE command\n");
 
 		if (copy_from_user(&req, (void *)arg, sizeof(req)))
 			return -EFAULT;
@@ -852,20 +852,20 @@ static long wigig_sensing_ioctl(struct file *file, unsigned int cmd,
 		break;
 	}
 	case WIGIG_SENSING_IOCTL_CLEAR_DATA:
-		pr_info("Received WIGIG_SENSING_IOCTL_CLEAR_DATA command\n");
+		pr_debug("Received WIGIG_SENSING_IOCTL_CLEAR_DATA command\n");
 		rc = wigig_sensing_ioc_clear_data(ctx);
 		break;
 	case WIGIG_SENSING_IOCTL_GET_NUM_DROPPED_BURSTS:
-		pr_info("Received WIGIG_SENSING_IOCTL_GET_NUM_DROPPED_BURSTS command\n");
+		pr_debug("Received WIGIG_SENSING_IOCTL_GET_NUM_DROPPED_BURSTS command\n");
 		rc = wigig_sensing_ioc_get_num_dropped_bursts(ctx);
 		break;
 	case WIGIG_SENSING_IOCTL_GET_EVENT:
-		pr_info("Received WIGIG_SENSING_IOCTL_GET_EVENT command\n");
+		pr_debug("Received WIGIG_SENSING_IOCTL_GET_EVENT command\n");
 		rc = wigig_sensing_ioc_get_event(ctx,
 			(enum wigig_sensing_event *)arg);
 		break;
 	case WIGIG_SENSING_IOCTL_GET_NUM_AVAIL_BURSTS:
-		pr_info("Received WIGIG_SENSING_IOCTL_GET_NUM_AVAIL_BURSTS command\n");
+		pr_debug("Received WIGIG_SENSING_IOCTL_GET_NUM_AVAIL_BURSTS command\n");
 		rc = wigig_sensing_ioc_get_num_avail_bursts(ctx);
 		break;
 	default:

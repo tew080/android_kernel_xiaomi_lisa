@@ -190,9 +190,9 @@ static void __init txx9_cache_fixup(void)
 	write_c0_config(conf);
 
 	if (conf & TX49_CONF_IC)
-		pr_info("TX49XX I-Cache disabled.\n");
+		pr_debug("TX49XX I-Cache disabled.\n");
 	if (conf & TX49_CONF_DC)
-		pr_info("TX49XX D-Cache disabled.\n");
+		pr_debug("TX49XX D-Cache disabled.\n");
 }
 #elif defined(CONFIG_CPU_TX39XX)
 /* flush all cache on very early stage (before tx39_cache_init) */
@@ -237,9 +237,9 @@ static void __init txx9_cache_fixup(void)
 	write_c0_config(conf);
 
 	if (!(conf & TX39_CONF_ICE))
-		pr_info("TX39XX I-Cache disabled.\n");
+		pr_debug("TX39XX I-Cache disabled.\n");
 	if (!(conf & TX39_CONF_DCE))
-		pr_info("TX39XX D-Cache disabled.\n");
+		pr_debug("TX39XX D-Cache disabled.\n");
 }
 #else
 static inline void txx9_cache_fixup(void)

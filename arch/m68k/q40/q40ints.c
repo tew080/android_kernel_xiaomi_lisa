@@ -277,7 +277,7 @@ static void q40_irq_handler(unsigned int irq, struct pt_regs *fp)
 					}
 #else
 					disabled = 0;
-					/*pr_info("reenabling irq %d\n", irq); */
+					/*pr_debug("reenabling irq %d\n", irq); */
 #endif
 				}
 // used to do 'goto repeat;' here, this delayed bh processing too long
@@ -326,7 +326,7 @@ void q40_irq_disable(struct irq_data *data)
 		master_outb(0, EXT_ENABLE_REG);
 		mext_disabled++;
 		if (mext_disabled > 1)
-			pr_info("disable_irq nesting count %d\n",
+			pr_debug("disable_irq nesting count %d\n",
 				mext_disabled);
 	}
 }

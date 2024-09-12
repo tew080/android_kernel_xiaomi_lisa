@@ -515,7 +515,7 @@ static int arcturus_append_powerplay_table(struct smu_context *smu)
 	if (ret)
 		return ret;
 
-	pr_info("smc_dpm_info table revision(format.content): %d.%d\n",
+	pr_debug("smc_dpm_info table revision(format.content): %d.%d\n",
 			smc_dpm_table->table_header.format_revision,
 			smc_dpm_table->table_header.content_revision);
 
@@ -916,7 +916,7 @@ static int arcturus_get_metrics_table(struct smu_context *smu,
 		ret = smu_update_table(smu, SMU_TABLE_SMU_METRICS, 0,
 				(void *)smu_table->metrics_table, false);
 		if (ret) {
-			pr_info("Failed to export SMU metrics table!\n");
+			pr_debug("Failed to export SMU metrics table!\n");
 			mutex_unlock(&smu->metrics_lock);
 			return ret;
 		}
@@ -1463,53 +1463,53 @@ static void arcturus_dump_pptable(struct smu_context *smu)
 	PPTable_t *pptable = table_context->driver_pptable;
 	int i;
 
-	pr_info("Dumped PPTable:\n");
+	pr_debug("Dumped PPTable:\n");
 
-	pr_info("Version = 0x%08x\n", pptable->Version);
+	pr_debug("Version = 0x%08x\n", pptable->Version);
 
-	pr_info("FeaturesToRun[0] = 0x%08x\n", pptable->FeaturesToRun[0]);
-	pr_info("FeaturesToRun[1] = 0x%08x\n", pptable->FeaturesToRun[1]);
+	pr_debug("FeaturesToRun[0] = 0x%08x\n", pptable->FeaturesToRun[0]);
+	pr_debug("FeaturesToRun[1] = 0x%08x\n", pptable->FeaturesToRun[1]);
 
 	for (i = 0; i < PPT_THROTTLER_COUNT; i++) {
-		pr_info("SocketPowerLimitAc[%d] = %d\n", i, pptable->SocketPowerLimitAc[i]);
-		pr_info("SocketPowerLimitAcTau[%d] = %d\n", i, pptable->SocketPowerLimitAcTau[i]);
+		pr_debug("SocketPowerLimitAc[%d] = %d\n", i, pptable->SocketPowerLimitAc[i]);
+		pr_debug("SocketPowerLimitAcTau[%d] = %d\n", i, pptable->SocketPowerLimitAcTau[i]);
 	}
 
-	pr_info("TdcLimitSoc = %d\n", pptable->TdcLimitSoc);
-	pr_info("TdcLimitSocTau = %d\n", pptable->TdcLimitSocTau);
-	pr_info("TdcLimitGfx = %d\n", pptable->TdcLimitGfx);
-	pr_info("TdcLimitGfxTau = %d\n", pptable->TdcLimitGfxTau);
+	pr_debug("TdcLimitSoc = %d\n", pptable->TdcLimitSoc);
+	pr_debug("TdcLimitSocTau = %d\n", pptable->TdcLimitSocTau);
+	pr_debug("TdcLimitGfx = %d\n", pptable->TdcLimitGfx);
+	pr_debug("TdcLimitGfxTau = %d\n", pptable->TdcLimitGfxTau);
 
-	pr_info("TedgeLimit = %d\n", pptable->TedgeLimit);
-	pr_info("ThotspotLimit = %d\n", pptable->ThotspotLimit);
-	pr_info("TmemLimit = %d\n", pptable->TmemLimit);
-	pr_info("Tvr_gfxLimit = %d\n", pptable->Tvr_gfxLimit);
-	pr_info("Tvr_memLimit = %d\n", pptable->Tvr_memLimit);
-	pr_info("Tvr_socLimit = %d\n", pptable->Tvr_socLimit);
-	pr_info("FitLimit = %d\n", pptable->FitLimit);
+	pr_debug("TedgeLimit = %d\n", pptable->TedgeLimit);
+	pr_debug("ThotspotLimit = %d\n", pptable->ThotspotLimit);
+	pr_debug("TmemLimit = %d\n", pptable->TmemLimit);
+	pr_debug("Tvr_gfxLimit = %d\n", pptable->Tvr_gfxLimit);
+	pr_debug("Tvr_memLimit = %d\n", pptable->Tvr_memLimit);
+	pr_debug("Tvr_socLimit = %d\n", pptable->Tvr_socLimit);
+	pr_debug("FitLimit = %d\n", pptable->FitLimit);
 
-	pr_info("PpmPowerLimit = %d\n", pptable->PpmPowerLimit);
-	pr_info("PpmTemperatureThreshold = %d\n", pptable->PpmTemperatureThreshold);
+	pr_debug("PpmPowerLimit = %d\n", pptable->PpmPowerLimit);
+	pr_debug("PpmTemperatureThreshold = %d\n", pptable->PpmTemperatureThreshold);
 
-	pr_info("ThrottlerControlMask = %d\n", pptable->ThrottlerControlMask);
+	pr_debug("ThrottlerControlMask = %d\n", pptable->ThrottlerControlMask);
 
-	pr_info("UlvVoltageOffsetGfx = %d\n", pptable->UlvVoltageOffsetGfx);
-	pr_info("UlvPadding = 0x%08x\n", pptable->UlvPadding);
+	pr_debug("UlvVoltageOffsetGfx = %d\n", pptable->UlvVoltageOffsetGfx);
+	pr_debug("UlvPadding = 0x%08x\n", pptable->UlvPadding);
 
-	pr_info("UlvGfxclkBypass = %d\n", pptable->UlvGfxclkBypass);
-	pr_info("Padding234[0] = 0x%02x\n", pptable->Padding234[0]);
-	pr_info("Padding234[1] = 0x%02x\n", pptable->Padding234[1]);
-	pr_info("Padding234[2] = 0x%02x\n", pptable->Padding234[2]);
+	pr_debug("UlvGfxclkBypass = %d\n", pptable->UlvGfxclkBypass);
+	pr_debug("Padding234[0] = 0x%02x\n", pptable->Padding234[0]);
+	pr_debug("Padding234[1] = 0x%02x\n", pptable->Padding234[1]);
+	pr_debug("Padding234[2] = 0x%02x\n", pptable->Padding234[2]);
 
-	pr_info("MinVoltageGfx = %d\n", pptable->MinVoltageGfx);
-	pr_info("MinVoltageSoc = %d\n", pptable->MinVoltageSoc);
-	pr_info("MaxVoltageGfx = %d\n", pptable->MaxVoltageGfx);
-	pr_info("MaxVoltageSoc = %d\n", pptable->MaxVoltageSoc);
+	pr_debug("MinVoltageGfx = %d\n", pptable->MinVoltageGfx);
+	pr_debug("MinVoltageSoc = %d\n", pptable->MinVoltageSoc);
+	pr_debug("MaxVoltageGfx = %d\n", pptable->MaxVoltageGfx);
+	pr_debug("MaxVoltageSoc = %d\n", pptable->MaxVoltageSoc);
 
-	pr_info("LoadLineResistanceGfx = %d\n", pptable->LoadLineResistanceGfx);
-	pr_info("LoadLineResistanceSoc = %d\n", pptable->LoadLineResistanceSoc);
+	pr_debug("LoadLineResistanceGfx = %d\n", pptable->LoadLineResistanceGfx);
+	pr_debug("LoadLineResistanceSoc = %d\n", pptable->LoadLineResistanceSoc);
 
-	pr_info("[PPCLK_GFXCLK]\n"
+	pr_debug("[PPCLK_GFXCLK]\n"
 			"  .VoltageMode          = 0x%02x\n"
 			"  .SnapToDiscrete       = 0x%02x\n"
 			"  .NumDiscreteLevels    = 0x%02x\n"
@@ -1530,7 +1530,7 @@ static void arcturus_dump_pptable(struct smu_context *smu)
 			pptable->DpmDescriptor[PPCLK_GFXCLK].SsFmin,
 			pptable->DpmDescriptor[PPCLK_GFXCLK].Padding16);
 
-	pr_info("[PPCLK_VCLK]\n"
+	pr_debug("[PPCLK_VCLK]\n"
 			"  .VoltageMode          = 0x%02x\n"
 			"  .SnapToDiscrete       = 0x%02x\n"
 			"  .NumDiscreteLevels    = 0x%02x\n"
@@ -1551,7 +1551,7 @@ static void arcturus_dump_pptable(struct smu_context *smu)
 			pptable->DpmDescriptor[PPCLK_VCLK].SsFmin,
 			pptable->DpmDescriptor[PPCLK_VCLK].Padding16);
 
-	pr_info("[PPCLK_DCLK]\n"
+	pr_debug("[PPCLK_DCLK]\n"
 			"  .VoltageMode          = 0x%02x\n"
 			"  .SnapToDiscrete       = 0x%02x\n"
 			"  .NumDiscreteLevels    = 0x%02x\n"
@@ -1572,7 +1572,7 @@ static void arcturus_dump_pptable(struct smu_context *smu)
 			pptable->DpmDescriptor[PPCLK_DCLK].SsFmin,
 			pptable->DpmDescriptor[PPCLK_DCLK].Padding16);
 
-	pr_info("[PPCLK_SOCCLK]\n"
+	pr_debug("[PPCLK_SOCCLK]\n"
 			"  .VoltageMode          = 0x%02x\n"
 			"  .SnapToDiscrete       = 0x%02x\n"
 			"  .NumDiscreteLevels    = 0x%02x\n"
@@ -1593,7 +1593,7 @@ static void arcturus_dump_pptable(struct smu_context *smu)
 			pptable->DpmDescriptor[PPCLK_SOCCLK].SsFmin,
 			pptable->DpmDescriptor[PPCLK_SOCCLK].Padding16);
 
-	pr_info("[PPCLK_UCLK]\n"
+	pr_debug("[PPCLK_UCLK]\n"
 			"  .VoltageMode          = 0x%02x\n"
 			"  .SnapToDiscrete       = 0x%02x\n"
 			"  .NumDiscreteLevels    = 0x%02x\n"
@@ -1614,7 +1614,7 @@ static void arcturus_dump_pptable(struct smu_context *smu)
 			pptable->DpmDescriptor[PPCLK_UCLK].SsFmin,
 			pptable->DpmDescriptor[PPCLK_UCLK].Padding16);
 
-	pr_info("[PPCLK_FCLK]\n"
+	pr_debug("[PPCLK_FCLK]\n"
 			"  .VoltageMode          = 0x%02x\n"
 			"  .SnapToDiscrete       = 0x%02x\n"
 			"  .NumDiscreteLevels    = 0x%02x\n"
@@ -1636,255 +1636,255 @@ static void arcturus_dump_pptable(struct smu_context *smu)
 			pptable->DpmDescriptor[PPCLK_FCLK].Padding16);
 
 
-	pr_info("FreqTableGfx\n");
+	pr_debug("FreqTableGfx\n");
 	for (i = 0; i < NUM_GFXCLK_DPM_LEVELS; i++)
-		pr_info("  .[%02d] = %d\n", i, pptable->FreqTableGfx[i]);
+		pr_debug("  .[%02d] = %d\n", i, pptable->FreqTableGfx[i]);
 
-	pr_info("FreqTableVclk\n");
+	pr_debug("FreqTableVclk\n");
 	for (i = 0; i < NUM_VCLK_DPM_LEVELS; i++)
-		pr_info("  .[%02d] = %d\n", i, pptable->FreqTableVclk[i]);
+		pr_debug("  .[%02d] = %d\n", i, pptable->FreqTableVclk[i]);
 
-	pr_info("FreqTableDclk\n");
+	pr_debug("FreqTableDclk\n");
 	for (i = 0; i < NUM_DCLK_DPM_LEVELS; i++)
-		pr_info("  .[%02d] = %d\n", i, pptable->FreqTableDclk[i]);
+		pr_debug("  .[%02d] = %d\n", i, pptable->FreqTableDclk[i]);
 
-	pr_info("FreqTableSocclk\n");
+	pr_debug("FreqTableSocclk\n");
 	for (i = 0; i < NUM_SOCCLK_DPM_LEVELS; i++)
-		pr_info("  .[%02d] = %d\n", i, pptable->FreqTableSocclk[i]);
+		pr_debug("  .[%02d] = %d\n", i, pptable->FreqTableSocclk[i]);
 
-	pr_info("FreqTableUclk\n");
+	pr_debug("FreqTableUclk\n");
 	for (i = 0; i < NUM_UCLK_DPM_LEVELS; i++)
-		pr_info("  .[%02d] = %d\n", i, pptable->FreqTableUclk[i]);
+		pr_debug("  .[%02d] = %d\n", i, pptable->FreqTableUclk[i]);
 
-	pr_info("FreqTableFclk\n");
+	pr_debug("FreqTableFclk\n");
 	for (i = 0; i < NUM_FCLK_DPM_LEVELS; i++)
-		pr_info("  .[%02d] = %d\n", i, pptable->FreqTableFclk[i]);
+		pr_debug("  .[%02d] = %d\n", i, pptable->FreqTableFclk[i]);
 
-	pr_info("Mp0clkFreq\n");
+	pr_debug("Mp0clkFreq\n");
 	for (i = 0; i < NUM_MP0CLK_DPM_LEVELS; i++)
-		pr_info("  .[%d] = %d\n", i, pptable->Mp0clkFreq[i]);
+		pr_debug("  .[%d] = %d\n", i, pptable->Mp0clkFreq[i]);
 
-	pr_info("Mp0DpmVoltage\n");
+	pr_debug("Mp0DpmVoltage\n");
 	for (i = 0; i < NUM_MP0CLK_DPM_LEVELS; i++)
-		pr_info("  .[%d] = %d\n", i, pptable->Mp0DpmVoltage[i]);
+		pr_debug("  .[%d] = %d\n", i, pptable->Mp0DpmVoltage[i]);
 
-	pr_info("GfxclkFidle = 0x%x\n", pptable->GfxclkFidle);
-	pr_info("GfxclkSlewRate = 0x%x\n", pptable->GfxclkSlewRate);
-	pr_info("Padding567[0] = 0x%x\n", pptable->Padding567[0]);
-	pr_info("Padding567[1] = 0x%x\n", pptable->Padding567[1]);
-	pr_info("Padding567[2] = 0x%x\n", pptable->Padding567[2]);
-	pr_info("Padding567[3] = 0x%x\n", pptable->Padding567[3]);
-	pr_info("GfxclkDsMaxFreq = %d\n", pptable->GfxclkDsMaxFreq);
-	pr_info("GfxclkSource = 0x%x\n", pptable->GfxclkSource);
-	pr_info("Padding456 = 0x%x\n", pptable->Padding456);
+	pr_debug("GfxclkFidle = 0x%x\n", pptable->GfxclkFidle);
+	pr_debug("GfxclkSlewRate = 0x%x\n", pptable->GfxclkSlewRate);
+	pr_debug("Padding567[0] = 0x%x\n", pptable->Padding567[0]);
+	pr_debug("Padding567[1] = 0x%x\n", pptable->Padding567[1]);
+	pr_debug("Padding567[2] = 0x%x\n", pptable->Padding567[2]);
+	pr_debug("Padding567[3] = 0x%x\n", pptable->Padding567[3]);
+	pr_debug("GfxclkDsMaxFreq = %d\n", pptable->GfxclkDsMaxFreq);
+	pr_debug("GfxclkSource = 0x%x\n", pptable->GfxclkSource);
+	pr_debug("Padding456 = 0x%x\n", pptable->Padding456);
 
-	pr_info("EnableTdpm = %d\n", pptable->EnableTdpm);
-	pr_info("TdpmHighHystTemperature = %d\n", pptable->TdpmHighHystTemperature);
-	pr_info("TdpmLowHystTemperature = %d\n", pptable->TdpmLowHystTemperature);
-	pr_info("GfxclkFreqHighTempLimit = %d\n", pptable->GfxclkFreqHighTempLimit);
+	pr_debug("EnableTdpm = %d\n", pptable->EnableTdpm);
+	pr_debug("TdpmHighHystTemperature = %d\n", pptable->TdpmHighHystTemperature);
+	pr_debug("TdpmLowHystTemperature = %d\n", pptable->TdpmLowHystTemperature);
+	pr_debug("GfxclkFreqHighTempLimit = %d\n", pptable->GfxclkFreqHighTempLimit);
 
-	pr_info("FanStopTemp = %d\n", pptable->FanStopTemp);
-	pr_info("FanStartTemp = %d\n", pptable->FanStartTemp);
+	pr_debug("FanStopTemp = %d\n", pptable->FanStopTemp);
+	pr_debug("FanStartTemp = %d\n", pptable->FanStartTemp);
 
-	pr_info("FanGainEdge = %d\n", pptable->FanGainEdge);
-	pr_info("FanGainHotspot = %d\n", pptable->FanGainHotspot);
-	pr_info("FanGainVrGfx = %d\n", pptable->FanGainVrGfx);
-	pr_info("FanGainVrSoc = %d\n", pptable->FanGainVrSoc);
-	pr_info("FanGainVrMem = %d\n", pptable->FanGainVrMem);
-	pr_info("FanGainHbm = %d\n", pptable->FanGainHbm);
+	pr_debug("FanGainEdge = %d\n", pptable->FanGainEdge);
+	pr_debug("FanGainHotspot = %d\n", pptable->FanGainHotspot);
+	pr_debug("FanGainVrGfx = %d\n", pptable->FanGainVrGfx);
+	pr_debug("FanGainVrSoc = %d\n", pptable->FanGainVrSoc);
+	pr_debug("FanGainVrMem = %d\n", pptable->FanGainVrMem);
+	pr_debug("FanGainHbm = %d\n", pptable->FanGainHbm);
 
-	pr_info("FanPwmMin = %d\n", pptable->FanPwmMin);
-	pr_info("FanAcousticLimitRpm = %d\n", pptable->FanAcousticLimitRpm);
-	pr_info("FanThrottlingRpm = %d\n", pptable->FanThrottlingRpm);
-	pr_info("FanMaximumRpm = %d\n", pptable->FanMaximumRpm);
-	pr_info("FanTargetTemperature = %d\n", pptable->FanTargetTemperature);
-	pr_info("FanTargetGfxclk = %d\n", pptable->FanTargetGfxclk);
-	pr_info("FanZeroRpmEnable = %d\n", pptable->FanZeroRpmEnable);
-	pr_info("FanTachEdgePerRev = %d\n", pptable->FanTachEdgePerRev);
-	pr_info("FanTempInputSelect = %d\n", pptable->FanTempInputSelect);
+	pr_debug("FanPwmMin = %d\n", pptable->FanPwmMin);
+	pr_debug("FanAcousticLimitRpm = %d\n", pptable->FanAcousticLimitRpm);
+	pr_debug("FanThrottlingRpm = %d\n", pptable->FanThrottlingRpm);
+	pr_debug("FanMaximumRpm = %d\n", pptable->FanMaximumRpm);
+	pr_debug("FanTargetTemperature = %d\n", pptable->FanTargetTemperature);
+	pr_debug("FanTargetGfxclk = %d\n", pptable->FanTargetGfxclk);
+	pr_debug("FanZeroRpmEnable = %d\n", pptable->FanZeroRpmEnable);
+	pr_debug("FanTachEdgePerRev = %d\n", pptable->FanTachEdgePerRev);
+	pr_debug("FanTempInputSelect = %d\n", pptable->FanTempInputSelect);
 
-	pr_info("FuzzyFan_ErrorSetDelta = %d\n", pptable->FuzzyFan_ErrorSetDelta);
-	pr_info("FuzzyFan_ErrorRateSetDelta = %d\n", pptable->FuzzyFan_ErrorRateSetDelta);
-	pr_info("FuzzyFan_PwmSetDelta = %d\n", pptable->FuzzyFan_PwmSetDelta);
-	pr_info("FuzzyFan_Reserved = %d\n", pptable->FuzzyFan_Reserved);
+	pr_debug("FuzzyFan_ErrorSetDelta = %d\n", pptable->FuzzyFan_ErrorSetDelta);
+	pr_debug("FuzzyFan_ErrorRateSetDelta = %d\n", pptable->FuzzyFan_ErrorRateSetDelta);
+	pr_debug("FuzzyFan_PwmSetDelta = %d\n", pptable->FuzzyFan_PwmSetDelta);
+	pr_debug("FuzzyFan_Reserved = %d\n", pptable->FuzzyFan_Reserved);
 
-	pr_info("OverrideAvfsGb[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->OverrideAvfsGb[AVFS_VOLTAGE_GFX]);
-	pr_info("OverrideAvfsGb[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->OverrideAvfsGb[AVFS_VOLTAGE_SOC]);
-	pr_info("Padding8_Avfs[0] = %d\n", pptable->Padding8_Avfs[0]);
-	pr_info("Padding8_Avfs[1] = %d\n", pptable->Padding8_Avfs[1]);
+	pr_debug("OverrideAvfsGb[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->OverrideAvfsGb[AVFS_VOLTAGE_GFX]);
+	pr_debug("OverrideAvfsGb[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->OverrideAvfsGb[AVFS_VOLTAGE_SOC]);
+	pr_debug("Padding8_Avfs[0] = %d\n", pptable->Padding8_Avfs[0]);
+	pr_debug("Padding8_Avfs[1] = %d\n", pptable->Padding8_Avfs[1]);
 
-	pr_info("dBtcGbGfxPll{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("dBtcGbGfxPll{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->dBtcGbGfxPll.a,
 			pptable->dBtcGbGfxPll.b,
 			pptable->dBtcGbGfxPll.c);
-	pr_info("dBtcGbGfxAfll{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("dBtcGbGfxAfll{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->dBtcGbGfxAfll.a,
 			pptable->dBtcGbGfxAfll.b,
 			pptable->dBtcGbGfxAfll.c);
-	pr_info("dBtcGbSoc{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("dBtcGbSoc{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->dBtcGbSoc.a,
 			pptable->dBtcGbSoc.b,
 			pptable->dBtcGbSoc.c);
 
-	pr_info("qAgingGb[AVFS_VOLTAGE_GFX]{m = 0x%x b = 0x%x}\n",
+	pr_debug("qAgingGb[AVFS_VOLTAGE_GFX]{m = 0x%x b = 0x%x}\n",
 			pptable->qAgingGb[AVFS_VOLTAGE_GFX].m,
 			pptable->qAgingGb[AVFS_VOLTAGE_GFX].b);
-	pr_info("qAgingGb[AVFS_VOLTAGE_SOC]{m = 0x%x b = 0x%x}\n",
+	pr_debug("qAgingGb[AVFS_VOLTAGE_SOC]{m = 0x%x b = 0x%x}\n",
 			pptable->qAgingGb[AVFS_VOLTAGE_SOC].m,
 			pptable->qAgingGb[AVFS_VOLTAGE_SOC].b);
 
-	pr_info("qStaticVoltageOffset[AVFS_VOLTAGE_GFX]{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("qStaticVoltageOffset[AVFS_VOLTAGE_GFX]{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->qStaticVoltageOffset[AVFS_VOLTAGE_GFX].a,
 			pptable->qStaticVoltageOffset[AVFS_VOLTAGE_GFX].b,
 			pptable->qStaticVoltageOffset[AVFS_VOLTAGE_GFX].c);
-	pr_info("qStaticVoltageOffset[AVFS_VOLTAGE_SOC]{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("qStaticVoltageOffset[AVFS_VOLTAGE_SOC]{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->qStaticVoltageOffset[AVFS_VOLTAGE_SOC].a,
 			pptable->qStaticVoltageOffset[AVFS_VOLTAGE_SOC].b,
 			pptable->qStaticVoltageOffset[AVFS_VOLTAGE_SOC].c);
 
-	pr_info("DcTol[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcTol[AVFS_VOLTAGE_GFX]);
-	pr_info("DcTol[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcTol[AVFS_VOLTAGE_SOC]);
+	pr_debug("DcTol[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcTol[AVFS_VOLTAGE_GFX]);
+	pr_debug("DcTol[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcTol[AVFS_VOLTAGE_SOC]);
 
-	pr_info("DcBtcEnabled[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcBtcEnabled[AVFS_VOLTAGE_GFX]);
-	pr_info("DcBtcEnabled[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcBtcEnabled[AVFS_VOLTAGE_SOC]);
-	pr_info("Padding8_GfxBtc[0] = 0x%x\n", pptable->Padding8_GfxBtc[0]);
-	pr_info("Padding8_GfxBtc[1] = 0x%x\n", pptable->Padding8_GfxBtc[1]);
+	pr_debug("DcBtcEnabled[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcBtcEnabled[AVFS_VOLTAGE_GFX]);
+	pr_debug("DcBtcEnabled[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcBtcEnabled[AVFS_VOLTAGE_SOC]);
+	pr_debug("Padding8_GfxBtc[0] = 0x%x\n", pptable->Padding8_GfxBtc[0]);
+	pr_debug("Padding8_GfxBtc[1] = 0x%x\n", pptable->Padding8_GfxBtc[1]);
 
-	pr_info("DcBtcMin[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcBtcMin[AVFS_VOLTAGE_GFX]);
-	pr_info("DcBtcMin[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcBtcMin[AVFS_VOLTAGE_SOC]);
-	pr_info("DcBtcMax[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcBtcMax[AVFS_VOLTAGE_GFX]);
-	pr_info("DcBtcMax[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcBtcMax[AVFS_VOLTAGE_SOC]);
+	pr_debug("DcBtcMin[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcBtcMin[AVFS_VOLTAGE_GFX]);
+	pr_debug("DcBtcMin[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcBtcMin[AVFS_VOLTAGE_SOC]);
+	pr_debug("DcBtcMax[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcBtcMax[AVFS_VOLTAGE_GFX]);
+	pr_debug("DcBtcMax[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcBtcMax[AVFS_VOLTAGE_SOC]);
 
-	pr_info("DcBtcGb[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcBtcGb[AVFS_VOLTAGE_GFX]);
-	pr_info("DcBtcGb[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcBtcGb[AVFS_VOLTAGE_SOC]);
+	pr_debug("DcBtcGb[AVFS_VOLTAGE_GFX] = 0x%x\n", pptable->DcBtcGb[AVFS_VOLTAGE_GFX]);
+	pr_debug("DcBtcGb[AVFS_VOLTAGE_SOC] = 0x%x\n", pptable->DcBtcGb[AVFS_VOLTAGE_SOC]);
 
-	pr_info("XgmiDpmPstates\n");
+	pr_debug("XgmiDpmPstates\n");
 	for (i = 0; i < NUM_XGMI_LEVELS; i++)
-		pr_info("  .[%d] = %d\n", i, pptable->XgmiDpmPstates[i]);
-	pr_info("XgmiDpmSpare[0] = 0x%02x\n", pptable->XgmiDpmSpare[0]);
-	pr_info("XgmiDpmSpare[1] = 0x%02x\n", pptable->XgmiDpmSpare[1]);
+		pr_debug("  .[%d] = %d\n", i, pptable->XgmiDpmPstates[i]);
+	pr_debug("XgmiDpmSpare[0] = 0x%02x\n", pptable->XgmiDpmSpare[0]);
+	pr_debug("XgmiDpmSpare[1] = 0x%02x\n", pptable->XgmiDpmSpare[1]);
 
-	pr_info("VDDGFX_TVmin = %d\n", pptable->VDDGFX_TVmin);
-	pr_info("VDDSOC_TVmin = %d\n", pptable->VDDSOC_TVmin);
-	pr_info("VDDGFX_Vmin_HiTemp = %d\n", pptable->VDDGFX_Vmin_HiTemp);
-	pr_info("VDDGFX_Vmin_LoTemp = %d\n", pptable->VDDGFX_Vmin_LoTemp);
-	pr_info("VDDSOC_Vmin_HiTemp = %d\n", pptable->VDDSOC_Vmin_HiTemp);
-	pr_info("VDDSOC_Vmin_LoTemp = %d\n", pptable->VDDSOC_Vmin_LoTemp);
-	pr_info("VDDGFX_TVminHystersis = %d\n", pptable->VDDGFX_TVminHystersis);
-	pr_info("VDDSOC_TVminHystersis = %d\n", pptable->VDDSOC_TVminHystersis);
+	pr_debug("VDDGFX_TVmin = %d\n", pptable->VDDGFX_TVmin);
+	pr_debug("VDDSOC_TVmin = %d\n", pptable->VDDSOC_TVmin);
+	pr_debug("VDDGFX_Vmin_HiTemp = %d\n", pptable->VDDGFX_Vmin_HiTemp);
+	pr_debug("VDDGFX_Vmin_LoTemp = %d\n", pptable->VDDGFX_Vmin_LoTemp);
+	pr_debug("VDDSOC_Vmin_HiTemp = %d\n", pptable->VDDSOC_Vmin_HiTemp);
+	pr_debug("VDDSOC_Vmin_LoTemp = %d\n", pptable->VDDSOC_Vmin_LoTemp);
+	pr_debug("VDDGFX_TVminHystersis = %d\n", pptable->VDDGFX_TVminHystersis);
+	pr_debug("VDDSOC_TVminHystersis = %d\n", pptable->VDDSOC_TVminHystersis);
 
-	pr_info("DebugOverrides = 0x%x\n", pptable->DebugOverrides);
-	pr_info("ReservedEquation0{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("DebugOverrides = 0x%x\n", pptable->DebugOverrides);
+	pr_debug("ReservedEquation0{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->ReservedEquation0.a,
 			pptable->ReservedEquation0.b,
 			pptable->ReservedEquation0.c);
-	pr_info("ReservedEquation1{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("ReservedEquation1{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->ReservedEquation1.a,
 			pptable->ReservedEquation1.b,
 			pptable->ReservedEquation1.c);
-	pr_info("ReservedEquation2{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("ReservedEquation2{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->ReservedEquation2.a,
 			pptable->ReservedEquation2.b,
 			pptable->ReservedEquation2.c);
-	pr_info("ReservedEquation3{a = 0x%x b = 0x%x c = 0x%x}\n",
+	pr_debug("ReservedEquation3{a = 0x%x b = 0x%x c = 0x%x}\n",
 			pptable->ReservedEquation3.a,
 			pptable->ReservedEquation3.b,
 			pptable->ReservedEquation3.c);
 
-	pr_info("MinVoltageUlvGfx = %d\n", pptable->MinVoltageUlvGfx);
-	pr_info("PaddingUlv = %d\n", pptable->PaddingUlv);
+	pr_debug("MinVoltageUlvGfx = %d\n", pptable->MinVoltageUlvGfx);
+	pr_debug("PaddingUlv = %d\n", pptable->PaddingUlv);
 
-	pr_info("TotalPowerConfig = %d\n", pptable->TotalPowerConfig);
-	pr_info("TotalPowerSpare1 = %d\n", pptable->TotalPowerSpare1);
-	pr_info("TotalPowerSpare2 = %d\n", pptable->TotalPowerSpare2);
+	pr_debug("TotalPowerConfig = %d\n", pptable->TotalPowerConfig);
+	pr_debug("TotalPowerSpare1 = %d\n", pptable->TotalPowerSpare1);
+	pr_debug("TotalPowerSpare2 = %d\n", pptable->TotalPowerSpare2);
 
-	pr_info("PccThresholdLow = %d\n", pptable->PccThresholdLow);
-	pr_info("PccThresholdHigh = %d\n", pptable->PccThresholdHigh);
+	pr_debug("PccThresholdLow = %d\n", pptable->PccThresholdLow);
+	pr_debug("PccThresholdHigh = %d\n", pptable->PccThresholdHigh);
 
-	pr_info("Board Parameters:\n");
-	pr_info("MaxVoltageStepGfx = 0x%x\n", pptable->MaxVoltageStepGfx);
-	pr_info("MaxVoltageStepSoc = 0x%x\n", pptable->MaxVoltageStepSoc);
+	pr_debug("Board Parameters:\n");
+	pr_debug("MaxVoltageStepGfx = 0x%x\n", pptable->MaxVoltageStepGfx);
+	pr_debug("MaxVoltageStepSoc = 0x%x\n", pptable->MaxVoltageStepSoc);
 
-	pr_info("VddGfxVrMapping = 0x%x\n", pptable->VddGfxVrMapping);
-	pr_info("VddSocVrMapping = 0x%x\n", pptable->VddSocVrMapping);
-	pr_info("VddMemVrMapping = 0x%x\n", pptable->VddMemVrMapping);
-	pr_info("BoardVrMapping = 0x%x\n", pptable->BoardVrMapping);
+	pr_debug("VddGfxVrMapping = 0x%x\n", pptable->VddGfxVrMapping);
+	pr_debug("VddSocVrMapping = 0x%x\n", pptable->VddSocVrMapping);
+	pr_debug("VddMemVrMapping = 0x%x\n", pptable->VddMemVrMapping);
+	pr_debug("BoardVrMapping = 0x%x\n", pptable->BoardVrMapping);
 
-	pr_info("GfxUlvPhaseSheddingMask = 0x%x\n", pptable->GfxUlvPhaseSheddingMask);
-	pr_info("ExternalSensorPresent = 0x%x\n", pptable->ExternalSensorPresent);
+	pr_debug("GfxUlvPhaseSheddingMask = 0x%x\n", pptable->GfxUlvPhaseSheddingMask);
+	pr_debug("ExternalSensorPresent = 0x%x\n", pptable->ExternalSensorPresent);
 
-	pr_info("GfxMaxCurrent = 0x%x\n", pptable->GfxMaxCurrent);
-	pr_info("GfxOffset = 0x%x\n", pptable->GfxOffset);
-	pr_info("Padding_TelemetryGfx = 0x%x\n", pptable->Padding_TelemetryGfx);
+	pr_debug("GfxMaxCurrent = 0x%x\n", pptable->GfxMaxCurrent);
+	pr_debug("GfxOffset = 0x%x\n", pptable->GfxOffset);
+	pr_debug("Padding_TelemetryGfx = 0x%x\n", pptable->Padding_TelemetryGfx);
 
-	pr_info("SocMaxCurrent = 0x%x\n", pptable->SocMaxCurrent);
-	pr_info("SocOffset = 0x%x\n", pptable->SocOffset);
-	pr_info("Padding_TelemetrySoc = 0x%x\n", pptable->Padding_TelemetrySoc);
+	pr_debug("SocMaxCurrent = 0x%x\n", pptable->SocMaxCurrent);
+	pr_debug("SocOffset = 0x%x\n", pptable->SocOffset);
+	pr_debug("Padding_TelemetrySoc = 0x%x\n", pptable->Padding_TelemetrySoc);
 
-	pr_info("MemMaxCurrent = 0x%x\n", pptable->MemMaxCurrent);
-	pr_info("MemOffset = 0x%x\n", pptable->MemOffset);
-	pr_info("Padding_TelemetryMem = 0x%x\n", pptable->Padding_TelemetryMem);
+	pr_debug("MemMaxCurrent = 0x%x\n", pptable->MemMaxCurrent);
+	pr_debug("MemOffset = 0x%x\n", pptable->MemOffset);
+	pr_debug("Padding_TelemetryMem = 0x%x\n", pptable->Padding_TelemetryMem);
 
-	pr_info("BoardMaxCurrent = 0x%x\n", pptable->BoardMaxCurrent);
-	pr_info("BoardOffset = 0x%x\n", pptable->BoardOffset);
-	pr_info("Padding_TelemetryBoardInput = 0x%x\n", pptable->Padding_TelemetryBoardInput);
+	pr_debug("BoardMaxCurrent = 0x%x\n", pptable->BoardMaxCurrent);
+	pr_debug("BoardOffset = 0x%x\n", pptable->BoardOffset);
+	pr_debug("Padding_TelemetryBoardInput = 0x%x\n", pptable->Padding_TelemetryBoardInput);
 
-	pr_info("VR0HotGpio = %d\n", pptable->VR0HotGpio);
-	pr_info("VR0HotPolarity = %d\n", pptable->VR0HotPolarity);
-	pr_info("VR1HotGpio = %d\n", pptable->VR1HotGpio);
-	pr_info("VR1HotPolarity = %d\n", pptable->VR1HotPolarity);
+	pr_debug("VR0HotGpio = %d\n", pptable->VR0HotGpio);
+	pr_debug("VR0HotPolarity = %d\n", pptable->VR0HotPolarity);
+	pr_debug("VR1HotGpio = %d\n", pptable->VR1HotGpio);
+	pr_debug("VR1HotPolarity = %d\n", pptable->VR1HotPolarity);
 
-	pr_info("PllGfxclkSpreadEnabled = %d\n", pptable->PllGfxclkSpreadEnabled);
-	pr_info("PllGfxclkSpreadPercent = %d\n", pptable->PllGfxclkSpreadPercent);
-	pr_info("PllGfxclkSpreadFreq = %d\n", pptable->PllGfxclkSpreadFreq);
+	pr_debug("PllGfxclkSpreadEnabled = %d\n", pptable->PllGfxclkSpreadEnabled);
+	pr_debug("PllGfxclkSpreadPercent = %d\n", pptable->PllGfxclkSpreadPercent);
+	pr_debug("PllGfxclkSpreadFreq = %d\n", pptable->PllGfxclkSpreadFreq);
 
-	pr_info("UclkSpreadEnabled = %d\n", pptable->UclkSpreadEnabled);
-	pr_info("UclkSpreadPercent = %d\n", pptable->UclkSpreadPercent);
-	pr_info("UclkSpreadFreq = %d\n", pptable->UclkSpreadFreq);
+	pr_debug("UclkSpreadEnabled = %d\n", pptable->UclkSpreadEnabled);
+	pr_debug("UclkSpreadPercent = %d\n", pptable->UclkSpreadPercent);
+	pr_debug("UclkSpreadFreq = %d\n", pptable->UclkSpreadFreq);
 
-	pr_info("FclkSpreadEnabled = %d\n", pptable->FclkSpreadEnabled);
-	pr_info("FclkSpreadPercent = %d\n", pptable->FclkSpreadPercent);
-	pr_info("FclkSpreadFreq = %d\n", pptable->FclkSpreadFreq);
+	pr_debug("FclkSpreadEnabled = %d\n", pptable->FclkSpreadEnabled);
+	pr_debug("FclkSpreadPercent = %d\n", pptable->FclkSpreadPercent);
+	pr_debug("FclkSpreadFreq = %d\n", pptable->FclkSpreadFreq);
 
-	pr_info("FllGfxclkSpreadEnabled = %d\n", pptable->FllGfxclkSpreadEnabled);
-	pr_info("FllGfxclkSpreadPercent = %d\n", pptable->FllGfxclkSpreadPercent);
-	pr_info("FllGfxclkSpreadFreq = %d\n", pptable->FllGfxclkSpreadFreq);
+	pr_debug("FllGfxclkSpreadEnabled = %d\n", pptable->FllGfxclkSpreadEnabled);
+	pr_debug("FllGfxclkSpreadPercent = %d\n", pptable->FllGfxclkSpreadPercent);
+	pr_debug("FllGfxclkSpreadFreq = %d\n", pptable->FllGfxclkSpreadFreq);
 
 	for (i = 0; i < NUM_I2C_CONTROLLERS; i++) {
-		pr_info("I2cControllers[%d]:\n", i);
-		pr_info("                   .Enabled = %d\n",
+		pr_debug("I2cControllers[%d]:\n", i);
+		pr_debug("                   .Enabled = %d\n",
 				pptable->I2cControllers[i].Enabled);
-		pr_info("                   .SlaveAddress = 0x%x\n",
+		pr_debug("                   .SlaveAddress = 0x%x\n",
 				pptable->I2cControllers[i].SlaveAddress);
-		pr_info("                   .ControllerPort = %d\n",
+		pr_debug("                   .ControllerPort = %d\n",
 				pptable->I2cControllers[i].ControllerPort);
-		pr_info("                   .ControllerName = %d\n",
+		pr_debug("                   .ControllerName = %d\n",
 				pptable->I2cControllers[i].ControllerName);
-		pr_info("                   .ThermalThrottler = %d\n",
+		pr_debug("                   .ThermalThrottler = %d\n",
 				pptable->I2cControllers[i].ThermalThrotter);
-		pr_info("                   .I2cProtocol = %d\n",
+		pr_debug("                   .I2cProtocol = %d\n",
 				pptable->I2cControllers[i].I2cProtocol);
-		pr_info("                   .Speed = %d\n",
+		pr_debug("                   .Speed = %d\n",
 				pptable->I2cControllers[i].Speed);
 	}
 
-	pr_info("MemoryChannelEnabled = %d\n", pptable->MemoryChannelEnabled);
-	pr_info("DramBitWidth = %d\n", pptable->DramBitWidth);
+	pr_debug("MemoryChannelEnabled = %d\n", pptable->MemoryChannelEnabled);
+	pr_debug("DramBitWidth = %d\n", pptable->DramBitWidth);
 
-	pr_info("TotalBoardPower = %d\n", pptable->TotalBoardPower);
+	pr_debug("TotalBoardPower = %d\n", pptable->TotalBoardPower);
 
-	pr_info("XgmiLinkSpeed\n");
+	pr_debug("XgmiLinkSpeed\n");
 	for (i = 0; i < NUM_XGMI_PSTATE_LEVELS; i++)
-		pr_info("  .[%d] = %d\n", i, pptable->XgmiLinkSpeed[i]);
-	pr_info("XgmiLinkWidth\n");
+		pr_debug("  .[%d] = %d\n", i, pptable->XgmiLinkSpeed[i]);
+	pr_debug("XgmiLinkWidth\n");
 	for (i = 0; i < NUM_XGMI_PSTATE_LEVELS; i++)
-		pr_info("  .[%d] = %d\n", i, pptable->XgmiLinkWidth[i]);
-	pr_info("XgmiFclkFreq\n");
+		pr_debug("  .[%d] = %d\n", i, pptable->XgmiLinkWidth[i]);
+	pr_debug("XgmiFclkFreq\n");
 	for (i = 0; i < NUM_XGMI_PSTATE_LEVELS; i++)
-		pr_info("  .[%d] = %d\n", i, pptable->XgmiFclkFreq[i]);
-	pr_info("XgmiSocVoltage\n");
+		pr_debug("  .[%d] = %d\n", i, pptable->XgmiFclkFreq[i]);
+	pr_debug("XgmiSocVoltage\n");
 	for (i = 0; i < NUM_XGMI_PSTATE_LEVELS; i++)
-		pr_info("  .[%d] = %d\n", i, pptable->XgmiSocVoltage[i]);
+		pr_debug("  .[%d] = %d\n", i, pptable->XgmiSocVoltage[i]);
 
 }
 

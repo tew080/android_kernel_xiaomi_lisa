@@ -703,7 +703,7 @@ static int __init cstate_init(void)
 		err = perf_pmu_register(&cstate_core_pmu, cstate_core_pmu.name, -1);
 		if (err) {
 			has_cstate_core = false;
-			pr_info("Failed to register cstate core pmu\n");
+			pr_debug("Failed to register cstate core pmu\n");
 			cstate_cleanup();
 			return err;
 		}
@@ -719,7 +719,7 @@ static int __init cstate_init(void)
 		}
 		if (err) {
 			has_cstate_pkg = false;
-			pr_info("Failed to register cstate pkg pmu\n");
+			pr_debug("Failed to register cstate pkg pmu\n");
 			cstate_cleanup();
 			return err;
 		}

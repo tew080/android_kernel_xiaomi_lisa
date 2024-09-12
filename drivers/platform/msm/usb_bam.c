@@ -1226,7 +1226,7 @@ static int usb_bam_init(struct platform_device *pdev)
 	if (dev && dev->parent && device_property_present(dev->parent, "iommus")
 		&& !device_property_present(dev->parent,
 						"qcom,smmu-s1-bypass")) {
-		pr_info("%s: setting SPS_BAM_SMMU_EN flag with (%s)\n",
+		pr_debug("%s: setting SPS_BAM_SMMU_EN flag with (%s)\n",
 						__func__, dev_name(dev));
 		props.options |= SPS_BAM_SMMU_EN;
 	}

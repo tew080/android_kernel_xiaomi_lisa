@@ -38,7 +38,7 @@ static int asids_init(void)
 	asid_info.active = &active_asids;
 	asid_info.reserved = &reserved_asids;
 
-	pr_info("ASID allocator initialised with %lu entries\n",
+	pr_debug("ASID allocator initialised with %lu entries\n",
 		NUM_CTXT_ASIDS(&asid_info));
 
 	return 0;

@@ -834,7 +834,7 @@ void __init smp_detect_cpus(void)
 		else
 			s_cpus += smp_cpu_mtid + 1;
 	}
-	pr_info("%d configured CPUs, %d standby CPUs\n", c_cpus, s_cpus);
+	pr_debug("%d configured CPUs, %d standby CPUs\n", c_cpus, s_cpus);
 
 	/* Add CPUs present at boot */
 	get_online_cpus();

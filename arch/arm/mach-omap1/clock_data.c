@@ -814,7 +814,7 @@ int __init omap1_clk_init(void)
 	if (cpu_is_omap16xx() && crystal_type == 2)
 		ck_ref.rate = 19200000;
 
-	pr_info("Clocks: ARM_SYSST: 0x%04x DPLL_CTL: 0x%04x ARM_CKCTL: 0x%04x\n",
+	pr_debug("Clocks: ARM_SYSST: 0x%04x DPLL_CTL: 0x%04x ARM_CKCTL: 0x%04x\n",
 		omap_readw(ARM_SYSST), omap_readw(DPLL_CTL),
 		omap_readw(ARM_CKCTL));
 

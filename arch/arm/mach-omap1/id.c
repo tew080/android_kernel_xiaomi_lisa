@@ -197,7 +197,7 @@ void __init omap_check_revision(void)
 		printk(KERN_INFO "Unknown OMAP cpu type: 0x%02x\n", cpu_type);
 	}
 
-	pr_info("OMAP%04x", omap_revision >> 16);
+	pr_debug("OMAP%04x", omap_revision >> 16);
 	if ((omap_revision >> 8) & 0xff)
 		pr_cont("%x", (omap_revision >> 8) & 0xff);
 	pr_cont(" revision %i handled as %02xxx id: %08x%08x\n",

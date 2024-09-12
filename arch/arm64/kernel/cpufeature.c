@@ -1157,7 +1157,7 @@ static bool has_hw_dbm(const struct arm64_cpu_capabilities *cap,
 	 */
 	if (!detected && cpu_can_use_dbm(cap)) {
 		detected = true;
-		pr_info("detected: Hardware dirty bit management\n");
+		pr_debug("detected: Hardware dirty bit management\n");
 	}
 
 	return true;
@@ -1186,7 +1186,7 @@ bool cpu_has_amu_feat(int cpu)
 static void cpu_amu_enable(struct arm64_cpu_capabilities const *cap)
 {
 	if (has_cpuid_feature(cap, SCOPE_LOCAL_CPU)) {
-		pr_info("detected CPU%d: Activity Monitors Unit (AMU)\n",
+		pr_debug("detected CPU%d: Activity Monitors Unit (AMU)\n",
 			smp_processor_id());
 		cpumask_set_cpu(smp_processor_id(), &amu_cpus);
 	}
@@ -1869,7 +1869,7 @@ static void update_cpu_capabilities(u16 scope_mask)
 			continue;
 
 		if (caps->desc)
-			pr_info("detected: %s\n", caps->desc);
+			pr_debug("detected: %s\n", caps->desc);
 		cpus_set_cap(caps->capability);
 
 		if ((scope_mask & SCOPE_BOOT_CPU) && (caps->type & SCOPE_BOOT_CPU))
@@ -2184,7 +2184,7 @@ void __init setup_cpu_features(void)
 	}
 
 	if (system_uses_ttbr0_pan())
-		pr_info("emulated: Privileged Access Never (PAN) using TTBR0_EL1 switching\n");
+		pr_debug("emulated: Privileged Access Never (PAN) using TTBR0_EL1 switching\n");
 
 	sve_setup();
 	minsigstksz_setup();

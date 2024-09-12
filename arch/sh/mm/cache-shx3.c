@@ -30,7 +30,7 @@ void __init shx3_cache_init(void)
 		boot_cpu_data.icache.n_aliases = 0;
 		boot_cpu_data.dcache.n_aliases = 0;
 
-		pr_info("Enabling hardware synonym avoidance\n");
+		pr_debug("Enabling hardware synonym avoidance\n");
 	}
 
 #ifdef CONFIG_SMP

@@ -31,7 +31,7 @@ static void __init mp_sfi_register_lapic(u8 id)
 		return;
 	}
 
-	pr_info("registering lapic[%d]\n", id);
+	pr_debug("registering lapic[%d]\n", id);
 
 	generic_processor_info(id, GET_APIC_VERSION(apic_read(APIC_LVR)));
 }

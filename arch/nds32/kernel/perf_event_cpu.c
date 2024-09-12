@@ -1058,7 +1058,7 @@ int nds32_pmu_register(struct nds32_pmu *nds32_pmu, int type)
 {
 	nds32_init(nds32_pmu);
 	pm_runtime_enable(&nds32_pmu->plat_device->dev);
-	pr_info("enabled with %s PMU driver, %d counters available\n",
+	pr_debug("enabled with %s PMU driver, %d counters available\n",
 		nds32_pmu->name, nds32_pmu->num_events);
 	return perf_pmu_register(&nds32_pmu->pmu, nds32_pmu->name, type);
 }

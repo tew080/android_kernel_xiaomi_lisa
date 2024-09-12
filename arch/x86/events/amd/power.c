@@ -292,7 +292,7 @@ static int __init amd_power_pmu_init(void)
 		return ret;
 	}
 
-	pr_info("AMD Power PMU detected\n");
+	pr_debug("AMD Power PMU detected\n");
 	return ret;
 }
 module_init(amd_power_pmu_init);

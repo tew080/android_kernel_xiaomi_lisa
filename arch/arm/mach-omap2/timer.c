@@ -416,7 +416,7 @@ static void __init dmtimer_clkevt_init_common(struct dmtimer_clockevent *clkevt,
 			omap_hwmod_lookup(clkevt->dev.name);
 	}
 
-	pr_info("OMAP clockevent source: %s at %lu Hz\n", clkevt->dev.name,
+	pr_debug("OMAP clockevent source: %s at %lu Hz\n", clkevt->dev.name,
 		timer->rate);
 }
 
@@ -547,7 +547,7 @@ static void __init omap2_gptimer_clocksource_init(int gptimer_id,
 		pr_err("Could not register clocksource %s\n",
 			clocksource_gpt.name);
 	else
-		pr_info("OMAP clocksource: %s at %lu Hz\n",
+		pr_debug("OMAP clocksource: %s at %lu Hz\n",
 			clocksource_gpt.name, clksrc.rate);
 }
 

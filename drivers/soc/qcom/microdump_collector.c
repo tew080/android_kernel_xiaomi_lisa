@@ -46,7 +46,7 @@ static int microdump_modem_notifier_nb(struct notifier_block *nb,
 				, SMEM_SSR_REASON_MSS0, &size_reason);
 
 	if (IS_ERR_OR_NULL(crash_reason)) {
-		pr_info("%s: smem %d not available\n",
+		pr_debug("%s: smem %d not available\n",
 				__func__, SMEM_SSR_REASON_MSS0);
 		goto out;
 	}
@@ -58,7 +58,7 @@ static int microdump_modem_notifier_nb(struct notifier_block *nb,
 				, SMEM_SSR_DATA_MSS0, &size_data);
 
 	if (IS_ERR_OR_NULL(crash_data)) {
-		pr_info("%s: smem %d not available\n",
+		pr_debug("%s: smem %d not available\n",
 				__func__, SMEM_SSR_DATA_MSS0);
 		goto out;
 	}
@@ -68,7 +68,7 @@ static int microdump_modem_notifier_nb(struct notifier_block *nb,
 
 	ret = do_ramdump(drv->microdump_dev, segment, 2);
 	if (ret)
-		pr_info("%s: do_ramdump() failed\n", __func__);
+		pr_debug("%s: do_ramdump() failed\n", __func__);
 
 out:
 	return NOTIFY_OK;

@@ -5,7 +5,7 @@
 extern int pat_debug_enable;
 
 #define dprintk(fmt, arg...) \
-	do { if (pat_debug_enable) pr_info("x86/PAT: " fmt, ##arg); } while (0)
+	do { if (pat_debug_enable) pr_debug("x86/PAT: " fmt, ##arg); } while (0)
 
 struct memtype {
 	u64			start;

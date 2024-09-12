@@ -2139,7 +2139,7 @@ static void pvr2_hdw_setup_low(struct pvr2_hdw *hdw)
 	if (le16_to_cpu(hdw->usb_dev->descriptor.idVendor) == 0x2040 &&
 	    (le16_to_cpu(hdw->usb_dev->descriptor.idProduct) == 0x7502 ||
 	     le16_to_cpu(hdw->usb_dev->descriptor.idProduct) == 0x7510)) {
-		pr_info("%s(): resetting 160xxx demod\n", __func__);
+		pr_debug("%s(): resetting 160xxx demod\n", __func__);
 		/* TODO: not sure this is proper place to reset once only */
 		pvr2_issue_simple_cmd(hdw,
 				      FX2CMD_HCW_DEMOD_RESET_PIN |
@@ -3308,12 +3308,12 @@ void pvr2_hdw_trigger_module_log(struct pvr2_hdw *hdw)
 	int nr = pvr2_hdw_get_unit_number(hdw);
 	LOCK_TAKE(hdw->big_lock);
 	do {
-		pr_info("pvrusb2: =================  START STATUS CARD #%d  =================\n", nr);
+		pr_debug("pvrusb2: =================  START STATUS CARD #%d  =================\n", nr);
 		v4l2_device_call_all(&hdw->v4l2_dev, 0, core, log_status);
 		pvr2_trace(PVR2_TRACE_INFO,"cx2341x config:");
 		cx2341x_log_status(&hdw->enc_ctl_state, "pvrusb2");
 		pvr2_hdw_state_log_state(hdw);
-		pr_info("pvrusb2: ==================  END STATUS CARD #%d  ==================\n", nr);
+		pr_debug("pvrusb2: ==================  END STATUS CARD #%d  ==================\n", nr);
 	} while (0);
 	LOCK_GIVE(hdw->big_lock);
 }
@@ -4879,7 +4879,7 @@ static void pvr2_hdw_state_log_state(struct pvr2_hdw *hdw)
 	for (idx = 0; ; idx++) {
 		ccnt = pvr2_hdw_report_unlocked(hdw,idx,buf,sizeof(buf));
 		if (!ccnt) break;
-		pr_info("%s %.*s\n", hdw->name, ccnt, buf);
+		pr_debug("%s %.*s\n", hdw->name, ccnt, buf);
 	}
 	ccnt = pvr2_hdw_report_clients(hdw, buf, sizeof(buf));
 	if (ccnt >= sizeof(buf))
@@ -4891,7 +4891,7 @@ static void pvr2_hdw_state_log_state(struct pvr2_hdw *hdw)
 		while ((lcnt + ucnt < ccnt) && (buf[lcnt + ucnt] != '\n')) {
 			lcnt++;
 		}
-		pr_info("%s %.*s\n", hdw->name, lcnt, buf + ucnt);
+		pr_debug("%s %.*s\n", hdw->name, lcnt, buf + ucnt);
 		ucnt += lcnt + 1;
 	}
 }

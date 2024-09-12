@@ -501,7 +501,7 @@ static int qpnp_vibrator_ldo_probe(struct platform_device *pdev)
 		}
 	}
 
-	pr_info("Vibrator LDO successfully registered: uV = %d, overdrive = %s\n",
+	pr_debug("Vibrator LDO successfully registered: uV = %d, overdrive = %s\n",
 		chip->vmax_uV,
 		chip->disable_overdrive ? "disabled" : "enabled");
 	return 0;

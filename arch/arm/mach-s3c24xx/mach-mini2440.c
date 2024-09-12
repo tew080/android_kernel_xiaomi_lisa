@@ -614,13 +614,13 @@ static void __init mini2440_parse_features(
 		switch (f) {
 		case '0'...'9':	/* tft screen */
 			if (features->done & FEATURE_SCREEN) {
-				pr_info("MINI2440: '%c' ignored, screen type already set\n",
+				pr_debug("MINI2440: '%c' ignored, screen type already set\n",
 					f);
 			} else {
 				int li = f - '0';
 
 				if (li >= ARRAY_SIZE(mini2440_lcd_cfg))
-					pr_info("MINI2440: '%c' out of range LCD mode\n",
+					pr_debug("MINI2440: '%c' out of range LCD mode\n",
 						f);
 				else {
 					features->optional[features->count++] =
@@ -632,7 +632,7 @@ static void __init mini2440_parse_features(
 			break;
 		case 'b':
 			if (features->done & FEATURE_BACKLIGHT)
-				pr_info("MINI2440: '%c' ignored, backlight already set\n",
+				pr_debug("MINI2440: '%c' ignored, backlight already set\n",
 					f);
 			else {
 				features->optional[features->count++] =
@@ -641,12 +641,12 @@ static void __init mini2440_parse_features(
 			features->done |= FEATURE_BACKLIGHT;
 			break;
 		case 't':
-			pr_info("MINI2440: '%c' ignored, touchscreen not compiled in\n",
+			pr_debug("MINI2440: '%c' ignored, touchscreen not compiled in\n",
 				f);
 			break;
 		case 'c':
 			if (features->done & FEATURE_CAMERA)
-				pr_info("MINI2440: '%c' ignored, camera already registered\n",
+				pr_debug("MINI2440: '%c' ignored, camera already registered\n",
 					f);
 			else
 				features->optional[features->count++] =
@@ -662,7 +662,7 @@ static void __init mini2440_init(void)
 	struct mini2440_features_t features = { 0 };
 	int i;
 
-	pr_info("MINI2440: Option string mini2440=%s\n",
+	pr_debug("MINI2440: Option string mini2440=%s\n",
 			mini2440_features_str);
 
 	/* Parse the feature string */
@@ -691,7 +691,7 @@ static void __init mini2440_init(void)
 		mini2440_fb_info.displays =
 			&mini2440_lcd_cfg[features.lcd_index];
 
-		pr_info("MINI2440: LCD");
+		pr_debug("MINI2440: LCD");
 		for (li = 0; li < ARRAY_SIZE(mini2440_lcd_cfg); li++)
 			if (li == features.lcd_index)
 				pr_cont(" [%d:%dx%d]", li,

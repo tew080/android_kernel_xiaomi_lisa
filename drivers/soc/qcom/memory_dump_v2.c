@@ -715,7 +715,7 @@ static int init_memory_dump(void *dump_vaddr, phys_addr_t phys_addr,
 
 	/* Ensure write to imem_base is complete before unmapping */
 	mb();
-	pr_info("MSM Memory Dump base table set up\n");
+	pr_debug("MSM Memory Dump base table set up\n");
 
 	iounmap(imem_base);
 	dump_vaddr +=  sizeof(*table);
@@ -729,7 +729,7 @@ static int init_memory_dump(void *dump_vaddr, phys_addr_t phys_addr,
 		pr_err("mem dump apps data table register failed\n");
 		return ret;
 	}
-	pr_info("MSM Memory Dump apps data table set up\n");
+	pr_debug("MSM Memory Dump apps data table set up\n");
 
 	return 0;
 }

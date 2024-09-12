@@ -68,7 +68,7 @@ void dvma_print (unsigned long dvma_addr)
 
 	index = dvma_addr >> DVMA_PAGE_SHIFT;
 
-	pr_info("idx %lx dvma_addr %08lx paddr %08lx\n", index, dvma_addr,
+	pr_debug("idx %lx dvma_addr %08lx paddr %08lx\n", index, dvma_addr,
 		dvma_entry_paddr(index));
 }
 #endif
@@ -154,7 +154,7 @@ inline int dvma_map_iommu(unsigned long kaddr, unsigned long baddr,
 	for(; index < end ; index++) {
 //		if(dvma_entry_use(index))
 //			BUG();
-//		pr_info("mapping pa %lx to ba %lx\n", __pa(kaddr),
+//		pr_debug("mapping pa %lx to ba %lx\n", __pa(kaddr),
 //			index << DVMA_PAGE_SHIFT);
 
 		dvma_entry_set(index, __pa(kaddr));
@@ -187,7 +187,7 @@ void dvma_unmap_iommu(unsigned long baddr, int len)
 			 index << DVMA_PAGE_SHIFT);
 #if 0
 		if(!dvma_entry_use(index))
-			pr_info("dvma_unmap freeing unused entry %04x\n",
+			pr_debug("dvma_unmap freeing unused entry %04x\n",
 				index);
 		else
 			dvma_entry_dec(index);

@@ -869,7 +869,7 @@ EXPORT_SYMBOL(uaccess_flush_key);
 
 static int __init handle_no_rfi_flush(char *p)
 {
-	pr_info("rfi-flush: disabled on command line.");
+	pr_debug("rfi-flush: disabled on command line.");
 	no_rfi_flush = true;
 	return 0;
 }
@@ -877,7 +877,7 @@ early_param("no_rfi_flush", handle_no_rfi_flush);
 
 static int __init handle_no_entry_flush(char *p)
 {
-	pr_info("entry-flush: disabled on command line.");
+	pr_debug("entry-flush: disabled on command line.");
 	no_entry_flush = true;
 	return 0;
 }
@@ -885,7 +885,7 @@ early_param("no_entry_flush", handle_no_entry_flush);
 
 static int __init handle_no_uaccess_flush(char *p)
 {
-	pr_info("uaccess-flush: disabled on command line.");
+	pr_debug("uaccess-flush: disabled on command line.");
 	no_uaccess_flush = true;
 	return 0;
 }
@@ -897,7 +897,7 @@ early_param("no_uaccess_flush", handle_no_uaccess_flush);
  */
 static int __init handle_no_pti(char *p)
 {
-	pr_info("rfi-flush: disabling due to 'nopti' on command line.\n");
+	pr_debug("rfi-flush: disabling due to 'nopti' on command line.\n");
 	handle_no_rfi_flush(NULL);
 	return 0;
 }
@@ -994,15 +994,15 @@ static void __ref init_fallback_flush(void)
 void setup_rfi_flush(enum l1d_flush_type types, bool enable)
 {
 	if (types & L1D_FLUSH_FALLBACK) {
-		pr_info("rfi-flush: fallback displacement flush available\n");
+		pr_debug("rfi-flush: fallback displacement flush available\n");
 		init_fallback_flush();
 	}
 
 	if (types & L1D_FLUSH_ORI)
-		pr_info("rfi-flush: ori type flush available\n");
+		pr_debug("rfi-flush: ori type flush available\n");
 
 	if (types & L1D_FLUSH_MTTRIG)
-		pr_info("rfi-flush: mttrig type flush available\n");
+		pr_debug("rfi-flush: mttrig type flush available\n");
 
 	enabled_flush_types = types;
 

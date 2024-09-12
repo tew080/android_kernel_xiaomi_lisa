@@ -927,12 +927,12 @@ qtnf_cmd_resp_proc_hw_info(struct qtnf_bus *bus,
 		tlv = (struct qlink_tlv_hdr *)(tlv->val + tlv_value_len);
 	}
 
-	pr_info("fw_version=%d, MACs map %#x, chains Tx=%u Rx=%u, capab=0x%x\n",
+	pr_debug("fw_version=%d, MACs map %#x, chains Tx=%u Rx=%u, capab=0x%x\n",
 		hwinfo->fw_ver, hwinfo->mac_bitmap,
 		hwinfo->total_tx_chain, hwinfo->total_rx_chain,
 		hwinfo->hw_capab);
 
-	pr_info("\nBuild name:            %s"  \
+	pr_debug("\nBuild name:            %s"  \
 		"\nBuild revision:        %s"  \
 		"\nBuild type:            %s"  \
 		"\nBuild label:           %s"  \

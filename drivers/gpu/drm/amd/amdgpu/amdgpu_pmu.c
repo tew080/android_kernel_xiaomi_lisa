@@ -235,7 +235,7 @@ static int init_pmu_by_type(struct amdgpu_device *adev,
 		return ret;
 	}
 
-	pr_info("Detected AMDGPU %s Counters. # of Counters = %d.\n",
+	pr_debug("Detected AMDGPU %s Counters. # of Counters = %d.\n",
 			pmu_type_name, num_counters);
 
 	list_add_tail(&pmu_entry->entry, &amdgpu_pmu_list);

@@ -610,35 +610,35 @@ void microblaze_cache_init(void)
 {
 	if (cpuinfo.use_instr & PVR2_USE_MSR_INSTR) {
 		if (cpuinfo.dcache_wb) {
-			pr_info("wb_msr\n");
+			pr_debug("wb_msr\n");
 			mbc = (struct scache *)&wb_msr;
 			if (cpuinfo.ver_code <= CPUVER_7_20_D) {
 				/* MS: problem with signal handling - hw bug */
-				pr_info("WB won't work properly\n");
+				pr_debug("WB won't work properly\n");
 			}
 		} else {
 			if (cpuinfo.ver_code >= CPUVER_7_20_A) {
-				pr_info("wt_msr_noirq\n");
+				pr_debug("wt_msr_noirq\n");
 				mbc = (struct scache *)&wt_msr_noirq;
 			} else {
-				pr_info("wt_msr\n");
+				pr_debug("wt_msr\n");
 				mbc = (struct scache *)&wt_msr;
 			}
 		}
 	} else {
 		if (cpuinfo.dcache_wb) {
-			pr_info("wb_nomsr\n");
+			pr_debug("wb_nomsr\n");
 			mbc = (struct scache *)&wb_nomsr;
 			if (cpuinfo.ver_code <= CPUVER_7_20_D) {
 				/* MS: problem with signal handling - hw bug */
-				pr_info("WB won't work properly\n");
+				pr_debug("WB won't work properly\n");
 			}
 		} else {
 			if (cpuinfo.ver_code >= CPUVER_7_20_A) {
-				pr_info("wt_nomsr_noirq\n");
+				pr_debug("wt_nomsr_noirq\n");
 				mbc = (struct scache *)&wt_nomsr_noirq;
 			} else {
-				pr_info("wt_nomsr\n");
+				pr_debug("wt_nomsr\n");
 				mbc = (struct scache *)&wt_nomsr;
 			}
 		}

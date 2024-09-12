@@ -152,7 +152,7 @@ static int __init intc_of_init(struct device_node *node,
 
 	if (!of_property_read_u32_array(node, "ralink,intc-registers",
 					rt_intc_regs, 6))
-		pr_info("intc: using register map from devicetree\n");
+		pr_debug("intc: using register map from devicetree\n");
 
 	irq = irq_of_parse_and_map(node, 0);
 	if (!irq)

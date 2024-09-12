@@ -64,7 +64,7 @@ static long ps3_hpte_insert(unsigned long hpte_group, unsigned long vpn,
 
 	if (result) {
 		/* all entries bolted !*/
-		pr_info("%s:result=%s vpn=%lx pa=%lx ix=%lx v=%llx r=%llx\n",
+		pr_debug("%s:result=%s vpn=%lx pa=%lx ix=%lx v=%llx r=%llx\n",
 			__func__, ps3_result(result), vpn, pa, hpte_group,
 			hpte_v, hpte_r);
 		BUG();
@@ -116,7 +116,7 @@ static long ps3_hpte_updatepp(unsigned long slot, unsigned long newpp,
 				       &hpte_rs);
 
 	if (result) {
-		pr_info("%s: result=%s read vpn=%lx slot=%lx psize=%d\n",
+		pr_debug("%s: result=%s read vpn=%lx slot=%lx psize=%d\n",
 			__func__, ps3_result(result), vpn, slot, psize);
 		BUG();
 	}
@@ -161,7 +161,7 @@ static void ps3_hpte_invalidate(unsigned long slot, unsigned long vpn,
 	result = lv1_write_htab_entry(PS3_LPAR_VAS_ID_CURRENT, slot, 0, 0);
 
 	if (result) {
-		pr_info("%s: result=%s vpn=%lx slot=%lx psize=%d\n",
+		pr_debug("%s: result=%s vpn=%lx slot=%lx psize=%d\n",
 			__func__, ps3_result(result), vpn, slot, psize);
 		BUG();
 	}

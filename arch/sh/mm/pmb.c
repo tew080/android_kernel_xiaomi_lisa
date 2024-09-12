@@ -527,7 +527,7 @@ static void __init pmb_notify(void)
 {
 	int i;
 
-	pr_info("PMB: boot mappings:\n");
+	pr_debug("PMB: boot mappings:\n");
 
 	read_lock(&pmb_rwlock);
 
@@ -539,7 +539,7 @@ static void __init pmb_notify(void)
 
 		pmbe = &pmb_entry_list[i];
 
-		pr_info("       0x%08lx -> 0x%08lx [ %4ldMB %2scached ]\n",
+		pr_debug("       0x%08lx -> 0x%08lx [ %4ldMB %2scached ]\n",
 			pmbe->vpn >> PAGE_SHIFT, pmbe->ppn >> PAGE_SHIFT,
 			pmbe->size >> 20, (pmbe->flags & PMB_C) ? "" : "un");
 	}

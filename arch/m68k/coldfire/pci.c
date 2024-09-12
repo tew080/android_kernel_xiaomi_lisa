@@ -172,7 +172,7 @@ static int __init mcf_pci_init(void)
 	if (!bridge)
 		return -ENOMEM;
 
-	pr_info("ColdFire: PCI bus initialization...\n");
+	pr_debug("ColdFire: PCI bus initialization...\n");
 
 	/* Reset the external PCI bus */
 	__raw_writel(PCIGSCR_RESET, PCIGSCR);
@@ -220,7 +220,7 @@ static int __init mcf_pci_init(void)
 		pci_free_host_bridge(bridge);
 		return -ENODEV;
 	}
-	pr_info("Coldfire: PCI IO/config window mapped to 0x%x\n",
+	pr_debug("Coldfire: PCI IO/config window mapped to 0x%x\n",
 		(u32) iospace);
 
 	/* Turn of PCI reset, and wait for devices to settle */

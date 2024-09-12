@@ -444,7 +444,7 @@ static unsigned int min_odd(unsigned int x, unsigned int y)
 static void result(const char *err, unsigned int n, unsigned int src_off,
 		   unsigned int dst_off, unsigned int len, unsigned long data)
 {
-	pr_info("%s: result #%u: '%s' with src_off=0x%x dst_off=0x%x len=0x%x (%lu)\n",
+	pr_debug("%s: result #%u: '%s' with src_off=0x%x dst_off=0x%x len=0x%x (%lu)\n",
 		current->comm, n, err, src_off, dst_off, len, data);
 }
 
@@ -895,7 +895,7 @@ err_free_coefs:
 	kfree(pq_coefs);
 err_thread_type:
 	iops = dmatest_persec(runtime, total_tests);
-	pr_info("%s: summary %u tests, %u failures %llu.%02llu iops %llu KB/s (%d)\n",
+	pr_debug("%s: summary %u tests, %u failures %llu.%02llu iops %llu KB/s (%d)\n",
 		current->comm, total_tests, failed_tests,
 		FIXPT_TO_INT(iops), FIXPT_GET_FRAC(iops),
 		dmatest_KBs(runtime, total_len), ret);
@@ -1022,7 +1022,7 @@ static int dmatest_add_channel(struct dmatest_info *info,
 		thread_count += cnt > 0 ? cnt : 0;
 	}
 
-	pr_info("Added %u threads using %s\n",
+	pr_debug("Added %u threads using %s\n",
 		thread_count, dma_chan_name(chan));
 
 	list_add_tail(&dtc->node, &info->channels);
@@ -1106,7 +1106,7 @@ static void run_pending_tests(struct dmatest_info *info)
 			wake_up_process(thread->task);
 			thread_count++;
 		}
-		pr_info("Started %u threads using %s\n",
+		pr_debug("Started %u threads using %s\n",
 			thread_count, dma_chan_name(dtc->chan));
 	}
 }
@@ -1167,7 +1167,7 @@ static int dmatest_run_set(const char *val, const struct kernel_param *kp)
 		return ret;
 	} else if (dmatest_run) {
 		if (!is_threaded_test_pending(info)) {
-			pr_info("No channels configured, continue with any\n");
+			pr_debug("No channels configured, continue with any\n");
 			if (!is_threaded_test_run(info))
 				stop_threaded_test(info);
 			add_threaded_test(info);
@@ -1279,7 +1279,7 @@ static int dmatest_test_list_get(char *val, const struct kernel_param *kp)
 		list_for_each_entry(thread, &dtc->threads, node) {
 			thread_count++;
 		}
-		pr_info("%u threads using %s\n",
+		pr_debug("%u threads using %s\n",
 			thread_count, dma_chan_name(dtc->chan));
 	}
 

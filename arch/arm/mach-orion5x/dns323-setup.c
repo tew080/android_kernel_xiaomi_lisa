@@ -488,14 +488,14 @@ static struct i2c_board_info __initdata dns323c_i2c_devices[] = {
 /* DNS-323 rev. A specific power off method */
 static void dns323a_power_off(void)
 {
-	pr_info("DNS-323: Triggering power-off...\n");
+	pr_debug("DNS-323: Triggering power-off...\n");
 	gpio_set_value(DNS323_GPIO_POWER_OFF, 1);
 }
 
 /* DNS-323 rev B specific power off method */
 static void dns323b_power_off(void)
 {
-	pr_info("DNS-323: Triggering power-off...\n");
+	pr_debug("DNS-323: Triggering power-off...\n");
 	/* Pin has to be changed to 1 and back to 0 to do actual power off. */
 	gpio_set_value(DNS323_GPIO_POWER_OFF, 1);
 	mdelay(100);
@@ -505,7 +505,7 @@ static void dns323b_power_off(void)
 /* DNS-323 rev. C specific power off method */
 static void dns323c_power_off(void)
 {
-	pr_info("DNS-323: Triggering power-off...\n");
+	pr_debug("DNS-323: Triggering power-off...\n");
 	gpio_set_value(DNS323C_GPIO_POWER_OFF, 1);
 }
 
@@ -588,7 +588,7 @@ static void __init dns323_init(void)
 
 	/* Identify revision */
 	system_rev = dns323_identify_rev();
-	pr_info("DNS-323: Identified HW revision %c1\n", 'A' + system_rev);
+	pr_debug("DNS-323: Identified HW revision %c1\n", 'A' + system_rev);
 
 	/* Just to be tricky, the 5182 has a completely different
 	 * set of MPP modes to the 5181.

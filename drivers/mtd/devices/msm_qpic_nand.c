@@ -742,7 +742,7 @@ static int msm_nand_version_check(struct msm_nand_info *info,
 			MSM_NAND_VERSION_MAJOR_SHIFT;
 	nandc_version->qpic_minor = (qpic_ver & MSM_NAND_VERSION_MINOR_MASK) >>
 			MSM_NAND_VERSION_MINOR_SHIFT;
-	pr_info("nand_major:%d, nand_minor:%d, qpic_major:%d, qpic_minor:%d\n",
+	pr_debug("nand_major:%d, nand_minor:%d, qpic_major:%d, qpic_minor:%d\n",
 		nandc_version->nand_major, nandc_version->nand_minor,
 		nandc_version->qpic_major, nandc_version->qpic_minor);
 out:
@@ -978,7 +978,7 @@ static int msm_nand_flash_onfi_probe(struct msm_nand_info *info)
 	flash->ecc_correctability =
 			onfi_param_page_ptr->number_of_bits_ecc_correctability;
 
-	pr_info("Found an ONFI compliant device %s\n",
+	pr_debug("Found an ONFI compliant device %s\n",
 			onfi_param_page_ptr->device_model);
 
 	manid  = flash->flash_id & 0xFF;
@@ -3935,12 +3935,12 @@ static int msm_nand_scan(struct mtd_info *mtd)
 			supported_flash->ecc_capability = 4;
 		}
 
-		pr_info("NAND Id: 0x%x Buswidth: %dBits Density: %lld MByte\n",
+		pr_debug("NAND Id: 0x%x Buswidth: %dBits Density: %lld MByte\n",
 			supported_flash->flash_id, (wide_bus) ? 16 : 8,
 			(mtd->size >> 20));
-		pr_info("pagesize: %d Erasesize: %d oobsize: %d (in Bytes)\n",
+		pr_debug("pagesize: %d Erasesize: %d oobsize: %d (in Bytes)\n",
 			mtd->writesize, mtd->erasesize, mtd->oobsize);
-		pr_info("BCH ECC: %d Bit\n", supported_flash->ecc_capability);
+		pr_debug("BCH ECC: %d Bit\n", supported_flash->ecc_capability);
 	}
 
 	chip->cw_size = (chip->bch_caps & MSM_NAND_CAP_8_BIT_BCH) ? 532 : 528;
@@ -4006,7 +4006,7 @@ static int msm_nand_scan(struct mtd_info *mtd)
 
 	chip->ecc_buf_cfg = 0x203; /* No of bytes covered by ECC - 516 bytes */
 
-	pr_info("CFG0: 0x%08x,           CFG1: 0x%08x\n"
+	pr_debug("CFG0: 0x%08x,           CFG1: 0x%08x\n"
 		"            RAWCFG0: 0x%08x,        RAWCFG1: 0x%08x\n"
 		"          ECCBUFCFG: 0x%08x,      ECCBCHCFG: 0x%08x\n"
 		"          RAWECCCFG: 0x%08x, BAD BLOCK BYTE: 0x%08x\n",
@@ -4196,7 +4196,7 @@ static int msm_nand_bam_init(struct msm_nand_info *nand_info)
 			__func__, rc);
 		goto put_dev;
 	}
-	pr_info("%s: BAM device registered: bam_handle 0x%lx\n",
+	pr_debug("%s: BAM device registered: bam_handle 0x%lx\n",
 			__func__, nand_info->sps.bam_handle);
 init_sps_ep:
 	rc = msm_nand_init_endpoint(nand_info, &nand_info->sps.data_prod,
@@ -4293,7 +4293,7 @@ static int msm_nand_parse_smem_ptable(int *nr_parts)
 	void *temp_ptable = NULL;
 	char *name = NULL;
 
-	pr_info("Parsing partition table info from SMEM\n");
+	pr_debug("Parsing partition table info from SMEM\n");
 	temp_ptable = qcom_smem_get(SMEM_APPS, SMEM_AARM_PARTITION_TABLE, &len);
 
 
@@ -4364,7 +4364,7 @@ static int msm_nand_parse_smem_ptable(int *nr_parts)
 			i, pentry->name, pentry->offset, pentry->length,
 			pentry->attr);
 	}
-	pr_info("SMEM partition table found: ver: %d len: %d\n",
+	pr_debug("SMEM partition table found: ver: %d len: %d\n",
 		ptable.version, ptable.numparts);
 	return 0;
 out:
@@ -4390,7 +4390,7 @@ static int msm_nand_bam_panic_notifier(struct notifier_block *this,
 	err = msm_nand_get_device(chip->dev);
 	if (err)
 		goto out;
-	pr_info("Dumping APSS bam pipes register dumps\n");
+	pr_debug("Dumping APSS bam pipes register dumps\n");
 	sps_get_bam_debug_info(info->sps.bam_handle, 93,
 			(SPS_BAM_PIPE(0) |
 			 SPS_BAM_PIPE(1) |
@@ -4632,11 +4632,11 @@ static int msm_nand_probe(struct platform_device *pdev)
 		goto free_bam;
 	}
 
-	pr_info("NANDc phys addr 0x%lx, BAM phys addr 0x%lx, BAM IRQ %d\n",
+	pr_debug("NANDc phys addr 0x%lx, BAM phys addr 0x%lx, BAM IRQ %d\n",
 			info->nand_phys, info->bam_phys, info->bam_irq);
-	pr_info("Allocated DMA buffer at virt_addr 0x%pK, phys_addr 0x%x\n",
+	pr_debug("Allocated DMA buffer at virt_addr 0x%pK, phys_addr 0x%x\n",
 		info->nand_chip.dma_virt_addr, info->nand_chip.dma_phys_addr);
-	pr_info("Host capabilities:0x%08x\n", info->nand_chip.caps);
+	pr_debug("Host capabilities:0x%08x\n", info->nand_chip.caps);
 	dev_node = dev;
 	msm_nand_bam_register_panic_handler();
 	goto out;

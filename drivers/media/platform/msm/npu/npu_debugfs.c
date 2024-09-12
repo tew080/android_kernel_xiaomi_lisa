@@ -90,14 +90,14 @@ static ssize_t npu_debug_ctrl_write(struct file *file,
 		buf[count-1] = 0;/* remove line feed */
 
 	if (strcmp(buf, "on") == 0) {
-		pr_info("triggering fw_init\n");
+		pr_debug("triggering fw_init\n");
 		if (fw_init(npu_dev) != 0)
-			pr_info("error in fw_init\n");
+			pr_debug("error in fw_init\n");
 	} else if (strcmp(buf, "off") == 0) {
-		pr_info("triggering fw_deinit\n");
+		pr_debug("triggering fw_deinit\n");
 		fw_deinit(npu_dev, false, true);
 	} else if (strcmp(buf, "ssr") == 0) {
-		pr_info("trigger error irq\n");
+		pr_debug("trigger error irq\n");
 		if (npu_enable_core_power(npu_dev))
 			return -EPERM;
 
@@ -105,7 +105,7 @@ static ssize_t npu_debug_ctrl_write(struct file *file,
 		REGW(npu_dev, NPU_MASTERn_ERROR_IRQ_SET(0), 2);
 		npu_disable_core_power(npu_dev);
 	} else if (strcmp(buf, "ssr_wdt") == 0) {
-		pr_info("trigger wdt irq\n");
+		pr_debug("trigger wdt irq\n");
 		npu_disable_post_pil_clocks(npu_dev);
 	} else if (strcmp(buf, "loopback") == 0) {
 		pr_debug("loopback test\n");
@@ -118,7 +118,7 @@ static ssize_t npu_debug_ctrl_write(struct file *file,
 		} else {
 			val = min(val, npu_dev->pwrctrl.max_pwrlevel);
 			npu_dev->pwrctrl.active_pwrlevel = val;
-			pr_info("setting power state to %d\n", val);
+			pr_debug("setting power state to %d\n", val);
 		}
 	}
 

@@ -658,7 +658,7 @@ static int i2c_pmic_probe(struct i2c_client *client,
 
 probe_children:
 	of_platform_populate(chip->dev->of_node, NULL, NULL, chip->dev);
-	pr_info("I2C PMIC probe successful\n");
+	pr_debug("I2C PMIC probe successful\n");
 	return rc;
 
 cleanup:

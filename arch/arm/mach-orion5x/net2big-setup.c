@@ -171,7 +171,7 @@ static void __init net2big_sata_power_init(void)
 	 */
 	msleep(300);
 	gpio_set_value(NET2BIG_GPIO_SATA_POWER_REQ, 1);
-	pr_info("net2big: power up SATA hard disks\n");
+	pr_debug("net2big: power up SATA hard disks\n");
 
 	return;
 

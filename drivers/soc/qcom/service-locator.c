@@ -67,7 +67,7 @@ static int service_locator_new_server(struct qmi_handle *qmi,
 	service_locator.connected = true;
 	if (!service_inited)
 		complete_all(&service_locator.service_available);
-	pr_info("Connection established with the Service locator\n");
+	pr_debug("Connection established with the Service locator\n");
 	return 0;
 }
 
@@ -76,7 +76,7 @@ static void service_locator_del_server(struct qmi_handle *qmi,
 {
 	service_locator.connected = false;
 	complete_all(&service_locator.service_available);
-	pr_info("Connection with service locator lost\n");
+	pr_debug("Connection with service locator lost\n");
 }
 
 static struct qmi_ops server_ops = {
@@ -287,7 +287,7 @@ static int init_service_locator(void)
 
 	service_inited = true;
 	mutex_unlock(&service_init_mutex);
-	pr_info("Service locator initialized\n");
+	pr_debug("Service locator initialized\n");
 	return 0;
 
 inited:

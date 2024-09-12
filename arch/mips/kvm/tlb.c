@@ -78,7 +78,7 @@ void kvm_mips_dump_host_tlbs(void)
 
 	kvm_info("HOST TLBs:\n");
 	dump_tlb_regs();
-	pr_info("\n");
+	pr_debug("\n");
 	dump_tlb_all();
 
 	local_irq_restore(flags);

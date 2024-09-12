@@ -71,7 +71,7 @@ static int __init hppb_probe(struct parisc_device *dev)
 
 	status = ccio_request_resource(dev, &card->mmio_region);
 
-	pr_info("Found GeckoBoa at %pap, bus space %pR,%s claimed.\n",
+	pr_debug("Found GeckoBoa at %pap, bus space %pR,%s claimed.\n",
 			&dev->hpa.start,
 			&card->mmio_region,
 			(status < 0) ? " not":"" );

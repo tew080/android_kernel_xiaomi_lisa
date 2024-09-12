@@ -10,7 +10,7 @@
 #define debug(f, a...)
 #endif
 
-#define output(f, a...) pr_info("tridentfb: " f, ## a)
+#define output(f, a...) pr_debug("tridentfb: " f, ## a)
 
 #define Kb	(1024)
 #define Mb	(Kb*Kb)

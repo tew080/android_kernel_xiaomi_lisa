@@ -751,7 +751,7 @@ static int __init einj_init(void)
 				   einj_debug_dir, &vendor_flags);
 	}
 
-	pr_info("Error INJection is initialized.\n");
+	pr_debug("Error INJection is initialized.\n");
 
 	return 0;
 

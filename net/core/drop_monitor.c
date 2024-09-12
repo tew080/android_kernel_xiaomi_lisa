@@ -1641,7 +1641,7 @@ static int __init init_net_drop_monitor(void)
 {
 	int cpu, rc;
 
-	pr_info("Initializing network drop monitor service\n");
+	pr_debug("Initializing network drop monitor service\n");
 
 	if (sizeof(void *) > 8) {
 		pr_err("Unable to store program counters on this arch, Drop monitor failed\n");

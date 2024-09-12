@@ -393,7 +393,7 @@ idu_of_init(struct device_node *intc, struct device_node *parent)
 	READ_BCR(ARC_REG_MCIP_IDU_BCR, idu_bcr);
 	nr_irqs = mcip_idu_bcr_to_nr_irqs(idu_bcr);
 
-	pr_info("MCIP: IDU supports %u common irqs\n", nr_irqs);
+	pr_debug("MCIP: IDU supports %u common irqs\n", nr_irqs);
 
 	domain = irq_domain_add_linear(intc, nr_irqs, &idu_irq_ops, NULL);
 

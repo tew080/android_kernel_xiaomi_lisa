@@ -264,7 +264,7 @@ void __init config_hp300(void)
 
 	if (hp300_model >= HP_330 && hp300_model <= HP_433S &&
 	    hp300_model != HP_350) {
-		pr_info("Detected HP9000 model %s\n",
+		pr_debug("Detected HP9000 model %s\n",
 			hp300_models[hp300_model-HP_320]);
 		strcat(hp300_model_name, hp300_models[hp300_model-HP_320]);
 	} else {

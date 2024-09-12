@@ -1143,10 +1143,10 @@ static void collect_d_work_func(struct work_struct *work)
 	}
 	if ((pon_rt_sts & QPNP_PON_KPDPWR_RESIN_N_SET) == QPNP_PON_KPDPWR_RESIN_N_SET) {
 		console_verbose();
-		pr_info("------ collect D&R-state processes info before long comb key ------\n");
+		pr_debug("------ collect D&R-state processes info before long comb key ------\n");
 		show_state_filter_single(TASK_UNINTERRUPTIBLE);
 		show_state_filter_single(TASK_RUNNING);
-		pr_info("------ end collecting D&R-state processes info ------\n");
+		pr_debug("------ end collecting D&R-state processes info ------\n");
 		console_loglevel = tmp_console;
 	}
 err_return:
@@ -1632,7 +1632,7 @@ static int qpnp_pon_config_kpdpwr_init(struct qpnp_pon *pon,
 		if (rc < 0)
 			pr_err("failed to read QPNP_PON_RT_STS rc=%d\n", rc);
 
-		pr_info("KPDPWR status at init=0x%02x, KPDPWR_ON=%d\n",
+		pr_debug("KPDPWR status at init=0x%02x, KPDPWR_ON=%d\n",
 			pon_rt_sts, (pon_rt_sts & QPNP_PON_KPDPWR_ON));
 	}
 
@@ -2665,7 +2665,7 @@ static int qpnp_pon_probe(struct platform_device *pdev)
 						"qcom,kpdpwr-sw-debounce");
 
 	if (pon->kpdpwr_dbc_enable) {
-		pr_info("use kpdpwr-sw-debounce\n");
+		pr_debug("use kpdpwr-sw-debounce\n");
 	} else {
 		rc = qpnp_pon_get_dbc(pon, &pon->dbc_time_us);
 		if (rc)

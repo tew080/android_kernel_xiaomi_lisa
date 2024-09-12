@@ -354,7 +354,7 @@ static void check_pci_edl(struct device_node *np)
 
 	mem = of_iomap(np, 0);
 	if (!mem) {
-		pr_info("Unable to map memory for DT property: %s\n", np->name);
+		pr_debug("Unable to map memory for DT property: %s\n", np->name);
 		return;
 	}
 
@@ -366,7 +366,7 @@ static void check_pci_edl(struct device_node *np)
 		mask_value = (read_val >> l) & GENMASK(h - l, 0);
 		if (mask_value == 5 || mask_value == 7) {
 			early_pcie_init_enable = true;
-			pr_info("Setting up EDL mode to PCIE\n");
+			pr_debug("Setting up EDL mode to PCIE\n");
 		}
 	}
 

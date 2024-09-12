@@ -102,7 +102,7 @@ int __init fadump_cma_init(void)
 	/*
 	 * So we now have successfully initialized cma area for fadump.
 	 */
-	pr_info("Initialized 0x%lx bytes cma area at %ldMB from 0x%lx "
+	pr_debug("Initialized 0x%lx bytes cma area at %ldMB from 0x%lx "
 		"bytes of memory reserved for firmware-assisted dump\n",
 		cma_get_size(fadump_cma),
 		(unsigned long)cma_get_base(fadump_cma) >> 20,
@@ -298,7 +298,7 @@ static __init u64 fadump_calculate_reserve_size(void)
 		unsigned long max_size;
 
 		if (fw_dump.reserve_bootvar)
-			pr_info("Using 'crashkernel=' parameter for memory reservation.\n");
+			pr_debug("Using 'crashkernel=' parameter for memory reservation.\n");
 
 		fw_dump.reserve_bootvar = (unsigned long)size;
 
@@ -309,7 +309,7 @@ static __init u64 fadump_calculate_reserve_size(void)
 		max_size = memblock_phys_mem_size() / MAX_BOOT_MEM_RATIO;
 		if (fw_dump.reserve_bootvar > max_size) {
 			fw_dump.reserve_bootvar = max_size;
-			pr_info("Adjusted boot memory size to %luMB\n",
+			pr_debug("Adjusted boot memory size to %luMB\n",
 				(fw_dump.reserve_bootvar >> 20));
 		}
 
@@ -515,7 +515,7 @@ int __init fadump_reserve_mem(void)
 		return 0;
 
 	if (!fw_dump.fadump_supported) {
-		pr_info("Firmware-Assisted Dump is not supported on this hardware\n");
+		pr_debug("Firmware-Assisted Dump is not supported on this hardware\n");
 		goto error_out;
 	}
 
@@ -573,7 +573,7 @@ int __init fadump_reserve_mem(void)
 	size = get_fadump_area_size();
 	fw_dump.reserve_dump_area_size = size;
 	if (fw_dump.dump_active) {
-		pr_info("Firmware-assisted dump is active.\n");
+		pr_debug("Firmware-assisted dump is active.\n");
 
 #ifdef CONFIG_HUGETLB_PAGE
 		/*
@@ -620,7 +620,7 @@ int __init fadump_reserve_mem(void)
 			goto error_out;
 		}
 
-		pr_info("Reserved %lldMB of memory at %#016llx (System RAM: %lldMB)\n",
+		pr_debug("Reserved %lldMB of memory at %#016llx (System RAM: %lldMB)\n",
 			(size >> 20), base, (memblock_phys_mem_size() >> 20));
 
 		ret = fadump_cma_init();
@@ -1201,7 +1201,7 @@ static void fadump_free_reserved_memory(unsigned long start_pfn,
 	unsigned long pfn;
 	unsigned long time_limit = jiffies + HZ;
 
-	pr_info("freeing reserved memory (0x%llx - 0x%llx)\n",
+	pr_debug("freeing reserved memory (0x%llx - 0x%llx)\n",
 		PFN_PHYS(start_pfn), PFN_PHYS(end_pfn));
 
 	for (pfn = start_pfn; pfn < end_pfn; pfn++) {
@@ -1598,7 +1598,7 @@ int __init fadump_reserve_mem(void)
 		 * If last boot has crashed then reserve all the memory
 		 * above boot memory to preserve crash data.
 		 */
-		pr_info("Preserving crash data for processing in next boot.\n");
+		pr_debug("Preserving crash data for processing in next boot.\n");
 		fadump_reserve_crash_area(fw_dump.boot_mem_top);
 	} else
 		pr_debug("FADump-aware kernel..\n");
@@ -1625,7 +1625,7 @@ static void __init fadump_reserve_crash_area(u64 base)
 			mstart = base;
 		}
 
-		pr_info("Reserving %lluMB of memory at %#016llx for preserving crash data",
+		pr_debug("Reserving %lluMB of memory at %#016llx for preserving crash data",
 			(msize >> 20), mstart);
 		memblock_reserve(mstart, msize);
 	}

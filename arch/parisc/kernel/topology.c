@@ -101,7 +101,7 @@ void __init store_cpu_topology(unsigned int cpuid)
 
 	update_siblings_masks(cpuid);
 
-	pr_info("CPU%u: thread %d, cpu %d, socket %d\n",
+	pr_debug("CPU%u: thread %d, cpu %d, socket %d\n",
 		cpuid, cpu_topology[cpuid].thread_id,
 		cpu_topology[cpuid].core_id,
 		cpu_topology[cpuid].socket_id);

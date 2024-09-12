@@ -535,7 +535,7 @@ int smu_sys_set_pp_table(struct smu_context *smu,  void *buf, size_t size)
 
 	ret = smu_reset(smu);
 	if (ret)
-		pr_info("smu reset failed, ret = %d\n", ret);
+		pr_debug("smu reset failed, ret = %d\n", ret);
 
 	return ret;
 
@@ -1026,7 +1026,7 @@ static int smu_smc_table_hw_init(struct smu_context *smu,
 	int ret;
 
 	if (smu_is_dpm_running(smu) && adev->in_suspend) {
-		pr_info("dpm has been enabled\n");
+		pr_debug("dpm has been enabled\n");
 		return 0;
 	}
 
@@ -1159,7 +1159,7 @@ static int smu_smc_table_hw_init(struct smu_context *smu,
 	ret = smu_set_tool_table_location(smu);
 
 	if (!smu_is_dpm_running(smu))
-		pr_info("dpm has been disabled\n");
+		pr_debug("dpm has been disabled\n");
 
 	return ret;
 }
@@ -1284,7 +1284,7 @@ static int smu_hw_init(void *handle)
 	else
 		adev->pm.dpm_enabled = true;	/* TODO: will set dpm_enabled flag while VCN and DAL DPM is workable */
 
-	pr_info("SMU is initialized successfully!\n");
+	pr_debug("SMU is initialized successfully!\n");
 
 	return 0;
 
@@ -1377,7 +1377,7 @@ static int smu_resume(void *handle)
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
 	struct smu_context *smu = &adev->smu;
 
-	pr_info("SMU is resuming...\n");
+	pr_debug("SMU is resuming...\n");
 
 	mutex_lock(&smu->mutex);
 
@@ -1391,7 +1391,7 @@ static int smu_resume(void *handle)
 
 	mutex_unlock(&smu->mutex);
 
-	pr_info("SMU is resumed successfully!\n");
+	pr_debug("SMU is resumed successfully!\n");
 
 	return 0;
 failed:

@@ -201,7 +201,7 @@ int dump_hab_open(void)
 		pr_err("failed to create pipe dump buffer rc %d\n", rc);
 		filp = NULL;
 	} else {
-		pr_info("hab pipe dump buffer opened %s\n", file_path);
+		pr_debug("hab pipe dump buffer opened %s\n", file_path);
 		pipedump_idx = 0;
 		dump_hab_buf(file_path, strlen(file_path)); /* id first */
 	}
@@ -210,7 +210,7 @@ int dump_hab_open(void)
 
 void dump_hab_close(void)
 {
-	pr_info("pipe dump content size %d completed\n", pipedump_idx);
+	pr_debug("pipe dump content size %d completed\n", pipedump_idx);
 	/* transfer buffer ownership to devcoredump */
 	filp = NULL;
 	pipedump_idx = 0;
@@ -244,7 +244,7 @@ void dump_hab(void)
 
 			list_for_each_entry(pchan, &habdev->pchannels, node) {
 				if (pchan->vcnt > 0) {
-					pr_info("***** dump pchan %s vcnt %d *****\n",
+					pr_debug("***** dump pchan %s vcnt %d *****\n",
 						pchan->name, pchan->vcnt);
 					hab_pipe_read_dump(pchan);
 				}

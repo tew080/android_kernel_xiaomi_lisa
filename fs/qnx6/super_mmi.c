@@ -118,7 +118,7 @@ struct qnx6_super_block *qnx6_mmi_fill_super(struct super_block *s, int silent)
 		sbi->sb_buf = bh1;
 		sbi->sb = (struct qnx6_super_block *)bh1->b_data;
 		brelse(bh2);
-		pr_info("superblock #1 active\n");
+		pr_debug("superblock #1 active\n");
 	} else {
 		/* superblock #2 active */
 		qnx6_mmi_copy_sb(qsb, sb2);
@@ -130,7 +130,7 @@ struct qnx6_super_block *qnx6_mmi_fill_super(struct super_block *s, int silent)
 		sbi->sb_buf = bh2;
 		sbi->sb = (struct qnx6_super_block *)bh2->b_data;
 		brelse(bh1);
-		pr_info("superblock #2 active\n");
+		pr_debug("superblock #2 active\n");
 	}
 	kfree(qsb);
 

@@ -212,7 +212,7 @@ int nand_onfi_detect(struct nand_chip *chip)
 		onfi_version = 10;
 
 	if (!onfi_version) {
-		pr_info("unsupported ONFI version: %d\n", val);
+		pr_debug("unsupported ONFI version: %d\n", val);
 		goto free_onfi_param_page;
 	}
 

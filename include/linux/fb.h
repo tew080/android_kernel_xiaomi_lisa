@@ -810,7 +810,7 @@ extern int fb_find_mode(struct fb_var_screeninfo *var,
 #define fb_warn(fb_info, fmt, ...)					\
 	pr_warn("fb%d: " fmt, (fb_info)->node, ##__VA_ARGS__)
 #define fb_info(fb_info, fmt, ...)					\
-	pr_info("fb%d: " fmt, (fb_info)->node, ##__VA_ARGS__)
+	pr_debug("fb%d: " fmt, (fb_info)->node, ##__VA_ARGS__)
 #define fb_dbg(fb_info, fmt, ...)					\
 	pr_debug("fb%d: " fmt, (fb_info)->node, ##__VA_ARGS__)
 

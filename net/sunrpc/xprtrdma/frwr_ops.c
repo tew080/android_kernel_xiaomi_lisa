@@ -67,7 +67,7 @@ bool frwr_is_supported(struct ib_device *device)
 	return true;
 
 out_not_supported:
-	pr_info("rpcrdma: 'frwr' mode is not supported by device %s\n",
+	pr_debug("rpcrdma: 'frwr' mode is not supported by device %s\n",
 		device->name);
 	return false;
 }

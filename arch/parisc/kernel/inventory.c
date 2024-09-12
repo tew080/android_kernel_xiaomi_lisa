@@ -84,11 +84,11 @@ void __init setup_pdc(void)
 		pr_cont("64 bit PAT.\n");
 		parisc_cell_num = cell_info.cell_num;
 		parisc_cell_loc = cell_info.cell_loc;
-		pr_info("PAT: Running on cell %lu and location %lu.\n",
+		pr_debug("PAT: Running on cell %lu and location %lu.\n",
 			parisc_cell_num, parisc_cell_loc);
 		status = pdc_pat_pd_get_pdc_revisions(&legacy_rev,
 			&pat_rev, &parisc_pat_pdc_cap);
-		pr_info("PAT: legacy revision 0x%lx, pat_rev 0x%lx, pdc_cap 0x%lx, S-PTLB %d, HPMC_RENDEZ %d.\n",
+		pr_debug("PAT: legacy revision 0x%lx, pat_rev 0x%lx, pdc_cap 0x%lx, S-PTLB %d, HPMC_RENDEZ %d.\n",
 			legacy_rev, pat_rev, parisc_pat_pdc_cap,
 			parisc_pat_pdc_cap
 			 & PDC_PAT_CAPABILITY_BIT_SIMULTANEOUS_PTLB ? 1:0,
@@ -639,6 +639,6 @@ void __init do_device_inventory(void)
 #if defined(CONFIG_64BIT) && defined(CONFIG_SMP)
 	pa_serialize_tlb_flushes = machine_has_merced_bus();
 	if (pa_serialize_tlb_flushes)
-		pr_info("Merced bus found: Enable PxTLB serialization.\n");
+		pr_debug("Merced bus found: Enable PxTLB serialization.\n");
 #endif
 }

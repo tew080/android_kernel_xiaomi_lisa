@@ -41,7 +41,7 @@ static bool tomoyo_policy_loader_exists(void)
 	if (!tomoyo_loader)
 		tomoyo_loader = CONFIG_SECURITY_TOMOYO_POLICY_LOADER;
 	if (kern_path(tomoyo_loader, LOOKUP_FOLLOW, &path)) {
-		pr_info("Not activating Mandatory Access Control as %s does not exist.\n",
+		pr_debug("Not activating Mandatory Access Control as %s does not exist.\n",
 			tomoyo_loader);
 		return false;
 	}
@@ -97,7 +97,7 @@ void tomoyo_load_policy(const char *filename)
 	if (!tomoyo_policy_loader_exists())
 		return;
 	done = true;
-	pr_info("Calling %s to load policy. Please wait.\n", tomoyo_loader);
+	pr_debug("Calling %s to load policy. Please wait.\n", tomoyo_loader);
 	argv[0] = (char *) tomoyo_loader;
 	argv[1] = NULL;
 	envp[0] = "HOME=/";

@@ -264,7 +264,7 @@ int amd_cache_northbridges(void)
 		 * interface.
 		 */
 		if (!roots_per_misc || (root_count % roots_per_misc)) {
-			pr_info("Unsupported AMD DF/PCI configuration found\n");
+			pr_debug("Unsupported AMD DF/PCI configuration found\n");
 			return -ENODEV;
 		}
 	}
@@ -526,7 +526,7 @@ static __init void fix_erratum_688(void)
 
 	on_each_cpu(__fix_erratum_688, NULL, 0);
 
-	pr_info("x86/cpu/AMD: CPU erratum 688 worked around\n");
+	pr_debug("x86/cpu/AMD: CPU erratum 688 worked around\n");
 }
 
 static __init int init_amd_nbs(void)

@@ -717,7 +717,7 @@ stm32_exti_chip_data *stm32_exti_chip_init(struct stm32_exti_host_data *h_data,
 	writel_relaxed(0, base + stm32_bank->imr_ofst);
 	writel_relaxed(0, base + stm32_bank->emr_ofst);
 
-	pr_info("%pOF: bank%d\n", node, bank_idx);
+	pr_debug("%pOF: bank%d\n", node, bank_idx);
 
 	return chip_data;
 }

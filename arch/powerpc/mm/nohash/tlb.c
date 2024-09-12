@@ -554,7 +554,7 @@ static void setup_page_sizes(void)
 
 out:
 	/* Cleanup array and print summary */
-	pr_info("MMU: Supported page sizes\n");
+	pr_debug("MMU: Supported page sizes\n");
 	for (psize = 0; psize < MMU_PAGE_COUNT; ++psize) {
 		struct mmu_psize_def *def = &mmu_psize_defs[psize];
 		const char *__page_type_names[] = {
@@ -567,7 +567,7 @@ out:
 			def->shift = 0;	
 			continue;
 		}
-		pr_info("  %8ld KB as %s\n", 1ul << (def->shift - 10),
+		pr_debug("  %8ld KB as %s\n", 1ul << (def->shift - 10),
 			__page_type_names[def->flags & 0x3]);
 	}
 }
@@ -592,7 +592,7 @@ static void setup_mmu_htw(void)
 		break;
 #endif
 	}
-	pr_info("MMU: Book3E HW tablewalk %s\n",
+	pr_debug("MMU: Book3E HW tablewalk %s\n",
 		book3e_htw_mode != PPC_HTW_NONE ? "enabled" : "not supported");
 }
 

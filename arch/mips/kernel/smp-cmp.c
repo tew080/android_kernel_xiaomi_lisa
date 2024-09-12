@@ -119,7 +119,7 @@ void __init cmp_smp_setup(void)
 #endif
 		smp_num_siblings = nvpe;
 	}
-	pr_info("Detected %i available secondary CPU(s)\n", ncpu);
+	pr_debug("Detected %i available secondary CPU(s)\n", ncpu);
 }
 
 void __init cmp_prepare_cpus(unsigned int max_cpus)

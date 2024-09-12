@@ -17,7 +17,7 @@ void machine_halt(void)
 void machine_restart(char *__unused)
 {
 	/* Soft reset : jump to reset vector */
-	pr_info("Put your restart handler here\n");
+	pr_debug("Put your restart handler here\n");
 	machine_halt();
 }
 

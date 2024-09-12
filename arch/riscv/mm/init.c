@@ -63,7 +63,7 @@ static void __init setup_initrd(void)
 	unsigned long size;
 
 	if (initrd_start >= initrd_end) {
-		pr_info("initrd not found or empty");
+		pr_debug("initrd not found or empty");
 		goto disable;
 	}
 	if (__pa(initrd_end) > PFN_PHYS(max_low_pfn)) {
@@ -75,7 +75,7 @@ static void __init setup_initrd(void)
 	memblock_reserve(__pa(initrd_start), size);
 	initrd_below_start_ok = 1;
 
-	pr_info("Initial ramdisk at: 0x%p (%lu bytes)\n",
+	pr_debug("Initial ramdisk at: 0x%p (%lu bytes)\n",
 		(void *)(initrd_start), size);
 	return;
 disable:

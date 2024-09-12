@@ -730,7 +730,7 @@ vfp_double_add(struct vfp_double *vdd, struct vfp_double *vdn,
 
 	if (vdn->significand & (1ULL << 63) ||
 	    vdm->significand & (1ULL << 63)) {
-		pr_info("VFP: bad FP values in %s\n", __func__);
+		pr_debug("VFP: bad FP values in %s\n", __func__);
 		vfp_double_dump("VDN", vdn);
 		vfp_double_dump("VDM", vdm);
 	}

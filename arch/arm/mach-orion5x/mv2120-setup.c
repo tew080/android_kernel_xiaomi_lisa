@@ -182,7 +182,7 @@ static struct platform_device mv2120_leds = {
 
 static void mv2120_power_off(void)
 {
-	pr_info("%s: triggering power-off...\n", __func__);
+	pr_debug("%s: triggering power-off...\n", __func__);
 	gpio_set_value(MV2120_GPIO_POWER_OFF, 0);
 }
 

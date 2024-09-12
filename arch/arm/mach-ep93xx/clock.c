@@ -576,9 +576,9 @@ static int __init ep93xx_clock_init(void)
 	if (ep93xx_chip_revision() < EP93XX_CHIP_REV_E2)
 		clk_spi.rate /= 2;
 
-	pr_info("PLL1 running at %ld MHz, PLL2 at %ld MHz\n",
+	pr_debug("PLL1 running at %ld MHz, PLL2 at %ld MHz\n",
 		clk_pll1.rate / 1000000, clk_pll2.rate / 1000000);
-	pr_info("FCLK %ld MHz, HCLK %ld MHz, PCLK %ld MHz\n",
+	pr_debug("FCLK %ld MHz, HCLK %ld MHz, PCLK %ld MHz\n",
 		clk_f.rate / 1000000, clk_h.rate / 1000000,
 		clk_p.rate / 1000000);
 

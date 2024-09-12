@@ -123,7 +123,7 @@ static int bcm63xx_parse_cfe_nor_partitions(struct mtd_info *master,
 	parts[curpart].types = bcm63xx_cfe_part_types;
 
 	for (i = 0; i < nrparts; i++)
-		pr_info("Partition %d is %s offset %llx and length %llx\n", i,
+		pr_debug("Partition %d is %s offset %llx and length %llx\n", i,
 			parts[i].name, parts[i].offset,	parts[i].size);
 
 	*pparts = parts;

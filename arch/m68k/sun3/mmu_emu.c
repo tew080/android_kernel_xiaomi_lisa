@@ -155,7 +155,7 @@ void __init mmu_emu_init(unsigned long bootmem_end)
 
 		if(!pmeg_alloc[i]) {
 #ifdef DEBUG_MMU_EMU
-			pr_info("freed:");
+			pr_debug("freed:");
 			print_pte_vaddr (seg);
 #endif
 			sun3_put_segmap(seg, SUN3_INVALID_PMEG);
@@ -167,7 +167,7 @@ void __init mmu_emu_init(unsigned long bootmem_end)
 		if (sun3_get_segmap (seg) != SUN3_INVALID_PMEG) {
 #ifdef DEBUG_PROM_MAPS
 			for(i = 0; i < 16; i++) {
-				pr_info("mapped:");
+				pr_debug("mapped:");
 				print_pte_vaddr (seg + (i*PAGE_SIZE));
 				break;
 			}
@@ -295,7 +295,7 @@ inline void mmu_emu_map_pmeg (int context, int vaddr)
 
 
 #ifdef DEBUG_MMU_EMU
-	pr_info("mmu_emu_map_pmeg: pmeg %x to context %d vaddr %x\n",
+	pr_debug("mmu_emu_map_pmeg: pmeg %x to context %d vaddr %x\n",
 		curr_pmeg, context, vaddr);
 #endif
 
@@ -372,7 +372,7 @@ int mmu_emu_handle_fault (unsigned long vaddr, int read_flag, int kernel_fault)
 	}
 
 #ifdef DEBUG_MMU_EMU
-	pr_info("mmu_emu_handle_fault: vaddr=%lx type=%s crp=%p\n",
+	pr_debug("mmu_emu_handle_fault: vaddr=%lx type=%s crp=%p\n",
 		vaddr, read_flag ? "read" : "write", crp);
 #endif
 
@@ -380,7 +380,7 @@ int mmu_emu_handle_fault (unsigned long vaddr, int read_flag, int kernel_fault)
 	offset  = (vaddr >> SUN3_PTE_SIZE_BITS) & 0xF;
 
 #ifdef DEBUG_MMU_EMU
-	pr_info("mmu_emu_handle_fault: segment=%lx offset=%lx\n", segment,
+	pr_debug("mmu_emu_handle_fault: segment=%lx offset=%lx\n", segment,
 		offset);
 #endif
 
@@ -388,7 +388,7 @@ int mmu_emu_handle_fault (unsigned long vaddr, int read_flag, int kernel_fault)
 
 //todo: next line should check for valid pmd properly.
 	if (!pte) {
-//                pr_info("mmu_emu_handle_fault: invalid pmd\n");
+//                pr_debug("mmu_emu_handle_fault: invalid pmd\n");
                 return 0;
         }
 
@@ -420,7 +420,7 @@ int mmu_emu_handle_fault (unsigned long vaddr, int read_flag, int kernel_fault)
 		pte_val (*pte) |= SUN3_PAGE_ACCESSED;
 
 #ifdef DEBUG_MMU_EMU
-	pr_info("seg:%ld crp:%p ->", get_fs().seg, crp);
+	pr_debug("seg:%ld crp:%p ->", get_fs().seg, crp);
 	print_pte_vaddr (vaddr);
 	pr_cont("\n");
 #endif

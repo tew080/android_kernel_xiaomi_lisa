@@ -590,11 +590,11 @@ static int aw_dev_parse_check_acf_by_hdr(struct aw_container *aw_cfg)
 		}
 	}
 
-	aw_pr_info("project name [%s]", cfg_hdr->a_project);
-	aw_pr_info("custom name [%s]", cfg_hdr->a_custom);
-	aw_pr_info("version name [%d.%d.%d.%d]", cfg_hdr->a_version[3], cfg_hdr->a_version[2],
+	aw_pr_debug("project name [%s]", cfg_hdr->a_project);
+	aw_pr_debug("custom name [%s]", cfg_hdr->a_custom);
+	aw_pr_debug("version name [%d.%d.%d.%d]", cfg_hdr->a_version[3], cfg_hdr->a_version[2],
 						cfg_hdr->a_version[1], cfg_hdr->a_version[0]);
-	aw_pr_info("author id %d", cfg_hdr->a_author_id);
+	aw_pr_debug("author id %d", cfg_hdr->a_author_id);
 
 	return 0;
 }
@@ -654,11 +654,11 @@ static int aw_dev_parse_check_acf_by_hdr_v_1_0_0_0(struct aw_container *aw_cfg)
 		}
 	}
 
-	aw_pr_info("project name [%s]", cfg_hdr->a_project);
-	aw_pr_info("custom name [%s]", cfg_hdr->a_custom);
-	aw_pr_info("version name [%d.%d.%d.%d]", cfg_hdr->a_version[3], cfg_hdr->a_version[2],
+	aw_pr_debug("project name [%s]", cfg_hdr->a_project);
+	aw_pr_debug("custom name [%s]", cfg_hdr->a_custom);
+	aw_pr_debug("version name [%d.%d.%d.%d]", cfg_hdr->a_version[3], cfg_hdr->a_version[2],
 						cfg_hdr->a_version[1], cfg_hdr->a_version[0]);
-	aw_pr_info("author id %d", cfg_hdr->a_author_id);
+	aw_pr_debug("author id %d", cfg_hdr->a_author_id);
 
 	return 0;
 }

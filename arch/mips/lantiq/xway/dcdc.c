@@ -53,7 +53,7 @@ int __init dcdc_init(void)
 	int ret = platform_driver_register(&dcdc_driver);
 
 	if (ret)
-		pr_info("dcdc: Error registering platform driver\n");
+		pr_debug("dcdc: Error registering platform driver\n");
 	return ret;
 }
 

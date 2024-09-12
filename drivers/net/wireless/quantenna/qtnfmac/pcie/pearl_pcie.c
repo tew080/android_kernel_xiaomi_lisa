@@ -1011,10 +1011,10 @@ static void qtnf_pearl_fw_work_handler(struct work_struct *work)
 	qtnf_clear_state(&ps->bda->bda_ep_state, QTN_EP_FW_LOADRDY);
 
 	if (ps->base.flashboot) {
-		pr_info("booting firmware from flash\n");
+		pr_debug("booting firmware from flash\n");
 
 	} else {
-		pr_info("starting firmware upload: %s\n", fwname);
+		pr_debug("starting firmware upload: %s\n", fwname);
 
 		ret = qtnf_ep_fw_load(ps, fw->data, fw->size);
 		release_firmware(fw);
@@ -1036,7 +1036,7 @@ static void qtnf_pearl_fw_work_handler(struct work_struct *work)
 		goto fw_load_exit;
 	}
 
-	pr_info("firmware is up and running\n");
+	pr_debug("firmware is up and running\n");
 
 	ret = qtnf_pcie_fw_boot_done(bus);
 	if (ret)

@@ -112,7 +112,7 @@ void __init pic32_config_init(void)
 	writel(-1, PIC32_CLR(pic32_conf_base + PIC32_RCON));
 
 	/* Device Inforation */
-	pr_info("Device Id: 0x%08x, Device Ver: 0x%04x\n",
+	pr_debug("Device Id: 0x%08x, Device Ver: 0x%04x\n",
 		pic32_get_device_id(),
 		pic32_get_device_version());
 }

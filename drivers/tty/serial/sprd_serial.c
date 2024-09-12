@@ -1030,7 +1030,7 @@ static int __init sprd_console_setup(struct console *co, char *options)
 
 	sprd_uart_port = sprd_port[co->index];
 	if (!sprd_uart_port || !sprd_uart_port->port.membase) {
-		pr_info("serial port %d not yet initialized\n", co->index);
+		pr_debug("serial port %d not yet initialized\n", co->index);
 		return -ENODEV;
 	}
 

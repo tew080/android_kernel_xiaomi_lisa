@@ -155,7 +155,7 @@ int virtblk_init_crypto_qti_spec(void)
 	if (!virtio_ksm)
 		return  -ENOMEM;
 
-	pr_info("%s: keyslot manager created\n", __func__);
+	pr_debug("%s: keyslot manager created\n", __func__);
 
 	return err;
 }

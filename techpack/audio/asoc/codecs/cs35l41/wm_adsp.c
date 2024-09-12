@@ -1015,7 +1015,7 @@ static int wm_adsp_cal_z_get(struct snd_kcontrol *kcontrol,
 	struct wm_adsp *dsp = snd_soc_component_get_drvdata(component);
 
 	ucontrol->value.enumerated.item[0] = dsp->cal_z;
-	pr_info("get cal_z = %d\n", ucontrol->value.enumerated.item[0]);
+	pr_debug("get cal_z = %d\n", ucontrol->value.enumerated.item[0]);
 
 	return 0;
 }
@@ -1029,7 +1029,7 @@ static int wm_adsp_cal_z_put(struct snd_kcontrol *kcontrol,
 	dsp->cal_z = ucontrol->value.enumerated.item[0];
 	dsp->cal_chksum = dsp->cal_z + CAL_STATUS_DEFAULT;
 
-	pr_info("put cal_z = %d, cal_checksum = %d\n", dsp->cal_z, dsp->cal_chksum);
+	pr_debug("put cal_z = %d, cal_checksum = %d\n", dsp->cal_z, dsp->cal_chksum);
 
 	return 0;
 }
@@ -1041,7 +1041,7 @@ static int wm_adsp_ambient_get(struct snd_kcontrol *kcontrol,
 	struct wm_adsp *dsp = snd_soc_component_get_drvdata(component);
 
 	ucontrol->value.enumerated.item[0] = dsp->ambient;
-	pr_info("get ambient = %d\n", ucontrol->value.enumerated.item[0]);
+	pr_debug("get ambient = %d\n", ucontrol->value.enumerated.item[0]);
 
 	return 0;
 }
@@ -1054,7 +1054,7 @@ static int wm_adsp_ambient_put(struct snd_kcontrol *kcontrol,
 
 	dsp->ambient = ucontrol->value.enumerated.item[0];
 
-	pr_info("put ambient = %d\n", dsp->ambient);
+	pr_debug("put ambient = %d\n", dsp->ambient);
 
 	return 0;
 }
@@ -1066,7 +1066,7 @@ static int wm_adsp_cal_status_get(struct snd_kcontrol *kcontrol,
 	struct wm_adsp *dsp = snd_soc_component_get_drvdata(component);
 
 	ucontrol->value.enumerated.item[0] = dsp->cal_status;
-	pr_info("get calib status = %d\n", ucontrol->value.enumerated.item[0]);
+	pr_debug("get calib status = %d\n", ucontrol->value.enumerated.item[0]);
 
 	return 0;
 }
@@ -1079,7 +1079,7 @@ static int wm_adsp_cal_status_put(struct snd_kcontrol *kcontrol,
 
 	dsp->cal_status = ucontrol->value.enumerated.item[0];
 
-	pr_info("put calib status = %d\n", dsp->cal_status);
+	pr_debug("put calib status = %d\n", dsp->cal_status);
 
 	return 0;
 }
@@ -1091,7 +1091,7 @@ static int wm_adsp_cal_chksum_get(struct snd_kcontrol *kcontrol,
 	struct wm_adsp *dsp = snd_soc_component_get_drvdata(component);
 
 	ucontrol->value.enumerated.item[0] = dsp->cal_chksum;
-	pr_info("get calib checksum = %d\n", ucontrol->value.enumerated.item[0]);
+	pr_debug("get calib checksum = %d\n", ucontrol->value.enumerated.item[0]);
 
 	return 0;
 }
@@ -1104,7 +1104,7 @@ static int wm_adsp_cal_chksum_put(struct snd_kcontrol *kcontrol,
 
 	dsp->cal_chksum = ucontrol->value.enumerated.item[0];
 
-	pr_info("put calib checksum = %d\n", dsp->cal_chksum);
+	pr_debug("put calib checksum = %d\n", dsp->cal_chksum);
 
 	return 0;
 }
@@ -1144,7 +1144,7 @@ static int wm_adsp_block_bypass_put(struct snd_kcontrol *kcontrol,
 			break;
 	}
 
-	pr_info("block_bypass = %d\n", dsp->block_bypass);
+	pr_debug("block_bypass = %d\n", dsp->block_bypass);
 
 	return 0;
 }

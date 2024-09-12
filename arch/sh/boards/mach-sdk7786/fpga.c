@@ -62,7 +62,7 @@ void __init sdk7786_fpga_init(void)
 	version = fpga_read_reg(FPGAVR);
 	date = fpga_read_reg(FPGADR);
 
-	pr_info("\tFPGA version:\t%d.%d (built on %d/%d/%d)\n",
+	pr_debug("\tFPGA version:\t%d.%d (built on %d/%d/%d)\n",
 		bcd2bin(version >> 8) & 0xf, bcd2bin(version & 0xf),
 		((date >> 12) & 0xf) + 2000,
 		(date >> 8) & 0xf, bcd2bin(date & 0xff));

@@ -396,7 +396,7 @@ static int __init gicv2m_init_one(struct fwnode_handle *fwnode,
 
 	list_add_tail(&v2m->entry, &v2m_nodes);
 
-	pr_info("range%pR, SPI[%d:%d]\n", res,
+	pr_debug("range%pR, SPI[%d:%d]\n", res,
 		v2m->spi_start, (v2m->spi_start + v2m->nr_spis - 1));
 	return 0;
 
@@ -436,7 +436,7 @@ static int __init gicv2m_of_init(struct fwnode_handle *parent_handle,
 		if (!of_property_read_u32(child, "arm,msi-base-spi",
 					  &spi_start) &&
 		    !of_property_read_u32(child, "arm,msi-num-spis", &nr_spis))
-			pr_info("DT overriding V2M MSI_TYPER (base:%u, num:%u)\n",
+			pr_debug("DT overriding V2M MSI_TYPER (base:%u, num:%u)\n",
 				spi_start, nr_spis);
 
 		ret = gicv2m_init_one(&child->fwnode, spi_start, nr_spis,
@@ -511,7 +511,7 @@ acpi_parse_madt_msi(union acpi_subtable_headers *header,
 	res.flags = IORESOURCE_MEM;
 
 	if (acpi_check_amazon_graviton_quirks()) {
-		pr_info("applying Amazon Graviton quirk\n");
+		pr_debug("applying Amazon Graviton quirk\n");
 		res.end = res.start + SZ_8K - 1;
 		flags |= GICV2M_GRAVITON_ADDRESS_ONLY;
 		gicv2m_msi_domain_info.flags &= ~MSI_FLAG_MULTI_PCI_MSI;
@@ -521,7 +521,7 @@ acpi_parse_madt_msi(union acpi_subtable_headers *header,
 		spi_start = m->spi_base;
 		nr_spis = m->spi_count;
 
-		pr_info("ACPI overriding V2M MSI_TYPER (base:%u, num:%u)\n",
+		pr_debug("ACPI overriding V2M MSI_TYPER (base:%u, num:%u)\n",
 			spi_start, nr_spis);
 	}
 

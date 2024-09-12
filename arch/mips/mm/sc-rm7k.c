@@ -148,7 +148,7 @@ static void rm7k_sc_enable(void)
 	if (read_c0_config() & RM7K_CONF_SE)
 		return;
 
-	pr_info("Enabling secondary cache...\n");
+	pr_debug("Enabling secondary cache...\n");
 	run_uncached(__rm7k_sc_enable);
 
 	if (rm7k_tcache_init)
@@ -266,5 +266,5 @@ void rm7k_sc_init(void)
 	rm7k_tcache_init = 1;
 	c->tcache.linesz = tc_lsize;
 	c->tcache.ways = 1;
-	pr_info("Tertiary cache size %ldK.\n", (tcache_size >> 10));
+	pr_debug("Tertiary cache size %ldK.\n", (tcache_size >> 10));
 }

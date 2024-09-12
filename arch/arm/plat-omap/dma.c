@@ -1155,7 +1155,7 @@ static int omap2_dma_handle_ch(int ch)
 		return 0;
 	}
 	if (unlikely(status & OMAP_DMA_DROP_IRQ))
-		pr_info("DMA synchronization event drop occurred with device %d\n",
+		pr_debug("DMA synchronization event drop occurred with device %d\n",
 			dma_chan[ch].dev_id);
 	if (unlikely(status & OMAP2_DMA_TRANS_ERR_IRQ)) {
 		printk(KERN_INFO "DMA transaction error with device %d\n",
@@ -1381,7 +1381,7 @@ static int omap_system_dma_probe(struct platform_device *pdev)
 
 	/* reserve dma channels 0 and 1 in high security devices on 34xx */
 	if (d->dev_caps & HS_CHANNELS_RESERVED) {
-		pr_info("Reserving DMA channels 0 and 1 for HS ROM code\n");
+		pr_debug("Reserving DMA channels 0 and 1 for HS ROM code\n");
 		dma_chan[0].dev_id = 0;
 		dma_chan[1].dev_id = 1;
 	}

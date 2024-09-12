@@ -164,7 +164,7 @@ static int __cld80211_init(void)
 
 	memset(&nl_ops[0], 0, sizeof(nl_ops));
 
-	pr_info("CLD80211: Initializing\n");
+	pr_debug("CLD80211: Initializing\n");
 	for (i = 0; i < CLD80211_MAX_COMMANDS; i++) {
 		nl_ops[i].cmd = i + 1;
 		nl_ops[i].doit = cld80211_doit;

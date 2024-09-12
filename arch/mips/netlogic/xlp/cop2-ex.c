@@ -106,7 +106,7 @@ static int nlm_cu2_call(struct notifier_block *nfb, unsigned long action,
 		nlm_cop2_restore(&(current->thread.cp2));
 		write_c0_status(status & ~ST0_CU2);
 		local_irq_restore(flags);
-		pr_info("COP2 access enabled for pid %d (%s)\n",
+		pr_debug("COP2 access enabled for pid %d (%s)\n",
 					current->pid, current->comm);
 		return NOTIFY_BAD;	/* Don't call default notifier */
 	}

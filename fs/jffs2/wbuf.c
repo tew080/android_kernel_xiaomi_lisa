@@ -1277,7 +1277,7 @@ int jffs2_dataflash_setup(struct jffs2_sb_info *c) {
 	}
 #endif
 
-	pr_info("write-buffering enabled buffer (%d) erasesize (%d)\n",
+	pr_debug("write-buffering enabled buffer (%d) erasesize (%d)\n",
 		c->wbuf_pagesize, c->sector_size);
 
 	return 0;
@@ -1339,7 +1339,7 @@ int jffs2_ubivol_setup(struct jffs2_sb_info *c) {
 	if (!c->wbuf)
 		return -ENOMEM;
 
-	pr_info("write-buffering enabled buffer (%d) erasesize (%d)\n",
+	pr_debug("write-buffering enabled buffer (%d) erasesize (%d)\n",
 		c->wbuf_pagesize, c->sector_size);
 
 	return 0;

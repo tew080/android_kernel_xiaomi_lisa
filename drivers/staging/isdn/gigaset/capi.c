@@ -2504,7 +2504,7 @@ static struct capi_driver capi_driver_gigaset = {
  */
 void gigaset_isdn_regdrv(void)
 {
-	pr_info("Kernel CAPI interface\n");
+	pr_debug("Kernel CAPI interface\n");
 	register_capi_driver(&capi_driver_gigaset);
 }
 

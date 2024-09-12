@@ -248,7 +248,7 @@ static int qpnp_revid_probe(struct platform_device *pdev)
 	build_pmic_string(pmic_string, PMIC_STRING_MAXLENGTH,
 			  to_spmi_device(pdev->dev.parent)->usid,
 			pmic_subtype, rev1, rev2, rev3, rev4);
-	pr_info("%s options: %d, %d, %d, %d\n",
+	pr_debug("%s options: %d, %d, %d, %d\n",
 			pmic_string, option1, option2, option3, option4);
 	return 0;
 }

@@ -1195,7 +1195,7 @@ int efivars_register(struct efivars *efivars,
 
 	__efivars = efivars;
 
-	pr_info("Registered efivars operations\n");
+	pr_debug("Registered efivars operations\n");
 
 	up(&efivars_lock);
 
@@ -1228,7 +1228,7 @@ int efivars_unregister(struct efivars *efivars)
 		goto out;
 	}
 
-	pr_info("Unregistered efivars operations\n");
+	pr_debug("Unregistered efivars operations\n");
 	__efivars = NULL;
 
 	rv = 0;

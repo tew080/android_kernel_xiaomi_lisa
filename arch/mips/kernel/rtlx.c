@@ -32,22 +32,22 @@ static void __used dump_rtlx(void)
 {
 	int i;
 
-	pr_info("id 0x%lx state %d\n", rtlx->id, rtlx->state);
+	pr_debug("id 0x%lx state %d\n", rtlx->id, rtlx->state);
 
 	for (i = 0; i < RTLX_CHANNELS; i++) {
 		struct rtlx_channel *chan = &rtlx->channel[i];
 
-		pr_info(" rt_state %d lx_state %d buffer_size %d\n",
+		pr_debug(" rt_state %d lx_state %d buffer_size %d\n",
 			chan->rt_state, chan->lx_state, chan->buffer_size);
 
-		pr_info(" rt_read %d rt_write %d\n",
+		pr_debug(" rt_read %d rt_write %d\n",
 			chan->rt_read, chan->rt_write);
 
-		pr_info(" lx_read %d lx_write %d\n",
+		pr_debug(" lx_read %d lx_write %d\n",
 			chan->lx_read, chan->lx_write);
 
-		pr_info(" rt_buffer <%s>\n", chan->rt_buffer);
-		pr_info(" lx_buffer <%s>\n", chan->lx_buffer);
+		pr_debug(" rt_buffer <%s>\n", chan->rt_buffer);
+		pr_debug(" lx_buffer <%s>\n", chan->lx_buffer);
 	}
 }
 

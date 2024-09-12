@@ -39,7 +39,7 @@ static void do_nothing(void)
 /* Must immediately follow do_nothing for size calculuations to work out. */
 static void do_overwritten(void)
 {
-	pr_info("do_overwritten wasn't overwritten!\n");
+	pr_debug("do_overwritten wasn't overwritten!\n");
 	return;
 }
 
@@ -47,7 +47,7 @@ static noinline void execute_location(void *dst, bool write)
 {
 	void (*func)(void) = dst;
 
-	pr_info("attempting ok execution at %px\n", do_nothing);
+	pr_debug("attempting ok execution at %px\n", do_nothing);
 	do_nothing();
 
 	if (write == CODE_WRITE) {
@@ -55,7 +55,7 @@ static noinline void execute_location(void *dst, bool write)
 		flush_icache_range((unsigned long)dst,
 				   (unsigned long)dst + EXEC_SIZE);
 	}
-	pr_info("attempting bad execution at %px\n", func);
+	pr_debug("attempting bad execution at %px\n", func);
 	func();
 	pr_err("FAIL: func returned\n");
 }
@@ -67,14 +67,14 @@ static void execute_user_location(void *dst)
 	/* Intentionally crossing kernel/user memory boundary. */
 	void (*func)(void) = dst;
 
-	pr_info("attempting ok execution at %px\n", do_nothing);
+	pr_debug("attempting ok execution at %px\n", do_nothing);
 	do_nothing();
 
 	copied = access_process_vm(current, (unsigned long)dst, do_nothing,
 				   EXEC_SIZE, FOLL_WRITE);
 	if (copied < EXEC_SIZE)
 		return;
-	pr_info("attempting bad execution at %px\n", func);
+	pr_debug("attempting bad execution at %px\n", func);
 	func();
 	pr_err("FAIL: func returned\n");
 }
@@ -84,7 +84,7 @@ void lkdtm_WRITE_RO(void)
 	/* Explicitly cast away "const" for the test and make volatile. */
 	volatile unsigned long *ptr = (unsigned long *)&rodata;
 
-	pr_info("attempting bad rodata write at %px\n", ptr);
+	pr_debug("attempting bad rodata write at %px\n", ptr);
 	*ptr ^= 0xabcd1234;
 	pr_err("FAIL: survived bad write\n");
 }
@@ -99,11 +99,11 @@ void lkdtm_WRITE_RO_AFTER_INIT(void)
 	 * real test.
 	 */
 	if ((*ptr & 0xAA) != 0xAA) {
-		pr_info("%p was NOT written during init!?\n", ptr);
+		pr_debug("%p was NOT written during init!?\n", ptr);
 		return;
 	}
 
-	pr_info("attempting bad ro_after_init write at %px\n", ptr);
+	pr_debug("attempting bad ro_after_init write at %px\n", ptr);
 	*ptr ^= 0xabcd1234;
 	pr_err("FAIL: survived bad write\n");
 }
@@ -121,7 +121,7 @@ void lkdtm_WRITE_KERN(void)
 			(unsigned long)do_nothing;
 	ptr = (unsigned char *)do_overwritten;
 
-	pr_info("attempting bad %zu byte write at %px\n", size, ptr);
+	pr_debug("attempting bad %zu byte write at %px\n", size, ptr);
 	memcpy((void *)ptr, (unsigned char *)do_nothing, size);
 	flush_icache_range((unsigned long)ptr, (unsigned long)(ptr + size));
 	pr_err("FAIL: survived bad write\n");
@@ -200,12 +200,12 @@ void lkdtm_ACCESS_USERSPACE(void)
 
 	ptr = (unsigned long *)user_addr;
 
-	pr_info("attempting bad read at %px\n", ptr);
+	pr_debug("attempting bad read at %px\n", ptr);
 	tmp = *ptr;
 	tmp += 0xc0dec0de;
 	pr_err("FAIL: survived bad read\n");
 
-	pr_info("attempting bad write at %px\n", ptr);
+	pr_debug("attempting bad write at %px\n", ptr);
 	*ptr = tmp;
 	pr_err("FAIL: survived bad write\n");
 
@@ -217,12 +217,12 @@ void lkdtm_ACCESS_NULL(void)
 	unsigned long tmp;
 	volatile unsigned long *ptr = (unsigned long *)NULL;
 
-	pr_info("attempting bad read at %px\n", ptr);
+	pr_debug("attempting bad read at %px\n", ptr);
 	tmp = *ptr;
 	tmp += 0xc0dec0de;
 	pr_err("FAIL: survived bad read\n");
 
-	pr_info("attempting bad write at %px\n", ptr);
+	pr_debug("attempting bad write at %px\n", ptr);
 	*ptr = tmp;
 	pr_err("FAIL: survived bad write\n");
 }

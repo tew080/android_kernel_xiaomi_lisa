@@ -68,17 +68,17 @@ static ssize_t fault_inject_write(struct file *file, const char __user *buf,
 	if (size > 0) {
 		val = op->set_clnt(&sa, size);
 		if (val)
-			pr_info("NFSD [%s]: Client %s had %llu state object(s)\n",
+			pr_debug("NFSD [%s]: Client %s had %llu state object(s)\n",
 				op->file, write_buf, val);
 	} else {
 		val = simple_strtoll(write_buf, NULL, 0);
 		if (val == 0)
-			pr_info("NFSD Fault Injection: %s (all)", op->file);
+			pr_debug("NFSD Fault Injection: %s (all)", op->file);
 		else
-			pr_info("NFSD Fault Injection: %s (n = %llu)",
+			pr_debug("NFSD Fault Injection: %s (n = %llu)",
 				op->file, val);
 		val = op->set_val(val);
-		pr_info("NFSD: %s: found %llu", op->file, val);
+		pr_debug("NFSD: %s: found %llu", op->file, val);
 	}
 	return len; /* on success, claim we got the whole input */
 }

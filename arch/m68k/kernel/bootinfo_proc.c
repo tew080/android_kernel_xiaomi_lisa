@@ -47,7 +47,7 @@ void __init save_bootinfo(const struct bi_record *bi)
 		return;
 	}
 
-	pr_info("Saving %zu bytes of bootinfo\n", size);
+	pr_debug("Saving %zu bytes of bootinfo\n", size);
 	memcpy(bootinfo_tmp, start, size);
 	bootinfo_size = size;
 }

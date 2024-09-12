@@ -211,7 +211,7 @@ int adb_iop_probe(void)
 
 int adb_iop_init(void)
 {
-	pr_info("adb: IOP ISM driver v0.4 for Unified ADB\n");
+	pr_debug("adb: IOP ISM driver v0.4 for Unified ADB\n");
 	iop_listen(ADB_IOP, ADB_CHAN, adb_iop_listen, "ADB");
 	return 0;
 }

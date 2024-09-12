@@ -859,7 +859,7 @@ parport_register_dev_model(struct parport *port, const char *name,
 
 	if (par_dev_cb->flags & PARPORT_DEV_LURK) {
 		if (!par_dev_cb->preempt || !par_dev_cb->wakeup) {
-			pr_info("%s: refused to register lurking device (%s) without callbacks\n",
+			pr_debug("%s: refused to register lurking device (%s) without callbacks\n",
 				port->name, name);
 			return NULL;
 		}

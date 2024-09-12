@@ -40,7 +40,7 @@ prom_printf(char *fmt, ...)
 
 #ifdef CONFIG_KGDB
 	if (kgdb_initialized) {
-		pr_info("kgdb_initialized = %d\n", kgdb_initialized);
+		pr_debug("kgdb_initialized = %d\n", kgdb_initialized);
 		putpacket(bptr, 1);
 	} else
 #else

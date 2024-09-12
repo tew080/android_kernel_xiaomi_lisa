@@ -167,10 +167,10 @@ static bool __init sparc64_has_md5_opcode(void)
 static int __init md5_sparc64_mod_init(void)
 {
 	if (sparc64_has_md5_opcode()) {
-		pr_info("Using sparc64 md5 opcode optimized MD5 implementation\n");
+		pr_debug("Using sparc64 md5 opcode optimized MD5 implementation\n");
 		return crypto_register_shash(&alg);
 	}
-	pr_info("sparc64 md5 opcode not available.\n");
+	pr_debug("sparc64 md5 opcode not available.\n");
 	return -ENODEV;
 }
 

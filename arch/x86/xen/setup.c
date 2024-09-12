@@ -537,7 +537,7 @@ void __init xen_remap_memory(void)
 
 	set_pte_mfn(buf, mfn_save, PAGE_KERNEL);
 
-	pr_info("Remapped %ld page(s)\n", remapped);
+	pr_debug("Remapped %ld page(s)\n", remapped);
 }
 
 static unsigned long __init xen_get_pages_limit(void)
@@ -902,7 +902,7 @@ char * __init xen_memory_setup(void)
 		start = boot_params.hdr.ramdisk_image;
 		size = boot_params.hdr.ramdisk_size;
 		xen_phys_memcpy(new_area, start, size);
-		pr_info("initrd moved from [mem %#010llx-%#010llx] to [mem %#010llx-%#010llx]\n",
+		pr_debug("initrd moved from [mem %#010llx-%#010llx] to [mem %#010llx-%#010llx]\n",
 			start, start + size, new_area, new_area + size);
 		memblock_free(start, size);
 		boot_params.hdr.ramdisk_image = new_area;
@@ -915,7 +915,7 @@ char * __init xen_memory_setup(void)
 	 */
 	xen_foreach_remap_area(max_pfn, xen_set_identity_and_remap_chunk);
 
-	pr_info("Released %ld page(s)\n", xen_released_pages);
+	pr_debug("Released %ld page(s)\n", xen_released_pages);
 
 	return "Xen";
 }

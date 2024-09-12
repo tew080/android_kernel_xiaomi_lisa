@@ -35,7 +35,7 @@ void arc_init_IRQ(void)
 	write_aux_reg(AUX_IRQ_LEV, level_mask);
 
 	if (level_mask)
-		pr_info("Level-2 interrupts bitset %x\n", level_mask);
+		pr_debug("Level-2 interrupts bitset %x\n", level_mask);
 
 	/*
 	 * Disable all IRQ lines so faulty external hardware won't

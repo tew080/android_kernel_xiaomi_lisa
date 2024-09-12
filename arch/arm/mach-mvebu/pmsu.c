@@ -168,7 +168,7 @@ static int __init mvebu_v7_pmsu_init(void)
 	if (!np)
 		return 0;
 
-	pr_info("Initializing Power Management Service Unit\n");
+	pr_debug("Initializing Power Management Service Unit\n");
 
 	if (of_address_to_resource(np, 0, &res)) {
 		pr_err("unable to get resource\n");

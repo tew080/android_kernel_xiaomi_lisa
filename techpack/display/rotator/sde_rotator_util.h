@@ -23,7 +23,7 @@
 #define SDE_ROT_MAX_IMG_HEIGHT		0x3FFF
 
 #define SDEROT_DBG(fmt, ...)	pr_debug("<SDEROT_DBG> " fmt, ##__VA_ARGS__)
-#define SDEROT_INFO(fmt, ...)	pr_info("<SDEROT_INFO> " fmt, ##__VA_ARGS__)
+#define SDEROT_INFO(fmt, ...)	pr_debug("<SDEROT_INFO> " fmt, ##__VA_ARGS__)
 #define SDEROT_INFO_ONCE(fmt, ...)  \
 	pr_info_once("<SDEROT_INFO> " fmt, ##__VA_ARGS__)
 #define SDEROT_WARN(fmt, ...)	pr_warn("<SDEROT_WARN> " fmt, ##__VA_ARGS__)

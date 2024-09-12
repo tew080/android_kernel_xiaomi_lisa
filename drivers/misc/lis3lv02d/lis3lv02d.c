@@ -1123,7 +1123,7 @@ int lis3lv02d_init_device(struct lis3lv02d *lis3)
 
 	switch (lis3->whoami) {
 	case WAI_12B:
-		pr_info("12 bits sensor found\n");
+		pr_debug("12 bits sensor found\n");
 		lis3->read_data = lis3lv02d_read_12;
 		lis3->mdps_max_val = 2048;
 		lis3->pwron_delay = LIS3_PWRON_DELAY_WAI_12B;
@@ -1134,7 +1134,7 @@ int lis3lv02d_init_device(struct lis3lv02d *lis3)
 		lis3->regs_size = ARRAY_SIZE(lis3_wai12_regs);
 		break;
 	case WAI_8B:
-		pr_info("8 bits sensor found\n");
+		pr_debug("8 bits sensor found\n");
 		lis3->read_data = lis3lv02d_read_8;
 		lis3->mdps_max_val = 128;
 		lis3->pwron_delay = LIS3_PWRON_DELAY_WAI_8B;
@@ -1145,7 +1145,7 @@ int lis3lv02d_init_device(struct lis3lv02d *lis3)
 		lis3->regs_size = ARRAY_SIZE(lis3_wai8_regs);
 		break;
 	case WAI_3DC:
-		pr_info("8 bits 3DC sensor found\n");
+		pr_debug("8 bits 3DC sensor found\n");
 		lis3->read_data = lis3lv02d_read_8;
 		lis3->mdps_max_val = 128;
 		lis3->pwron_delay = LIS3_PWRON_DELAY_WAI_8B;
@@ -1154,7 +1154,7 @@ int lis3lv02d_init_device(struct lis3lv02d *lis3)
 		lis3->scale = LIS3_SENSITIVITY_8B;
 		break;
 	case WAI_3DLH:
-		pr_info("16 bits lis331dlh sensor found\n");
+		pr_debug("16 bits lis331dlh sensor found\n");
 		lis3->read_data = lis331dlh_read_data;
 		lis3->mdps_max_val = 2048; /* 12 bits for 2G */
 		lis3->shift_adj = SHIFT_ADJ_2G;

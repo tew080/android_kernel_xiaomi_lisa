@@ -197,13 +197,13 @@ static int __init iTCO_vendor_init_module(void)
 			SUPERMICRO_NEW_BOARD);
 		return -EINVAL;
 	}
-	pr_info("vendor-support=%d\n", iTCO_vendorsupport);
+	pr_debug("vendor-support=%d\n", iTCO_vendorsupport);
 	return 0;
 }
 
 static void __exit iTCO_vendor_exit_module(void)
 {
-	pr_info("Module Unloaded\n");
+	pr_debug("Module Unloaded\n");
 }
 
 module_init(iTCO_vendor_init_module);

@@ -1461,14 +1461,14 @@ static int __init init_ntfs_fs(void)
 {
 	int err;
 
-	pr_info("ntfs3: Max link count %u\n", NTFS_LINK_MAX);
+	pr_debug("ntfs3: Max link count %u\n", NTFS_LINK_MAX);
 
 	if (IS_ENABLED(CONFIG_NTFS3_FS_POSIX_ACL))
-		pr_info("ntfs3: Enabled Linux POSIX ACLs support\n");
+		pr_debug("ntfs3: Enabled Linux POSIX ACLs support\n");
 	if (IS_ENABLED(CONFIG_NTFS3_64BIT_CLUSTER))
 		pr_notice("ntfs3: Warning: Activated 64 bits per cluster. Windows does not support this\n");
 	if (IS_ENABLED(CONFIG_NTFS3_LZX_XPRESS))
-		pr_info("ntfs3: Read-only LZX/Xpress compression included\n");
+		pr_debug("ntfs3: Read-only LZX/Xpress compression included\n");
 
 	err = ntfs3_init_bitmap();
 	if (err)

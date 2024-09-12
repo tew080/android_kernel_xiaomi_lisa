@@ -888,9 +888,9 @@ static void cell_iommu_setup_fixed_ptab(struct cbe_iommu *iommu,
 		(cell_iommu_get_ioid(np) & CBE_IOPTE_IOID_Mask);
 
 	if (iommu_fixed_is_weak)
-		pr_info("IOMMU: Using weak ordering for fixed mapping\n");
+		pr_debug("IOMMU: Using weak ordering for fixed mapping\n");
 	else {
-		pr_info("IOMMU: Using strong ordering for fixed mapping\n");
+		pr_debug("IOMMU: Using strong ordering for fixed mapping\n");
 		base_pte |= CBE_IOPTE_SO_RW;
 	}
 

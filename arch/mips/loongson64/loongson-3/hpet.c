@@ -88,7 +88,7 @@ static int hpet_set_state_periodic(struct clock_event_device *evt)
 
 	spin_lock(&hpet_lock);
 
-	pr_info("set clock event to periodic mode!\n");
+	pr_debug("set clock event to periodic mode!\n");
 	/* stop counter */
 	hpet_stop_counter();
 
@@ -131,7 +131,7 @@ static int hpet_set_state_oneshot(struct clock_event_device *evt)
 
 	spin_lock(&hpet_lock);
 
-	pr_info("set clock event to one shot mode!\n");
+	pr_debug("set clock event to one shot mode!\n");
 	cfg = hpet_read(HPET_T0_CFG);
 	/*
 	 * set timer0 type
@@ -248,7 +248,7 @@ void __init setup_hpet_timer(void)
 
 	clockevents_register_device(cd);
 	setup_irq(HPET_T0_IRQ, &hpet_irq);
-	pr_info("hpet clock event device register\n");
+	pr_debug("hpet clock event device register\n");
 }
 
 static u64 hpet_read_counter(struct clocksource *cs)

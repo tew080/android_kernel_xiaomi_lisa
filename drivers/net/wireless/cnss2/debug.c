@@ -234,7 +234,7 @@ static ssize_t cnss_dev_boot_debug_write(struct file *fp,
 		} else if (sysfs_streq(cmd, "linkdown")) {
 			ret = cnss_suspend_pci_link(pci_priv);
 		} else if (sysfs_streq(cmd, "assert")) {
-			cnss_pr_info("FW Assert triggered for debug\n");
+			cnss_pr_debug("FW Assert triggered for debug\n");
 			ret = cnss_force_fw_assert(&pci_priv->pci_dev->dev);
 		} else if (sysfs_streq(cmd, "set_cbc_done")) {
 			cnss_pr_dbg("Force set cold boot cal done status\n");

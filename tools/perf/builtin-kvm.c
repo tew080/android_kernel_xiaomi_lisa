@@ -391,7 +391,7 @@ static bool handle_end_event(struct perf_kvm_stat *kvm,
 
 		kvm->events_ops->decode_key(kvm, &event->key, decode);
 		if (!skip_event(decode)) {
-			pr_info("%" PRIu64 " VM %d, vcpu %d: %s event took %" PRIu64 "usec\n",
+			pr_debug("%" PRIu64 " VM %d, vcpu %d: %s event took %" PRIu64 "usec\n",
 				 sample->time, sample->pid, vcpu_record->vcpu_id,
 				 decode, time_diff / NSEC_PER_USEC);
 		}
@@ -572,19 +572,19 @@ static void print_vcpu_info(struct perf_kvm_stat *kvm)
 {
 	int vcpu = kvm->trace_vcpu;
 
-	pr_info("Analyze events for ");
+	pr_debug("Analyze events for ");
 
 	if (kvm->opts.target.system_wide)
-		pr_info("all VMs, ");
+		pr_debug("all VMs, ");
 	else if (kvm->opts.target.pid)
-		pr_info("pid(s) %s, ", kvm->opts.target.pid);
+		pr_debug("pid(s) %s, ", kvm->opts.target.pid);
 	else
-		pr_info("dazed and confused on what is monitored, ");
+		pr_debug("dazed and confused on what is monitored, ");
 
 	if (vcpu == -1)
-		pr_info("all VCPUs:\n\n");
+		pr_debug("all VCPUs:\n\n");
 	else
-		pr_info("VCPU %d:\n\n", vcpu);
+		pr_debug("VCPU %d:\n\n", vcpu);
 }
 
 static void show_timeofday(void)
@@ -596,9 +596,9 @@ static void show_timeofday(void)
 	gettimeofday(&tv, NULL);
 	if (localtime_r(&tv.tv_sec, &ltime)) {
 		strftime(date, sizeof(date), "%H:%M:%S", &ltime);
-		pr_info("%s.%06ld", date, tv.tv_usec);
+		pr_debug("%s.%06ld", date, tv.tv_usec);
 	} else
-		pr_info("00:00:00.000000");
+		pr_debug("00:00:00.000000");
 
 	return;
 }
@@ -614,17 +614,17 @@ static void print_result(struct perf_kvm_stat *kvm)
 		show_timeofday();
 	}
 
-	pr_info("\n\n");
+	pr_debug("\n\n");
 	print_vcpu_info(kvm);
-	pr_info("%*s ", decode_str_len, kvm->events_ops->name);
-	pr_info("%10s ", "Samples");
-	pr_info("%9s ", "Samples%");
+	pr_debug("%*s ", decode_str_len, kvm->events_ops->name);
+	pr_debug("%10s ", "Samples");
+	pr_debug("%9s ", "Samples%");
 
-	pr_info("%9s ", "Time%");
-	pr_info("%11s ", "Min Time");
-	pr_info("%11s ", "Max Time");
-	pr_info("%16s ", "Avg time");
-	pr_info("\n\n");
+	pr_debug("%9s ", "Time%");
+	pr_debug("%11s ", "Min Time");
+	pr_debug("%11s ", "Max Time");
+	pr_debug("%16s ", "Avg time");
+	pr_debug("\n\n");
 
 	while ((event = pop_from_result(&kvm->result))) {
 		u64 ecount, etime, max, min;
@@ -635,22 +635,22 @@ static void print_result(struct perf_kvm_stat *kvm)
 		min = get_event_min(event, vcpu);
 
 		kvm->events_ops->decode_key(kvm, &event->key, decode);
-		pr_info("%*s ", decode_str_len, decode);
-		pr_info("%10llu ", (unsigned long long)ecount);
-		pr_info("%8.2f%% ", (double)ecount / kvm->total_count * 100);
-		pr_info("%8.2f%% ", (double)etime / kvm->total_time * 100);
-		pr_info("%9.2fus ", (double)min / NSEC_PER_USEC);
-		pr_info("%9.2fus ", (double)max / NSEC_PER_USEC);
-		pr_info("%9.2fus ( +-%7.2f%% )", (double)etime / ecount / NSEC_PER_USEC,
+		pr_debug("%*s ", decode_str_len, decode);
+		pr_debug("%10llu ", (unsigned long long)ecount);
+		pr_debug("%8.2f%% ", (double)ecount / kvm->total_count * 100);
+		pr_debug("%8.2f%% ", (double)etime / kvm->total_time * 100);
+		pr_debug("%9.2fus ", (double)min / NSEC_PER_USEC);
+		pr_debug("%9.2fus ", (double)max / NSEC_PER_USEC);
+		pr_debug("%9.2fus ( +-%7.2f%% )", (double)etime / ecount / NSEC_PER_USEC,
 			kvm_event_rel_stddev(vcpu, event));
-		pr_info("\n");
+		pr_debug("\n");
 	}
 
-	pr_info("\nTotal Samples:%" PRIu64 ", Total events handled time:%.2fus.\n\n",
+	pr_debug("\nTotal Samples:%" PRIu64 ", Total events handled time:%.2fus.\n\n",
 		kvm->total_count, kvm->total_time / (double)NSEC_PER_USEC);
 
 	if (kvm->lost_events)
-		pr_info("\nLost events: %" PRIu64 "\n\n", kvm->lost_events);
+		pr_debug("\nLost events: %" PRIu64 "\n\n", kvm->lost_events);
 }
 
 #ifdef HAVE_TIMERFD_SUPPORT
@@ -831,7 +831,7 @@ static int perf_kvm__mmap_read(struct perf_kvm_stat *kvm)
 		err = ordered_events__flush(oe, OE_FLUSH__ROUND);
 		if (err) {
 			if (kvm->lost_events)
-				pr_info("\nLost events: %" PRIu64 "\n\n",
+				pr_debug("\nLost events: %" PRIu64 "\n\n",
 					kvm->lost_events);
 			return err;
 		}

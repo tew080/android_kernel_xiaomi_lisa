@@ -145,7 +145,7 @@ int __init bcm63xx_gpio_init(void)
 	if (!BCMCPU_IS_6345())
 		gpio_out_high = bcm_gpio_readl(GPIO_DATA_HI_REG);
 	bcm63xx_gpio_chip.ngpio = bcm63xx_gpio_count();
-	pr_info("registering %d GPIOs\n", bcm63xx_gpio_chip.ngpio);
+	pr_debug("registering %d GPIOs\n", bcm63xx_gpio_chip.ngpio);
 
 	return gpiochip_add_data(&bcm63xx_gpio_chip, NULL);
 }

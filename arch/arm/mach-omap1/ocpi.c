@@ -75,7 +75,7 @@ static int __init omap_ocpi_init(void)
 
 	clk_enable(ocpi_ck);
 	ocpi_enable();
-	pr_info("OMAP OCPI interconnect driver loaded\n");
+	pr_debug("OMAP OCPI interconnect driver loaded\n");
 
 	return 0;
 }

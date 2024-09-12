@@ -599,7 +599,7 @@ int ipa_fmwk_register_ipa(const struct ipa_core_data *in)
 	ipa_late_register_ready_cb();
 	mutex_unlock(&ipa_fmwk_ctx->lock);
 
-	pr_info("IPA driver is now in ready state\n");
+	pr_debug("IPA driver is now in ready state\n");
 	return 0;
 }
 EXPORT_SYMBOL(ipa_fmwk_register_ipa);
@@ -1158,7 +1158,7 @@ int ipa_fmwk_register_ipa_usb(const struct ipa_usb_data *in)
 	ipa_fmwk_ctx->ipa_usb_is_teth_prot_connected =
 		in->ipa_usb_is_teth_prot_connected;
 
-	pr_info("ipa_usb registered successfully\n");
+	pr_debug("ipa_usb registered successfully\n");
 
 	return 0;
 }
@@ -1333,7 +1333,7 @@ int ipa_fmwk_register_ipa_wdi3(const struct ipa_wdi3_data *in)
 		in->ipa_wdi_create_smmu_mapping_per_inst;
 	ipa_fmwk_ctx->ipa_wdi_release_smmu_mapping_per_inst =
 		in->ipa_wdi_release_smmu_mapping_per_inst;
-	pr_info("ipa_wdi3 registered successfully\n");
+	pr_debug("ipa_wdi3 registered successfully\n");
 
 	return 0;
 }
@@ -1768,7 +1768,7 @@ int ipa_fmwk_register_ipa_qdss(const struct ipa_qdss_data *in)
 	ipa_fmwk_ctx->ipa_qdss_conn_pipes = in->ipa_qdss_conn_pipes;
 	ipa_fmwk_ctx->ipa_qdss_disconn_pipes = in->ipa_qdss_disconn_pipes;
 
-	pr_info("ipa_qdss registered successfully\n");
+	pr_debug("ipa_qdss registered successfully\n");
 
 	return 0;
 
@@ -1805,7 +1805,7 @@ int ipa_fmwk_register_gsb(const struct ipa_gsb_data *in)
 	ipa_fmwk_ctx->ipa_bridge_tx_dp = in->ipa_bridge_tx_dp;
 	ipa_fmwk_ctx->ipa_bridge_cleanup = in->ipa_bridge_cleanup;
 
-	pr_info("ipa_gsb registered successfully\n");
+	pr_debug("ipa_gsb registered successfully\n");
 
 	return 0;
 }
@@ -1930,7 +1930,7 @@ int ipa_fmwk_register_uc_offload(const struct ipa_uc_offload_data *in)
 	ipa_fmwk_ctx->ipa_uc_offload_dereg_rdyCB =
 		in->ipa_uc_offload_dereg_rdyCB;
 
-	pr_info("ipa_uc_offload registered successfully\n");
+	pr_debug("ipa_uc_offload registered successfully\n");
 
 	return 0;
 }
@@ -2062,7 +2062,7 @@ int ipa_fmwk_register_ipa_mhi(const struct ipa_mhi_data *in)
 		in->ipa_mhi_handle_ipa_config_req;
 	ipa_fmwk_ctx->ipa_mhi_update_mstate = in->ipa_mhi_update_mstate;
 
-	pr_info("ipa_mhi registered successfully\n");
+	pr_debug("ipa_mhi registered successfully\n");
 
 	return 0;
 }
@@ -2208,7 +2208,7 @@ int ipa_fmwk_register_ipa_wigig(const struct ipa_wigig_data *in)
 	ipa_fmwk_ctx->ipa_wigig_save_regs =
 		in->ipa_wigig_save_regs;
 
-	pr_info("ipa_wigig registered successfully\n");
+	pr_debug("ipa_wigig registered successfully\n");
 
 	return 0;
 }
@@ -2423,7 +2423,7 @@ int ipa_fmwk_register_ipa_eth(const struct ipa_eth_data *in)
 	ipa_fmwk_ctx->ipa_eth_client_exist =
 		in->ipa_eth_client_exist;
 
-	pr_info("ipa_eth registered successfully\n");
+	pr_debug("ipa_eth registered successfully\n");
 
 	return 0;
 }
@@ -2559,7 +2559,7 @@ EXPORT_SYMBOL(ipa_eth_client_exist);
 /* module functions */
 static int __init ipa_fmwk_init(void)
 {
-	pr_info("IPA framework init\n");
+	pr_debug("IPA framework init\n");
 
 	ipa_fmwk_ctx = kzalloc(sizeof(struct ipa_fmwk_contex), GFP_KERNEL);
 	if (ipa_fmwk_ctx == NULL)

@@ -828,7 +828,7 @@ int __weak strcmp_cpuid_str(const char *mapcpuid, const char *cpuid)
 
 	if (regcomp(&re, mapcpuid, REG_EXTENDED) != 0) {
 		/* Warn unable to generate match particular string. */
-		pr_info("Invalid regular expression %s\n", mapcpuid);
+		pr_debug("Invalid regular expression %s\n", mapcpuid);
 		return 1;
 	}
 

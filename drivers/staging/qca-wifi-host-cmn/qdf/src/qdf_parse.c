@@ -37,7 +37,7 @@ QDF_STATUS qdf_ini_parse(const char *ini_path, void *context,
 	int ini_read_count = 0;
 
 	if (strcmp(ini_path, WLAN_INI_FILE) == 0) {
-		pr_info("qcacld: loading overridden WLAN_INI_FILE\n");
+		pr_debug("qcacld: loading overridden WLAN_INI_FILE\n");
 		fbuf = wlan_cfg_buf;
 		status = QDF_STATUS_SUCCESS;
 	} else {
@@ -100,7 +100,7 @@ QDF_STATUS qdf_ini_parse(const char *ini_path, void *context,
 
 		key = qdf_str_trim(key);
 
-		pr_info("qcacld: cfg: \"%s\" = \"%s\"\n", key, value);
+		pr_debug("qcacld: cfg: \"%s\" = \"%s\"\n", key, value);
 
 		/*
 		 * Ignoring comments, a valid ini line contains one of:

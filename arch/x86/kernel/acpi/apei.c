@@ -28,7 +28,7 @@ int arch_apei_enable_cmcff(struct acpi_hest_header *hest_hdr, void *data)
 	    !cmc->num_hardware_banks)
 		return 1;
 
-	pr_info("HEST: Enabling Firmware First mode for corrected errors.\n");
+	pr_debug("HEST: Enabling Firmware First mode for corrected errors.\n");
 
 	mc_bank = (struct acpi_hest_ia_error_bank *)(cmc + 1);
 	for (i = 0; i < cmc->num_hardware_banks; i++, mc_bank++)

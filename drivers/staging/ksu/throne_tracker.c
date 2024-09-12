@@ -70,12 +70,12 @@ static void crown_manager(const char *apk, struct list_head *uid_data)
 		return;
 	}
 
-	pr_info("manager pkg: %s\n", pkg);
+	pr_debug("manager pkg: %s\n", pkg);
 
 #ifdef KSU_MANAGER_PACKAGE
 	// pkg is `/<real package>`
 	if (strncmp(pkg, KSU_MANAGER_PACKAGE, sizeof(KSU_MANAGER_PACKAGE))) {
-		pr_info("manager package is inconsistent with kernel build: %s\n",
+		pr_debug("manager package is inconsistent with kernel build: %s\n",
 			KSU_MANAGER_PACKAGE);
 		return;
 	}
@@ -85,7 +85,7 @@ static void crown_manager(const char *apk, struct list_head *uid_data)
 
 	list_for_each_entry (np, list, list) {
 		if (strncmp(np->package, pkg, KSU_MAX_PACKAGE_NAME) == 0) {
-			pr_info("Crowning manager: %s(uid=%d)\n", pkg, np->uid);
+			pr_debug("Crowning manager: %s(uid=%d)\n", pkg, np->uid);
 			ksu_set_manager_uid(np->uid);
 			break;
 		}
@@ -141,7 +141,7 @@ FILLDIR_RETURN_TYPE my_actor(struct dir_context *ctx, const char *name,
 		return FILLDIR_ACTOR_STOP;
 	}
 	if (my_ctx->stop && *my_ctx->stop) {
-		pr_info("Stop searching\n");
+		pr_debug("Stop searching\n");
 		return FILLDIR_ACTOR_STOP;
 	}
 
@@ -183,7 +183,7 @@ FILLDIR_RETURN_TYPE my_actor(struct dir_context *ctx, const char *name,
 			}
 
 			bool is_manager = is_manager_apk(dirpath);
-			pr_info("Found new base.apk at path: %s, is_manager: %d\n",
+			pr_debug("Found new base.apk at path: %s, is_manager: %d\n",
 				dirpath, is_manager);
 			if (is_manager) {
 				crown_manager(dirpath, my_ctx->private_data);
@@ -353,12 +353,12 @@ void track_throne()
 
 	if (!manager_exist) {
 		if (ksu_is_manager_uid_valid()) {
-			pr_info("manager is uninstalled, invalidate it!\n");
+			pr_debug("manager is uninstalled, invalidate it!\n");
 			ksu_invalidate_manager_uid();
 		}
-		pr_info("Searching manager...\n");
+		pr_debug("Searching manager...\n");
 		search_manager("/data/app", 2, &uid_list);
-		pr_info("Search manager finished\n");
+		pr_debug("Search manager finished\n");
 	}
 
 	// then prune the allowlist

@@ -358,7 +358,7 @@ static int perf_add_probe_events(struct perf_probe_event *pevs, int npevs)
 	for (i = k = 0; i < npevs; i++)
 		k += pevs[i].ntevs;
 
-	pr_info("Added new event%s\n", (k > 1) ? "s:" : ":");
+	pr_debug("Added new event%s\n", (k > 1) ? "s:" : ":");
 	for (i = 0; i < npevs; i++) {
 		struct perf_probe_event *pev = &pevs[i];
 
@@ -381,8 +381,8 @@ static int perf_add_probe_events(struct perf_probe_event *pevs, int npevs)
 	/* Note that it is possible to skip all events because of blacklist */
 	if (event) {
 		/* Show how to use the event. */
-		pr_info("\nYou can now use it in all perf tools, such as:\n\n");
-		pr_info("\tperf record -e %s:%s -aR sleep 1\n\n", group, event);
+		pr_debug("\nYou can now use it in all perf tools, such as:\n\n");
+		pr_debug("\tperf record -e %s:%s -aR sleep 1\n\n", group, event);
 	}
 
 out_cleanup:
@@ -447,7 +447,7 @@ static int perf_del_probe_events(struct strfilter *filter)
 	ret = probe_file__get_events(kfd, filter, klist);
 	if (ret == 0) {
 		strlist__for_each_entry(ent, klist)
-			pr_info("Removed event: %s\n", ent->s);
+			pr_debug("Removed event: %s\n", ent->s);
 
 		ret = probe_file__del_strlist(kfd, klist);
 		if (ret < 0)
@@ -457,7 +457,7 @@ static int perf_del_probe_events(struct strfilter *filter)
 	ret2 = probe_file__get_events(ufd, filter, ulist);
 	if (ret2 == 0) {
 		strlist__for_each_entry(ent, ulist)
-			pr_info("Removed event: %s\n", ent->s);
+			pr_debug("Removed event: %s\n", ent->s);
 
 		ret2 = probe_file__del_strlist(ufd, ulist);
 		if (ret2 < 0)

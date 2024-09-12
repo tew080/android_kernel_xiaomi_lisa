@@ -183,14 +183,14 @@ void __init tx4927_setup(void)
 	if (!(____raw_readq(&tx4927_ccfgptr->ccfg) & TX4927_CCFG_PCIARB))
 		txx9_clear64(&tx4927_ccfgptr->pcfg, TX4927_PCFG_PCICLKEN_ALL);
 
-	pr_info("%s -- %dMHz(M%dMHz) CRIR:%08x CCFG:%llx PCFG:%llx\n",
+	pr_debug("%s -- %dMHz(M%dMHz) CRIR:%08x CCFG:%llx PCFG:%llx\n",
 		txx9_pcode_str, (cpuclk + 500000) / 1000000,
 		(txx9_master_clock + 500000) / 1000000,
 		(__u32)____raw_readq(&tx4927_ccfgptr->crir),
 		____raw_readq(&tx4927_ccfgptr->ccfg),
 		____raw_readq(&tx4927_ccfgptr->pcfg));
 
-	pr_info("%s SDRAMC --", txx9_pcode_str);
+	pr_debug("%s SDRAMC --", txx9_pcode_str);
 	for (i = 0; i < 4; i++) {
 		__u64 cr = TX4927_SDRAMC_CR(i);
 		unsigned long base, size;
@@ -324,7 +324,7 @@ static void __init tx4927_stop_unused_modules(void)
 	}
 	local_irq_enable();
 	if (buf[0])
-		pr_info("%s: stop%s\n", txx9_pcode_str, buf);
+		pr_debug("%s: stop%s\n", txx9_pcode_str, buf);
 }
 
 static int __init tx4927_late_init(void)

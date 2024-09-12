@@ -38,7 +38,7 @@ static void init_c3(struct cpuinfo_x86 *c)
 			rdmsr(MSR_VIA_FCR, lo, hi);
 			lo |= ACE_FCR;		/* enable ACE unit */
 			wrmsr(MSR_VIA_FCR, lo, hi);
-			pr_info("CPU: Enabled ACE h/w crypto\n");
+			pr_debug("CPU: Enabled ACE h/w crypto\n");
 		}
 
 		/* enable RNG unit, if present and disabled */
@@ -46,7 +46,7 @@ static void init_c3(struct cpuinfo_x86 *c)
 			rdmsr(MSR_VIA_RNG, lo, hi);
 			lo |= RNG_ENABLE;	/* enable RNG unit */
 			wrmsr(MSR_VIA_RNG, lo, hi);
-			pr_info("CPU: Enabled h/w RNG\n");
+			pr_debug("CPU: Enabled h/w RNG\n");
 		}
 
 		/* store Centaur Extended Feature Flags as
@@ -219,11 +219,11 @@ static void init_centaur(struct cpuinfo_x86 *c)
 		newlo = (lo|fcr_set) & (~fcr_clr);
 
 		if (newlo != lo) {
-			pr_info("Centaur FCR was 0x%X now 0x%X\n",
+			pr_debug("Centaur FCR was 0x%X now 0x%X\n",
 				lo, newlo);
 			wrmsr(MSR_IDT_FCR1, newlo, hi);
 		} else {
-			pr_info("Centaur FCR is 0x%X\n", lo);
+			pr_debug("Centaur FCR is 0x%X\n", lo);
 		}
 		/* Emulate MTRRs using Centaur's MCR. */
 		set_cpu_cap(c, X86_FEATURE_CENTAUR_MCR);

@@ -410,7 +410,7 @@ static int test_and_print(struct test *t, bool force_skip, int subtest)
 
 	switch (err) {
 	case TEST_OK:
-		pr_info(" Ok\n");
+		pr_debug(" Ok\n");
 		break;
 	case TEST_SKIP:
 		color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip\n");
@@ -550,7 +550,7 @@ static int run_shell_tests(int argc, const char *argv[], int i, int width)
 			continue;
 
 		st.file = ent->d_name;
-		pr_info("%2d: %-*s:", i, width, test.desc);
+		pr_debug("%2d: %-*s:", i, width, test.desc);
 		test_and_print(&test, false, -1);
 	}
 
@@ -583,7 +583,7 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
 			continue;
 		}
 
-		pr_info("%2d: %-*s:", i, width, t->desc);
+		pr_debug("%2d: %-*s:", i, width, t->desc);
 
 		if (intlist__find(skiplist, i)) {
 			color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (user override)\n");
@@ -611,7 +611,7 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
 					      " Skip (not compiled in)\n");
 				continue;
 			}
-			pr_info("\n");
+			pr_debug("\n");
 
 			for (subi = 0; subi < subn; subi++) {
 				int len = strlen(t->subtest.get_desc(subi));
@@ -621,7 +621,7 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
 			}
 
 			for (subi = 0; subi < subn; subi++) {
-				pr_info("%2d.%1d: %-*s:", i, subi + 1, subw,
+				pr_debug("%2d.%1d: %-*s:", i, subi + 1, subw,
 					t->subtest.get_desc(subi));
 				err = test_and_print(t, skip, subi);
 				if (err != TEST_OK && t->subtest.skip_if_fail)
@@ -657,7 +657,7 @@ static int perf_test__list_shell(int argc, const char **argv, int i)
 		if (!perf_test__matches(&t, curr, argc, argv))
 			continue;
 
-		pr_info("%2d: %s\n", i, t.desc);
+		pr_debug("%2d: %s\n", i, t.desc);
 	}
 
 	closedir(dir);
@@ -677,14 +677,14 @@ static int perf_test__list(int argc, const char **argv)
 		    (t->is_supported && !t->is_supported()))
 			continue;
 
-		pr_info("%2d: %s\n", i, t->desc);
+		pr_debug("%2d: %s\n", i, t->desc);
 
 		if (t->subtest.get_nr) {
 			int subn = t->subtest.get_nr();
 			int subi;
 
 			for (subi = 0; subi < subn; subi++)
-				pr_info("%2d:%1d: %s\n", i, subi + 1,
+				pr_debug("%2d:%1d: %s\n", i, subi + 1,
 					t->subtest.get_desc(subi));
 		}
 	}

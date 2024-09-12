@@ -72,7 +72,7 @@ int __init bcm_kona_smc_init(void)
 		return -ENOMEM;
 	bcm_smc_buffer_phys = buffer_phys;
 
-	pr_info("Kona Secure API initialized\n");
+	pr_debug("Kona Secure API initialized\n");
 
 	return 0;
 }

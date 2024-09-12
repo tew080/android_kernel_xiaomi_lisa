@@ -18,7 +18,7 @@ static loff_t get_pos(struct dnode *d, struct hpfs_dirent *fde)
 		if (de == fde) return ((loff_t) le32_to_cpu(d->self) << 4) | (loff_t)i;
 		i++;
 	}
-	pr_info("%s(): not_found\n", __func__);
+	pr_debug("%s(): not_found\n", __func__);
 	return ((loff_t)le32_to_cpu(d->self) << 4) | (loff_t)1;
 }
 
@@ -623,7 +623,7 @@ static void delete_empty_dnode(struct inode *i, dnode_secno dno)
 			hpfs_brelse4(&qbh1);
 		}
 		hpfs_add_to_dnode(i, ndown, de_cp->name, de_cp->namelen, de_cp, de_cp->down ? de_down_pointer(de_cp) : 0);
-		/*pr_info("UP-TO-DNODE: %08x (ndown = %08x, down = %08x, dno = %08x)\n",
+		/*pr_debug("UP-TO-DNODE: %08x (ndown = %08x, down = %08x, dno = %08x)\n",
 		  up, ndown, down, dno);*/
 		dno = up;
 		kfree(de_cp);

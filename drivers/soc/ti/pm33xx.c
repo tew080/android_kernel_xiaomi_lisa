@@ -215,9 +215,9 @@ static int am33xx_pm_suspend(suspend_state_t suspend_state)
 		/* print the wakeup reason */
 		if (rtc_only_idle) {
 			wakeup_src = rtc_wake_src();
-			pr_info("PM: Wakeup source %s\n", wakeup_src.src);
+			pr_debug("PM: Wakeup source %s\n", wakeup_src.src);
 		} else {
-			pr_info("PM: Wakeup source %s\n",
+			pr_debug("PM: Wakeup source %s\n",
 				m3_ipc->ops->request_wake_src(m3_ipc));
 		}
 	}

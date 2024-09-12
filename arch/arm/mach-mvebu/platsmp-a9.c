@@ -29,7 +29,7 @@ static int mvebu_cortex_a9_boot_secondary(unsigned int cpu,
 {
 	int ret, hw_cpu;
 
-	pr_info("Booting CPU %d\n", cpu);
+	pr_debug("Booting CPU %d\n", cpu);
 
 	/*
 	 * Write the address of secondary startup into the system-wide

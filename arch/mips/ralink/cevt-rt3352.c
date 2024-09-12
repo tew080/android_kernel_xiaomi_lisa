@@ -146,7 +146,7 @@ static int __init ralink_systick_init(struct device_node *np)
 
 	clockevents_register_device(&systick.dev);
 
-	pr_info("%pOFn: running - mult: %d, shift: %d\n",
+	pr_debug("%pOFn: running - mult: %d, shift: %d\n",
 			np, systick.dev.mult, systick.dev.shift);
 
 	return 0;

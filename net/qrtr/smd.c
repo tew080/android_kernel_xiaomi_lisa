@@ -66,7 +66,7 @@ static int qcom_smd_qrtr_probe(struct rpmsg_device *rpdev)
 	bool rt;
 	int rc, size;
 	u32 *svc_arr = NULL;
-	pr_info("%s:Entered\n", __func__);
+	pr_debug("%s:Entered\n", __func__);
 
 	qdev = devm_kzalloc(&rpdev->dev, sizeof(*qdev), GFP_KERNEL);
 	if (!qdev)
@@ -100,7 +100,7 @@ static int qcom_smd_qrtr_probe(struct rpmsg_device *rpdev)
 
 	dev_set_drvdata(&rpdev->dev, qdev);
 
-	pr_info("%s:SMD QRTR driver probed\n", __func__);
+	pr_debug("%s:SMD QRTR driver probed\n", __func__);
 
 	return 0;
 }

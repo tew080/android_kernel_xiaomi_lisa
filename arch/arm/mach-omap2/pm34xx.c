@@ -334,7 +334,7 @@ restore:
 	list_for_each_entry(pwrst, &pwrst_list, node) {
 		state = pwrdm_read_prev_pwrst(pwrst->pwrdm);
 		if (state > pwrst->next_state) {
-			pr_info("Powerdomain (%s) didn't enter target state %d\n",
+			pr_debug("Powerdomain (%s) didn't enter target state %d\n",
 				pwrst->pwrdm->name, pwrst->next_state);
 			ret = -1;
 		}
@@ -343,7 +343,7 @@ restore:
 	if (ret)
 		pr_err("Could not enter target state in pm_suspend\n");
 	else
-		pr_info("Successfully put all powerdomains to target state\n");
+		pr_debug("Successfully put all powerdomains to target state\n");
 
 	return ret;
 }

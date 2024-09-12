@@ -41,7 +41,7 @@ static char *prix[] = {"", "debug", "info", "error"};
 #define LOG_EAVB(level, format, args...) \
 do { \
 	if ((level) >= log_level) { \
-		pr_info("eavb: pid %.8x: %s: %s(%d) "format, \
+		pr_debug("eavb: pid %.8x: %s: %s(%d) "format, \
 			current->pid, prix[0x3 & (level)], \
 			__func__, __LINE__, ## args); \
 	} \

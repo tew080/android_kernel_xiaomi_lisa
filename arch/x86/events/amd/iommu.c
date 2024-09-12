@@ -441,7 +441,7 @@ static __init int init_one_iommu(unsigned int idx)
 
 	ret = perf_pmu_register(&perf_iommu->pmu, perf_iommu->name, -1);
 	if (!ret) {
-		pr_info("Detected AMD IOMMU #%d (%d banks, %d counters/bank).\n",
+		pr_debug("Detected AMD IOMMU #%d (%d banks, %d counters/bank).\n",
 			idx, perf_iommu->max_banks, perf_iommu->max_counters);
 		list_add_tail(&perf_iommu->list, &perf_amd_iommu_list);
 	} else {

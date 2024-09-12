@@ -713,7 +713,7 @@ qdf_nbuf_history_add(qdf_nbuf_t nbuf, const char *func, uint32_t line,
 	struct qdf_nbuf_event *event = &qdf_nbuf_history[idx];
 
 	if (qdf_atomic_read(&smmu_crashed)) {
-		pr_info("Not adding network buf to the list");
+		pr_debug("Not adding network buf to the list");
 		return;
 	}
 

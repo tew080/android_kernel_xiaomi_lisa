@@ -87,7 +87,7 @@ int foo_bar_reg(void)
 	if (simple_thread_cnt++)
 		goto out;
 
-	pr_info("Starting thread for foo_bar_fn\n");
+	pr_debug("Starting thread for foo_bar_fn\n");
 	/*
 	 * We shouldn't be able to start a trace when the module is
 	 * unloading (there's other locks to prevent that). But
@@ -105,7 +105,7 @@ void foo_bar_unreg(void)
 	if (--simple_thread_cnt)
 		goto out;
 
-	pr_info("Killing thread for foo_bar_fn\n");
+	pr_debug("Killing thread for foo_bar_fn\n");
 	if (simple_tsk_fn)
 		kthread_stop(simple_tsk_fn);
 	simple_tsk_fn = NULL;

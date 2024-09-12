@@ -211,7 +211,7 @@ static int __init TAU_init(void)
 
 	queue_work(tau_workq, &tau_work);
 
-	pr_info("Thermal assist unit using %s, shrink_timer: %d ms\n",
+	pr_debug("Thermal assist unit using %s, shrink_timer: %d ms\n",
 		tau_int_enable ? "interrupts" : "workqueue", shrink_timer);
 	tau_initialized = 1;
 

@@ -272,7 +272,7 @@ int kmmio_handler(struct pt_regs *regs, unsigned long addr)
 				 addr, smp_processor_id());
 
 			if (!faultpage->old_presence)
-				pr_info("unexpected secondary hit for address 0x%08lx on CPU %d.\n",
+				pr_debug("unexpected secondary hit for address 0x%08lx on CPU %d.\n",
 					addr, smp_processor_id());
 		} else {
 			/*

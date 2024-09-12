@@ -37,7 +37,7 @@ static loff_t hpfs_dir_lseek(struct file *filp, loff_t off, int whence)
 	inode_lock(i);
 	hpfs_lock(s);
 
-	/*pr_info("dir lseek\n");*/
+	/*pr_debug("dir lseek\n");*/
 	if (new_off == 0 || new_off == 1 || new_off == 11 || new_off == 12 || new_off == 13) goto ok;
 	pos = ((loff_t) hpfs_de_as_down_as_possible(s, hpfs_inode->i_dno) << 4) + 1;
 	while (pos != new_off) {

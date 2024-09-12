@@ -170,26 +170,26 @@ static void __init rbtx4938_mem_setup(void)
 	tx4938_sio_init(7372800, 0);
 
 #ifdef CONFIG_TOSHIBA_RBTX4938_MPLEX_PIO58_61
-	pr_info("PIOSEL: disabling both ATA and NAND selection\n");
+	pr_debug("PIOSEL: disabling both ATA and NAND selection\n");
 	txx9_clear64(&tx4938_ccfgptr->pcfg,
 		     TX4938_PCFG_NDF_SEL | TX4938_PCFG_ATA_SEL);
 #endif
 
 #ifdef CONFIG_TOSHIBA_RBTX4938_MPLEX_NAND
-	pr_info("PIOSEL: enabling NAND selection\n");
+	pr_debug("PIOSEL: enabling NAND selection\n");
 	txx9_set64(&tx4938_ccfgptr->pcfg, TX4938_PCFG_NDF_SEL);
 	txx9_clear64(&tx4938_ccfgptr->pcfg, TX4938_PCFG_ATA_SEL);
 #endif
 
 #ifdef CONFIG_TOSHIBA_RBTX4938_MPLEX_ATA
-	pr_info("PIOSEL: enabling ATA selection\n");
+	pr_debug("PIOSEL: enabling ATA selection\n");
 	txx9_set64(&tx4938_ccfgptr->pcfg, TX4938_PCFG_ATA_SEL);
 	txx9_clear64(&tx4938_ccfgptr->pcfg, TX4938_PCFG_NDF_SEL);
 #endif
 
 #ifdef CONFIG_TOSHIBA_RBTX4938_MPLEX_KEEP
 	pcfg = ____raw_readq(&tx4938_ccfgptr->pcfg);
-	pr_info("PIOSEL: NAND %s, ATA %s\n",
+	pr_debug("PIOSEL: NAND %s, ATA %s\n",
 		(pcfg & TX4938_PCFG_NDF_SEL) ? "enabled" : "disabled",
 		(pcfg & TX4938_PCFG_ATA_SEL) ? "enabled" : "disabled");
 #endif
@@ -219,7 +219,7 @@ static void __init rbtx4938_mem_setup(void)
 	_machine_restart = rbtx4938_machine_restart;
 
 	writeb(0xff, rbtx4938_led_addr);
-	pr_info("RBTX4938 --- FPGA(Rev %02x) DIPSW:%02x,%02x\n",
+	pr_debug("RBTX4938 --- FPGA(Rev %02x) DIPSW:%02x,%02x\n",
 		readb(rbtx4938_fpga_rev_addr),
 		readb(rbtx4938_dipsw_addr), readb(rbtx4938_bdipsw_addr));
 }

@@ -1045,7 +1045,7 @@ static int esdhc_execute_tuning(struct mmc_host *mmc, u32 opcode)
 			/* Recover HS400 tuning flag */
 			if (hs400_tuning)
 				host->flags |= SDHCI_HS400_TUNING;
-			pr_info("%s: Hold on to use fixed sampling clock. Try SW tuning!\n",
+			pr_debug("%s: Hold on to use fixed sampling clock. Try SW tuning!\n",
 				mmc_hostname(mmc));
 			/* Do SW tuning */
 			esdhc_prepare_sw_tuning(host, &window_start,
@@ -1065,7 +1065,7 @@ static int esdhc_execute_tuning(struct mmc_host *mmc, u32 opcode)
 
 				clk = host->max_clk / (esdhc->div_ratio + 1);
 				esdhc_of_set_clock(host, clk);
-				pr_info("%s: Hold on to use fixed sampling clock. Try tuning with reduced clock!\n",
+				pr_debug("%s: Hold on to use fixed sampling clock. Try tuning with reduced clock!\n",
 					mmc_hostname(mmc));
 			} else {
 				break;

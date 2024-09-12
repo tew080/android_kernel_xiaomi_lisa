@@ -149,7 +149,7 @@ void __init plat_mem_setup(void)
 	struct cpuinfo_mips *c = &current_cpu_data;
 
 	if ((c->cputype == CPU_74K) || (c->cputype == CPU_1074K)) {
-		pr_info("Using bcma bus\n");
+		pr_debug("Using bcma bus\n");
 #ifdef CONFIG_BCM47XX_BCMA
 		bcm47xx_bus_type = BCM47XX_BUS_TYPE_BCMA;
 		bcm47xx_register_bcma();
@@ -159,7 +159,7 @@ void __init plat_mem_setup(void)
 #endif
 #endif
 	} else {
-		pr_info("Using ssb bus\n");
+		pr_debug("Using ssb bus\n");
 #ifdef CONFIG_BCM47XX_SSB
 		bcm47xx_bus_type = BCM47XX_BUS_TYPE_SSB;
 		bcm47xx_sprom_register_fallbacks();

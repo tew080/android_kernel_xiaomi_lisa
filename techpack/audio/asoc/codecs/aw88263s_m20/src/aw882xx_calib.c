@@ -114,7 +114,7 @@ static int aw_cali_write_cali_re_to_file(int32_t cali_re, int channel)
 
 	set_fs(fs);
 
-	pr_info("%s: channel:%d buf:%s cali_re:%d\n",
+	pr_debug("%s: channel:%d buf:%s cali_re:%d\n",
 		__func__, channel, buf, cali_re);
 
 	filp_close(fp, NULL);
@@ -172,7 +172,7 @@ static int aw_cali_get_read_cali_re(int32_t *cali_re, int channel)
 	else
 		*cali_re = AW_ERRO_CALI_VALUE;
 
-	pr_info("%s: channel:%d buf:%s int_cali_re: %d\n",
+	pr_debug("%s: channel:%d buf:%s int_cali_re: %d\n",
 		__func__, channel, buf, int_cali_re);
 
 	kfree(buf);
@@ -1516,7 +1516,7 @@ static ssize_t aw_class_re_range_show(struct  class *class, struct class_attribu
 	struct aw_device *local_dev = NULL;
 	uint32_t re_value[AW_DEV_RE_RANGE] = { 0 };
 
-	aw_pr_info("enter");
+	aw_pr_debug("enter");
 
 	ret = aw882xx_dev_get_list_head(&dev_list);
 	if (ret < 0) {

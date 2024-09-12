@@ -62,7 +62,7 @@ static int __init mipsr2emu_enable(char *s)
 {
 	mipsr2_emulation = 1;
 
-	pr_info("MIPS R2-to-R6 Emulator Enabled!");
+	pr_debug("MIPS R2-to-R6 Emulator Enabled!");
 
 	return 1;
 }

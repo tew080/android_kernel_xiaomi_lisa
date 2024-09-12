@@ -309,11 +309,11 @@ static void setup_pci_atmu(struct pci_controller *hose)
 
 	paddr_lo = min(paddr_lo, (u64)pcicsrbar);
 
-	pr_info("%pOF: PCICSRBAR @ 0x%x\n", hose->dn, pcicsrbar);
+	pr_debug("%pOF: PCICSRBAR @ 0x%x\n", hose->dn, pcicsrbar);
 
 	/* Setup inbound mem window */
 	mem = memblock_end_of_DRAM();
-	pr_info("%s: end of DRAM %llx\n", __func__, mem);
+	pr_debug("%s: end of DRAM %llx\n", __func__, mem);
 
 	/*
 	 * The msi-address-64 property, if it exists, indicates the physical
@@ -332,7 +332,7 @@ static void setup_pci_atmu(struct pci_controller *hose)
 		u64 address = be64_to_cpup(reg);
 
 		if ((address >= mem) && (address < (mem + PAGE_SIZE))) {
-			pr_info("%pOF: extending DDR ATMU to cover MSIIR", hose->dn);
+			pr_debug("%pOF: extending DDR ATMU to cover MSIIR", hose->dn);
 			mem += PAGE_SIZE;
 		} else {
 			/* TODO: Create a new ATMU for MSIIR */
@@ -350,7 +350,7 @@ static void setup_pci_atmu(struct pci_controller *hose)
 		if ((1ull << mem_log) != mem) {
 			mem_log++;
 			if ((1ull << mem_log) > mem)
-				pr_info("%pOF: Setting PCI inbound window "
+				pr_debug("%pOF: Setting PCI inbound window "
 					"greater than memory size\n", hose->dn);
 		}
 
@@ -398,7 +398,7 @@ static void setup_pci_atmu(struct pci_controller *hose)
 			 */
 			ppc_md.dma_set_mask = fsl_pci_dma_set_mask;
 
-			pr_info("%pOF: Setup 64-bit PCI DMA window\n", hose->dn);
+			pr_debug("%pOF: Setup 64-bit PCI DMA window\n", hose->dn);
 		}
 	} else {
 		u64 paddr = 0;
@@ -450,7 +450,7 @@ static void setup_pci_atmu(struct pci_controller *hose)
 				"could reduce unnecessary bounce buffering.\n",
 				hose->dn);
 
-		pr_info("%pOF: DMA window size is 0x%llx\n", hose->dn,
+		pr_debug("%pOF: DMA window size is 0x%llx\n", hose->dn,
 			(u64)hose->dma_window_size);
 	}
 }

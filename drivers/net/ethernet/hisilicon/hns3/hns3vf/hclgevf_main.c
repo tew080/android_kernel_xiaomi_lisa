@@ -3174,7 +3174,7 @@ static struct hnae3_ae_algo ae_algovf = {
 
 static int hclgevf_init(void)
 {
-	pr_info("%s is initializing\n", HCLGEVF_NAME);
+	pr_debug("%s is initializing\n", HCLGEVF_NAME);
 
 	hnae3_register_ae_algo(&ae_algovf);
 

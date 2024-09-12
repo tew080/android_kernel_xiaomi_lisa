@@ -463,13 +463,13 @@ void show_regs(struct pt_regs * regs)
 
 	for (i = 0; i < 16; i++) {
 		if ((i % 8) == 0)
-			pr_info("a%02d:", i);
+			pr_debug("a%02d:", i);
 		pr_cont(" %08lx", regs->areg[i]);
 	}
 	pr_cont("\n");
-	pr_info("pc: %08lx, ps: %08lx, depc: %08lx, excvaddr: %08lx\n",
+	pr_debug("pc: %08lx, ps: %08lx, depc: %08lx, excvaddr: %08lx\n",
 		regs->pc, regs->ps, regs->depc, regs->excvaddr);
-	pr_info("lbeg: %08lx, lend: %08lx lcount: %08lx, sar: %08lx\n",
+	pr_debug("lbeg: %08lx, lend: %08lx lcount: %08lx, sar: %08lx\n",
 		regs->lbeg, regs->lend, regs->lcount, regs->sar);
 	if (user_mode(regs))
 		pr_cont("wb: %08lx, ws: %08lx, wmask: %08lx, syscall: %ld\n",
@@ -489,7 +489,7 @@ void show_trace(struct task_struct *task, unsigned long *sp)
 	if (!sp)
 		sp = stack_pointer(task);
 
-	pr_info("Call Trace:\n");
+	pr_debug("Call Trace:\n");
 	walk_stackframe(sp, show_trace_cb, NULL);
 #ifndef CONFIG_KALLSYMS
 	pr_cont("\n");
@@ -507,7 +507,7 @@ void show_stack(struct task_struct *task, unsigned long *sp)
 		sp = stack_pointer(task);
 	stack = sp;
 
-	pr_info("Stack:\n");
+	pr_debug("Stack:\n");
 
 	for (i = 0; i < kstack_depth_to_print; i++) {
 		if (kstack_end(sp))
@@ -528,7 +528,7 @@ void die(const char * str, struct pt_regs * regs, long err)
 	console_verbose();
 	spin_lock_irq(&die_lock);
 
-	pr_info("%s: sig: %ld [#%d]%s\n", str, err, ++die_counter,
+	pr_debug("%s: sig: %ld [#%d]%s\n", str, err, ++die_counter,
 		IS_ENABLED(CONFIG_PREEMPT) ? " PREEMPT" : "");
 	show_regs(regs);
 	if (!user_mode(regs))

@@ -709,10 +709,10 @@ void select_idle_routine(const struct cpuinfo_x86 *c)
 		return;
 
 	if (boot_cpu_has_bug(X86_BUG_AMD_E400)) {
-		pr_info("using AMD E400 aware idle routine\n");
+		pr_debug("using AMD E400 aware idle routine\n");
 		x86_idle = amd_e400_idle;
 	} else if (prefer_mwait_c1_over_halt(c)) {
-		pr_info("using mwait in idle threads\n");
+		pr_debug("using mwait in idle threads\n");
 		x86_idle = mwait_idle;
 	} else
 		x86_idle = default_idle;
@@ -721,7 +721,7 @@ void select_idle_routine(const struct cpuinfo_x86 *c)
 void amd_e400_c1e_apic_setup(void)
 {
 	if (boot_cpu_has_bug(X86_BUG_AMD_APIC_C1E)) {
-		pr_info("Switch to broadcast mode on CPU%d\n", smp_processor_id());
+		pr_debug("Switch to broadcast mode on CPU%d\n", smp_processor_id());
 		local_irq_disable();
 		tick_broadcast_force();
 		local_irq_enable();
@@ -748,7 +748,7 @@ void __init arch_post_acpi_subsys_init(void)
 
 	if (!boot_cpu_has(X86_FEATURE_NONSTOP_TSC))
 		mark_tsc_unstable("TSC halt in AMD C1E");
-	pr_info("System has AMD C1E enabled\n");
+	pr_debug("System has AMD C1E enabled\n");
 }
 
 static int __init idle_setup(char *str)
@@ -757,7 +757,7 @@ static int __init idle_setup(char *str)
 		return -EINVAL;
 
 	if (!strcmp(str, "poll")) {
-		pr_info("using polling idle threads\n");
+		pr_debug("using polling idle threads\n");
 		boot_option_idle_override = IDLE_POLL;
 		cpu_idle_poll_ctrl(true);
 	} else if (!strcmp(str, "halt")) {

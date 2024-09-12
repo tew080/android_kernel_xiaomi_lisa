@@ -763,7 +763,7 @@ static int get_leaf(struct gfs2_inode *dip, u64 leaf_no,
 
 	error = gfs2_meta_read(dip->i_gl, leaf_no, DIO_WAIT, 0, bhp);
 	if (!error && gfs2_metatype_check(GFS2_SB(&dip->i_inode), *bhp, GFS2_METATYPE_LF)) {
-		/* pr_info("block num=%llu\n", leaf_no); */
+		/* pr_debug("block num=%llu\n", leaf_no); */
 		error = -EIO;
 	}
 

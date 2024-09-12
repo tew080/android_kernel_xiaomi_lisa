@@ -680,7 +680,7 @@ void gdsc_debug_print_regs(struct regulator *regulator)
 	ww_mutex_lock(&rdev->mutex, NULL);
 
 	if (rdev->open_count)
-		pr_info("%-32s EN\n", "Device-Supply");
+		pr_debug("%-32s EN\n", "Device-Supply");
 
 	list_for_each_entry(reg, &rdev->consumer_list, list) {
 		if (reg->supply_name)
@@ -688,7 +688,7 @@ void gdsc_debug_print_regs(struct regulator *regulator)
 		else
 			supply_name = "(null)-(null)";
 
-		pr_info("%-32s %c\n", supply_name,
+		pr_debug("%-32s %c\n", supply_name,
 			(reg->enable_count ? 'Y' : 'N'));
 	}
 
@@ -701,8 +701,8 @@ void gdsc_debug_print_regs(struct regulator *regulator)
 		return;
 	}
 
-	pr_info("Dumping %s Registers:\n", sc->rdesc.name);
-	pr_info("GDSCR: 0x%.8x CFG: 0x%.8x CFG2: 0x%.8x\n",
+	pr_debug("Dumping %s Registers:\n", sc->rdesc.name);
+	pr_debug("GDSCR: 0x%.8x CFG: 0x%.8x CFG2: 0x%.8x\n",
 			regvals[0], regvals[1], regvals[2]);
 }
 EXPORT_SYMBOL(gdsc_debug_print_regs);

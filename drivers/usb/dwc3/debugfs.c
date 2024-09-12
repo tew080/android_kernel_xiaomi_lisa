@@ -1339,7 +1339,7 @@ static ssize_t dwc3_gadget_l1_store(struct file *file,
 	dwc->gadget.lpm_capable = enable_l1;
 	dwc->usb2_gadget_lpm_disable = !enable_l1;
 
-	pr_info("dwc3 gadget lpm : %s. Perform a plugout/plugin\n",
+	pr_debug("dwc3 gadget lpm : %s. Perform a plugout/plugin\n",
 				enable_l1 ? "enabled" : "disabled");
 
 	return count;

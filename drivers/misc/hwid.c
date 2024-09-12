@@ -198,7 +198,7 @@ static void __exit hwid_module_exit(void)
 		sysfs_remove_group(hwid_kobj, &attr_group);
 		kobject_del(hwid_kobj);
 	}
-	pr_info("hwid: hwid module exit success\n");
+	pr_debug("hwid: hwid module exit success\n");
 }
 
 subsys_initcall(hwid_module_init);

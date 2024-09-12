@@ -154,7 +154,7 @@ static void __init versatile_dt_pci_init(void)
 	newprop->length = sizeof("disabled");
 	of_update_property(np, newprop);
 
-	pr_info("Not plugged into PCI backplane!\n");
+	pr_debug("Not plugged into PCI backplane!\n");
 
 out_put_node:
 	of_node_put(np);

@@ -320,7 +320,7 @@ aoeblk_ioctl(struct block_device *bdev, fmode_t mode, uint cmd, ulong arg)
 
 	/* udev calls scsi_id, which uses SG_IO, resulting in noise */
 	if (cmd != SG_IO)
-		pr_info("aoe: unknown ioctl 0x%x\n", cmd);
+		pr_debug("aoe: unknown ioctl 0x%x\n", cmd);
 
 	return -ENOTTY;
 }

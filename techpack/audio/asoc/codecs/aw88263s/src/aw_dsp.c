@@ -363,7 +363,7 @@ static int aw_qcom_write_data_to_dsp(uint32_t param_id, void *data, int size)
 		} else {
 			try++;
 			usleep_range(AW_10000_US, AW_10000_US + 10);
-			aw_pr_info("afe topo not ready try again");
+			aw_pr_debug("afe topo not ready try again");
 		}
 	}
 	mutex_unlock(&g_aw_dsp_lock);
@@ -385,7 +385,7 @@ static int aw_qcom_read_data_from_dsp(uint32_t param_id, void *data, int size)
 		} else {
 			try++;
 			usleep_range(AW_10000_US, AW_10000_US + 10);
-			aw_pr_info("afe topo not ready try again");
+			aw_pr_debug("afe topo not ready try again");
 		}
 	}
 	mutex_unlock(&g_aw_dsp_lock);
@@ -1163,7 +1163,7 @@ int aw_dsp_set_copp_module_en(bool enable)
 	if (ret)
 		return -EINVAL;
 
-	aw_pr_info("set skt %s", enable == 1 ? "enable" : "disable");
+	aw_pr_debug("set skt %s", enable == 1 ? "enable" : "disable");
 	return 0;
 }
 

@@ -102,7 +102,7 @@ static int __init nlm_platform_usb_init(void)
 	if (cpu_is_xlpii())
 		return 0;
 
-	pr_info("Initializing USB Interface\n");
+	pr_debug("Initializing USB Interface\n");
 	nlm_usb_hw_reset(0, 0);
 	nlm_usb_hw_reset(0, 3);
 

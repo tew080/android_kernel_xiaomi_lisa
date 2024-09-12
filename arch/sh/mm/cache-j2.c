@@ -60,5 +60,5 @@ void __init j2_cache_init(void)
 	local_flush_icache_page = j2_flush_icache;
 	local_flush_cache_sigtramp = j2_flush_icache;
 
-	pr_info("Initial J2 CCR is %.8x\n", __raw_readl(j2_ccr_base));
+	pr_debug("Initial J2 CCR is %.8x\n", __raw_readl(j2_ccr_base));
 }

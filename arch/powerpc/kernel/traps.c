@@ -322,7 +322,7 @@ static void show_signal_msg(int signr, struct pt_regs *regs, int code,
 	if (!__ratelimit(&rs))
 		return;
 
-	pr_info("%s[%d]: %s (%d) at %lx nip %lx lr %lx code %x",
+	pr_debug("%s[%d]: %s (%d) at %lx nip %lx lr %lx code %x",
 		current->comm, current->pid, signame(signr), signr,
 		addr, regs->nip, regs->link, code);
 

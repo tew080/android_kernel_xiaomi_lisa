@@ -761,7 +761,7 @@ static int debug_set_size(debug_info_t *id, int nr_areas, int pages_per_area)
 	if (pages_per_area > 0) {
 		new_areas = debug_areas_alloc(pages_per_area, nr_areas);
 		if (!new_areas) {
-			pr_info("Allocating memory for %i pages failed\n",
+			pr_debug("Allocating memory for %i pages failed\n",
 				pages_per_area);
 			rc = -ENOMEM;
 			goto out;
@@ -778,7 +778,7 @@ static int debug_set_size(debug_info_t *id, int nr_areas, int pages_per_area)
 	memset(id->active_entries, 0, sizeof(int)*id->nr_areas);
 	memset(id->active_pages, 0, sizeof(int)*id->nr_areas);
 	spin_unlock_irqrestore(&id->lock, flags);
-	pr_info("%s: set new size (%i pages)\n", id->name, pages_per_area);
+	pr_debug("%s: set new size (%i pages)\n", id->name, pages_per_area);
 out:
 	return rc;
 }
@@ -801,9 +801,9 @@ void debug_set_level(debug_info_t *id, int new_level)
 	spin_lock_irqsave(&id->lock, flags);
 	if (new_level == DEBUG_OFF_LEVEL) {
 		id->level = DEBUG_OFF_LEVEL;
-		pr_info("%s: switched off\n", id->name);
+		pr_debug("%s: switched off\n", id->name);
 	} else if ((new_level > DEBUG_MAX_LEVEL) || (new_level < 0)) {
-		pr_info("%s: level %i is out of range (%i - %i)\n",
+		pr_debug("%s: level %i is out of range (%i - %i)\n",
 			id->name, new_level, 0, DEBUG_MAX_LEVEL);
 	} else {
 		id->level = new_level;
@@ -1387,7 +1387,7 @@ static int debug_input_flush_fn(debug_info_t *id, struct debug_view *view,
 		goto out;
 	}
 
-	pr_info("Flushing debug data failed because %c is not a valid "
+	pr_debug("Flushing debug data failed because %c is not a valid "
 		 "area\n", input_buf[0]);
 
 out:

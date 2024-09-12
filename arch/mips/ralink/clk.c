@@ -80,7 +80,7 @@ void __init plat_time_init(void)
 	clk = clk_get_sys("cpu", NULL);
 	if (IS_ERR(clk))
 		panic("unable to get CPU clock, err=%ld", PTR_ERR(clk));
-	pr_info("CPU Clock: %ldMHz\n", clk_get_rate(clk) / 1000000);
+	pr_debug("CPU Clock: %ldMHz\n", clk_get_rate(clk) / 1000000);
 	mips_hpt_frequency = clk_get_rate(clk) / 2;
 	clk_put(clk);
 	timer_probe();

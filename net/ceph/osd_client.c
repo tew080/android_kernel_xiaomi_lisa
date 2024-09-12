@@ -3184,7 +3184,7 @@ static void check_linger_pool_dne(struct ceph_osd_linger_request *lreq)
 	if (lreq->map_dne_bound) {
 		if (map->epoch >= lreq->map_dne_bound) {
 			/* we had a new enough map */
-			pr_info("linger_id %llu pool does not exist\n",
+			pr_debug("linger_id %llu pool does not exist\n",
 				lreq->linger_id);
 			linger_reg_commit_complete(lreq, -ENOENT);
 			__linger_cancel(lreq);

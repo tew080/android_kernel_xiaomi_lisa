@@ -1078,7 +1078,7 @@ static int init_splh_notif(const char *buf)
 	if (ret < 0)
 		return -EINVAL;
 
-	pr_info("msm_perf: nfps=%hu n_ipc_freq_pair=%hu last_freq_val=%hu len=%hu\n",
+	pr_debug("msm_perf: nfps=%hu n_ipc_freq_pair=%hu last_freq_val=%hu len=%hu\n",
 		nfps, n_ipc_freq_pair, *--ptmp, tmp_valid_len);
 	splh_init_done = 1;
 	return 0;

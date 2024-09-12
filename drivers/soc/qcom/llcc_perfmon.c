@@ -253,7 +253,7 @@ static ssize_t perfmon_configure_store(struct device *dev,
 
 		port_ops = llcc_priv->port_ops[port_sel];
 		port_ops->event_config(llcc_priv, event_sel, &j, true);
-		pr_info("counter %2d configured for event %2ld from port %ld\n",
+		pr_debug("counter %2d configured for event %2ld from port %ld\n",
 				j++, event_sel, port_sel);
 		if (((llcc_priv->enables_port & (1 << port_sel)) == 0) &&
 				(port_ops->event_enable))
@@ -325,7 +325,7 @@ static ssize_t perfmon_remove_store(struct device *dev,
 		counter_map->event_sel = 0;
 		port_ops = llcc_priv->port_ops[port_sel];
 		port_ops->event_config(llcc_priv, event_sel, &j, false);
-		pr_info("removed counter %2d for event %2ld from port %2ld\n",
+		pr_debug("removed counter %2d for event %2ld from port %2ld\n",
 				j++, event_sel, port_sel);
 		if ((llcc_priv->enables_port & (1 << port_sel)) &&
 				(port_ops->event_enable))
@@ -1473,7 +1473,7 @@ static int llcc_perfmon_probe(struct platform_device *pdev)
 	else if ((val & MAJOR_VER_MASK) >= LLCC_VERSION_2)
 		llcc_priv->version = REV_2;
 
-	pr_info("Revision <%x.%x.%x>, %d MEMORY CNTRLRS connected with LLCC\n",
+	pr_debug("Revision <%x.%x.%x>, %d MEMORY CNTRLRS connected with LLCC\n",
 			MAJOR_REV_NO(val), BRANCH_NO(val), MINOR_NO(val),
 			llcc_priv->num_mc);
 

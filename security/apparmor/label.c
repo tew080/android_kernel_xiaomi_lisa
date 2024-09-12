@@ -1805,13 +1805,13 @@ void aa_label_xprintk(struct aa_ns *ns, struct aa_label *label, int flags,
 			AA_DEBUG("label print error");
 			return;
 		}
-		pr_info("%s", str);
+		pr_debug("%s", str);
 		kfree(str);
 	} else if (display_mode(ns, label, flags))
-		pr_info("%s (%s)", label->hname,
+		pr_debug("%s (%s)", label->hname,
 		       label_modename(ns, label, flags));
 	else
-		pr_info("%s", label->hname);
+		pr_debug("%s", label->hname);
 }
 
 void aa_label_audit(struct audit_buffer *ab, struct aa_label *label, gfp_t gfp)

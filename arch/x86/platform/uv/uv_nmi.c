@@ -200,7 +200,7 @@ static int param_set_action(const char *val, const struct kernel_param *kp)
 
 	if (i < n) {
 		strcpy(uv_nmi_action, arg);
-		pr_info("UV: New NMI action:%s\n", uv_nmi_action);
+		pr_debug("UV: New NMI action:%s\n", uv_nmi_action);
 		return 0;
 	}
 
@@ -233,12 +233,12 @@ static void uv_nmi_setup_mmrs(void)
 		nmi_mmr = UVH_NMI_MMRX;
 		nmi_mmr_clear = UVH_NMI_MMRX_CLEAR;
 		nmi_mmr_pending = 1UL << UVH_NMI_MMRX_SHIFT;
-		pr_info("UV: SMI NMI support: %s\n", UVH_NMI_MMRX_TYPE);
+		pr_debug("UV: SMI NMI support: %s\n", UVH_NMI_MMRX_TYPE);
 	} else {
 		nmi_mmr = UVH_NMI_MMR;
 		nmi_mmr_clear = UVH_NMI_MMR_CLEAR;
 		nmi_mmr_pending = 1UL << UVH_NMI_MMR_SHIFT;
-		pr_info("UV: SMI NMI support: %s\n", UVH_NMI_MMR_TYPE);
+		pr_debug("UV: SMI NMI support: %s\n", UVH_NMI_MMR_TYPE);
 	}
 }
 
@@ -407,7 +407,7 @@ static void uv_init_hubless_pch_d0(void)
 
 	read = *PCH_PCR_GPIO_ADDRESS(PAD_OWN_GPP_D_0);
 	if (read != 0) {
-		pr_info("UV: Hubless NMI already configured\n");
+		pr_debug("UV: Hubless NMI already configured\n");
 		return;
 	}
 
@@ -660,14 +660,14 @@ static void uv_nmi_wait(int master)
 /* Dump Instruction Pointer header */
 static void uv_nmi_dump_cpu_ip_hdr(void)
 {
-	pr_info("\nUV: %4s %6s %-32s %s   (Note: PID 0 not listed)\n",
+	pr_debug("\nUV: %4s %6s %-32s %s   (Note: PID 0 not listed)\n",
 		"CPU", "PID", "COMMAND", "IP");
 }
 
 /* Dump Instruction Pointer info */
 static void uv_nmi_dump_cpu_ip(int cpu, struct pt_regs *regs)
 {
-	pr_info("UV: %4d %6d %-32.32s %pS",
+	pr_debug("UV: %4d %6d %-32.32s %pS",
 		cpu, current->pid, current->comm, (void *)regs->ip);
 }
 
@@ -689,7 +689,7 @@ static void uv_nmi_dump_state_cpu(int cpu, struct pt_regs *regs)
 		uv_nmi_dump_cpu_ip(cpu, regs);
 
 	if (uv_nmi_action_is("dump")) {
-		pr_info("UV:%sNMI process trace for CPU %d\n", dots, cpu);
+		pr_debug("UV:%sNMI process trace for CPU %d\n", dots, cpu);
 		show_regs(regs);
 	}
 
@@ -1031,7 +1031,7 @@ void __init uv_nmi_setup(void)
 	uv_nmi_setup_mmrs();
 	uv_nmi_setup_common(true);
 	uv_register_nmi_notifier();
-	pr_info("UV: Hub NMI enabled\n");
+	pr_debug("UV: Hub NMI enabled\n");
 }
 
 /* Setup for UV Hubless systems */
@@ -1049,5 +1049,5 @@ void __init uv_nmi_setup_hubless(void)
 	/* Ensure NMI enabled in Processor Interface Reg: */
 	uv_reassert_nmi();
 	uv_register_nmi_notifier();
-	pr_info("UV: Hubless NMI enabled\n");
+	pr_debug("UV: Hubless NMI enabled\n");
 }

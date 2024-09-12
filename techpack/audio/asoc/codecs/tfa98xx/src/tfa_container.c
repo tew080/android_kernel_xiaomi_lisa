@@ -1397,7 +1397,7 @@ static enum Tfa98xx_Error tfaContWriteItem(struct tfa_device *tfa, TfaDescPtr_t 
 	case dscRegister:   // register patch
 		reg = (TfaRegpatch_t *)(dsc->offset + (uint8_t *)tfa->cnt);
 		return tfaRunWriteRegister(tfa, reg);
-		//pr_debug("$0x%2x=0x%02x,0x%02x\n", reg->address, reg->mask, reg->value);
+		pr_debug("$0x%2x=0x%02x,0x%02x\n", reg->address, reg->mask, reg->value);
 		break;
 	case dscString: // ascii: zero terminated string
 		pr_debug(";string: %s\n", tfaContGetString(tfa->cnt, dsc));
@@ -2357,7 +2357,7 @@ int tfa_tib_dsp_msgmulti(struct tfa_device *tfa, int length, const char *buffer)
 	/* check total message size after concatination */
 	post_len = total + length + (2 * len_word_in_bytes);
 	if (post_len > tfadsp_max_msg_size) {
-		//pr_debug("New multi-message too large! (%d >= %d (max.)), current length: %d\n", post_len, tfadsp_max_msg_size, total);
+		pr_debug("New multi-message too large! (%d >= %d (max.)), current length: %d\n", post_len, tfadsp_max_msg_size, total);
 		return Tfa98xx_Error_Buffer_too_small;
 	}
 

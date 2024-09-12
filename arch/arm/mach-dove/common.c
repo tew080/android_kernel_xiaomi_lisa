@@ -419,7 +419,7 @@ static const struct dove_pmu_initdata pmu_data __initconst = {
 
 void __init dove_init(void)
 {
-	pr_info("Dove 88AP510 SoC, TCLK = %d MHz.\n",
+	pr_debug("Dove 88AP510 SoC, TCLK = %d MHz.\n",
 		(dove_tclk + 499999) / 1000000);
 
 #ifdef CONFIG_CACHE_TAUROS2

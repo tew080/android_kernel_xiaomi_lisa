@@ -424,7 +424,7 @@ static void msm_restart_prepare(const char *cmd)
 	}
 
 	if (force_warm_reboot)
-		pr_info("Forcing a warm reset of the system\n");
+		pr_debug("Forcing a warm reset of the system\n");
 
 	/* Hard reset the PMIC unless memory contents must be maintained. */
 	if (in_panic || force_warm_reboot || need_warm_reset)

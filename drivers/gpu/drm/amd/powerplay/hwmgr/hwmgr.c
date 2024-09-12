@@ -194,7 +194,7 @@ int hwmgr_sw_init(struct pp_hwmgr *hwmgr)
 		return -EINVAL;
 
 	phm_register_irq_handlers(hwmgr);
-	pr_info("hwmgr_sw_init smu backed is %s\n", hwmgr->smumgr_funcs->name);
+	pr_debug("hwmgr_sw_init smu backed is %s\n", hwmgr->smumgr_funcs->name);
 
 	return hwmgr->smumgr_funcs->smu_init(hwmgr);
 }
@@ -219,7 +219,7 @@ int hwmgr_hw_init(struct pp_hwmgr *hwmgr)
 	    !hwmgr->pptable_func->pptable_init ||
 	    !hwmgr->hwmgr_func->backend_init) {
 		hwmgr->pm_en = false;
-		pr_info("dpm not supported \n");
+		pr_debug("dpm not supported \n");
 		return 0;
 	}
 

@@ -894,7 +894,7 @@ static int has_svm(void)
 	}
 
 	if (sev_active()) {
-		pr_info("KVM is unsupported when running as an SEV guest\n");
+		pr_debug("KVM is unsupported when running as an SEV guest\n");
 		return 0;
 	}
 
@@ -1260,7 +1260,7 @@ static __init int sev_hardware_setup(void)
 	if (rc)
 		goto err;
 
-	pr_info("SEV supported\n");
+	pr_debug("SEV supported\n");
 
 err:
 	kfree(status);
@@ -1431,7 +1431,7 @@ static __init int svm_hardware_setup(void)
 		    !IS_ENABLED(CONFIG_X86_LOCAL_APIC)) {
 			avic = false;
 		} else {
-			pr_info("AVIC enabled\n");
+			pr_debug("AVIC enabled\n");
 
 			amd_iommu_register_ga_log_notifier(&avic_ga_log_notifier);
 		}
@@ -1443,7 +1443,7 @@ static __init int svm_hardware_setup(void)
 		    !IS_ENABLED(CONFIG_X86_64)) {
 			vls = false;
 		} else {
-			pr_info("Virtual VMLOAD VMSAVE supported\n");
+			pr_debug("Virtual VMLOAD VMSAVE supported\n");
 		}
 	}
 

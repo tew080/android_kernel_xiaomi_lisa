@@ -128,7 +128,7 @@ asmlinkage irqreturn_t sun3xflop_hardint(int irq, void *dev_id)
 		return IRQ_HANDLED;
 	}
 
-//	pr_info("doing pdma\n");// st %x\n", sun_fdc->status_82072);
+//	pr_debug("doing pdma\n");// st %x\n", sun_fdc->status_82072);
 
 #ifdef TRACE_FLPY_INT
 	if(!calls)
@@ -172,7 +172,7 @@ asmlinkage irqreturn_t sun3xflop_hardint(int irq, void *dev_id)
 #ifdef TRACE_FLPY_INT
 	calls++;
 #endif
-//	pr_info("st=%02x\n", st);
+//	pr_debug("st=%02x\n", st);
 	if(st == 0x20)
 		return IRQ_HANDLED;
 	if(!(st & 0x20)) {
@@ -181,7 +181,7 @@ asmlinkage irqreturn_t sun3xflop_hardint(int irq, void *dev_id)
 		doing_pdma = 0;
 
 #ifdef TRACE_FLPY_INT
-		pr_info("count=%x, residue=%x calls=%d bytes=%x dma_wait=%d\n",
+		pr_debug("count=%x, residue=%x calls=%d bytes=%x dma_wait=%d\n",
 			virtual_dma_count, virtual_dma_residue, calls, bytes,
 			dma_wait);
 		calls = 0;

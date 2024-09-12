@@ -62,7 +62,7 @@ static __init void omapl138_hawk_config_emac(void)
 
 	/* configure the CFGCHIP3 register for MII */
 	__raw_writel(val, cfgchip3);
-	pr_info("EMAC: MII PHY configured\n");
+	pr_debug("EMAC: MII PHY configured\n");
 
 	soc_info->emac_pdata->phy_id = HAWKBOARD_PHY_ID;
 

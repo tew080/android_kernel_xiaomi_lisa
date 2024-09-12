@@ -61,13 +61,13 @@ static bool poweroff_pending(void)
 	/* Check for DPO event */
 	rc = opal_get_dpo_status(&opal_dpo_timeout);
 	if (rc == OPAL_SUCCESS) {
-		pr_info("Existing DPO event detected.\n");
+		pr_debug("Existing DPO event detected.\n");
 		return true;
 	}
 
 	/* Check for EPOW event */
 	if (detect_epow()) {
-		pr_info("Existing EPOW event detected.\n");
+		pr_debug("Existing EPOW event detected.\n");
 		return true;
 	}
 
@@ -83,23 +83,23 @@ static int opal_power_control_event(struct notifier_block *nb,
 	switch (msg_type) {
 	case OPAL_MSG_EPOW:
 		if (detect_epow()) {
-			pr_info("EPOW msg received. Powering off system\n");
+			pr_debug("EPOW msg received. Powering off system\n");
 			orderly_poweroff(true);
 		}
 		break;
 	case OPAL_MSG_DPO:
-		pr_info("DPO msg received. Powering off system\n");
+		pr_debug("DPO msg received. Powering off system\n");
 		orderly_poweroff(true);
 		break;
 	case OPAL_MSG_SHUTDOWN:
 		type = be64_to_cpu(((struct opal_msg *)msg)->params[0]);
 		switch (type) {
 		case SOFT_REBOOT:
-			pr_info("Reboot requested\n");
+			pr_debug("Reboot requested\n");
 			orderly_reboot();
 			break;
 		case SOFT_OFF:
-			pr_info("Poweroff requested\n");
+			pr_debug("Poweroff requested\n");
 			orderly_poweroff(true);
 			break;
 		default:
@@ -154,7 +154,7 @@ int __init opal_power_control_init(void)
 
 	if (!supported)
 		return 0;
-	pr_info("OPAL EPOW, DPO support detected.\n");
+	pr_debug("OPAL EPOW, DPO support detected.\n");
 
 	/* Register EPOW event notifier */
 	ret = opal_message_notifier_register(OPAL_MSG_EPOW, &opal_epow_nb);

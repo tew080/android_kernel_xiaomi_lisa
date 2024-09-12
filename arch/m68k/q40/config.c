@@ -82,7 +82,7 @@ static int __init q40_debug_setup(char *arg)
 {
 	/* useful for early debugging stages - writes kernel messages into SRAM */
 	if (MACH_IS_Q40 && !strncmp(arg, "mem", 3)) {
-		/*pr_info("using NVRAM debug, q40_mem_cptr=%p\n",q40_mem_cptr);*/
+		/*pr_debug("using NVRAM debug, q40_mem_cptr=%p\n",q40_mem_cptr);*/
 		_cpleft = 2000 - ((long)q40_mem_cptr-0xff020000) / 4;
 		register_console(&q40_console_driver);
 	}
@@ -123,7 +123,7 @@ static void q40_heartbeat(int on)
 static void q40_reset(void)
 {
 	halted = 1;
-	pr_info("*******************************************\n"
+	pr_debug("*******************************************\n"
 		"Called q40_reset : press the RESET button!!\n"
 		"*******************************************\n");
 	Q40_LED_ON();
@@ -134,7 +134,7 @@ static void q40_reset(void)
 static void q40_halt(void)
 {
 	halted = 1;
-	pr_info("*******************\n"
+	pr_debug("*******************\n"
 		"  Called q40_halt\n"
 		"*******************\n");
 	Q40_LED_ON();

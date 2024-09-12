@@ -394,7 +394,7 @@ int init_power8_pmu(void)
 	cur_cpu_spec->cpu_user_features2 |= PPC_FEATURE2_EBB;
 
 	if (cpu_has_feature(CPU_FTR_PMAO_BUG))
-		pr_info("PMAO restore workaround active.\n");
+		pr_debug("PMAO restore workaround active.\n");
 
 	return 0;
 }

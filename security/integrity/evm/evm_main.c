@@ -71,9 +71,9 @@ static void __init evm_init_config(void)
 
 	xattrs = ARRAY_SIZE(evm_config_default_xattrnames);
 
-	pr_info("Initialising EVM extended attributes:\n");
+	pr_debug("Initialising EVM extended attributes:\n");
 	for (i = 0; i < xattrs; i++) {
-		pr_info("%s\n", evm_config_default_xattrnames[i].name);
+		pr_debug("%s\n", evm_config_default_xattrnames[i].name);
 		list_add_tail(&evm_config_default_xattrnames[i].list,
 			      &evm_config_xattrnames);
 	}
@@ -81,7 +81,7 @@ static void __init evm_init_config(void)
 #ifdef CONFIG_EVM_ATTR_FSUUID
 	evm_hmac_attrs |= EVM_ATTR_FSUUID;
 #endif
-	pr_info("HMAC attrs: 0x%x\n", evm_hmac_attrs);
+	pr_debug("HMAC attrs: 0x%x\n", evm_hmac_attrs);
 }
 
 static bool evm_key_loaded(void)
@@ -579,7 +579,7 @@ static int __init init_evm(void)
 
 	error = evm_init_secfs();
 	if (error < 0) {
-		pr_info("Error registering secfs\n");
+		pr_debug("Error registering secfs\n");
 		goto error;
 	}
 

@@ -448,7 +448,7 @@ static int npcm_pspi_probe(struct platform_device *pdev)
 	if (ret)
 		goto out_disable_clk;
 
-	pr_info("NPCM Peripheral SPI %d probed\n", pdev->id);
+	pr_debug("NPCM Peripheral SPI %d probed\n", pdev->id);
 
 	return 0;
 

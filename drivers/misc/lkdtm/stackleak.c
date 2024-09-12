@@ -37,7 +37,7 @@ void lkdtm_STACKLEAK_ERASING(void)
 		return;
 	}
 
-	pr_info("checking unused part of the thread stack (%lu bytes)...\n",
+	pr_debug("checking unused part of the thread stack (%lu bytes)...\n",
 					left * sizeof(unsigned long));
 
 	/*
@@ -57,7 +57,7 @@ void lkdtm_STACKLEAK_ERASING(void)
 		return;
 	}
 
-	pr_info("first %lu bytes are unpoisoned\n",
+	pr_debug("first %lu bytes are unpoisoned\n",
 				(i - found) * sizeof(unsigned long));
 
 	/* The rest of thread stack should be erased */
@@ -68,6 +68,6 @@ void lkdtm_STACKLEAK_ERASING(void)
 		}
 	}
 
-	pr_info("OK: the rest of the thread stack is properly erased\n");
+	pr_debug("OK: the rest of the thread stack is properly erased\n");
 	return;
 }

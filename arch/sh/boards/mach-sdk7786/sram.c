@@ -53,7 +53,7 @@ static int __init fpga_sram_init(void)
 		return -ENXIO;
 	}
 
-	pr_info("Adding %dKiB of FPGA memory at 0x%08lx-0x%08lx "
+	pr_debug("Adding %dKiB of FPGA memory at 0x%08lx-0x%08lx "
 		"(area %d) to pool.\n",
 		SZ_2K >> 10, phys, phys + SZ_2K - 1, area);
 

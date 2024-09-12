@@ -508,7 +508,7 @@ static void __init p1022_ds_setup_arch(void)
 				 * allocate one static local variable for each
 				 * call to this function.
 				 */
-				pr_info("p1022ds: disabling %pOF node",
+				pr_debug("p1022ds: disabling %pOF node",
 					np2);
 				of_update_property(np2, &nor_status);
 				of_node_put(np2);
@@ -524,7 +524,7 @@ static void __init p1022_ds_setup_arch(void)
 					.length = sizeof("disabled"),
 				};
 
-				pr_info("p1022ds: disabling %pOF node",
+				pr_debug("p1022ds: disabling %pOF node",
 					np2);
 				of_update_property(np2, &nand_status);
 				of_node_put(np2);
@@ -543,7 +543,7 @@ static void __init p1022_ds_setup_arch(void)
 
 	swiotlb_detect_4g();
 
-	pr_info("Freescale P1022 DS reference board\n");
+	pr_debug("Freescale P1022 DS reference board\n");
 }
 
 machine_arch_initcall(p1022_ds, mpc85xx_common_publish_devices);

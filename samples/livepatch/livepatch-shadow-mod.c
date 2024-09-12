@@ -111,7 +111,7 @@ static __used noinline struct dummy *dummy_alloc(void)
 		return NULL;
 	}
 
-	pr_info("%s: dummy @ %p, expires @ %lx\n",
+	pr_debug("%s: dummy @ %p, expires @ %lx\n",
 		__func__, d, d->jiffies_expire);
 
 	return d;
@@ -119,7 +119,7 @@ static __used noinline struct dummy *dummy_alloc(void)
 
 static __used noinline void dummy_free(struct dummy *d)
 {
-	pr_info("%s: dummy @ %p, expired = %lx\n",
+	pr_debug("%s: dummy @ %p, expired = %lx\n",
 		__func__, d, d->jiffies_expire);
 
 	kfree(d);
@@ -171,7 +171,7 @@ static void cleanup_work_func(struct work_struct *work)
 	unsigned long j;
 
 	j = jiffies;
-	pr_info("%s: jiffies = %lx\n", __func__, j);
+	pr_debug("%s: jiffies = %lx\n", __func__, j);
 
 	mutex_lock(&dummy_list_mutex);
 	list_for_each_entry_safe(d, tmp, &dummy_list, list) {

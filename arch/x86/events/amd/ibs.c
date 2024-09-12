@@ -792,7 +792,7 @@ static __init void perf_event_ibs_init(void)
 	perf_ibs_pmu_init(&perf_ibs_op, "ibs_op");
 
 	register_nmi_handler(NMI_LOCAL, perf_ibs_nmi_handler, 0, "perf_ibs");
-	pr_info("perf: AMD IBS detected (0x%08x)\n", ibs_caps);
+	pr_debug("perf: AMD IBS detected (0x%08x)\n", ibs_caps);
 }
 
 #else /* defined(CONFIG_PERF_EVENTS) && defined(CONFIG_CPU_SUP_AMD) */
@@ -941,7 +941,7 @@ static void force_ibs_eilvt_setup(void)
 	if (!ibs_eilvt_valid())
 		goto out;
 
-	pr_info("LVT offset %d assigned\n", offset);
+	pr_debug("LVT offset %d assigned\n", offset);
 
 	return;
 out:

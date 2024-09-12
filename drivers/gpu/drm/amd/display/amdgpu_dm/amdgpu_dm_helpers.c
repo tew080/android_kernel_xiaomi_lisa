@@ -342,7 +342,7 @@ void dm_dtn_log_begin(struct dc_context *ctx,
 	static const char msg[] = "[dtn begin]\n";
 
 	if (!log_ctx) {
-		pr_info("%s", msg);
+		pr_debug("%s", msg);
 		return;
 	}
 
@@ -365,7 +365,7 @@ void dm_dtn_log_append_v(struct dc_context *ctx,
 		vaf.va = &args;
 
 		va_start(args, msg);
-		pr_info("%pV", &vaf);
+		pr_debug("%pV", &vaf);
 		va_end(args);
 
 		return;
@@ -416,7 +416,7 @@ void dm_dtn_log_end(struct dc_context *ctx,
 	static const char msg[] = "[dtn end]\n";
 
 	if (!log_ctx) {
-		pr_info("%s", msg);
+		pr_debug("%s", msg);
 		return;
 	}
 

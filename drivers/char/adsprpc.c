@@ -6301,7 +6301,7 @@ static inline int fastrpc_mmap_device_ioctl(struct fastrpc_file *fl,
 		break;
 	default:
 		err = -ENOTTY;
-		pr_info("bad ioctl: %d\n", ioctl_num);
+		pr_debug("bad ioctl: %d\n", ioctl_num);
 		break;
 	}
 bail:
@@ -6462,7 +6462,7 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int ioctl_num,
 		break;
 	default:
 		err = -ENOTTY;
-		pr_info("bad ioctl: %d\n", ioctl_num);
+		pr_debug("bad ioctl: %d\n", ioctl_num);
 		break;
 	}
  bail:
@@ -6481,7 +6481,7 @@ static int fastrpc_restart_notifier_cb(struct notifier_block *nb,
 	ctx = container_of(nb, struct fastrpc_channel_ctx, nb);
 	cid = ctx - &me->channel[0];
 	if (code == SUBSYS_BEFORE_SHUTDOWN) {
-		pr_info("adsprpc: %s: %s subsystem is restarting\n",
+		pr_debug("adsprpc: %s: %s subsystem is restarting\n",
 			__func__, gcinfo[cid].subsys);
 		mutex_lock(&me->channel[cid].smd_mutex);
 		ctx->ssrcount++;
@@ -6494,7 +6494,7 @@ static int fastrpc_restart_notifier_cb(struct notifier_block *nb,
 		}
 		if (cid == CDSP_DOMAIN_ID)
 			fastrpc_ramdump_collection(cid);
-		pr_info("adsprpc: %s: received RAMDUMP notification for %s\n",
+		pr_debug("adsprpc: %s: received RAMDUMP notification for %s\n",
 			__func__, gcinfo[cid].subsys);
 	} else if (code == SUBSYS_BEFORE_POWERUP) {
 		if (cid == RH_CID && notifdata->enable_ramdump) {
@@ -6506,7 +6506,7 @@ static int fastrpc_restart_notifier_cb(struct notifier_block *nb,
 		}
 		fastrpc_notify_drivers(me, cid);
 	} else if (code == SUBSYS_AFTER_POWERUP) {
-		pr_info("adsprpc: %s: %s subsystem is up\n",
+		pr_debug("adsprpc: %s: %s subsystem is up\n",
 			__func__, gcinfo[cid].subsys);
 		ctx->issubsystemup = 1;
 	}
@@ -6523,7 +6523,7 @@ static int fastrpc_pdr_notifier_cb(struct notifier_block *pdrnb,
 
 	spd = container_of(pdrnb, struct fastrpc_static_pd, pdrnb);
 	if (code == SERVREG_NOTIF_SERVICE_STATE_DOWN_V01) {
-		pr_info("adsprpc: %s: %s (%s) is down for PDR on %s\n",
+		pr_debug("adsprpc: %s: %s (%s) is down for PDR on %s\n",
 			__func__, spd->spdname, spd->servloc_name,
 			gcinfo[spd->cid].subsys);
 		mutex_lock(&me->channel[spd->cid].smd_mutex);
@@ -6539,7 +6539,7 @@ static int fastrpc_pdr_notifier_cb(struct notifier_block *pdrnb,
 			if (spd->cid == RH_CID && me->ramdump_handle)
 				me->channel[RH_CID].ramdumpenabled = 1;
 		}
-		pr_info("adsprpc: %s: received %s RAMDUMP notification for %s (%s)\n",
+		pr_debug("adsprpc: %s: received %s RAMDUMP notification for %s (%s)\n",
 			__func__, gcinfo[spd->cid].subsys,
 			spd->spdname, spd->servloc_name);
 	} else if (code == SUBSYS_BEFORE_POWERUP) {
@@ -6550,7 +6550,7 @@ static int fastrpc_pdr_notifier_cb(struct notifier_block *pdrnb,
 			me->channel[RH_CID].ramdumpenabled = 0;
 			}
 	} else if (code == SERVREG_NOTIF_SERVICE_STATE_UP_V01) {
-		pr_info("adsprpc: %s: %s (%s) is up on %s\n",
+		pr_debug("adsprpc: %s: %s (%s) is up on %s\n",
 			__func__, spd->spdname, spd->servloc_name,
 			gcinfo[spd->cid].subsys);
 		spd->ispdup = 1;
@@ -6612,7 +6612,7 @@ pdr_register:
 				__func__, subsys, cb_pdname, spd->servloc_name,
 				PTR_ERR(spd->pdrhandle));
 		else
-			pr_info("adsprpc: %s: PDR notifier for %s registered for %s (%s)\n",
+			pr_debug("adsprpc: %s: PDR notifier for %s registered for %s (%s)\n",
 			__func__, subsys, cb_pdname, spd->servloc_name);
 	} else {
 		pr_warn("adsprpc: %s: %s (%s) notifier is already registered for %s\n",
@@ -6620,11 +6620,11 @@ pdr_register:
 	}
 
 	if (curr_state == SERVREG_NOTIF_SERVICE_STATE_UP_V01) {
-		pr_info("adsprpc: %s: %s (%s) PDR service for %s is up\n",
+		pr_debug("adsprpc: %s: %s (%s) PDR service for %s is up\n",
 			__func__, spd->servloc_name, cb_pdname, subsys);
 		spd->ispdup = 1;
 	} else if (curr_state == SERVREG_NOTIF_SERVICE_STATE_UNINIT_V01) {
-		pr_info("adsprpc: %s: %s (%s) PDR service for %s is uninitialized\n",
+		pr_debug("adsprpc: %s: %s (%s) PDR service for %s is uninitialized\n",
 			__func__, spd->servloc_name, cb_pdname, subsys);
 	}
 	return NOTIFY_DONE;
@@ -6847,7 +6847,7 @@ static void fastrpc_init_privileged_gids(struct device *dev, char *prop_name,
 					__func__, i);
 			goto bail;
 		}
-		pr_info("adsprpc: %s: privileged GID: %u\n", __func__, gids[i]);
+		pr_debug("adsprpc: %s: privileged GID: %u\n", __func__, gids[i]);
 	}
 	sort(gids, len, sizeof(*gids), uint_cmp_func, NULL);
 	gidlist->gids = gids;
@@ -6900,7 +6900,7 @@ static int fastrpc_setup_service_locator(struct device *dev,
 			pr_warn("adsprpc: %s: get service location failed with %d for %s (%s)\n",
 				__func__, err, service_name, client_name);
 		else
-			pr_info("adsprpc: %s: service location enabled for %s (%s)\n",
+			pr_debug("adsprpc: %s: service location enabled for %s (%s)\n",
 				__func__, service_name, client_name);
 	}
 bail:
@@ -6988,7 +6988,7 @@ static int fastrpc_probe(struct platform_device *pdev)
 			if (!err)
 				configure_secure_channels(secure_domains);
 			else
-				pr_info("adsprpc: unable to read the domain configuration from dts\n");
+				pr_debug("adsprpc: unable to read the domain configuration from dts\n");
 		}
 	}
 	if (of_device_is_compatible(dev->of_node,
@@ -7154,7 +7154,7 @@ static int __init fastrpc_device_init(void)
 				__func__, gcinfo[i].subsys,
 				PTR_ERR(me->channel[i].handle));
 		else
-			pr_info("adsprpc: %s: SSR notifier registered for %s\n",
+			pr_debug("adsprpc: %s: SSR notifier registered for %s\n",
 				__func__, gcinfo[i].subsys);
 	}
 	me->channel[CDSP_DOMAIN_ID].rh_dump_dev = create_ramdump_device("cdsp_minidump", NULL);

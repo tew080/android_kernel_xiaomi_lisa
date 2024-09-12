@@ -109,7 +109,7 @@ static int fastcvpd_rpmsg_probe(struct rpmsg_device *rpdev)
 		mutex_unlock(&me->smd_mutex);
 	}
 
-	pr_info("%s: Successfully probed. cdsp_state=%d video_shutdown=%d\n",
+	pr_debug("%s: Successfully probed. cdsp_state=%d video_shutdown=%d\n",
 		__func__, cdsp_state, video_shutdown);
 bail:
 	return err;
@@ -123,7 +123,7 @@ static void fastcvpd_rpmsg_remove(struct rpmsg_device *rpdev)
 	me->chan = NULL;
 	me->cdsp_state = STATUS_SSR;
 	mutex_unlock(&me->smd_mutex);
-	pr_info("%s: CDSP SSR triggered\n", __func__);
+	pr_debug("%s: CDSP SSR triggered\n", __func__);
 }
 
 static int fastcvpd_rpmsg_callback(struct rpmsg_device *rpdev,

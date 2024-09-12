@@ -49,14 +49,14 @@ static int tpm_loadkey2(struct tpm_buf *tb,
 	/* session for loading the key */
 	ret = oiap(tb, &authhandle, enonce);
 	if (ret < 0) {
-		pr_info("oiap failed (%d)\n", ret);
+		pr_debug("oiap failed (%d)\n", ret);
 		return ret;
 	}
 
 	/* generate odd nonce */
 	ret = tpm_get_random(NULL, nonceodd, TPM_NONCE_SIZE);
 	if (ret < 0) {
-		pr_info("tpm_get_random failed (%d)\n", ret);
+		pr_debug("tpm_get_random failed (%d)\n", ret);
 		return ret;
 	}
 
@@ -81,14 +81,14 @@ static int tpm_loadkey2(struct tpm_buf *tb,
 
 	ret = trusted_tpm_send(tb->data, MAX_BUF_SIZE);
 	if (ret < 0) {
-		pr_info("authhmac failed (%d)\n", ret);
+		pr_debug("authhmac failed (%d)\n", ret);
 		return ret;
 	}
 
 	ret = TSS_checkhmac1(tb->data, ordinal, nonceodd, keyauth,
 			     SHA1_DIGEST_SIZE, 0, 0);
 	if (ret < 0) {
-		pr_info("TSS_checkhmac1 failed (%d)\n", ret);
+		pr_debug("TSS_checkhmac1 failed (%d)\n", ret);
 		return ret;
 	}
 
@@ -135,14 +135,14 @@ static int tpm_unbind(struct tpm_buf *tb,
 	/* session for loading the key */
 	ret = oiap(tb, &authhandle, enonce);
 	if (ret < 0) {
-		pr_info("oiap failed (%d)\n", ret);
+		pr_debug("oiap failed (%d)\n", ret);
 		return ret;
 	}
 
 	/* generate odd nonce */
 	ret = tpm_get_random(NULL, nonceodd, TPM_NONCE_SIZE);
 	if (ret < 0) {
-		pr_info("tpm_get_random failed (%d)\n", ret);
+		pr_debug("tpm_get_random failed (%d)\n", ret);
 		return ret;
 	}
 
@@ -169,7 +169,7 @@ static int tpm_unbind(struct tpm_buf *tb,
 
 	ret = trusted_tpm_send(tb->data, MAX_BUF_SIZE);
 	if (ret < 0) {
-		pr_info("authhmac failed (%d)\n", ret);
+		pr_debug("authhmac failed (%d)\n", ret);
 		return ret;
 	}
 
@@ -181,7 +181,7 @@ static int tpm_unbind(struct tpm_buf *tb,
 			     datalen, TPM_DATA_OFFSET + sizeof(uint32_t),
 			     0, 0);
 	if (ret < 0) {
-		pr_info("TSS_checkhmac1 failed (%d)\n", ret);
+		pr_debug("TSS_checkhmac1 failed (%d)\n", ret);
 		return ret;
 	}
 
@@ -221,14 +221,14 @@ static int tpm_sign(struct tpm_buf *tb,
 	/* session for loading the key */
 	ret = oiap(tb, &authhandle, enonce);
 	if (ret < 0) {
-		pr_info("oiap failed (%d)\n", ret);
+		pr_debug("oiap failed (%d)\n", ret);
 		return ret;
 	}
 
 	/* generate odd nonce */
 	ret = tpm_get_random(NULL, nonceodd, TPM_NONCE_SIZE);
 	if (ret < 0) {
-		pr_info("tpm_get_random failed (%d)\n", ret);
+		pr_debug("tpm_get_random failed (%d)\n", ret);
 		return ret;
 	}
 
@@ -255,7 +255,7 @@ static int tpm_sign(struct tpm_buf *tb,
 
 	ret = trusted_tpm_send(tb->data, MAX_BUF_SIZE);
 	if (ret < 0) {
-		pr_info("authhmac failed (%d)\n", ret);
+		pr_debug("authhmac failed (%d)\n", ret);
 		return ret;
 	}
 
@@ -267,7 +267,7 @@ static int tpm_sign(struct tpm_buf *tb,
 			     datalen, TPM_DATA_OFFSET + sizeof(uint32_t),
 			     0, 0);
 	if (ret < 0) {
-		pr_info("TSS_checkhmac1 failed (%d)\n", ret);
+		pr_debug("TSS_checkhmac1 failed (%d)\n", ret);
 		return ret;
 	}
 

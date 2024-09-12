@@ -297,7 +297,7 @@ static void virtscsi_handle_transport_reset(struct virtio_scsi *vscsi,
 		}
 		break;
 	default:
-		pr_info("Unsupported virtio scsi event reason %x\n", event->reason);
+		pr_debug("Unsupported virtio scsi event reason %x\n", event->reason);
 	}
 }
 

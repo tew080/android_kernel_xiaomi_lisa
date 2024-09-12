@@ -1078,7 +1078,7 @@ static int kvmppc_exit_pr_progint(struct kvm_run *run, struct kvm_vcpu *vcpu,
 
 	if (kvmppc_get_msr(vcpu) & MSR_PR) {
 #ifdef EXIT_DEBUG
-		pr_info("Userspace triggered 0x700 exception at\n 0x%lx (0x%x)\n",
+		pr_debug("Userspace triggered 0x700 exception at\n 0x%lx (0x%x)\n",
 			kvmppc_get_pc(vcpu), last_inst);
 #endif
 		if ((last_inst & 0xff0007ff) != (INS_DCBZ & 0xfffffff7)) {

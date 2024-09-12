@@ -150,7 +150,7 @@ static void setup_etheraddr(struct net_device *dev, char *str)
 	return;
 
 random:
-	pr_info("%s: choosing a random ethernet address\n",
+	pr_debug("%s: choosing a random ethernet address\n",
 		dev->name);
 	eth_hw_addr_random(dev);
 }
@@ -543,7 +543,7 @@ static int iss_net_configure(int index, char *init)
 		goto errout;
 	}
 
-	pr_info("Netdevice %d (%pM)\n", index, dev->dev_addr);
+	pr_debug("Netdevice %d (%pM)\n", index, dev->dev_addr);
 
 	/* sysfs register */
 

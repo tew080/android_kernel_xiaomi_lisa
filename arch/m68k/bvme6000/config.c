@@ -57,7 +57,7 @@ void bvme6000_reset(void)
 {
 	volatile PitRegsPtr pit = (PitRegsPtr)BVME_PIT_BASE;
 
-	pr_info("\r\n\nCalled bvme6000_reset\r\n"
+	pr_debug("\r\n\nCalled bvme6000_reset\r\n"
 		"\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r");
 	/* The string of returns is to delay the reset until the whole
 	 * message is output. */
@@ -109,7 +109,7 @@ void __init config_bvme6000(void)
     mach_reset		 = bvme6000_reset;
     mach_get_model       = bvme6000_get_model;
 
-    pr_info("Board is %sconfigured as a System Controller\n",
+    pr_debug("Board is %sconfigured as a System Controller\n",
 	    *config_reg_ptr & BVME_CONFIG_SW1 ? "" : "not ");
 
     /* Now do the PIT configuration */

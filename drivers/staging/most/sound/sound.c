@@ -438,7 +438,7 @@ static int pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 		return 0;
 
 	default:
-		pr_info("%s(), invalid\n", __func__);
+		pr_debug("%s(), invalid\n", __func__);
 		return -EINVAL;
 	}
 	return 0;
@@ -796,7 +796,7 @@ static int __init audio_init(void)
 {
 	int ret;
 
-	pr_info("init()\n");
+	pr_debug("init()\n");
 
 	INIT_LIST_HEAD(&adpt_list);
 
@@ -814,7 +814,7 @@ static int __init audio_init(void)
 
 static void __exit audio_exit(void)
 {
-	pr_info("exit()\n");
+	pr_debug("exit()\n");
 	most_deregister_configfs_subsys(&comp);
 	most_deregister_component(&comp);
 }

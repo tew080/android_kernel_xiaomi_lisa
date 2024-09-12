@@ -117,7 +117,7 @@ static u32 __init allocate_aperture(void)
 		return 0;
 	}
 	memblock_reserve(addr, aper_size);
-	pr_info("Mapping aperture over RAM [mem %#010lx-%#010lx] (%uKB)\n",
+	pr_debug("Mapping aperture over RAM [mem %#010lx-%#010lx] (%uKB)\n",
 		addr, addr + aper_size - 1, aper_size >> 10);
 	register_nosave_region(addr >> PAGE_SHIFT,
 			       (addr+aper_size) >> PAGE_SHIFT);
@@ -162,7 +162,7 @@ static u32 __init read_agp(int bus, int slot, int func, int cap, u32 *order)
 	u64 aper;
 	u32 old_order;
 
-	pr_info("pci 0000:%02x:%02x:%02x: AGP bridge\n", bus, slot, func);
+	pr_debug("pci 0000:%02x:%02x:%02x: AGP bridge\n", bus, slot, func);
 	apsizereg = read_pci_config_16(bus, slot, func, cap + 0x14);
 	if (apsizereg == 0xffffffff) {
 		pr_err("pci 0000:%02x:%02x.%d: APSIZE unreadable\n",
@@ -190,16 +190,16 @@ static u32 __init read_agp(int bus, int slot, int func, int cap, u32 *order)
 	 * On some sick chips, APSIZE is 0. It means it wants 4G
 	 * so let double check that order, and lets trust AMD NB settings:
 	 */
-	pr_info("pci 0000:%02x:%02x.%d: AGP aperture [bus addr %#010Lx-%#010Lx] (old size %uMB)\n",
+	pr_debug("pci 0000:%02x:%02x.%d: AGP aperture [bus addr %#010Lx-%#010Lx] (old size %uMB)\n",
 		bus, slot, func, aper, aper + (32ULL << (old_order + 20)) - 1,
 		32 << old_order);
 	if (aper + (32ULL<<(20 + *order)) > 0x100000000ULL) {
-		pr_info("pci 0000:%02x:%02x.%d: AGP aperture size %uMB (APSIZE %#x) is not right, using settings from NB\n",
+		pr_debug("pci 0000:%02x:%02x.%d: AGP aperture size %uMB (APSIZE %#x) is not right, using settings from NB\n",
 			bus, slot, func, 32 << *order, apsizereg);
 		*order = old_order;
 	}
 
-	pr_info("pci 0000:%02x:%02x.%d: AGP aperture [bus addr %#010Lx-%#010Lx] (%uMB, APSIZE %#x)\n",
+	pr_debug("pci 0000:%02x:%02x.%d: AGP aperture [bus addr %#010Lx-%#010Lx] (%uMB, APSIZE %#x)\n",
 		bus, slot, func, aper, aper + (32ULL << (*order + 20)) - 1,
 		32 << *order, apsizereg);
 
@@ -257,7 +257,7 @@ static u32 __init search_agp_bridge(u32 *order, int *valid_agp)
 			}
 		}
 	}
-	pr_info("No AGP bridge found\n");
+	pr_debug("No AGP bridge found\n");
 
 	return 0;
 }
@@ -349,7 +349,7 @@ void __init early_gart_iommu_check(void)
 		if (e820__mapped_any(aper_base, aper_base + aper_size,
 				    E820_TYPE_RAM)) {
 			/* reserve it, so we can reuse it in second kernel */
-			pr_info("e820: reserve [mem %#010Lx-%#010Lx] for GART\n",
+			pr_debug("e820: reserve [mem %#010Lx-%#010Lx] for GART\n",
 				aper_base, aper_base + aper_size - 1);
 			e820__range_add(aper_base, aper_size, E820_TYPE_RESERVED);
 			e820__update_table_print();
@@ -397,7 +397,7 @@ int __init gart_iommu_hole_init(void)
 	    !early_pci_allowed())
 		return -ENODEV;
 
-	pr_info("Checking aperture...\n");
+	pr_debug("Checking aperture...\n");
 
 	if (!fallback_aper_force)
 		agp_aper_base = search_agp_bridge(&agp_aper_order, &valid_agp);
@@ -438,7 +438,7 @@ int __init gart_iommu_hole_init(void)
 			aper_base = read_pci_config(bus, slot, 3, AMD64_GARTAPERTUREBASE) & 0x7fff;
 			aper_base <<= 25;
 
-			pr_info("Node %d: aperture [bus addr %#010Lx-%#010Lx] (%uMB)\n",
+			pr_debug("Node %d: aperture [bus addr %#010Lx-%#010Lx] (%uMB)\n",
 				node, aper_base, aper_base + aper_size - 1,
 				aper_size >> 20);
 			node++;
@@ -498,9 +498,9 @@ out:
 		   force_iommu ||
 		   valid_agp ||
 		   fallback_aper_force) {
-		pr_info("Your BIOS doesn't leave an aperture memory hole\n");
-		pr_info("Please enable the IOMMU option in the BIOS setup\n");
-		pr_info("This costs you %dMB of RAM\n",
+		pr_debug("Your BIOS doesn't leave an aperture memory hole\n");
+		pr_debug("Please enable the IOMMU option in the BIOS setup\n");
+		pr_debug("This costs you %dMB of RAM\n",
 			32 << fallback_aper_order);
 
 		aper_order = fallback_aper_order;

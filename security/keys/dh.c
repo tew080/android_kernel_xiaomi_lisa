@@ -94,7 +94,7 @@ static int kdf_alloc(struct kdf_sdesc **sdesc_ret, char *hashname)
 	/* allocate synchronous hash */
 	tfm = crypto_alloc_shash(hashname, 0, 0);
 	if (IS_ERR(tfm)) {
-		pr_info("could not allocate digest TFM handle %s\n", hashname);
+		pr_debug("could not allocate digest TFM handle %s\n", hashname);
 		return PTR_ERR(tfm);
 	}
 

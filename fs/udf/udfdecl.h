@@ -29,7 +29,7 @@ extern __printf(3, 4) void _udf_warn(struct super_block *sb,
 	_udf_warn(sb, __func__, fmt, ##__VA_ARGS__)
 
 #define udf_info(fmt, ...)					\
-	pr_info("INFO " fmt, ##__VA_ARGS__)
+	pr_debug("INFO " fmt, ##__VA_ARGS__)
 
 #define udf_debug(fmt, ...)					\
 	pr_debug("%s:%d:%s: " fmt, __FILE__, __LINE__, __func__, ##__VA_ARGS__)

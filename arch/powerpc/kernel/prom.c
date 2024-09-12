@@ -672,7 +672,7 @@ early_param("ppc_tm", parse_ppc_tm);
 static void __init tm_init(void)
 {
 	if (tm_disabled) {
-		pr_info("Disabling hardware transactional memory (HTM)\n");
+		pr_debug("Disabling hardware transactional memory (HTM)\n");
 		cur_cpu_spec->cpu_user_features2 &=
 			~(PPC_FEATURE2_HTM_NOSC | PPC_FEATURE2_HTM);
 		cur_cpu_spec->cpu_features &= ~CPU_FTR_TM;

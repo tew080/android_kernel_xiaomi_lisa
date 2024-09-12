@@ -692,7 +692,7 @@ static int __init devfreq_cpufreq_init(void)
 		}
 		of_node_put(of_par);
 	} else {
-		pr_info("No tables parsed from DT.\n");
+		pr_debug("No tables parsed from DT.\n");
 		return 0;
 	}
 

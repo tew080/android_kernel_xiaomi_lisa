@@ -63,7 +63,7 @@ static void print_use(void)
 	int i;
 	int j = 0;
 
-	pr_info("dvma entry usage:\n");
+	pr_debug("dvma entry usage:\n");
 
 	for(i = 0; i < IOMMU_TOTAL_ENTRIES; i++) {
 		if(!iommu_use[i])
@@ -71,14 +71,14 @@ static void print_use(void)
 
 		j++;
 
-		pr_info("dvma entry: %08x len %08lx\n",
+		pr_debug("dvma entry: %08x len %08lx\n",
 			(i << DVMA_PAGE_SHIFT) + DVMA_START, iommu_use[i]);
 	}
 
-	pr_info("%d entries in use total\n", j);
+	pr_debug("%d entries in use total\n", j);
 
-	pr_info("allocation/free calls: %lu/%lu\n", dvma_allocs, dvma_frees);
-	pr_info("allocation/free bytes: %Lx/%Lx\n", dvma_alloc_bytes,
+	pr_debug("allocation/free calls: %lu/%lu\n", dvma_allocs, dvma_frees);
+	pr_debug("allocation/free bytes: %Lx/%Lx\n", dvma_alloc_bytes,
 		dvma_free_bytes);
 }
 
@@ -88,18 +88,18 @@ static void print_holes(struct list_head *holes)
 	struct list_head *cur;
 	struct hole *hole;
 
-	pr_info("listing dvma holes\n");
+	pr_debug("listing dvma holes\n");
 	list_for_each(cur, holes) {
 		hole = list_entry(cur, struct hole, list);
 
 		if((hole->start == 0) && (hole->end == 0) && (hole->size == 0))
 			continue;
 
-		pr_info("hole: start %08lx end %08lx size %08lx\n",
+		pr_debug("hole: start %08lx end %08lx size %08lx\n",
 			hole->start, hole->end, hole->size);
 	}
 
-	pr_info("end of hole listing...\n");
+	pr_debug("end of hole listing...\n");
 }
 #endif /* DVMA_DEBUG */
 
@@ -308,7 +308,7 @@ unsigned long dvma_map_align(unsigned long kaddr, int len, int align)
 		align = ((align + (DVMA_PAGE_SIZE-1)) & DVMA_PAGE_MASK);
 
 	baddr = get_baddr(len, align);
-//	pr_info("using baddr %lx\n", baddr);
+//	pr_debug("using baddr %lx\n", baddr);
 
 	if(!dvma_map_iommu(kaddr, baddr, len))
 		return (baddr + off);

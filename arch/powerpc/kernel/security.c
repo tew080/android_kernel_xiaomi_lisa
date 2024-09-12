@@ -249,7 +249,7 @@ bool stf_barrier;
 
 static int __init handle_no_stf_barrier(char *p)
 {
-	pr_info("stf-barrier: disabled on command line.");
+	pr_debug("stf-barrier: disabled on command line.");
 	no_stf_barrier = true;
 	return 0;
 }
@@ -317,11 +317,11 @@ void setup_stf_barrier(void)
 		 (security_ftr_enabled(SEC_FTR_L1D_FLUSH_HV) && hv));
 
 	if (type == STF_BARRIER_FALLBACK) {
-		pr_info("stf-barrier: fallback barrier available\n");
+		pr_debug("stf-barrier: fallback barrier available\n");
 	} else if (type == STF_BARRIER_SYNC_ORI) {
-		pr_info("stf-barrier: hwsync barrier available\n");
+		pr_debug("stf-barrier: hwsync barrier available\n");
 	} else if (type == STF_BARRIER_EIEIO) {
-		pr_info("stf-barrier: eieio barrier available\n");
+		pr_debug("stf-barrier: eieio barrier available\n");
 	}
 
 	stf_enabled_flush_types = type;
@@ -395,7 +395,7 @@ device_initcall(stf_barrier_debugfs_init);
 static void no_count_cache_flush(void)
 {
 	count_cache_flush_type = COUNT_CACHE_FLUSH_NONE;
-	pr_info("count-cache-flush: software flush disabled.\n");
+	pr_debug("count-cache-flush: software flush disabled.\n");
 }
 
 static void toggle_count_cache_flush(bool enable)
@@ -409,7 +409,7 @@ static void toggle_count_cache_flush(bool enable)
 #ifdef CONFIG_KVM_BOOK3S_HV_POSSIBLE
 		patch_instruction_site(&patch__call_kvm_flush_link_stack, PPC_INST_NOP);
 #endif
-		pr_info("link-stack-flush: software flush disabled.\n");
+		pr_debug("link-stack-flush: software flush disabled.\n");
 		link_stack_flush_enabled = false;
 		no_count_cache_flush();
 		return;
@@ -425,7 +425,7 @@ static void toggle_count_cache_flush(bool enable)
 			  (u64)&kvm_flush_link_stack, BRANCH_SET_LINK);
 #endif
 
-	pr_info("link-stack-flush: software flush enabled.\n");
+	pr_debug("link-stack-flush: software flush enabled.\n");
 	link_stack_flush_enabled = true;
 
 	// If we just need to flush the link stack, patch an early return
@@ -437,13 +437,13 @@ static void toggle_count_cache_flush(bool enable)
 
 	if (!security_ftr_enabled(SEC_FTR_BCCTR_FLUSH_ASSIST)) {
 		count_cache_flush_type = COUNT_CACHE_FLUSH_SW;
-		pr_info("count-cache-flush: full software flush sequence enabled.\n");
+		pr_debug("count-cache-flush: full software flush sequence enabled.\n");
 		return;
 	}
 
 	patch_instruction_site(&patch__flush_count_cache_return, PPC_INST_BLR);
 	count_cache_flush_type = COUNT_CACHE_FLUSH_HW;
-	pr_info("count-cache-flush: hardware assisted flush sequence enabled\n");
+	pr_debug("count-cache-flush: hardware assisted flush sequence enabled\n");
 }
 
 void setup_count_cache_flush(void)

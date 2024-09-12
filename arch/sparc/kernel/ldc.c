@@ -1485,7 +1485,7 @@ EXPORT_SYMBOL(ldc_rx_reset);
 
 void __ldc_print(struct ldc_channel *lp, const char *caller)
 {
-	pr_info("%s: id=0x%lx flags=0x%x state=%s cstate=0x%lx hsstate=0x%x\n"
+	pr_debug("%s: id=0x%lx flags=0x%x state=%s cstate=0x%lx hsstate=0x%x\n"
 		"\trx_h=0x%lx rx_t=0x%lx rx_n=%ld\n"
 		"\ttx_h=0x%lx tx_t=0x%lx tx_n=%ld\n"
 		"\trcv_nxt=%u snd_nxt=%u\n",

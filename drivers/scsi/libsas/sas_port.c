@@ -95,7 +95,7 @@ static void sas_form_port(struct asd_sas_phy *phy)
 			wake_up(&sas_ha->eh_wait_q);
 			return;
 		} else {
-			pr_info("%s: phy%d belongs to port%d already(%d)!\n",
+			pr_debug("%s: phy%d belongs to port%d already(%d)!\n",
 				__func__, phy->id, phy->port->id,
 				phy->port->num_phys);
 			return;

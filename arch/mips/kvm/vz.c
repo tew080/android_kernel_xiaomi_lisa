@@ -3216,7 +3216,7 @@ int kvm_mips_emulation_init(struct kvm_mips_callbacks **install_callbacks)
 		 "pgd_reg not allocated even though cpu_has_vz\n"))
 		return -ENODEV;
 
-	pr_info("Starting KVM with MIPS VZ extensions\n");
+	pr_debug("Starting KVM with MIPS VZ extensions\n");
 
 	*install_callbacks = &kvm_vz_callbacks;
 	return 0;

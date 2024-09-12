@@ -642,7 +642,7 @@ static void __init mtrr_print_out_one_result(int i)
 	chunk_base = to_size_factor(result[i].chunk_sizek, &chunk_factor);
 	lose_base = to_size_factor(result[i].lose_cover_sizek, &lose_factor);
 
-	pr_info("%sgran_size: %ld%c \tchunk_size: %ld%c \t",
+	pr_debug("%sgran_size: %ld%c \tchunk_size: %ld%c \t",
 		result[i].bad ? "*BAD*" : " ",
 		gran_base, gran_factor, chunk_base, chunk_factor);
 	pr_cont("num_reg: %d  \tlose cover RAM: %s%ld%c\n",
@@ -731,7 +731,7 @@ int __init mtrr_cleanup(unsigned address_bits)
 					  x_remove_base, x_remove_size);
 
 	range_sums = sum_ranges(range, nr_range);
-	pr_info("total RAM covered: %ldM\n",
+	pr_debug("total RAM covered: %ldM\n",
 	       range_sums >> (20 - PAGE_SHIFT));
 
 	if (mtrr_chunk_size && mtrr_gran_size) {
@@ -747,7 +747,7 @@ int __init mtrr_cleanup(unsigned address_bits)
 			print_out_mtrr_range_state();
 			return 1;
 		}
-		pr_info("invalid mtrr_gran_size or mtrr_chunk_size, will find optimal one\n");
+		pr_debug("invalid mtrr_gran_size or mtrr_chunk_size, will find optimal one\n");
 	}
 
 	i = 0;
@@ -765,7 +765,7 @@ int __init mtrr_cleanup(unsigned address_bits)
 				      x_remove_base, x_remove_size, i);
 			if (debug_print) {
 				mtrr_print_out_one_result(i);
-				pr_info("\n");
+				pr_debug("\n");
 			}
 
 			i++;
@@ -776,7 +776,7 @@ int __init mtrr_cleanup(unsigned address_bits)
 	index_good = mtrr_search_optimal_index();
 
 	if (index_good != -1) {
-		pr_info("Found optimal setting for mtrr clean up\n");
+		pr_debug("Found optimal setting for mtrr clean up\n");
 		i = index_good;
 		mtrr_print_out_one_result(i);
 
@@ -796,8 +796,8 @@ int __init mtrr_cleanup(unsigned address_bits)
 			mtrr_print_out_one_result(i);
 	}
 
-	pr_info("mtrr_cleanup: can not find optimal value\n");
-	pr_info("please specify mtrr_gran_size/mtrr_chunk_size\n");
+	pr_debug("mtrr_cleanup: can not find optimal value\n");
+	pr_debug("please specify mtrr_gran_size/mtrr_chunk_size\n");
 
 	return 0;
 }
@@ -916,7 +916,7 @@ int __init mtrr_trim_uncached_memory(unsigned long end_pfn)
 
 	/* kvm/qemu doesn't have mtrr set right, don't trim them all: */
 	if (!highest_pfn) {
-		pr_info("CPU MTRRs all blank - virtualized system.\n");
+		pr_debug("CPU MTRRs all blank - virtualized system.\n");
 		return 0;
 	}
 
@@ -977,7 +977,7 @@ int __init mtrr_trim_uncached_memory(unsigned long end_pfn)
 		if (!changed_by_mtrr_cleanup)
 			WARN_ON(1);
 
-		pr_info("update e820 for mtrr\n");
+		pr_debug("update e820 for mtrr\n");
 		e820__update_table_print();
 
 		return 1;

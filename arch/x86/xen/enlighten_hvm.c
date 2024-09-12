@@ -273,7 +273,7 @@ static uint32_t __init xen_platform_hvm(void)
 
 	if (xen_pvh_domain() && nopv) {
 		/* Guest booting via the Xen-PVH boot entry goes here */
-		pr_info("\"nopv\" parameter is ignored in PVH guest\n");
+		pr_debug("\"nopv\" parameter is ignored in PVH guest\n");
 		nopv = false;
 	} else if (nopv && xen_domain) {
 		/*

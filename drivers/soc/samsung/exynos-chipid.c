@@ -91,7 +91,7 @@ int __init exynos_chipid_early_init(void)
 	}
 
 	/* it is too early to use dev_info() here (soc_dev is NULL) */
-	pr_info("soc soc0: Exynos: CPU[%s] PRO_ID[0x%x] REV[0x%x] Detected\n",
+	pr_debug("soc soc0: Exynos: CPU[%s] PRO_ID[0x%x] REV[0x%x] Detected\n",
 		soc_dev_attr->soc_id, product_id, revision);
 
 	return 0;

@@ -600,7 +600,7 @@ cxd2880_spi_probe(struct spi_device *spi)
 		goto fail_fe_conn;
 	}
 
-	pr_info("Sony CXD2880 has successfully attached.\n");
+	pr_debug("Sony CXD2880 has successfully attached.\n");
 
 	return 0;
 
@@ -653,7 +653,7 @@ cxd2880_spi_remove(struct spi_device *spi)
 		regulator_disable(dvb_spi->vcc_supply);
 
 	kfree(dvb_spi);
-	pr_info("cxd2880_spi remove ok.\n");
+	pr_debug("cxd2880_spi remove ok.\n");
 
 	return 0;
 }

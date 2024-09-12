@@ -118,7 +118,7 @@ static void xlp_enable_secondary_cores(const cpumask_t *wakeup_mask)
 			/* check if node exists and is online */
 			if (cpu_is_xlp9xx()) {
 				int b = xlp9xx_get_socbus(n);
-				pr_info("Node %d SoC PCI bus %d.\n", n, b);
+				pr_debug("Node %d SoC PCI bus %d.\n", n, b);
 				if (b == 0)
 					break;
 			} else {
@@ -167,7 +167,7 @@ static void xlp_enable_secondary_cores(const cpumask_t *wakeup_mask)
 		 */
 		syscoremask = (1 << hweight32(~fusemask & mask)) - 1;
 
-		pr_info("Node %d - SYS/FUSE coremask %x\n", n, syscoremask);
+		pr_debug("Node %d - SYS/FUSE coremask %x\n", n, syscoremask);
 		ncores = nlm_cores_per_node();
 		for (core = 0; core < ncores; core++) {
 			/* we will be on node 0 core 0 */

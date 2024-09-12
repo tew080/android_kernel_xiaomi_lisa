@@ -345,7 +345,7 @@ static int nic_init(u32 __iomem *mcr)
 		break;
 	}
 
-	pr_info("Found %s NIC", type);
+	pr_debug("Found %s NIC", type);
 	if (type != unknown)
 		pr_cont(" registration number %pM, CRC %02x", serial, crc);
 	pr_cont(".\n");
@@ -396,7 +396,7 @@ static void ioc3_get_eaddr(struct ioc3_private *ip)
 {
 	ioc3_get_eaddr_nic(ip);
 
-	pr_info("Ethernet address is %pM.\n", ip->dev->dev_addr);
+	pr_debug("Ethernet address is %pM.\n", ip->dev->dev_addr);
 }
 
 static void __ioc3_set_mac_address(struct net_device *dev)

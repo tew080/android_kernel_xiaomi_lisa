@@ -316,7 +316,7 @@ static int qtnf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 
 	chipid = qtnf_chip_id_get(sysctl_bar);
 
-	pr_info("identified device: %s\n", qtnf_chipid_to_string(chipid));
+	pr_debug("identified device: %s\n", qtnf_chipid_to_string(chipid));
 
 	switch (chipid) {
 	case QTN_CHIP_ID_PEARL:

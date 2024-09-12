@@ -206,7 +206,7 @@ static int __init rc32434_pci_init(void)
 {
 	void __iomem *io_map_base;
 
-	pr_info("PCI: Initializing PCI\n");
+	pr_debug("PCI: Initializing PCI\n");
 
 	ioport_resource.start = rc32434_res_pci_io1.start;
 	ioport_resource.end = rc32434_res_pci_io1.end;

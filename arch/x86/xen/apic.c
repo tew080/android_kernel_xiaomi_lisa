@@ -209,7 +209,7 @@ static void __init xen_apic_check(void)
 	if (apic == &xen_pv_apic)
 		return;
 
-	pr_info("Switched APIC routing from %s to %s.\n", apic->name,
+	pr_debug("Switched APIC routing from %s to %s.\n", apic->name,
 		xen_pv_apic.name);
 	apic = &xen_pv_apic;
 }

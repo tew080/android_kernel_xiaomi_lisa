@@ -49,10 +49,10 @@ static void __maybe_unused print_credit_config(struct xlr_fmn_info *fmn_info)
 {
 	int bkt;
 
-	pr_info("Bucket size :\n");
-	pr_info("Station\t: Size\n");
+	pr_debug("Bucket size :\n");
+	pr_debug("Station\t: Size\n");
 	for (bkt = 0; bkt < 16; bkt++)
-		pr_info(" %d  %d  %d  %d  %d  %d  %d %d\n",
+		pr_debug(" %d  %d  %d  %d  %d  %d  %d %d\n",
 			xlr_board_fmn_config.bucket_size[(bkt * 8) + 0],
 			xlr_board_fmn_config.bucket_size[(bkt * 8) + 1],
 			xlr_board_fmn_config.bucket_size[(bkt * 8) + 2],
@@ -61,12 +61,12 @@ static void __maybe_unused print_credit_config(struct xlr_fmn_info *fmn_info)
 			xlr_board_fmn_config.bucket_size[(bkt * 8) + 5],
 			xlr_board_fmn_config.bucket_size[(bkt * 8) + 6],
 			xlr_board_fmn_config.bucket_size[(bkt * 8) + 7]);
-	pr_info("\n");
+	pr_debug("\n");
 
-	pr_info("Credits distribution :\n");
-	pr_info("Station\t: Size\n");
+	pr_debug("Credits distribution :\n");
+	pr_debug("Station\t: Size\n");
 	for (bkt = 0; bkt < 16; bkt++)
-		pr_info(" %d  %d  %d  %d  %d  %d  %d %d\n",
+		pr_debug(" %d  %d  %d  %d  %d  %d  %d %d\n",
 			fmn_info->credit_config[(bkt * 8) + 0],
 			fmn_info->credit_config[(bkt * 8) + 1],
 			fmn_info->credit_config[(bkt * 8) + 2],
@@ -75,7 +75,7 @@ static void __maybe_unused print_credit_config(struct xlr_fmn_info *fmn_info)
 			fmn_info->credit_config[(bkt * 8) + 5],
 			fmn_info->credit_config[(bkt * 8) + 6],
 			fmn_info->credit_config[(bkt * 8) + 7]);
-	pr_info("\n");
+	pr_debug("\n");
 }
 
 static void check_credit_distribution(void)
@@ -99,7 +99,7 @@ static void check_credit_distribution(void)
 			pr_err("ERROR: Bucket %d: credits (%d) > size (%d)\n",
 				bkt, total_credits, cfg->bucket_size[bkt]);
 	}
-	pr_info("Credit distribution complete.\n");
+	pr_debug("Credit distribution complete.\n");
 }
 
 /**

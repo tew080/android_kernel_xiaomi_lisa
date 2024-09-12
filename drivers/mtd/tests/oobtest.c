@@ -91,7 +91,7 @@ static int write_whole_device(void)
 	int err;
 	unsigned int i;
 
-	pr_info("writing OOBs of whole device\n");
+	pr_debug("writing OOBs of whole device\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -99,13 +99,13 @@ static int write_whole_device(void)
 		if (err)
 			return err;
 		if (i % 256 == 0)
-			pr_info("written up to eraseblock %u\n", i);
+			pr_debug("written up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			return err;
 	}
-	pr_info("written %u eraseblocks\n", i);
+	pr_debug("written %u eraseblocks\n", i);
 	return 0;
 }
 
@@ -124,7 +124,7 @@ static size_t memcmpshowoffset(loff_t addr, loff_t offset, const void *cs,
 	for (su1 = cs, su2 = ct; 0 < count; ++su1, ++su2, count--, i++) {
 		res = *su1 ^ *su2;
 		if (res) {
-			pr_info("error @addr[0x%lx:0x%lx] 0x%x -> 0x%x diff 0x%x\n",
+			pr_debug("error @addr[0x%lx:0x%lx] 0x%x -> 0x%x diff 0x%x\n",
 				(unsigned long)addr, (unsigned long)offset + i,
 				*su1, *su2, res);
 			bitflips += hweight8(res);
@@ -152,7 +152,7 @@ static size_t memffshow(loff_t addr, loff_t offset, const void *cs,
 	for (su1 = cs; 0 < count; ++su1, count--, i++) {
 		res = *su1 ^ 0xff;
 		if (res) {
-			pr_info("error @addr[0x%lx:0x%lx] 0x%x -> 0xff diff 0x%x\n",
+			pr_debug("error @addr[0x%lx:0x%lx] 0x%x -> 0xff diff 0x%x\n",
 				(unsigned long)addr, (unsigned long)offset + i,
 				*su1, res);
 			bitflips += hweight8(res);
@@ -203,7 +203,7 @@ static int verify_eraseblock(int ebnum)
 				return -1;
 			}
 		} else if (bitflips) {
-			pr_info("ignoring error as within bitflip_limit\n");
+			pr_debug("ignoring error as within bitflip_limit\n");
 		}
 
 		if (use_offset != 0 || use_len < mtd->oobavail) {
@@ -249,7 +249,7 @@ static int verify_eraseblock(int ebnum)
 					return -1;
 				}
 			} else if (bitflips) {
-				pr_info("ignoring errors as within bitflip limit\n");
+				pr_debug("ignoring errors as within bitflip limit\n");
 			}
 		}
 		if (vary_offset)
@@ -303,7 +303,7 @@ static int verify_eraseblock_in_one_go(int ebnum)
 				return -1;
 			}
 		} else if (bitflips) {
-			pr_info("ignoring error as within bitflip_limit\n");
+			pr_debug("ignoring error as within bitflip_limit\n");
 		}
 	}
 
@@ -315,7 +315,7 @@ static int verify_all_eraseblocks(void)
 	int err;
 	unsigned int i;
 
-	pr_info("verifying all eraseblocks\n");
+	pr_debug("verifying all eraseblocks\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -323,13 +323,13 @@ static int verify_all_eraseblocks(void)
 		if (err)
 			return err;
 		if (i % 256 == 0)
-			pr_info("verified up to eraseblock %u\n", i);
+			pr_debug("verified up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			return err;
 	}
-	pr_info("verified %u eraseblocks\n", i);
+	pr_debug("verified %u eraseblocks\n", i);
 	return 0;
 }
 
@@ -345,12 +345,12 @@ static int __init mtd_oobtest_init(void)
 	printk(KERN_INFO "=================================================\n");
 
 	if (dev < 0) {
-		pr_info("Please specify a valid mtd-device via module parameter\n");
+		pr_debug("Please specify a valid mtd-device via module parameter\n");
 		pr_crit("CAREFUL: This test wipes all data on the specified MTD device!\n");
 		return -EINVAL;
 	}
 
-	pr_info("MTD device: %d\n", dev);
+	pr_debug("MTD device: %d\n", dev);
 
 	mtd = get_mtd_device(NULL, dev);
 	if (IS_ERR(mtd)) {
@@ -360,7 +360,7 @@ static int __init mtd_oobtest_init(void)
 	}
 
 	if (!mtd_type_is_nand(mtd)) {
-		pr_info("this test requires NAND flash\n");
+		pr_debug("this test requires NAND flash\n");
 		goto out;
 	}
 
@@ -369,7 +369,7 @@ static int __init mtd_oobtest_init(void)
 	ebcnt = tmp;
 	pgcnt = mtd->erasesize / mtd->writesize;
 
-	pr_info("MTD device size %llu, eraseblock size %u, "
+	pr_debug("MTD device size %llu, eraseblock size %u, "
 	       "page size %u, count of eraseblocks %u, pages per "
 	       "eraseblock %u, OOB size %u\n",
 	       (unsigned long long)mtd->size, mtd->erasesize,
@@ -396,7 +396,7 @@ static int __init mtd_oobtest_init(void)
 	vary_offset = 0;
 
 	/* First test: write all OOB, read it back and verify */
-	pr_info("test 1 of 5\n");
+	pr_debug("test 1 of 5\n");
 
 	err = mtdtest_erase_good_eraseblocks(mtd, bbt, 0, ebcnt);
 	if (err)
@@ -416,7 +416,7 @@ static int __init mtd_oobtest_init(void)
 	 * Second test: write all OOB, a block at a time, read it back and
 	 * verify.
 	 */
-	pr_info("test 2 of 5\n");
+	pr_debug("test 2 of 5\n");
 
 	err = mtdtest_erase_good_eraseblocks(mtd, bbt, 0, ebcnt);
 	if (err)
@@ -429,7 +429,7 @@ static int __init mtd_oobtest_init(void)
 
 	/* Check all eraseblocks */
 	prandom_seed_state(&rnd_state, 3);
-	pr_info("verifying all eraseblocks\n");
+	pr_debug("verifying all eraseblocks\n");
 	for (i = 0; i < ebcnt; ++i) {
 		if (bbt[i])
 			continue;
@@ -437,19 +437,19 @@ static int __init mtd_oobtest_init(void)
 		if (err)
 			goto out;
 		if (i % 256 == 0)
-			pr_info("verified up to eraseblock %u\n", i);
+			pr_debug("verified up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			goto out;
 	}
-	pr_info("verified %u eraseblocks\n", i);
+	pr_debug("verified %u eraseblocks\n", i);
 
 	/*
 	 * Third test: write OOB at varying offsets and lengths, read it back
 	 * and verify.
 	 */
-	pr_info("test 3 of 5\n");
+	pr_debug("test 3 of 5\n");
 
 	err = mtdtest_erase_good_eraseblocks(mtd, bbt, 0, ebcnt);
 	if (err)
@@ -482,7 +482,7 @@ static int __init mtd_oobtest_init(void)
 	vary_offset = 0;
 
 	/* Fourth test: try to write off end of device */
-	pr_info("test 4 of 5\n");
+	pr_debug("test 4 of 5\n");
 
 	err = mtdtest_erase_good_eraseblocks(mtd, bbt, 0, ebcnt);
 	if (err)
@@ -501,11 +501,11 @@ static int __init mtd_oobtest_init(void)
 	ops.ooboffs   = mtd->oobavail;
 	ops.datbuf    = NULL;
 	ops.oobbuf    = writebuf;
-	pr_info("attempting to start write past end of OOB\n");
-	pr_info("an error is expected...\n");
+	pr_debug("attempting to start write past end of OOB\n");
+	pr_debug("an error is expected...\n");
 	err = mtd_write_oob(mtd, addr0, &ops);
 	if (err) {
-		pr_info("error occurred as expected\n");
+		pr_debug("error occurred as expected\n");
 		err = 0;
 	} else {
 		pr_err("error: can write past end of OOB\n");
@@ -521,14 +521,14 @@ static int __init mtd_oobtest_init(void)
 	ops.ooboffs   = mtd->oobavail;
 	ops.datbuf    = NULL;
 	ops.oobbuf    = readbuf;
-	pr_info("attempting to start read past end of OOB\n");
-	pr_info("an error is expected...\n");
+	pr_debug("attempting to start read past end of OOB\n");
+	pr_debug("an error is expected...\n");
 	err = mtd_read_oob(mtd, addr0, &ops);
 	if (mtd_is_bitflip(err))
 		err = 0;
 
 	if (err) {
-		pr_info("error occurred as expected\n");
+		pr_debug("error occurred as expected\n");
 		err = 0;
 	} else {
 		pr_err("error: can read past end of OOB\n");
@@ -536,7 +536,7 @@ static int __init mtd_oobtest_init(void)
 	}
 
 	if (bbt[ebcnt - 1])
-		pr_info("skipping end of device tests because last "
+		pr_debug("skipping end of device tests because last "
 		       "block is bad\n");
 	else {
 		/* Attempt to write off end of device */
@@ -548,11 +548,11 @@ static int __init mtd_oobtest_init(void)
 		ops.ooboffs   = 0;
 		ops.datbuf    = NULL;
 		ops.oobbuf    = writebuf;
-		pr_info("attempting to write past end of device\n");
-		pr_info("an error is expected...\n");
+		pr_debug("attempting to write past end of device\n");
+		pr_debug("an error is expected...\n");
 		err = mtd_write_oob(mtd, mtd->size - mtd->writesize, &ops);
 		if (err) {
-			pr_info("error occurred as expected\n");
+			pr_debug("error occurred as expected\n");
 			err = 0;
 		} else {
 			pr_err("error: wrote past end of device\n");
@@ -568,14 +568,14 @@ static int __init mtd_oobtest_init(void)
 		ops.ooboffs   = 0;
 		ops.datbuf    = NULL;
 		ops.oobbuf    = readbuf;
-		pr_info("attempting to read past end of device\n");
-		pr_info("an error is expected...\n");
+		pr_debug("attempting to read past end of device\n");
+		pr_debug("an error is expected...\n");
 		err = mtd_read_oob(mtd, mtd->size - mtd->writesize, &ops);
 		if (mtd_is_bitflip(err))
 			err = 0;
 
 		if (err) {
-			pr_info("error occurred as expected\n");
+			pr_debug("error occurred as expected\n");
 			err = 0;
 		} else {
 			pr_err("error: read past end of device\n");
@@ -595,11 +595,11 @@ static int __init mtd_oobtest_init(void)
 		ops.ooboffs   = 1;
 		ops.datbuf    = NULL;
 		ops.oobbuf    = writebuf;
-		pr_info("attempting to write past end of device\n");
-		pr_info("an error is expected...\n");
+		pr_debug("attempting to write past end of device\n");
+		pr_debug("an error is expected...\n");
 		err = mtd_write_oob(mtd, mtd->size - mtd->writesize, &ops);
 		if (err) {
-			pr_info("error occurred as expected\n");
+			pr_debug("error occurred as expected\n");
 			err = 0;
 		} else {
 			pr_err("error: wrote past end of device\n");
@@ -615,14 +615,14 @@ static int __init mtd_oobtest_init(void)
 		ops.ooboffs   = 1;
 		ops.datbuf    = NULL;
 		ops.oobbuf    = readbuf;
-		pr_info("attempting to read past end of device\n");
-		pr_info("an error is expected...\n");
+		pr_debug("attempting to read past end of device\n");
+		pr_debug("an error is expected...\n");
 		err = mtd_read_oob(mtd, mtd->size - mtd->writesize, &ops);
 		if (mtd_is_bitflip(err))
 			err = 0;
 
 		if (err) {
-			pr_info("error occurred as expected\n");
+			pr_debug("error occurred as expected\n");
 			err = 0;
 		} else {
 			pr_err("error: read past end of device\n");
@@ -631,7 +631,7 @@ static int __init mtd_oobtest_init(void)
 	}
 
 	/* Fifth test: write / read across block boundaries */
-	pr_info("test 5 of 5\n");
+	pr_debug("test 5 of 5\n");
 
 	/* Erase all eraseblocks */
 	err = mtdtest_erase_good_eraseblocks(mtd, bbt, 0, ebcnt);
@@ -640,7 +640,7 @@ static int __init mtd_oobtest_init(void)
 
 	/* Write all eraseblocks */
 	prandom_seed_state(&rnd_state, 11);
-	pr_info("writing OOBs of whole device\n");
+	pr_debug("writing OOBs of whole device\n");
 	for (i = 0; i < ebcnt - 1; ++i) {
 		int cnt = 2;
 		int pg;
@@ -662,7 +662,7 @@ static int __init mtd_oobtest_init(void)
 			if (err)
 				goto out;
 			if (i % 256 == 0)
-				pr_info("written up to eraseblock %u\n", i);
+				pr_debug("written up to eraseblock %u\n", i);
 
 			err = mtdtest_relax();
 			if (err)
@@ -671,11 +671,11 @@ static int __init mtd_oobtest_init(void)
 			addr += mtd->writesize;
 		}
 	}
-	pr_info("written %u eraseblocks\n", i);
+	pr_debug("written %u eraseblocks\n", i);
 
 	/* Check all eraseblocks */
 	prandom_seed_state(&rnd_state, 11);
-	pr_info("verifying all eraseblocks\n");
+	pr_debug("verifying all eraseblocks\n");
 	for (i = 0; i < ebcnt - 1; ++i) {
 		if (bbt[i] || bbt[i + 1])
 			continue;
@@ -706,22 +706,22 @@ static int __init mtd_oobtest_init(void)
 			}
 		}
 		if (i % 256 == 0)
-			pr_info("verified up to eraseblock %u\n", i);
+			pr_debug("verified up to eraseblock %u\n", i);
 
 		err = mtdtest_relax();
 		if (err)
 			goto out;
 	}
-	pr_info("verified %u eraseblocks\n", i);
+	pr_debug("verified %u eraseblocks\n", i);
 
-	pr_info("finished with %d errors\n", errcnt);
+	pr_debug("finished with %d errors\n", errcnt);
 out:
 	kfree(bbt);
 	kfree(writebuf);
 	kfree(readbuf);
 	put_mtd_device(mtd);
 	if (err)
-		pr_info("error %d occurred\n", err);
+		pr_debug("error %d occurred\n", err);
 	printk(KERN_INFO "=================================================\n");
 	return err;
 }

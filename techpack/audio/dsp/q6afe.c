@@ -1856,7 +1856,7 @@ static int afe_apr_send_clk_pkt(void *data, wait_queue_head_t *wait)
 #ifdef CONFIG_MSM_CSPL
 int afe_apr_send_pkt_crus(void *data, int index, int set)
 {
-	pr_info("[CSPL] %s: index = %d, set=%d, data = %p\n",
+	pr_debug("[CSPL] %s: index = %d, set=%d, data = %p\n",
 		__func__, index, set, data);
 
 	if (set)
@@ -2852,14 +2852,14 @@ static void afe_send_cal_spv4_tx(int port_id)
 		if (afe_spk_prot_prepare(port_id, this_afe.vi_rx_port,
 			AFE_PARAM_ID_SP_V4_VI_CHANNEL_MAP_CFG, &afe_spk_config,
 			sizeof(struct afe_sp_v4_param_vi_channel_map_cfg)))
-			pr_info("%s: SPKR_CALIB_CHANNEL_MAP_CFG failed\n",
+			pr_debug("%s: SPKR_CALIB_CHANNEL_MAP_CFG failed\n",
 				 __func__);
 	}
 
 	if (this_afe.cal_data[AFE_FB_SPKR_PROT_CAL] == NULL ||
 	    this_afe.cal_data[AFE_FB_SPKR_PROT_TH_VI_CAL] == NULL ||
 	    this_afe.cal_data[AFE_FB_SPKR_PROT_EX_VI_CAL] == NULL) {
-		pr_info("%s: Returning as no cal data cached\n", __func__);
+		pr_debug("%s: Returning as no cal data cached\n", __func__);
 		return;
 	}
 
@@ -2908,7 +2908,7 @@ static void afe_send_cal_spv4_tx(int port_id)
 			AFE_PARAM_ID_SP_V4_VI_OP_MODE_CFG,
 			&afe_spk_config,
 			sizeof(struct afe_sp_v4_param_vi_op_mode_cfg)))
-			pr_info("%s: SPKR_CALIB_VI_PROC_CFG failed\n",
+			pr_debug("%s: SPKR_CALIB_VI_PROC_CFG failed\n",
 				__func__);
 
 		size = sizeof(struct afe_sp_v4_param_th_vi_r0t0_cfg) +
@@ -2936,7 +2936,7 @@ static void afe_send_cal_spv4_tx(int port_id)
 		if (afe_spk_prot_prepare(port_id, 0,
 			AFE_PARAM_ID_SP_V4_VI_R0T0_CFG,
 			(union afe_spkr_prot_config *)tmp_ptr, size))
-			pr_info("%s: th vi ftm cfg failed\n", __func__);
+			pr_debug("%s: th vi ftm cfg failed\n", __func__);
 
 		kfree(tmp_ptr);
 	}
@@ -2970,7 +2970,7 @@ static void afe_send_cal_spv4_tx(int port_id)
 		if (afe_spk_prot_prepare(port_id, 0,
 				AFE_PARAM_ID_SP_V4_TH_VI_FTM_CFG,
 				(union afe_spkr_prot_config *)tmp_ptr, size))
-			pr_info("%s: th vi ftm cfg failed\n", __func__);
+			pr_debug("%s: th vi ftm cfg failed\n", __func__);
 
 		kfree(tmp_ptr);
 		this_afe.th_ftm_cfg.mode = MSM_SPKR_PROT_DISABLED;
@@ -3003,7 +3003,7 @@ static void afe_send_cal_spv4_tx(int port_id)
 		if (afe_spk_prot_prepare(port_id, 0,
 				AFE_PARAM_ID_SP_V4_TH_VI_V_VALI_CFG,
 				(union afe_spkr_prot_config *)tmp_ptr, size))
-			pr_info("%s: th vi v-vali cfg failed\n", __func__);
+			pr_debug("%s: th vi v-vali cfg failed\n", __func__);
 
 		kfree(tmp_ptr);
 		this_afe.v_vali_cfg.mode = MSM_SPKR_PROT_DISABLED;
@@ -3035,7 +3035,7 @@ static void afe_send_cal_spv4_tx(int port_id)
 				 AFE_PARAM_ID_SP_V4_EX_VI_MODE_CFG,
 				 &afe_spk_config,
 				 sizeof(struct afe_sp_v4_param_ex_vi_mode_cfg)))
-			pr_info("%s: ex vi mode cfg failed\n", __func__);
+			pr_debug("%s: ex vi mode cfg failed\n", __func__);
 
 		ex_vi_ftm_cfg->num_ch = this_afe.num_spkrs;
 
@@ -3048,7 +3048,7 @@ static void afe_send_cal_spv4_tx(int port_id)
 		if (afe_spk_prot_prepare(port_id, 0,
 				 AFE_PARAM_ID_SP_V4_EX_VI_FTM_CFG,
 				 (union afe_spkr_prot_config *)tmp_ptr, size))
-			pr_info("%s: ex vi ftm cfg failed\n", __func__);
+			pr_debug("%s: ex vi ftm cfg failed\n", __func__);
 		kfree(tmp_ptr);
 		this_afe.ex_ftm_cfg.mode = MSM_SPKR_PROT_DISABLED;
 	}
@@ -3263,7 +3263,7 @@ static void afe_send_cal_spv4_rx(int port_id)
 		if (afe_spk_prot_prepare(port_id, 0,
 			AFE_PARAM_ID_SP_V4_OP_MODE,
 			&afe_spk_config, sizeof(union afe_spkr_prot_config)))
-			pr_info("%s: RX MODE_VI_PROC_CFG failed\n",
+			pr_debug("%s: RX MODE_VI_PROC_CFG failed\n",
 				   __func__);
 	}
 	mutex_unlock(&this_afe.cal_data[AFE_FB_SPKR_PROT_CAL]->lock);
@@ -3420,7 +3420,7 @@ static int afe_send_hw_delay(u16 port_id, u32 rate)
 		       __func__, port_id, ret);
 
 fail_cmd:
-	pr_info("%s: port_id 0x%x rate %u delay_usec %d status %d\n",
+	pr_debug("%s: port_id 0x%x rate %u delay_usec %d status %d\n",
 	__func__, port_id, rate, delay_entry.delay_usec, ret);
 	return ret;
 }
@@ -3518,7 +3518,7 @@ static int afe_get_cal_topology_id(u16 port_id, u32 *topology_id,
 	*topology_id = (u32)afe_top_info->topology;
 	cal_utils_mark_cal_used(cal_block);
 
-	pr_info("%s: port_id = 0x%x acdb_id = %d topology_id = 0x%x cal_type_index=%d ret=%d\n",
+	pr_debug("%s: port_id = 0x%x acdb_id = %d topology_id = 0x%x cal_type_index=%d ret=%d\n",
 		__func__, port_id, afe_top_info->acdb_id,
 		afe_top_info->topology, cal_type_index, ret);
 unlock:
@@ -3976,7 +3976,7 @@ static struct cal_block_data *afe_find_cal(int cal_index, int port_id)
 			goto exit;
 		}
 	}
-	pr_info("%s: no matching cal_block found\n", __func__);
+	pr_debug("%s: no matching cal_block found\n", __func__);
 	cal_block = NULL;
 
 exit:
@@ -8946,7 +8946,7 @@ static struct dentry *debugfs_afelb_gain;
 static int afe_debug_open(struct inode *inode, struct file *file)
 {
 	file->private_data = inode->i_private;
-	pr_info("%s: debug intf %s\n", __func__, (char *) file->private_data);
+	pr_debug("%s: debug intf %s\n", __func__, (char *) file->private_data);
 	return 0;
 }
 
@@ -9004,7 +9004,7 @@ static ssize_t afe_debug_write(struct file *filp,
 	if (!strcmp(lb_str, "afe_loopback")) {
 		rc = afe_get_parameters(lbuf, param, 3);
 		if (!rc) {
-			pr_info("%s: %lu %lu %lu\n", lb_str, param[0], param[1],
+			pr_debug("%s: %lu %lu %lu\n", lb_str, param[0], param[1],
 				param[2]);
 
 			if ((param[0] != AFE_LOOPBACK_ON) && (param[0] !=
@@ -9033,7 +9033,7 @@ static ssize_t afe_debug_write(struct file *filp,
 	} else if (!strcmp(lb_str, "afe_loopback_gain")) {
 		rc = afe_get_parameters(lbuf, param, 2);
 		if (!rc) {
-			pr_info("%s: %s %lu %lu\n",
+			pr_debug("%s: %s %lu %lu\n",
 				__func__, lb_str, param[0], param[1]);
 
 			rc = q6audio_validate_port(param[0]);
@@ -11413,7 +11413,7 @@ static int afe_spv4_get_calib_data(
 	}
 	memcpy(&calib_resp->res_cfg, &this_afe.spv4_calib_data.res_cfg,
 		sizeof(this_afe.calib_data.res_cfg));
-	pr_info("%s: state %s resistance %d %d\n", __func__,
+	pr_debug("%s: state %s resistance %d %d\n", __func__,
 		fbsp_state[calib_resp->res_cfg.th_vi_ca_state],
 		calib_resp->res_cfg.r0_cali_q24[SP_V2_SPKR_1],
 		calib_resp->res_cfg.r0_cali_q24[SP_V2_SPKR_2]);
@@ -11459,7 +11459,7 @@ int afe_spk_prot_get_calib_data(struct afe_spkr_prot_get_vi_calib *calib_resp)
 	}
 	memcpy(&calib_resp->res_cfg, &this_afe.calib_data.res_cfg,
 		sizeof(this_afe.calib_data.res_cfg));
-	pr_info("%s: state %s resistance %d %d\n", __func__,
+	pr_debug("%s: state %s resistance %d %d\n", __func__,
 		fbsp_state[calib_resp->res_cfg.th_vi_ca_state],
 		calib_resp->res_cfg.r0_cali_q24[SP_V2_SPKR_1],
 		calib_resp->res_cfg.r0_cali_q24[SP_V2_SPKR_2]);

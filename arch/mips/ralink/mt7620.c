@@ -598,19 +598,19 @@ mt7620_dram_init(struct ralink_soc_info *soc_info)
 {
 	switch (dram_type) {
 	case SYSCFG0_DRAM_TYPE_SDRAM:
-		pr_info("Board has SDRAM\n");
+		pr_debug("Board has SDRAM\n");
 		soc_info->mem_size_min = MT7620_SDRAM_SIZE_MIN;
 		soc_info->mem_size_max = MT7620_SDRAM_SIZE_MAX;
 		break;
 
 	case SYSCFG0_DRAM_TYPE_DDR1:
-		pr_info("Board has DDR1\n");
+		pr_debug("Board has DDR1\n");
 		soc_info->mem_size_min = MT7620_DDR1_SIZE_MIN;
 		soc_info->mem_size_max = MT7620_DDR1_SIZE_MAX;
 		break;
 
 	case SYSCFG0_DRAM_TYPE_DDR2:
-		pr_info("Board has DDR2\n");
+		pr_debug("Board has DDR2\n");
 		soc_info->mem_size_min = MT7620_DDR2_SIZE_MIN;
 		soc_info->mem_size_max = MT7620_DDR2_SIZE_MAX;
 		break;
@@ -624,13 +624,13 @@ mt7628_dram_init(struct ralink_soc_info *soc_info)
 {
 	switch (dram_type) {
 	case SYSCFG0_DRAM_TYPE_DDR1_MT7628:
-		pr_info("Board has DDR1\n");
+		pr_debug("Board has DDR1\n");
 		soc_info->mem_size_min = MT7620_DDR1_SIZE_MIN;
 		soc_info->mem_size_max = MT7620_DDR1_SIZE_MAX;
 		break;
 
 	case SYSCFG0_DRAM_TYPE_DDR2_MT7628:
-		pr_info("Board has DDR2\n");
+		pr_debug("Board has DDR2\n");
 		soc_info->mem_size_min = MT7620_DDR2_SIZE_MIN;
 		soc_info->mem_size_max = MT7620_DDR2_SIZE_MAX;
 		break;
@@ -706,9 +706,9 @@ void prom_soc_init(struct ralink_soc_info *soc_info)
 	pmu0 = __raw_readl(sysc + PMU0_CFG);
 	pmu1 = __raw_readl(sysc + PMU1_CFG);
 
-	pr_info("Analog PMU set to %s control\n",
+	pr_debug("Analog PMU set to %s control\n",
 		(pmu0 & PMU_SW_SET) ? ("sw") : ("hw"));
-	pr_info("Digital PMU set to %s control\n",
+	pr_debug("Digital PMU set to %s control\n",
 		(pmu1 & DIG_SW_SEL) ? ("sw") : ("hw"));
 
 	if (is_mt76x8())

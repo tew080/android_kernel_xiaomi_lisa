@@ -239,7 +239,7 @@ static void wmi_input_setup(void)
 
 		if (sparse_keymap_setup(wmi_input_dev, wmi_keymap, NULL) ||
 		    input_register_device(wmi_input_dev)) {
-			pr_info("Cannot initialize input device");
+			pr_debug("Cannot initialize input device");
 			input_free_device(wmi_input_dev);
 			return;
 		}
@@ -255,7 +255,7 @@ static void wmi_input_setup(void)
 		if (ACPI_SUCCESS(status))
 			inited |= INIT_INPUT_WMI_2;
 	} else {
-		pr_info("Cannot allocate input device");
+		pr_debug("Cannot allocate input device");
 	}
 }
 

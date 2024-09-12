@@ -76,7 +76,7 @@ detect_hypervisor_vendor(void)
 	}
 
 	if (h)
-		pr_info("Hypervisor detected: %s\n", h->name);
+		pr_debug("Hypervisor detected: %s\n", h->name);
 
 	return h;
 }

@@ -2876,9 +2876,9 @@ int __init amd_iommu_init_dma_ops(void)
 	iommu_detected = 1;
 
 	if (amd_iommu_unmap_flush)
-		pr_info("IO/TLB flush on unmap enabled\n");
+		pr_debug("IO/TLB flush on unmap enabled\n");
 	else
-		pr_info("Lazy IO/TLB flushing enabled\n");
+		pr_debug("Lazy IO/TLB flushing enabled\n");
 
 	return 0;
 

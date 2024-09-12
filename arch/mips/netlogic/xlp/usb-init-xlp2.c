@@ -214,7 +214,7 @@ static int __init nlm_platform_xlpii_usb_init(void)
 
 	if (!cpu_is_xlp9xx()) {
 		/* XLP 2XX single node */
-		pr_info("Initializing 2XX USB Interface\n");
+		pr_debug("Initializing 2XX USB Interface\n");
 		nlm_xlpii_usb_hw_reset(0, 1);
 		nlm_xlpii_usb_hw_reset(0, 2);
 		nlm_xlpii_usb_hw_reset(0, 3);
@@ -225,7 +225,7 @@ static int __init nlm_platform_xlpii_usb_init(void)
 	}
 
 	/* XLP 9XX, multi-node */
-	pr_info("Initializing 9XX/5XX USB Interface\n");
+	pr_debug("Initializing 9XX/5XX USB Interface\n");
 	for (node = 0; node < NLM_NR_NODES; node++) {
 		if (!nlm_node_present(node))
 			continue;

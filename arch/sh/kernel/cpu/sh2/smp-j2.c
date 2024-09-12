@@ -97,7 +97,7 @@ static void j2_start_cpu(unsigned int cpu, unsigned long entry_point)
 	iounmap(initpc);
 	iounmap(release);
 
-	pr_info("J2 SMP: requested start of cpu %u\n", cpu);
+	pr_debug("J2 SMP: requested start of cpu %u\n", cpu);
 }
 
 static unsigned int j2_smp_processor_id(void)

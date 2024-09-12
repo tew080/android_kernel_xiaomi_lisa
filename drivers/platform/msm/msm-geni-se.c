@@ -1803,7 +1803,7 @@ static int geni_se_probe(struct platform_device *pdev)
 
 #ifdef CONFIG_FASTBOOT_CMD_CTRL_UART
 	if (!is_early_cons_enabled) {
-		pr_info("is_early_cons_enabled not true\n");
+		pr_debug("is_early_cons_enabled not true\n");
 	}
 	else {
 		ret = geni_se_add_ab_ib(geni_se_dev, &geni_se_dev->wrapper_rsc);

@@ -368,11 +368,11 @@ __segment_load (char *name, int do_nonshared, unsigned long *addr, unsigned long
 	*addr = seg->start_addr;
 	*end  = seg->end;
 	if (do_nonshared)
-		pr_info("DCSS %s of range %px to %px and type %s loaded as "
+		pr_debug("DCSS %s of range %px to %px and type %s loaded as "
 			"exclusive-writable\n", name, (void*) seg->start_addr,
 			(void*) seg->end, segtype_string[seg->vm_segtype]);
 	else {
-		pr_info("DCSS %s of range %px to %px and type %s loaded in "
+		pr_debug("DCSS %s of range %px to %px and type %s loaded in "
 			"shared access mode\n", name, (void*) seg->start_addr,
 			(void*) seg->end, segtype_string[seg->vm_segtype]);
 	}
@@ -464,7 +464,7 @@ segment_modify_shared (char *name, int do_nonshared)
 		goto out_unlock;
 	}
 	if (do_nonshared == seg->do_nonshared) {
-		pr_info("DCSS %s is already in the requested access "
+		pr_debug("DCSS %s is already in the requested access "
 			"mode\n", name);
 		rc = 0;
 		goto out_unlock;

@@ -1033,7 +1033,7 @@ void hl_wreg(struct hl_device *hdev, u32 reg, u32 val);
 
 #define RREG32(reg) hdev->asic_funcs->rreg(hdev, (reg))
 #define WREG32(reg, v) hdev->asic_funcs->wreg(hdev, (reg), (v))
-#define DREG32(reg) pr_info("REGISTER: " #reg " : 0x%08X\n",	\
+#define DREG32(reg) pr_debug("REGISTER: " #reg " : 0x%08X\n",	\
 			hdev->asic_funcs->rreg(hdev, (reg)))
 
 #define WREG32_P(reg, val, mask)				\

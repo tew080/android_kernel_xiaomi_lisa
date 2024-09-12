@@ -129,7 +129,7 @@ void mark_rodata_ro(void)
 	unsigned long size = __end_ro_after_init - __start_ro_after_init;
 
 	set_memory_ro((unsigned long)__start_ro_after_init, size >> PAGE_SHIFT);
-	pr_info("Write protected read-only-after-init data: %luk\n", size >> 10);
+	pr_debug("Write protected read-only-after-init data: %luk\n", size >> 10);
 }
 
 int set_memory_encrypted(unsigned long addr, int numpages)

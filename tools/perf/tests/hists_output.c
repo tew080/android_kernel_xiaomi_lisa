@@ -158,7 +158,7 @@ static int test1(struct evsel *evsel, struct machine *machine)
 	perf_evsel__output_resort(evsel, NULL);
 
 	if (verbose > 2) {
-		pr_info("[fields = %s, sort = %s]\n", field_order, sort_order);
+		pr_debug("[fields = %s, sort = %s]\n", field_order, sort_order);
 		print_hists_out(hists);
 	}
 
@@ -258,7 +258,7 @@ static int test2(struct evsel *evsel, struct machine *machine)
 	perf_evsel__output_resort(evsel, NULL);
 
 	if (verbose > 2) {
-		pr_info("[fields = %s, sort = %s]\n", field_order, sort_order);
+		pr_debug("[fields = %s, sort = %s]\n", field_order, sort_order);
 		print_hists_out(hists);
 	}
 
@@ -312,7 +312,7 @@ static int test3(struct evsel *evsel, struct machine *machine)
 	perf_evsel__output_resort(evsel, NULL);
 
 	if (verbose > 2) {
-		pr_info("[fields = %s, sort = %s]\n", field_order, sort_order);
+		pr_debug("[fields = %s, sort = %s]\n", field_order, sort_order);
 		print_hists_out(hists);
 	}
 
@@ -390,7 +390,7 @@ static int test4(struct evsel *evsel, struct machine *machine)
 	perf_evsel__output_resort(evsel, NULL);
 
 	if (verbose > 2) {
-		pr_info("[fields = %s, sort = %s]\n", field_order, sort_order);
+		pr_debug("[fields = %s, sort = %s]\n", field_order, sort_order);
 		print_hists_out(hists);
 	}
 
@@ -493,7 +493,7 @@ static int test5(struct evsel *evsel, struct machine *machine)
 	perf_evsel__output_resort(evsel, NULL);
 
 	if (verbose > 2) {
-		pr_info("[fields = %s, sort = %s]\n", field_order, sort_order);
+		pr_debug("[fields = %s, sort = %s]\n", field_order, sort_order);
 		print_hists_out(hists);
 	}
 

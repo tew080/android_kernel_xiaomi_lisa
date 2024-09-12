@@ -11825,7 +11825,7 @@ static int bnxt_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 		return -ENODEV;
 
 	if (version_printed++ == 0)
-		pr_info("%s", version);
+		pr_debug("%s", version);
 
 	/* Clear any pending DMA transactions from crash kernel
 	 * while loading driver in capture kernel.

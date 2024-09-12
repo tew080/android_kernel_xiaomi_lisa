@@ -562,7 +562,7 @@ void alternatives_enable_smp(void)
 	mutex_lock(&text_mutex);
 
 	if (uniproc_patched) {
-		pr_info("switching to SMP code\n");
+		pr_debug("switching to SMP code\n");
 		BUG_ON(num_online_cpus() != 1);
 		clear_cpu_cap(&boot_cpu_data, X86_FEATURE_UP);
 		clear_cpu_cap(&cpu_data(0), X86_FEATURE_UP);

@@ -59,7 +59,7 @@ static void bridge_platform_create(nasid_t nasid, int widget, int masterwid)
 
 	platform_device_add_data(pdev, bd, sizeof(*bd));
 	platform_device_add(pdev);
-	pr_info("xtalk:n%d/%x bridge widget\n", nasid, widget);
+	pr_debug("xtalk:n%d/%x bridge widget\n", nasid, widget);
 	return;
 
 no_mem:
@@ -162,11 +162,11 @@ static void xtalk_probe_node(cnodeid_t nid)
 		break;
 	case XBOW_WIDGET_PART_NUM:
 	case XXBOW_WIDGET_PART_NUM:
-		pr_info("xtalk:n%d/0 xbow widget\n", nasid);
+		pr_debug("xtalk:n%d/0 xbow widget\n", nasid);
 		xbow_probe(nasid);
 		break;
 	default:
-		pr_info("xtalk:n%d/0 unknown widget (0x%x)\n", nasid, partnum);
+		pr_debug("xtalk:n%d/0 unknown widget (0x%x)\n", nasid, partnum);
 		break;
 	}
 }

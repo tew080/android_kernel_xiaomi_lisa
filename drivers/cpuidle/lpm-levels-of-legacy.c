@@ -369,7 +369,7 @@ static int parse_legacy_cluster_params(struct device_node *node,
 	c->ndevices = of_property_count_strings(node, key);
 
 	if (c->ndevices < 0) {
-		pr_info("%s(): Ignoring cluster params\n", __func__);
+		pr_debug("%s(): Ignoring cluster params\n", __func__);
 		c->no_saw_devices = true;
 		c->ndevices = 0;
 		return 0;
@@ -679,7 +679,7 @@ static int get_cpumask_for_node(struct device_node *node, struct cpumask *mask)
 
 	cpu_node = of_parse_phandle(node, "qcom,cpu", idx++);
 	if (!cpu_node) {
-		pr_info("%s: No CPU phandle, assuming single cluster\n",
+		pr_debug("%s: No CPU phandle, assuming single cluster\n",
 				node->full_name);
 		/*
 		 * Not all targets have the cpu node populated in the device
@@ -762,7 +762,7 @@ static int parse_cpu_levels(struct device_node *node, struct lpm_cluster *c)
 
 		ret = parse_cpu_mode(n, l);
 		if (ret < 0) {
-			pr_info("Failed %s\n", l->name);
+			pr_debug("Failed %s\n", l->name);
 			goto failed;
 		}
 
@@ -866,7 +866,7 @@ static struct lpm_cluster *parse_cluster(struct device_node *node,
 			struct lpm_cluster *child;
 
 			if (c->no_saw_devices)
-				pr_info("%s: SAW device not provided.\n",
+				pr_debug("%s: SAW device not provided.\n",
 					__func__);
 
 			child = parse_cluster(n, c);
@@ -966,21 +966,21 @@ void cluster_dt_walkthrough(struct lpm_cluster *cluster)
 
 	for (i = 0; i < id; i++)
 		snprintf(str+i, 10 - i, "\t");
-	pr_info("%d\n", __LINE__);
+	pr_debug("%d\n", __LINE__);
 
 	for (i = 0; i < cluster->nlevels; i++) {
 		struct lpm_cluster_level *l = &cluster->levels[i];
 
-		pr_info("%d ndevices:%d\n", __LINE__, cluster->ndevices);
+		pr_debug("%d ndevices:%d\n", __LINE__, cluster->ndevices);
 		for (j = 0; j < cluster->ndevices; j++)
-			pr_info("%sDevice: %pK id:%pK\n", str,
+			pr_debug("%sDevice: %pK id:%pK\n", str,
 					&cluster->name[j], &l->mode[i]);
 	}
 
 	if (cluster->cpu) {
-		pr_info("%d\n", __LINE__);
+		pr_debug("%d\n", __LINE__);
 		for (j = 0; j < cluster->cpu->nlevels; j++)
-			pr_info("%s\tCPU mode: %s id:%d\n", str,
+			pr_debug("%s\tCPU mode: %s id:%d\n", str,
 					cluster->cpu->levels[j].name,
 					cluster->cpu->levels[j].mode);
 	}
@@ -991,7 +991,7 @@ void cluster_dt_walkthrough(struct lpm_cluster *cluster)
 	list_for_each(list, &cluster->child) {
 		struct lpm_cluster *n;
 
-		pr_info("%d\n", __LINE__);
+		pr_debug("%d\n", __LINE__);
 		n = list_entry(list, typeof(*n), list);
 		cluster_dt_walkthrough(n);
 	}

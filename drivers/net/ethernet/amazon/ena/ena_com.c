@@ -1525,7 +1525,7 @@ int ena_com_set_aenq_config(struct ena_com_dev *ena_dev, u32 groups_flag)
 
 	ret = ena_com_get_feature(ena_dev, &get_resp, ENA_ADMIN_AENQ_CONFIG, 0);
 	if (ret) {
-		pr_info("Can't get aenq configuration\n");
+		pr_debug("Can't get aenq configuration\n");
 		return ret;
 	}
 
@@ -1599,12 +1599,12 @@ int ena_com_validate_version(struct ena_com_dev *ena_dev)
 		return -ETIME;
 	}
 
-	pr_info("ena device version: %d.%d\n",
+	pr_debug("ena device version: %d.%d\n",
 		(ver & ENA_REGS_VERSION_MAJOR_VERSION_MASK) >>
 			ENA_REGS_VERSION_MAJOR_VERSION_SHIFT,
 		ver & ENA_REGS_VERSION_MINOR_VERSION_MASK);
 
-	pr_info("ena controller version: %d.%d.%d implementation version %d\n",
+	pr_debug("ena controller version: %d.%d.%d implementation version %d\n",
 		(ctrl_ver & ENA_REGS_CONTROLLER_VERSION_MAJOR_VERSION_MASK) >>
 			ENA_REGS_CONTROLLER_VERSION_MAJOR_VERSION_SHIFT,
 		(ctrl_ver & ENA_REGS_CONTROLLER_VERSION_MINOR_VERSION_MASK) >>

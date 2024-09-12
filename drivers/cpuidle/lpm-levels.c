@@ -1630,7 +1630,7 @@ static void register_cluster_lpm_stats(struct lpm_cluster *cl,
 	cl->stats = lpm_stats_config_level(cl->cluster_name, level_name,
 			cl->nlevels, parent ? parent->stats : NULL, NULL);
 	if (IS_ERR_OR_NULL(cl->stats))
-		pr_info("Cluster (%s) stats not registered\n",
+		pr_debug("Cluster (%s) stats not registered\n",
 			cl->cluster_name);
 
 	kfree(level_name);
@@ -1797,14 +1797,14 @@ static int __init lpm_levels_module_init(void)
 
 	rc = cpuidle_register_governor(&lpm_governor);
 	if (rc) {
-		pr_info("Error registering governor %s rc=%d\n",
+		pr_debug("Error registering governor %s rc=%d\n",
 			lpm_driver.driver.name, rc);
 		return rc;
 	}
 
 	rc = platform_driver_register(&lpm_driver);
 	if (rc)
-		pr_info("Error registering %s rc=%d\n", lpm_driver.driver.name,
+		pr_debug("Error registering %s rc=%d\n", lpm_driver.driver.name,
 									rc);
 
 	return rc;

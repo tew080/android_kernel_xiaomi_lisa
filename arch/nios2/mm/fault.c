@@ -186,7 +186,7 @@ bad_area_nosemaphore:
 	/* User mode accesses just cause a SIGSEGV */
 	if (user_mode(regs)) {
 		if (unhandled_signal(current, SIGSEGV) && printk_ratelimit()) {
-			pr_info("%s: unhandled page fault (%d) at 0x%08lx, "
+			pr_debug("%s: unhandled page fault (%d) at 0x%08lx, "
 				"cause %ld\n", current->comm, SIGSEGV, address, cause);
 			show_regs(regs);
 		}

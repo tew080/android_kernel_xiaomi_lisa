@@ -107,7 +107,7 @@ fail_free:
 fail:
 	os_info_old->entry[nr].addr = 0;
 out:
-	pr_info("entry %i: %s (addr=0x%lx size=%lu)\n",
+	pr_debug("entry %i: %s (addr=0x%lx size=%lu)\n",
 		nr, msg, addr, size);
 }
 
@@ -141,7 +141,7 @@ static void os_info_old_init(void)
 		goto fail_free;
 	os_info_old_alloc(OS_INFO_VMCOREINFO, 1);
 	os_info_old_alloc(OS_INFO_REIPL_BLOCK, 1);
-	pr_info("crashkernel: addr=0x%lx size=%lu\n",
+	pr_debug("crashkernel: addr=0x%lx size=%lu\n",
 		(unsigned long) os_info_old->crashkernel_addr,
 		(unsigned long) os_info_old->crashkernel_size);
 	os_info_init = 1;

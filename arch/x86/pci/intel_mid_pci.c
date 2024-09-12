@@ -294,7 +294,7 @@ static const struct pci_ops intel_mid_pci_ops __initconst = {
  */
 int __init intel_mid_pci_init(void)
 {
-	pr_info("Intel MID platform detected, using MID PCI ops\n");
+	pr_debug("Intel MID platform detected, using MID PCI ops\n");
 	pci_mmcfg_late_init();
 	pcibios_enable_irq = intel_mid_pci_irq_enable;
 	pcibios_disable_irq = intel_mid_pci_irq_disable;

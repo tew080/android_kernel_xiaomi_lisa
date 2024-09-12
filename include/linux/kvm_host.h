@@ -509,7 +509,7 @@ struct kvm {
 #define kvm_err(fmt, ...) \
 	pr_err("kvm [%i]: " fmt, task_pid_nr(current), ## __VA_ARGS__)
 #define kvm_info(fmt, ...) \
-	pr_info("kvm [%i]: " fmt, task_pid_nr(current), ## __VA_ARGS__)
+	pr_debug("kvm [%i]: " fmt, task_pid_nr(current), ## __VA_ARGS__)
 #define kvm_debug(fmt, ...) \
 	pr_debug("kvm [%i]: " fmt, task_pid_nr(current), ## __VA_ARGS__)
 #define kvm_debug_ratelimited(fmt, ...) \

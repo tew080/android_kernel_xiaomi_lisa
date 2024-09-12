@@ -126,7 +126,7 @@ unsigned long __init smsc_fdc37m81x_init(unsigned long port)
 #ifdef DEBUG
 static void smsc_fdc37m81x_config_dump_one(const char *key, u8 dev, u8 reg)
 {
-	pr_info("%s: dev=0x%02x reg=0x%02x val=0x%02x\n", key, dev, reg,
+	pr_debug("%s: dev=0x%02x reg=0x%02x val=0x%02x\n", key, dev, reg,
 		smsc_fdc37m81x_rd(reg));
 }
 
@@ -139,7 +139,7 @@ void smsc_fdc37m81x_config_dump(void)
 
 	orig = smsc_fdc37m81x_rd(SMSC_FDC37M81X_DNUM);
 
-	pr_info("%s: common\n", fname);
+	pr_debug("%s: common\n", fname);
 	smsc_fdc37m81x_config_dump_one(fname, SMSC_FDC37M81X_NONE,
 				       SMSC_FDC37M81X_DNUM);
 	smsc_fdc37m81x_config_dump_one(fname, SMSC_FDC37M81X_NONE,
@@ -151,7 +151,7 @@ void smsc_fdc37m81x_config_dump(void)
 	smsc_fdc37m81x_config_dump_one(fname, SMSC_FDC37M81X_NONE,
 				       SMSC_FDC37M81X_PMGT);
 
-	pr_info("%s: keyboard\n", fname);
+	pr_debug("%s: keyboard\n", fname);
 	smsc_dc37m81x_wr(SMSC_FDC37M81X_DNUM, SMSC_FDC37M81X_KBD);
 	smsc_fdc37m81x_config_dump_one(fname, SMSC_FDC37M81X_KBD,
 				       SMSC_FDC37M81X_ACTIVE);

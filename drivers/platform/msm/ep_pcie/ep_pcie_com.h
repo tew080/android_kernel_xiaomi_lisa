@@ -236,7 +236,7 @@
 	ipc_log_string((dev)->ipc_log_sel, \
 		"INFO:%s: " fmt, __func__, arg); \
 	ipc_log_string((dev)->ipc_log_ful, "%s: " fmt, __func__, arg); \
-	pr_info("%s: " fmt, __func__, arg);  \
+	pr_debug("%s: " fmt, __func__, arg);  \
 	} while (0)
 
 #define EP_PCIE_ERR(dev, fmt, arg...) do {			 \

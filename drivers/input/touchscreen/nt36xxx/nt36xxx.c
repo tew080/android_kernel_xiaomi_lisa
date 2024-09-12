@@ -430,7 +430,7 @@ static void nvt_ts_trusted_touch_tvm_vm_mode_enable(struct nvt_ts_data *ts)
 		goto accept_fail;
 	}
 
-	pr_info("touch irq:returned from accept:%d\n", irq);
+	pr_debug("touch irq:returned from accept:%d\n", irq);
 	ts->client->irq = irq;
 
 	rc = nvt_ts_vm_handle_vm_hardware(ts);
@@ -439,7 +439,7 @@ static void nvt_ts_trusted_touch_tvm_vm_mode_enable(struct nvt_ts_data *ts)
 		goto accept_fail;
 	}
 	atomic_set(&ts->trusted_touch_enabled, 1);
-	pr_info("trusted touch enabled\n");
+	pr_debug("trusted touch enabled\n");
 
 	return;
 sgl_cmp_fail:
@@ -577,7 +577,7 @@ static void nvt_ts_trusted_touch_tvm_vm_mode_disable(struct nvt_ts_data *ts)
 	}
 	nvt_ts_trusted_touch_set_tvm_driver_state(ts, TRUSTED_TOUCH_TVM_INIT);
 	atomic_set(&ts->trusted_touch_enabled, 0);
-	pr_info("trusted touch disabled\n");
+	pr_debug("trusted touch disabled\n");
 	return;
 error:
 	nvt_ts_trusted_touch_abort_handler(ts,
@@ -840,7 +840,7 @@ static void nvt_trusted_touch_pvm_vm_mode_disable(struct nvt_ts_data *ts)
 						TRUSTED_TOUCH_PVM_INIT);
 	atomic_set(&ts->trusted_touch_enabled, 0);
 	atomic_set(&ts->trusted_touch_underway, 0);
-	pr_info("trusted touch disabled\n");
+	pr_debug("trusted touch disabled\n");
 	return;
 error:
 	nvt_ts_trusted_touch_abort_handler(ts,
@@ -945,7 +945,7 @@ static int nvt_ts_vm_mem_lend(struct nvt_ts_data *ts)
 		goto error;
 	}
 
-	pr_info("vm mem lend succeded\n");
+	pr_debug("vm mem lend succeded\n");
 
 	nvt_ts_trusted_touch_set_pvm_driver_state(ts, PVM_IOMEM_LENT);
 
@@ -1011,7 +1011,7 @@ static int nvt_ts_trusted_touch_pvm_vm_mode_enable(struct nvt_ts_data *ts)
 		goto error;
 	}
 
-	pr_info("vm irq lend succeded for irq:%d\n", ts->client->irq);
+	pr_debug("vm irq lend succeded for irq:%d\n", ts->client->irq);
 	nvt_ts_trusted_touch_set_pvm_driver_state(ts, PVM_IRQ_LENT);
 
 	rc = hh_irq_lend_notify(vm_info->irq_label);
@@ -1022,7 +1022,7 @@ static int nvt_ts_trusted_touch_pvm_vm_mode_enable(struct nvt_ts_data *ts)
 	nvt_ts_trusted_touch_set_pvm_driver_state(ts, PVM_IRQ_LENT_NOTIFIED);
 
 	atomic_set(&ts->trusted_touch_enabled, 1);
-	pr_info("trusted touch enabled\n");
+	pr_debug("trusted touch enabled\n");
 	return rc;
 error:
 	nvt_ts_trusted_touch_abort_handler(ts, TRUSTED_TOUCH_EVENT_LEND_FAILURE);
@@ -1164,7 +1164,7 @@ static void nvt_ts_dt_parse_trusted_touch_info(struct nvt_ts_data *ts)
 			"%s: No trusted touch mode environment\n", __func__);
 	}
 	ts->touch_environment = environment;
-	pr_info("Trusted touch environment:%s\n",
+	pr_debug("Trusted touch environment:%s\n",
 			ts->touch_environment);
 }
 
@@ -2557,7 +2557,7 @@ static int ts_create_sysfs(struct nvt_ts_data *ts)
 		return -ENOMEM;
 	}
 
-	pr_info("[EX]: sysfs_create_group() succeeded!!\n");
+	pr_debug("[EX]: sysfs_create_group() succeeded!!\n");
 	return ret;
 }
 

@@ -26,7 +26,7 @@ void __init kona_l2_cache_init(void)
 
 	ret = bcm_kona_smc_init();
 	if (ret) {
-		pr_info("Secure API not available (%d). Skipping L2 init.\n",
+		pr_debug("Secure API not available (%d). Skipping L2 init.\n",
 			ret);
 		return;
 	}

@@ -40,7 +40,7 @@ static inline bool selftest_run(const char *name, bool (*selftest)(void),
 		*nobs[i] = BIT(i) & largest_subset;
 
 	if (largest_subset == set)
-		pr_info("%s self-tests: pass\n", name);
+		pr_debug("%s self-tests: pass\n", name);
 
 	return !WARN_ON(largest_subset != set);
 }

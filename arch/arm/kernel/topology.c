@@ -168,7 +168,7 @@ static void update_cpu_capacity(unsigned int cpu)
 
 	topology_set_cpu_scale(cpu, cpu_capacity(cpu) / middle_capacity);
 
-	pr_info("CPU%u: update cpu_capacity %lu\n",
+	pr_debug("CPU%u: update cpu_capacity %lu\n",
 		cpu, topology_get_cpu_scale(cpu));
 }
 
@@ -232,7 +232,7 @@ void store_cpu_topology(unsigned int cpuid)
 
 	update_cpu_capacity(cpuid);
 
-	pr_info("CPU%u: thread %d, cpu %d, socket %d, mpidr %x\n",
+	pr_debug("CPU%u: thread %d, cpu %d, socket %d, mpidr %x\n",
 		cpuid, cpu_topology[cpuid].thread_id,
 		cpu_topology[cpuid].core_id,
 		cpu_topology[cpuid].package_id, mpidr);

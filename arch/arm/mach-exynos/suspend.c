@@ -240,7 +240,7 @@ static int exynos_cpu_do_idle(void)
 	/* issue the standby signal into the pm unit. */
 	cpu_do_idle();
 
-	pr_info("Failed to suspend the system\n");
+	pr_debug("Failed to suspend the system\n");
 	return 1; /* Aborting suspend */
 }
 static void exynos_flush_cache_all(void)
@@ -273,7 +273,7 @@ static int exynos5420_cpu_suspend(unsigned long arg)
 		mcpm_cpu_suspend();
 	}
 
-	pr_info("Failed to suspend the system\n");
+	pr_debug("Failed to suspend the system\n");
 
 	/* return value != 0 means failure */
 	return 1;

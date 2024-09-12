@@ -232,7 +232,7 @@ static int pf_q_num_set(const char *val, const struct kernel_param *kp)
 
 	if (!pdev) {
 		q_num = min_t(u32, HZIP_QUEUE_NUM_V1, HZIP_QUEUE_NUM_V2);
-		pr_info("No device found currently, suppose queue number is %d\n",
+		pr_debug("No device found currently, suppose queue number is %d\n",
 			q_num);
 	} else {
 		rev_id = pdev->revision;

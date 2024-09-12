@@ -107,7 +107,7 @@ static int __init test_async_probe_init(void)
 	ktime_t calltime, delta;
 	int err, nid, cpu;
 
-	pr_info("registering first set of asynchronous devices...\n");
+	pr_debug("registering first set of asynchronous devices...\n");
 
 	for_each_online_cpu(cpu) {
 		nid = cpu_to_node(cpu);
@@ -125,7 +125,7 @@ static int __init test_async_probe_init(void)
 		async_id++;
 	}
 
-	pr_info("registering asynchronous driver...\n");
+	pr_debug("registering asynchronous driver...\n");
 	calltime = ktime_get();
 	err = platform_driver_register(&async_driver);
 	if (err) {
@@ -135,14 +135,14 @@ static int __init test_async_probe_init(void)
 
 	delta = ktime_sub(ktime_get(), calltime);
 	duration = (unsigned long long) ktime_to_ms(delta);
-	pr_info("registration took %lld msecs\n", duration);
+	pr_debug("registration took %lld msecs\n", duration);
 	if (duration > TEST_PROBE_THRESHOLD) {
 		pr_err("test failed: probe took too long\n");
 		err = -ETIMEDOUT;
 		goto err_unregister_async_driver;
 	}
 
-	pr_info("registering second set of asynchronous devices...\n");
+	pr_debug("registering second set of asynchronous devices...\n");
 	calltime = ktime_get();
 	for_each_online_cpu(cpu) {
 		nid = cpu_to_node(cpu);
@@ -173,7 +173,7 @@ static int __init test_async_probe_init(void)
 	}
 
 
-	pr_info("registering first synchronous device...\n");
+	pr_debug("registering first synchronous device...\n");
 	nid = cpu_to_node(cpu);
 	pdev = &sync_dev[sync_id];
 
@@ -189,7 +189,7 @@ static int __init test_async_probe_init(void)
 
 	sync_id++;
 
-	pr_info("registering synchronous driver...\n");
+	pr_debug("registering synchronous driver...\n");
 	calltime = ktime_get();
 	err = platform_driver_register(&sync_driver);
 	if (err) {
@@ -199,7 +199,7 @@ static int __init test_async_probe_init(void)
 
 	delta = ktime_sub(ktime_get(), calltime);
 	duration = (unsigned long long) ktime_to_ms(delta);
-	pr_info("registration took %lld msecs\n", duration);
+	pr_debug("registration took %lld msecs\n", duration);
 	if (duration < TEST_PROBE_THRESHOLD) {
 		dev_err(&(*pdev)->dev,
 			"test failed: probe was too quick\n");
@@ -207,7 +207,7 @@ static int __init test_async_probe_init(void)
 		goto err_unregister_sync_driver;
 	}
 
-	pr_info("registering second synchronous device...\n");
+	pr_debug("registering second synchronous device...\n");
 	pdev = &sync_dev[sync_id];
 	calltime = ktime_get();
 
@@ -249,7 +249,7 @@ static int __init test_async_probe_init(void)
 		atomic_inc(&timeout);
 		err = -ETIMEDOUT;
 	} else if (!atomic_read(&errors) && !atomic_read(&warnings)) {
-		pr_info("completed successfully\n");
+		pr_debug("completed successfully\n");
 		return 0;
 	}
 

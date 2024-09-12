@@ -199,7 +199,7 @@ void machine_kexec(struct kimage *kimage)
 	if ((kimage != kexec_crash_image) && (kimage->head & IND_DONE))
 		kexec_segment_flush(kimage);
 
-	pr_info("Bye!\n");
+	pr_debug("Bye!\n");
 
 	local_daif_mask();
 
@@ -270,7 +270,7 @@ void machine_crash_shutdown(struct pt_regs *regs)
 	crash_save_cpu(regs, smp_processor_id());
 	machine_kexec_mask_interrupts();
 
-	pr_info("Starting crashdump kernel...\n");
+	pr_debug("Starting crashdump kernel...\n");
 }
 
 void arch_kexec_protect_crashkres(void)

@@ -305,5 +305,5 @@ void socrates_fpga_pic_init(struct device_node *pic)
 			SOCRATES_FPGA_IRQ_MASK << 16);
 	raw_spin_unlock_irqrestore(&socrates_fpga_pic_lock, flags);
 
-	pr_info("FPGA PIC: Setting up Socrates FPGA PIC\n");
+	pr_debug("FPGA PIC: Setting up Socrates FPGA PIC\n");
 }

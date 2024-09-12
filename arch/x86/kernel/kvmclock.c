@@ -99,7 +99,7 @@ static inline void kvm_sched_clock_init(bool stable)
 	kvm_sched_clock_offset = kvm_clock_read();
 	pv_ops.time.sched_clock = kvm_sched_clock_read;
 
-	pr_info("kvm-clock: using sched offset of %llu cycles",
+	pr_debug("kvm-clock: using sched offset of %llu cycles",
 		kvm_sched_clock_offset);
 
 	BUILD_BUG_ON(sizeof(kvm_sched_clock_offset) >
@@ -168,7 +168,7 @@ static void kvm_register_clock(char *txt)
 
 	pa = slow_virt_to_phys(&src->pvti) | 0x01ULL;
 	wrmsrl(msr_kvm_system_time, pa);
-	pr_info("kvm-clock: cpu %d, msr %llx, %s", smp_processor_id(), pa, txt);
+	pr_debug("kvm-clock: cpu %d, msr %llx, %s", smp_processor_id(), pa, txt);
 }
 
 static void kvm_save_sched_clock_state(void)
@@ -299,7 +299,7 @@ void __init kvmclock_init(void)
 		return;
 	}
 
-	pr_info("kvm-clock: Using msrs %x and %x",
+	pr_debug("kvm-clock: Using msrs %x and %x",
 		msr_kvm_system_time, msr_kvm_wall_clock);
 
 	this_cpu_write(hv_clock_per_cpu, &hv_clock_boot[0]);

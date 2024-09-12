@@ -233,7 +233,7 @@ static int announce_servers(struct sockaddr_qrtr *sq)
 	/* Announce the list of servers registered in this node */
 	xa_for_each(&nodes, node_idx, node) {
 		if (node->id == sq->sq_node) {
-			pr_info("Avoiding duplicate announce for NODE ID %u\n", node->id);
+			pr_debug("Avoiding duplicate announce for NODE ID %u\n", node->id);
 			continue;
 		}
 		xa_for_each(&node->servers, index, srv) {

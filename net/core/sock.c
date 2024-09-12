@@ -402,7 +402,7 @@ static int sock_set_timeout(long *timeo_p, char __user *optval, int optlen, bool
 		*timeo_p = 0;
 		if (warned < 10 && net_ratelimit()) {
 			warned++;
-			pr_info("%s: `%s' (pid %d) tries to set negative timeout\n",
+			pr_debug("%s: `%s' (pid %d) tries to set negative timeout\n",
 				__func__, current->comm, task_pid_nr(current));
 		}
 		return 0;

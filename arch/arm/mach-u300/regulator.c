@@ -61,7 +61,7 @@ static int __init __u300_init_boardpower(struct platform_device *pdev)
 	struct regmap *regmap;
 	int err;
 
-	pr_info("U300: setting up board power\n");
+	pr_debug("U300: setting up board power\n");
 
 	syscon_np = of_parse_phandle(np, "syscon", 0);
 	if (!syscon_np) {
@@ -93,7 +93,7 @@ static int __init __u300_init_boardpower(struct platform_device *pdev)
 	 * DC ON anymore. This function will likely be moved whenever
 	 * the rest of the U300 power management is implemented.
 	 */
-	pr_info("U300: disable system controller pull-up\n");
+	pr_debug("U300: disable system controller pull-up\n");
 	regmap_update_bits(regmap, U300_SYSCON_PMCR,
 			   U300_SYSCON_PMCR_DCON_ENABLE, 0);
 

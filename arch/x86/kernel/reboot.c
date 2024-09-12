@@ -61,7 +61,7 @@ static int __init set_acpi_reboot(const struct dmi_system_id *d)
 {
 	if (reboot_type != BOOT_ACPI) {
 		reboot_type = BOOT_ACPI;
-		pr_info("%s series board detected. Selecting %s-method for reboots.\n",
+		pr_debug("%s series board detected. Selecting %s-method for reboots.\n",
 			d->ident, "ACPI");
 	}
 	return 0;
@@ -75,7 +75,7 @@ static int __init set_bios_reboot(const struct dmi_system_id *d)
 {
 	if (reboot_type != BOOT_BIOS) {
 		reboot_type = BOOT_BIOS;
-		pr_info("%s series board detected. Selecting %s-method for reboots.\n",
+		pr_debug("%s series board detected. Selecting %s-method for reboots.\n",
 			d->ident, "BIOS");
 	}
 	return 0;
@@ -89,7 +89,7 @@ static int __init set_efi_reboot(const struct dmi_system_id *d)
 {
 	if (reboot_type != BOOT_EFI && !efi_runtime_disabled()) {
 		reboot_type = BOOT_EFI;
-		pr_info("%s series board detected. Selecting EFI-method for reboot.\n", d->ident);
+		pr_debug("%s series board detected. Selecting EFI-method for reboot.\n", d->ident);
 	}
 	return 0;
 }
@@ -141,7 +141,7 @@ static int __init set_pci_reboot(const struct dmi_system_id *d)
 {
 	if (reboot_type != BOOT_CF9_FORCE) {
 		reboot_type = BOOT_CF9_FORCE;
-		pr_info("%s series board detected. Selecting %s-method for reboots.\n",
+		pr_debug("%s series board detected. Selecting %s-method for reboots.\n",
 			d->ident, "PCI");
 	}
 	return 0;
@@ -151,7 +151,7 @@ static int __init set_kbd_reboot(const struct dmi_system_id *d)
 {
 	if (reboot_type != BOOT_KBD) {
 		reboot_type = BOOT_KBD;
-		pr_info("%s series board detected. Selecting %s-method for reboot.\n",
+		pr_debug("%s series board detected. Selecting %s-method for reboot.\n",
 			d->ident, "KBD");
 	}
 	return 0;
@@ -600,7 +600,7 @@ static void native_machine_emergency_restart(void)
 	 * override the reboot= parameter.
 	 */
 	if (efi_capsule_pending(NULL)) {
-		pr_info("EFI capsule is pending, forcing EFI reboot.\n");
+		pr_debug("EFI capsule is pending, forcing EFI reboot.\n");
 		reboot_type = BOOT_EFI;
 	}
 

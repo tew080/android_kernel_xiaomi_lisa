@@ -857,7 +857,7 @@ static bool dr_rule_cmp_value_to_mask(u8 *mask, u8 *value,
 
 	for (i = s_idx; i < e_idx; i++) {
 		if (value[i] & ~mask[i]) {
-			pr_info("Rule parameters contains a value not specified by mask\n");
+			pr_debug("Rule parameters contains a value not specified by mask\n");
 			return false;
 		}
 	}

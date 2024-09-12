@@ -400,7 +400,7 @@ static __init int j1939_module_init(void)
 {
 	int ret;
 
-	pr_info("can: SAE J1939\n");
+	pr_debug("can: SAE J1939\n");
 
 	ret = register_netdevice_notifier(&j1939_netdev_notifier);
 	if (ret)

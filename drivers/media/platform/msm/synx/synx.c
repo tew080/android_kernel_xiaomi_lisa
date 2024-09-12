@@ -1586,7 +1586,7 @@ int synx_initialize(struct synx_session *session_id,
 	session_id->client_id = client->id;
 	mutex_unlock(&synx_dev->dev_table_lock);
 
-	pr_info("[sess: %u] session created %s\n",
+	pr_debug("[sess: %u] session created %s\n",
 		session_id->client_id, params->name);
 	return 0;
 }
@@ -1689,10 +1689,10 @@ int synx_register_ops(const struct synx_register_params *params)
 		strlcpy(client_ops->name, params->name,
 			sizeof(client_ops->name));
 		client_ops->type = params->type;
-		pr_info("registered bind ops type %u for %s\n",
+		pr_debug("registered bind ops type %u for %s\n",
 			params->type, params->name);
 	} else {
-		pr_info("client already registered for type %u by %s\n",
+		pr_debug("client already registered for type %u by %s\n",
 			client_ops->type, client_ops->name);
 		rc = -EALREADY;
 	}
@@ -1715,7 +1715,7 @@ int synx_deregister_ops(const struct synx_register_params *params)
 	mutex_lock(&synx_dev->vtbl_lock);
 	client_ops = &synx_dev->bind_vtbl[params->type];
 	memset(client_ops, 0, sizeof(*client_ops));
-	pr_info("deregistered bind ops for %s\n",
+	pr_debug("deregistered bind ops for %s\n",
 		params->name);
 	mutex_unlock(&synx_dev->vtbl_lock);
 
@@ -1727,7 +1727,7 @@ static int __init synx_init(void)
 {
 	int rc;
 
-	pr_info("synx device initialization start\n");
+	pr_debug("synx device initialization start\n");
 
 	synx_dev = kzalloc(sizeof(*synx_dev), GFP_KERNEL);
 	if (!synx_dev)
@@ -1766,7 +1766,7 @@ static int __init synx_init(void)
 	set_bit(0, synx_dev->bitmap);
 	synx_dev->debugfs_root = synx_init_debugfs_dir(synx_dev);
 
-	pr_info("synx device initialization success\n");
+	pr_debug("synx device initialization success\n");
 
 	return 0;
 

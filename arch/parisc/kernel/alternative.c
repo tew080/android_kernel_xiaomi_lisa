@@ -93,7 +93,7 @@ void __init_or_module apply_alternatives(struct alt_instr *start,
 		applied++;
 	}
 
-	pr_info("%s%salternatives: applied %d out of %d patches\n",
+	pr_debug("%s%salternatives: applied %d out of %d patches\n",
 		module_name ? : "", module_name ? " " : "",
 		applied, index);
 }

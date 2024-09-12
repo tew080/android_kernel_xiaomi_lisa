@@ -887,7 +887,7 @@ static int __init sunxi_mc_smp_init(void)
 	/* Actually enable multi cluster SMP */
 	smp_set_ops(&sunxi_mc_smp_smp_ops);
 
-	pr_info("sunxi multi cluster SMP support installed\n");
+	pr_debug("sunxi multi cluster SMP support installed\n");
 
 	return 0;
 

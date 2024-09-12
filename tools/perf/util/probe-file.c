@@ -959,7 +959,7 @@ int probe_cache__filter_purge(struct probe_cache *pcache,
 
 	list_for_each_entry_safe(entry, tmp, &pcache->entries, node) {
 		if (probe_cache_entry__compare(entry, filter)) {
-			pr_info("Removed cached event: %s\n", entry->spev);
+			pr_debug("Removed cached event: %s\n", entry->spev);
 			list_del_init(&entry->node);
 			probe_cache_entry__delete(entry);
 		}

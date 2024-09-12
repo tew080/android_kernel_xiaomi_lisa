@@ -150,9 +150,9 @@ static void __init init_hardware(char *command, int size)
 {
 	char *p;
 
-	pr_info("uCdimm serial string [%s]\n", getserialnum());
+	pr_debug("uCdimm serial string [%s]\n", getserialnum());
 	p = cs8900a_hwaddr = gethwaddr(0);
-	pr_info("uCdimm hwaddr %pM\n", p);
+	pr_debug("uCdimm hwaddr %pM\n", p);
 	p = getbenv("APPEND");
 	if (p)
 		strcpy(p, command);
@@ -177,7 +177,7 @@ static void __init init_hardware(char *command, int size)
 
 void __init config_BSP(char *command, int size)
 {
-	pr_info("68VZ328 DragonBallVZ support (c) 2001 Lineo, Inc.\n");
+	pr_debug("68VZ328 DragonBallVZ support (c) 2001 Lineo, Inc.\n");
 
 	init_hardware(command, size);
 

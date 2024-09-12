@@ -134,32 +134,32 @@ void __init machine_early_init(const char *cmdline, unsigned int ram,
 	/* printk("TLB1 0x%08x, TLB0 0x%08x, tlb 0x%x\n", tlb0,
 							tlb1, kernel_tlb); */
 
-	pr_info("Ramdisk addr 0x%08x, ", ram);
+	pr_debug("Ramdisk addr 0x%08x, ", ram);
 	if (fdt)
-		pr_info("FDT at 0x%08x\n", fdt);
+		pr_debug("FDT at 0x%08x\n", fdt);
 	else
-		pr_info("Compiled-in FDT at %p\n", _fdt_start);
+		pr_debug("Compiled-in FDT at %p\n", _fdt_start);
 
 #ifdef CONFIG_MTD_UCLINUX
-	pr_info("Found romfs @ 0x%08x (0x%08x)\n",
+	pr_debug("Found romfs @ 0x%08x (0x%08x)\n",
 			romfs_base, romfs_size);
-	pr_info("#### klimit %p ####\n", old_klimit);
+	pr_debug("#### klimit %p ####\n", old_klimit);
 	BUG_ON(romfs_size < 0); /* What else can we do? */
 
-	pr_info("Moved 0x%08x bytes from 0x%08x to 0x%08x\n",
+	pr_debug("Moved 0x%08x bytes from 0x%08x to 0x%08x\n",
 			romfs_size, romfs_base, (unsigned)&__bss_stop);
 
-	pr_info("New klimit: 0x%08x\n", (unsigned)klimit);
+	pr_debug("New klimit: 0x%08x\n", (unsigned)klimit);
 #endif
 
 #if CONFIG_XILINX_MICROBLAZE0_USE_MSR_INSTR
 	if (msr) {
-		pr_info("!!!Your kernel has setup MSR instruction but ");
+		pr_debug("!!!Your kernel has setup MSR instruction but ");
 		pr_cont("CPU don't have it %x\n", msr);
 	}
 #else
 	if (!msr) {
-		pr_info("!!!Your kernel not setup MSR instruction but ");
+		pr_debug("!!!Your kernel not setup MSR instruction but ");
 		pr_cont("CPU have it %x\n", msr);
 	}
 #endif

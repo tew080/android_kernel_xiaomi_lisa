@@ -159,13 +159,13 @@ int __init mxc_expio_init(u32 base, u32 intr_gpio)
 	if ((imx_readw(brd_io + MAGIC_NUMBER1_REG) != 0xAAAA) ||
 	    (imx_readw(brd_io + MAGIC_NUMBER2_REG) != 0x5555) ||
 	    (imx_readw(brd_io + MAGIC_NUMBER3_REG) != 0xCAFE)) {
-		pr_info("3-Stack Debug board not detected\n");
+		pr_debug("3-Stack Debug board not detected\n");
 		iounmap(brd_io);
 		brd_io = NULL;
 		return -ENODEV;
 	}
 
-	pr_info("3-Stack Debug board detected, rev = 0x%04X\n",
+	pr_debug("3-Stack Debug board detected, rev = 0x%04X\n",
 		readw(brd_io + CPLD_CODE_VER_REG));
 
 	/*

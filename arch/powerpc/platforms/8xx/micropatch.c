@@ -385,5 +385,5 @@ void __init cpm_load_patch(cpm8xx_t *cp)
 
 	out_be16(&cp->cp_rccr, patch_params.rccr);
 
-	pr_info("%s microcode patch installed\n", patch_name);
+	pr_debug("%s microcode patch installed\n", patch_name);
 }

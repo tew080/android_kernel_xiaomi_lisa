@@ -254,7 +254,7 @@ void check_cpu_icache_size(int cpuid)
 
 	size = 1 << ((ctr & 0xf) + 2);
 	if (cpuid != 0 && icache_size != size)
-		pr_info("CPU%u: detected I-Cache line size mismatch, workaround enabled\n",
+		pr_debug("CPU%u: detected I-Cache line size mismatch, workaround enabled\n",
 			cpuid);
 	if (icache_size > size)
 		icache_size = size;

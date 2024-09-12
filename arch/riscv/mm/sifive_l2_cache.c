@@ -76,16 +76,16 @@ static void l2_config_read(void)
 
 	regval = readl(l2_base + SIFIVE_L2_CONFIG);
 	val = regval & 0xFF;
-	pr_info("L2CACHE: No. of Banks in the cache: %d\n", val);
+	pr_debug("L2CACHE: No. of Banks in the cache: %d\n", val);
 	val = (regval & 0xFF00) >> 8;
-	pr_info("L2CACHE: No. of ways per bank: %d\n", val);
+	pr_debug("L2CACHE: No. of ways per bank: %d\n", val);
 	val = (regval & 0xFF0000) >> 16;
-	pr_info("L2CACHE: Sets per bank: %llu\n", (uint64_t)1 << val);
+	pr_debug("L2CACHE: Sets per bank: %llu\n", (uint64_t)1 << val);
 	val = (regval & 0xFF000000) >> 24;
-	pr_info("L2CACHE: Bytes per cache block: %llu\n", (uint64_t)1 << val);
+	pr_debug("L2CACHE: Bytes per cache block: %llu\n", (uint64_t)1 << val);
 
 	regval = readl(l2_base + SIFIVE_L2_WAYENABLE);
-	pr_info("L2CACHE: Index of the largest way enabled: %d\n", regval);
+	pr_debug("L2CACHE: Index of the largest way enabled: %d\n", regval);
 }
 
 static const struct of_device_id sifive_l2_ids[] = {

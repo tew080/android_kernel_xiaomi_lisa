@@ -578,7 +578,7 @@ static int event_uniq_add(struct rb_root *root, const char *name, int nl,
 			new = &((*new)->rb_right);
 		else {
 			it->ct++;
-			pr_info("found a duplicate event %.*s, ct=%u\n", nl,
+			pr_debug("found a duplicate event %.*s, ct=%u\n", nl,
 						name, it->ct);
 			return it->ct;
 		}
@@ -650,7 +650,7 @@ static ssize_t catalog_event_len_validate(struct hv_24x7_event_data *event,
 	ev_len = be16_to_cpu(event->length);
 
 	if (ev_len % 16)
-		pr_info("event %zu has length %zu not divisible by 16: event=%pK\n",
+		pr_debug("event %zu has length %zu not divisible by 16: event=%pK\n",
 				event_idx, ev_len, event);
 
 	ev_end = (__u8 *)event + ev_len;
@@ -816,7 +816,7 @@ static int create_events_from_catalog(struct attribute ***events_,
 		}
 
 		if (!catalog_entry_domain_is_valid(event->domain)) {
-			pr_info("event %zu (%.*s) has invalid domain %d\n",
+			pr_debug("event %zu (%.*s) has invalid domain %d\n",
 					event_idx, nl, name, event->domain);
 			junk_events++;
 			continue;
@@ -888,7 +888,7 @@ static int create_events_from_catalog(struct attribute ***events_,
 		}
 	}
 
-	pr_info("read %zu catalog entries, created %zu event attrs (%zu failures), %zu descs\n",
+	pr_debug("read %zu catalog entries, created %zu event attrs (%zu failures), %zu descs\n",
 			event_idx, event_attr_ct, junk_events, desc_ct);
 
 	events[event_attr_ct] = NULL;

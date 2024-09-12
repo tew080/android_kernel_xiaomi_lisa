@@ -176,7 +176,7 @@ int __init rs_init(void)
 
 	tty_port_init(&serial_port);
 
-	pr_info("%s %s\n", serial_name, serial_version);
+	pr_debug("%s %s\n", serial_name, serial_version);
 
 	/* Initialize the tty_driver structure */
 

@@ -114,7 +114,7 @@ static void nlm_sata_firmware_init(int node)
 	uint64_t regbase;
 	int i;
 
-	pr_info("XLP AHCI Initialization started.\n");
+	pr_debug("XLP AHCI Initialization started.\n");
 	regbase = nlm_get_sata_regbase(node);
 
 	/* Reset SATA */
@@ -140,12 +140,12 @@ static void nlm_sata_firmware_init(int node)
 
 	for (i = 0; i < 4; i++) {
 		if (reg_val  & (P0_PHY_READY << i))
-			pr_info("PHY%d is up.\n", i);
+			pr_debug("PHY%d is up.\n", i);
 		else
-			pr_info("PHY%d is down.\n", i);
+			pr_debug("PHY%d is down.\n", i);
 	}
 
-	pr_info("XLP AHCI init done.\n");
+	pr_debug("XLP AHCI init done.\n");
 }
 
 static int __init nlm_ahci_init(void)

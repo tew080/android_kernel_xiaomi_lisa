@@ -99,7 +99,7 @@ static void __init dump_cpu_info(int cpu)
 		}
 	}
 
-	pr_info("CPU%d Features: %s\n", cpu, str);
+	pr_debug("CPU%d Features: %s\n", cpu, str);
 
 	L1_cache_info[ICACHE].ways = CACHE_WAY(ICACHE);
 	L1_cache_info[ICACHE].line_size = CACHE_LINE_SIZE(ICACHE);
@@ -107,7 +107,7 @@ static void __init dump_cpu_info(int cpu)
 	L1_cache_info[ICACHE].size =
 	    L1_cache_info[ICACHE].ways * L1_cache_info[ICACHE].line_size *
 	    L1_cache_info[ICACHE].sets / 1024;
-	pr_info("L1I:%dKB/%dS/%dW/%dB\n", L1_cache_info[ICACHE].size,
+	pr_debug("L1I:%dKB/%dS/%dW/%dB\n", L1_cache_info[ICACHE].size,
 		L1_cache_info[ICACHE].sets, L1_cache_info[ICACHE].ways,
 		L1_cache_info[ICACHE].line_size);
 	L1_cache_info[DCACHE].ways = CACHE_WAY(DCACHE);
@@ -116,10 +116,10 @@ static void __init dump_cpu_info(int cpu)
 	L1_cache_info[DCACHE].size =
 	    L1_cache_info[DCACHE].ways * L1_cache_info[DCACHE].line_size *
 	    L1_cache_info[DCACHE].sets / 1024;
-	pr_info("L1D:%dKB/%dS/%dW/%dB\n", L1_cache_info[DCACHE].size,
+	pr_debug("L1D:%dKB/%dS/%dW/%dB\n", L1_cache_info[DCACHE].size,
 		L1_cache_info[DCACHE].sets, L1_cache_info[DCACHE].ways,
 		L1_cache_info[DCACHE].line_size);
-	pr_info("L1 D-Cache is %s\n", WRITE_METHOD);
+	pr_debug("L1 D-Cache is %s\n", WRITE_METHOD);
 	if (L1_cache_info[DCACHE].size != L1_CACHE_BYTES)
 		pr_crit
 		    ("The cache line size(%d) of this processor is not the same as L1_CACHE_BYTES(%d).\n",
@@ -163,7 +163,7 @@ static void __init setup_cpuinfo(void)
 	cpu_rev = (__nds32__mfsr(NDS32_SR_CPU_VER) & CPU_VER_mskREV) >> CPU_VER_offREV;
 	cpu_cfgid = (__nds32__mfsr(NDS32_SR_CPU_VER) & CPU_VER_mskCFGID) >> CPU_VER_offCFGID;
 
-	pr_info("CPU:%c%ld, CPU_VER 0x%08x(id %lu, rev %lu, cfg %lu)\n",
+	pr_debug("CPU:%c%ld, CPU_VER 0x%08x(id %lu, rev %lu, cfg %lu)\n",
 		cpu_series, cpu_id, __nds32__mfsr(NDS32_SR_CPU_VER), cpu_id, cpu_rev, cpu_cfgid);
 
 	elf_hwcap |= HWCAP_MFUSR_PC;
@@ -252,7 +252,7 @@ static void __init setup_memory(void)
 	for_each_memblock(memory, region) {
 		memory_start = region->base;
 		memory_end = region->base + region->size;
-		pr_info("%s: Memory: 0x%x-0x%x\n", __func__,
+		pr_debug("%s: Memory: 0x%x-0x%x\n", __func__,
 			memory_start, memory_end);
 	}
 

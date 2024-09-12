@@ -118,9 +118,9 @@ static int __init setup_bau(char *arg)
 	nobau = !nobau;
 
 	if (!nobau)
-		pr_info("UV BAU Enabled\n");
+		pr_debug("UV BAU Enabled\n");
 	else
-		pr_info("UV BAU Disabled\n");
+		pr_debug("UV BAU Disabled\n");
 
 	return 0;
 }
@@ -140,7 +140,7 @@ set_bau_on(void)
 	struct bau_control *bcp;
 
 	if (nobau_perm) {
-		pr_info("BAU not initialized; cannot be turned on\n");
+		pr_debug("BAU not initialized; cannot be turned on\n");
 		return;
 	}
 	nobau = false;
@@ -148,7 +148,7 @@ set_bau_on(void)
 		bcp = &per_cpu(bau_control, cpu);
 		bcp->nobau = false;
 	}
-	pr_info("BAU turned on\n");
+	pr_debug("BAU turned on\n");
 	return;
 }
 
@@ -163,7 +163,7 @@ set_bau_off(void)
 		bcp = &per_cpu(bau_control, cpu);
 		bcp->nobau = true;
 	}
-	pr_info("BAU turned off\n");
+	pr_debug("BAU turned off\n");
 	return;
 }
 
@@ -1573,7 +1573,7 @@ static int parse_tunables_write(struct bau_control *bcp, char *instr,
 			break;
 	}
 	if (cnt != e) {
-		pr_info("bau tunable error: should be %d values\n", e);
+		pr_debug("bau tunable error: should be %d values\n", e);
 		return -EINVAL;
 	}
 

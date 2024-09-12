@@ -65,7 +65,7 @@ void arc_init_IRQ(void)
 	READ_BCR(ARC_REG_IRQ_BCR, irq_bcr);
 
 	irq_prio = irq_bcr.prio;	/* Encoded as N-1 for N levels */
-	pr_info("archs-intc\t: %d priority levels (default %d)%s\n",
+	pr_debug("archs-intc\t: %d priority levels (default %d)%s\n",
 		irq_prio + 1, ARCV2_IRQ_DEF_PRIO,
 		irq_bcr.firq ? " FIRQ (not used)":"");
 

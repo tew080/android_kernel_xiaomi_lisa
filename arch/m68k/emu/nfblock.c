@@ -101,7 +101,7 @@ static int __init nfhd_init_one(int id, u32 blocks, u32 bsize)
 	struct nfhd_device *dev;
 	int dev_id = id - NFHD_DEV_OFFSET;
 
-	pr_info("nfhd%u: found device with %u blocks (%u bytes)\n", dev_id,
+	pr_debug("nfhd%u: found device with %u blocks (%u bytes)\n", dev_id,
 		blocks, bsize);
 
 	if (bsize < 512 || (bsize & (bsize - 1))) {

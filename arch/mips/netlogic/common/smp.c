@@ -196,16 +196,16 @@ void __init nlm_smp_setup(void)
 		}
 	}
 
-	pr_info("Physical CPU mask: %*pb\n",
+	pr_debug("Physical CPU mask: %*pb\n",
 		cpumask_pr_args(&phys_cpu_present_mask));
-	pr_info("Possible CPU mask: %*pb\n",
+	pr_debug("Possible CPU mask: %*pb\n",
 		cpumask_pr_args(cpu_possible_mask));
 
 	/* check with the cores we have woken up */
 	for (ncore = 0, i = 0; i < NLM_NR_NODES; i++)
 		ncore += hweight32(nlm_get_node(i)->coremask);
 
-	pr_info("Detected (%dc%dt) %d Slave CPU(s)\n", ncore,
+	pr_debug("Detected (%dc%dt) %d Slave CPU(s)\n", ncore,
 		nlm_threads_per_core, num_cpus);
 
 	/* switch NMI handler to boot CPUs */

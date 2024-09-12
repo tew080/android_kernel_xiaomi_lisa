@@ -2638,7 +2638,7 @@ static int dvb_frontend_handle_ioctl(struct file *file,
 				dprintk("(adapter %d): switch delay (should be 32k followed by all 8k)\n",
 					fe->dvb->num);
 				for (i = 1; i < 10; i++)
-					pr_info("%d: %d\n", i,
+					pr_debug("%d: %d\n", i,
 						(int)ktime_us_delta(tv[i], tv[i - 1]));
 			}
 			err = 0;

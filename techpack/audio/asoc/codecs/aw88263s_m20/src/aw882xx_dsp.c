@@ -1216,7 +1216,7 @@ int aw882xx_dsp_set_copp_module_en(bool enable)
 	if (ret)
 		return -EINVAL;
 
-	aw_pr_info("set skt %s", enable == 1 ? "enable" : "disable");
+	aw_pr_debug("set skt %s", enable == 1 ? "enable" : "disable");
 	return 0;
 }
 

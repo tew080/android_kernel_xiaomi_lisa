@@ -169,7 +169,7 @@ static long cmm_alloc_pages(long nr)
 					GFP_NOIO | __GFP_NOWARN |
 					__GFP_NORETRY | __GFP_NOMEMALLOC);
 			if (!npa) {
-				pr_info("%s: Can not allocate new page list\n", __func__);
+				pr_debug("%s: Can not allocate new page list\n", __func__);
 				free_page(addr);
 				break;
 			}

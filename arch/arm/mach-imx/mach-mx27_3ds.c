@@ -222,7 +222,7 @@ static int __init mx27_3ds_otg_mode(char *options)
 	else if (!strcmp(options, "device"))
 		otg_mode_host = false;
 	else
-		pr_info("otg_mode neither \"host\" nor \"device\". "
+		pr_debug("otg_mode neither \"host\" nor \"device\". "
 			"Defaulting to device\n");
 	return 1;
 }

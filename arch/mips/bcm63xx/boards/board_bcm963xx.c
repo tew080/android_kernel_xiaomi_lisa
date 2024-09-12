@@ -768,7 +768,7 @@ void __init board_prom_init(void)
 			 cfe[5], cfe[6], cfe[7], cfe[8], cfe[9]);
 	else
 		strcpy(cfe_version, "unknown");
-	pr_info("CFE version: %s\n", cfe_version);
+	pr_debug("CFE version: %s\n", cfe_version);
 
 	bcm63xx_nvram_init(boot_addr + BCM963XX_NVRAM_OFFSET);
 
@@ -837,7 +837,7 @@ void __init board_setup(void)
 {
 	if (!board.name[0])
 		panic("unable to detect bcm963xx board");
-	pr_info("board name: %s\n", board.name);
+	pr_debug("board name: %s\n", board.name);
 
 	/* make sure we're running on expected cpu */
 	if (bcm63xx_get_cpu_id() != board.expected_cpu_id)

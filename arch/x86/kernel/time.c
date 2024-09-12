@@ -71,7 +71,7 @@ static void __init setup_default_timer_irq(void)
 	 * PIC/PIT we need this for the HPET0 in legacy replacement mode.
 	 */
 	if (setup_irq(0, &irq0))
-		pr_info("Failed to register legacy timer interrupt\n");
+		pr_debug("Failed to register legacy timer interrupt\n");
 }
 
 /* Default timer init function */

@@ -399,7 +399,7 @@ retry_gpio_req:
 		gpio_direction_output(xo_reset_gpio, 0);
 	}
 
-	pr_info("%s:gpio(%d) success\n", __func__, xo_reset_gpio);
+	pr_debug("%s:gpio(%d) success\n", __func__, xo_reset_gpio);
 
 	gpio_free(xo_reset_gpio);
 }
@@ -422,8 +422,8 @@ static int bt_configure_gpios(int on)
 			return rc;
 		}
 
-		pr_info("BTON:Turn Bt OFF asserting BT_EN to low\n");
-		pr_info("bt-reset-gpio(%d) value(%d)\n", bt_reset_gpio,
+		pr_debug("BTON:Turn Bt OFF asserting BT_EN to low\n");
+		pr_debug("bt-reset-gpio(%d) value(%d)\n", bt_reset_gpio,
 			gpio_get_value(bt_reset_gpio));
 		rc = gpio_direction_output(bt_reset_gpio, 0);
 		if (rc) {
@@ -433,27 +433,27 @@ static int bt_configure_gpios(int on)
 		PWR_SRC_STATUS_SET(BT_RESET_GPIO,
 			gpio_get_value(bt_reset_gpio));
 		msleep(50);
-		pr_info("BTON:Turn Bt OFF post asserting BT_EN to low\n");
-		pr_info("bt-reset-gpio(%d) value(%d)\n", bt_reset_gpio,
+		pr_debug("BTON:Turn Bt OFF post asserting BT_EN to low\n");
+		pr_debug("bt-reset-gpio(%d) value(%d)\n", bt_reset_gpio,
 			gpio_get_value(bt_reset_gpio));
 
 		if (bt_sw_ctrl_gpio >= 0) {
 			PWR_SRC_STATUS_SET(BT_SW_CTRL_GPIO,
 				gpio_get_value(bt_sw_ctrl_gpio));
-			pr_info("BTON:Turn Bt OFF bt-sw-ctrl-gpio(%d) value(%d)\n",
+			pr_debug("BTON:Turn Bt OFF bt-sw-ctrl-gpio(%d) value(%d)\n",
 				bt_sw_ctrl_gpio,
 				bt_power_src_status[BT_SW_CTRL_GPIO]);
 		}
 
 		if (wl_reset_gpio >= 0)
-			pr_info("BTON:Turn Bt ON wl-reset-gpio(%d) value(%d)\n",
+			pr_debug("BTON:Turn Bt ON wl-reset-gpio(%d) value(%d)\n",
 				wl_reset_gpio, gpio_get_value(wl_reset_gpio));
 
 		if ((wl_reset_gpio < 0) ||
 			((wl_reset_gpio >= 0) && gpio_get_value(wl_reset_gpio))) {
 
 			btpower_set_xo_reset_gpio_state(true);
-			pr_info("BTON: WLAN ON Asserting BT_EN to high\n");
+			pr_debug("BTON: WLAN ON Asserting BT_EN to high\n");
 			rc = gpio_direction_output(bt_reset_gpio, 1);
 			if (rc) {
 				pr_err("%s: Unable to set direction\n", __func__);
@@ -466,8 +466,8 @@ static int bt_configure_gpios(int on)
 
 		if ((wl_reset_gpio >= 0) && (gpio_get_value(wl_reset_gpio) == 0)) {
 			if (gpio_get_value(bt_reset_gpio)) {
-				pr_info("BTON: WLAN OFF and BT ON are too close\n");
-				pr_info("reset BT_EN, enable it after delay\n");
+				pr_debug("BTON: WLAN OFF and BT ON are too close\n");
+				pr_debug("reset BT_EN, enable it after delay\n");
 				rc = gpio_direction_output(bt_reset_gpio, 0);
 				if (rc) {
 					pr_err("%s: Unable to set direction\n",
@@ -477,10 +477,10 @@ static int bt_configure_gpios(int on)
 				PWR_SRC_STATUS_SET(BT_RESET_GPIO,
 					gpio_get_value(bt_reset_gpio));
 			}
-			pr_info("BTON: WLAN OFF waiting for 100ms delay\n");
-			pr_info("for AON output to fully discharge\n");
+			pr_debug("BTON: WLAN OFF waiting for 100ms delay\n");
+			pr_debug("for AON output to fully discharge\n");
 			msleep(100);
-			pr_info("BTON: WLAN OFF Asserting BT_EN to high\n");
+			pr_debug("BTON: WLAN OFF Asserting BT_EN to high\n");
 			btpower_set_xo_reset_gpio_state(true);
 			rc = gpio_direction_output(bt_reset_gpio, 1);
 			if (rc) {
@@ -498,8 +498,8 @@ static int bt_configure_gpios(int on)
 		 */
 		if (!gpio_get_value(bt_reset_gpio)) {
 			btpower_set_xo_reset_gpio_state(true);
-			pr_info("BTON: WLAN ON and BT ON are too close\n");
-			pr_info("Asserting BT_EN to high\n");
+			pr_debug("BTON: WLAN ON and BT ON are too close\n");
+			pr_debug("Asserting BT_EN to high\n");
 			rc = gpio_direction_output(bt_reset_gpio, 1);
 			if (rc) {
 				pr_err("%s: Unable to set direction\n", __func__);
@@ -538,28 +538,28 @@ static int bt_configure_gpios(int on)
 						__func__);
 			}
 		}
-		pr_info("BTON:Turn Bt On bt-reset-gpio(%d) value(%d)\n",
+		pr_debug("BTON:Turn Bt On bt-reset-gpio(%d) value(%d)\n",
 			bt_reset_gpio, gpio_get_value(bt_reset_gpio));
 		if (bt_sw_ctrl_gpio >= 0) {
 			PWR_SRC_STATUS_SET(BT_SW_CTRL_GPIO,
 				gpio_get_value(bt_sw_ctrl_gpio));
-			pr_info("BTON: Turn BT ON bt-sw-ctrl-gpio(%d) value(%d)\n",
+			pr_debug("BTON: Turn BT ON bt-sw-ctrl-gpio(%d) value(%d)\n",
 				bt_sw_ctrl_gpio,
 				bt_power_src_status[BT_SW_CTRL_GPIO]);
 		}
 	} else {
 		gpio_set_value(bt_reset_gpio, 0);
 		msleep(100);
-		pr_info("BT-OFF:bt-reset-gpio(%d) value(%d)\n",
+		pr_debug("BT-OFF:bt-reset-gpio(%d) value(%d)\n",
 			bt_reset_gpio, gpio_get_value(bt_reset_gpio));
 		if (bt_sw_ctrl_gpio >= 0) {
-			pr_info("BT-OFF:bt-sw-ctrl-gpio(%d) value(%d)\n",
+			pr_debug("BT-OFF:bt-sw-ctrl-gpio(%d) value(%d)\n",
 				bt_sw_ctrl_gpio,
 				gpio_get_value(bt_sw_ctrl_gpio));
 		}
 	}
 
-	pr_info("%s: bt_gpio= %d on: %d\n", __func__, bt_reset_gpio, on);
+	pr_debug("%s: bt_gpio= %d on: %d\n", __func__, bt_reset_gpio, on);
 
 	return rc;
 }
@@ -740,7 +740,7 @@ static int bt_dt_parse_vreg_info(struct device *dev,
 			__func__, vreg->name, vreg->min_vol, vreg->max_vol,
 			vreg->load_curr, vreg->is_retention_supp);
 	} else {
-		pr_info("%s: %s is not provided in device tree\n", __func__,
+		pr_debug("%s: %s is not provided in device tree\n", __func__,
 			vreg_name);
 	}
 
@@ -1144,7 +1144,7 @@ static long bt_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		break;
 	case BT_CMD_CHECK_SW_CTRL:
 		/*  Check  if  SW_CTRL  is  asserted  */
-		pr_info("BT_CMD_CHECK_SW_CTRL\n");
+		pr_debug("BT_CMD_CHECK_SW_CTRL\n");
 		if (bt_power_pdata->bt_gpio_sw_ctrl > 0) {
 #ifndef CONFIG_ARCH_JLQ
 			PWR_SRC_STATUS_SET(BT_SW_CTRL_GPIO,
@@ -1162,7 +1162,7 @@ static long bt_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 				PWR_SRC_STATUS_SET(BT_SW_CTRL_GPIO,
 					gpio_get_value(
 					bt_power_pdata->bt_gpio_sw_ctrl));
-				pr_info("bt-sw-ctrl-gpio(%d) value(%d)\n",
+				pr_debug("bt-sw-ctrl-gpio(%d) value(%d)\n",
 					bt_power_pdata->bt_gpio_sw_ctrl,
 					bt_power_src_status[BT_SW_CTRL_GPIO]);
 			}
@@ -1275,7 +1275,7 @@ static int btpower_get_tcs_table_info(struct platform_device *dev,
 
 	tcs_table_info->tcs_cmd_base_addr = res->start;
 	addr_len = resource_size(res);
-	pr_info("TCS CMD base address is %pa with length %pa\n",
+	pr_debug("TCS CMD base address is %pa with length %pa\n",
 		    &tcs_table_info->tcs_cmd_base_addr, &addr_len);
 
 	tcs_cmd_base_addr = devm_ioremap(&plat_dev->dev, res->start, addr_len);
@@ -1323,7 +1323,7 @@ static int btpower_enable_ipa_vreg(struct platform_device *dev,
 	writel_relaxed(1, tcs_cmd);
 
 	data_val = readl_relaxed(tcs_cmd);
-	pr_info("Configure S3E TCS Addr for iPA: %x with Data: %d\n"
+	pr_debug("Configure S3E TCS Addr for iPA: %x with Data: %d\n"
 		, addr_val, data_val);
 	return 0;
 }

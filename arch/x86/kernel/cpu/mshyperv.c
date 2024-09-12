@@ -227,7 +227,7 @@ static void __init ms_hyperv_init_platform(void)
 	ms_hyperv.misc_features = cpuid_edx(HYPERV_CPUID_FEATURES);
 	ms_hyperv.hints    = cpuid_eax(HYPERV_CPUID_ENLIGHTMENT_INFO);
 
-	pr_info("Hyper-V: features 0x%x, hints 0x%x, misc 0x%x\n",
+	pr_debug("Hyper-V: features 0x%x, hints 0x%x, misc 0x%x\n",
 		ms_hyperv.features, ms_hyperv.hints, ms_hyperv.misc_features);
 
 	ms_hyperv.max_vp_index = cpuid_eax(HYPERV_CPUID_IMPLEMENT_LIMITS);
@@ -246,7 +246,7 @@ static void __init ms_hyperv_init_platform(void)
 		hv_host_info_ecx = cpuid_ecx(HYPERV_CPUID_VERSION);
 		hv_host_info_edx = cpuid_edx(HYPERV_CPUID_VERSION);
 
-		pr_info("Hyper-V Host Build:%d-%d.%d-%d-%d.%d\n",
+		pr_debug("Hyper-V Host Build:%d-%d.%d-%d-%d.%d\n",
 			hv_host_info_eax, hv_host_info_ebx >> 16,
 			hv_host_info_ebx & 0xFFFF, hv_host_info_ecx,
 			hv_host_info_edx >> 24, hv_host_info_edx & 0xFFFFFF);
@@ -284,7 +284,7 @@ static void __init ms_hyperv_init_platform(void)
 		rdmsrl(HV_X64_MSR_APIC_FREQUENCY, hv_lapic_frequency);
 		hv_lapic_frequency = div_u64(hv_lapic_frequency, HZ);
 		lapic_timer_period = hv_lapic_frequency;
-		pr_info("Hyper-V: LAPIC Timer Frequency: %#x\n",
+		pr_debug("Hyper-V: LAPIC Timer Frequency: %#x\n",
 			lapic_timer_period);
 	}
 

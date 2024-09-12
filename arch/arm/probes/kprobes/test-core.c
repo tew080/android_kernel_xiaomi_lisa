@@ -415,12 +415,12 @@ static int run_api_tests(long (*func)(long, long))
 {
 	int ret;
 
-	pr_info("    kprobe\n");
+	pr_debug("    kprobe\n");
 	ret = test_kprobe(func);
 	if (ret < 0)
 		return ret;
 
-	pr_info("    kretprobe\n");
+	pr_debug("    kretprobe\n");
 	ret = test_kretprobe(func);
 	if (ret < 0)
 		return ret;
@@ -570,10 +570,10 @@ static int run_benchmarks(void)
 		ret = kprobe_benchmark(b->fn, b->offset);
 		if (ret < 0)
 			return ret;
-		pr_info("    %dns for kprobe %s\n", ret, b->title);
+		pr_debug("    %dns for kprobe %s\n", ret, b->title);
 	}
 
-	pr_info("\n");
+	pr_debug("\n");
 	return 0;
 }
 
@@ -1552,12 +1552,12 @@ static int run_test_cases(void (*tests)(void), const union decode_item *table)
 {
 	int ret;
 
-	pr_info("    Check decoding tables\n");
+	pr_debug("    Check decoding tables\n");
 	ret = table_test(table);
 	if (ret)
 		return ret;
 
-	pr_info("    Run test cases\n");
+	pr_debug("    Run test cases\n");
 	ret = coverage_start(table);
 	if (ret)
 		return ret;
@@ -1573,51 +1573,51 @@ static int __init run_all_tests(void)
 {
 	int ret = 0;
 
-	pr_info("Beginning kprobe tests...\n");
+	pr_debug("Beginning kprobe tests...\n");
 
 #ifndef CONFIG_THUMB2_KERNEL
 
-	pr_info("Probe ARM code\n");
+	pr_debug("Probe ARM code\n");
 	ret = run_api_tests(arm_func);
 	if (ret)
 		goto out;
 
-	pr_info("ARM instruction simulation\n");
+	pr_debug("ARM instruction simulation\n");
 	ret = run_test_cases(kprobe_arm_test_cases, probes_decode_arm_table);
 	if (ret)
 		goto out;
 
 #else /* CONFIG_THUMB2_KERNEL */
 
-	pr_info("Probe 16-bit Thumb code\n");
+	pr_debug("Probe 16-bit Thumb code\n");
 	ret = run_api_tests(thumb16_func);
 	if (ret)
 		goto out;
 
-	pr_info("Probe 32-bit Thumb code, even halfword\n");
+	pr_debug("Probe 32-bit Thumb code, even halfword\n");
 	ret = run_api_tests(thumb32even_func);
 	if (ret)
 		goto out;
 
-	pr_info("Probe 32-bit Thumb code, odd halfword\n");
+	pr_debug("Probe 32-bit Thumb code, odd halfword\n");
 	ret = run_api_tests(thumb32odd_func);
 	if (ret)
 		goto out;
 
-	pr_info("16-bit Thumb instruction simulation\n");
+	pr_debug("16-bit Thumb instruction simulation\n");
 	ret = run_test_cases(kprobe_thumb16_test_cases,
 				probes_decode_thumb16_table);
 	if (ret)
 		goto out;
 
-	pr_info("32-bit Thumb instruction simulation\n");
+	pr_debug("32-bit Thumb instruction simulation\n");
 	ret = run_test_cases(kprobe_thumb32_test_cases,
 				probes_decode_thumb32_table);
 	if (ret)
 		goto out;
 #endif
 
-	pr_info("Total instruction simulation tests=%d, pass=%d fail=%d\n",
+	pr_debug("Total instruction simulation tests=%d, pass=%d fail=%d\n",
 		test_try_count, test_pass_count, test_fail_count);
 	if (test_fail_count) {
 		ret = -EINVAL;
@@ -1625,7 +1625,7 @@ static int __init run_all_tests(void)
 	}
 
 #if BENCHMARKING
-	pr_info("Benchmarks\n");
+	pr_debug("Benchmarks\n");
 	ret = run_benchmarks();
 	if (ret)
 		goto out;
@@ -1644,7 +1644,7 @@ out:
 	if (ret == 0)
 		ret = tests_failed;
 	if (ret == 0)
-		pr_info("Finished kprobe tests OK\n");
+		pr_debug("Finished kprobe tests OK\n");
 	else
 		pr_err("kprobe tests failed\n");
 

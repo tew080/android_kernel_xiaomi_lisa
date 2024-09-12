@@ -411,7 +411,7 @@ static int slate_daemon_probe(struct platform_device *pdev)
 		return -ENOMEM;
 
 	dev->platform_dev = &pdev->dev;
-	pr_info("%s success\n", __func__);
+	pr_debug("%s success\n", __func__);
 
 	return 0;
 }

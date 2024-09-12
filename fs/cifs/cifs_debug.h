@@ -160,7 +160,7 @@ do {									\
 
 #define cifs_info(fmt, ...)						\
 do {									\
-	pr_info("CIFS: "fmt, ##__VA_ARGS__);				\
+	pr_debug("CIFS: "fmt, ##__VA_ARGS__);				\
 } while (0)
 #endif
 

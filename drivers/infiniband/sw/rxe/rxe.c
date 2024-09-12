@@ -360,7 +360,7 @@ static int __init rxe_module_init(void)
 
 	rdma_link_register(&rxe_link_ops);
 	rxe_initialized = true;
-	pr_info("loaded\n");
+	pr_debug("loaded\n");
 	return 0;
 }
 
@@ -372,7 +372,7 @@ static void __exit rxe_module_exit(void)
 	rxe_cache_exit();
 
 	rxe_initialized = false;
-	pr_info("unloaded\n");
+	pr_debug("unloaded\n");
 }
 
 late_initcall(rxe_module_init);

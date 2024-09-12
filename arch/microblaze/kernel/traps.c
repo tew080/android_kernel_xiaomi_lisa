@@ -50,7 +50,7 @@ void show_stack(struct task_struct *task, unsigned long *sp)
 	if (kstack_depth_to_print && (words_to_show > kstack_depth_to_print))
 		words_to_show = kstack_depth_to_print;
 
-	pr_info("Kernel Stack:\n");
+	pr_debug("Kernel Stack:\n");
 
 	/*
 	 * Make the first line an 'odd' size if necessary to get
@@ -67,9 +67,9 @@ void show_stack(struct task_struct *task, unsigned long *sp)
 	}
 	print_hex_dump(KERN_INFO, "", DUMP_PREFIX_ADDRESS, 32, 4, (void *)fp,
 		       words_to_show << 2, 0);
-	pr_info("\n\nCall Trace:\n");
+	pr_debug("\n\nCall Trace:\n");
 	microblaze_unwind(task, NULL);
-	pr_info("\n");
+	pr_debug("\n");
 
 	if (!task)
 		task = current;

@@ -193,7 +193,7 @@ static int do_test(struct hists *hists, struct result *expected, size_t nr_expec
 	perf_evsel__output_resort(hists_to_evsel(hists), NULL);
 
 	if (verbose > 2) {
-		pr_info("use callchain: %d, cumulate callchain: %d\n",
+		pr_debug("use callchain: %d, cumulate callchain: %d\n",
 			symbol_conf.use_callchain,
 			symbol_conf.cumulate_callchain);
 		print_hists_out(hists);

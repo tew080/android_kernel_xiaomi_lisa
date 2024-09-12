@@ -282,7 +282,7 @@ static long profiler_ioctl(struct file *file,
 
 static int profiler_release(struct inode *inode, struct file *file)
 {
-	pr_info("profiler release\n");
+	pr_debug("profiler release\n");
 	return 0;
 }
 
@@ -342,7 +342,7 @@ exit_unreg_chrdev_region:
 
 static void profiler_exit(void)
 {
-	pr_info("Exiting from profiler\n");
+	pr_debug("Exiting from profiler\n");
 }
 
 MODULE_LICENSE("GPL v2");

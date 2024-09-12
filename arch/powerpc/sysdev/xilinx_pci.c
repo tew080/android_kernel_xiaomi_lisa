@@ -128,5 +128,5 @@ void __init xilinx_pci_init(void)
 	/* Register the host bridge with the linux kernel! */
 	pci_process_bridge_OF_ranges(hose, pci_node, 1);
 
-	pr_info("xilinx-pci: Registered PCI host bridge\n");
+	pr_debug("xilinx-pci: Registered PCI host bridge\n");
 }

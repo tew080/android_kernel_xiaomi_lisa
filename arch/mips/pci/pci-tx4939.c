@@ -21,7 +21,7 @@ int __init tx4939_report_pciclk(void)
 {
 	int pciclk = 0;
 
-	pr_info("PCIC --%s PCICLK:",
+	pr_debug("PCIC --%s PCICLK:",
 		(__raw_readq(&tx4939_ccfgptr->ccfg) & TX4939_CCFG_PCI66) ?
 		" PCI66" : "");
 	if (__raw_readq(&tx4939_ccfgptr->pcfg) & TX4939_PCFG_PCICLKEN_ALL) {
@@ -43,7 +43,7 @@ void __init tx4939_report_pci1clk(void)
 {
 	unsigned int pciclk = txx9_master_clock * 20 / 6;
 
-	pr_info("PCIC1 -- PCICLK:%u.%uMHz\n",
+	pr_debug("PCIC1 -- PCICLK:%u.%uMHz\n",
 		(pciclk + 50000) / 1000000,
 		((pciclk + 50000) / 100000) % 10);
 }

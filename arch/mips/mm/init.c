@@ -353,7 +353,7 @@ void maar_init(void)
 	if (recorded.used)
 		return;
 
-	pr_info("MAAR configuration:\n");
+	pr_debug("MAAR configuration:\n");
 	for (i = 0; i < num_maars; i += 2) {
 		write_c0_maari(i);
 		back_to_back_c0_hazard();
@@ -367,7 +367,7 @@ void maar_init(void)
 		lower = (lower & MIPS_MAAR_ADDR) << 4;
 		upper = ((upper & MIPS_MAAR_ADDR) << 4) | 0xffff;
 
-		pr_info("  [%d]: ", i / 2);
+		pr_debug("  [%d]: ", i / 2);
 		if (!(attr & MIPS_MAAR_VL)) {
 			pr_cont("disabled\n");
 			continue;

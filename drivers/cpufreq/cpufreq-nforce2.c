@@ -337,7 +337,7 @@ static int nforce2_cpu_init(struct cpufreq_policy *policy)
 		}
 	}
 
-	pr_info("FSB currently at %i MHz, FID %d.%d\n",
+	pr_debug("FSB currently at %i MHz, FID %d.%d\n",
 		fsb, fid / 10, fid % 10);
 
 	/* Set maximum FSB to FSB at boot time */
@@ -397,9 +397,9 @@ static int nforce2_detect_chipset(void)
 	if (nforce2_dev == NULL)
 		return -ENODEV;
 
-	pr_info("Detected nForce2 chipset revision %X\n",
+	pr_debug("Detected nForce2 chipset revision %X\n",
 		nforce2_dev->revision);
-	pr_info("FSB changing is maybe unstable and can lead to crashes and data loss\n");
+	pr_debug("FSB changing is maybe unstable and can lead to crashes and data loss\n");
 
 	return 0;
 }
@@ -417,7 +417,7 @@ static int __init nforce2_init(void)
 
 	/* detect chipset */
 	if (nforce2_detect_chipset()) {
-		pr_info("No nForce2 chipset\n");
+		pr_debug("No nForce2 chipset\n");
 		return -ENODEV;
 	}
 

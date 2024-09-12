@@ -31,7 +31,7 @@ int s3c_irq_wake(struct irq_data *data, unsigned int state)
 	if (!(s3c_irqwake_intallow & irqbit))
 		return -ENOENT;
 
-	pr_info("wake %s for hwirq %lu\n",
+	pr_debug("wake %s for hwirq %lu\n",
 		state ? "enabled" : "disabled", data->hwirq);
 
 	if (!state)

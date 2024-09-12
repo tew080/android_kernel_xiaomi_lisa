@@ -154,7 +154,7 @@ static int build_unified_table(struct cc_limits_data *cc_cdev,
 	freq_map = kcalloc(table_ct[max_idx], sizeof(*freq_map), GFP_KERNEL);
 	if (!freq_map)
 		return -ENOMEM;
-	pr_info("CPU1:%d CPU2:%d\n", cc_cdev->cpu_map[0], cc_cdev->cpu_map[1]);
+	pr_debug("CPU1:%d CPU2:%d\n", cc_cdev->cpu_map[0], cc_cdev->cpu_map[1]);
 	for (idx = table_ct[max_idx] - 1, idy = table_ct[min_idx] - 1, idz = 0;
 			idx >= 0 && idz < table_ct[max_idx]; idx--, idz++) {
 		int volt = table[max_idx][idx].volt;
@@ -167,7 +167,7 @@ static int build_unified_table(struct cc_limits_data *cc_cdev,
 		if (idy < 0)
 			idy = 0;
 		freq_map[idz].frequency[1] = table[min_idx][idy].frequency;
-		pr_info("freq1:%u freq2:%u\n", freq_map[idz].frequency[0],
+		pr_debug("freq1:%u freq2:%u\n", freq_map[idz].frequency[0],
 				freq_map[idz].frequency[1]);
 	}
 

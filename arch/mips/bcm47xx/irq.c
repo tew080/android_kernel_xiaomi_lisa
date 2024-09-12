@@ -87,7 +87,7 @@ void __init arch_init_irq(void)
 	mips_cpu_irq_init();
 
 	if (cpu_has_vint) {
-		pr_info("Setting up vectored interrupts\n");
+		pr_debug("Setting up vectored interrupts\n");
 		set_vi_handler(2, bcm47xx_hw2_irqdispatch);
 		set_vi_handler(3, bcm47xx_hw3_irqdispatch);
 		set_vi_handler(4, bcm47xx_hw4_irqdispatch);

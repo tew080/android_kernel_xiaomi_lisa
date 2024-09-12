@@ -43,7 +43,7 @@ void mark_tsc_async_resets(char *reason)
 	if (tsc_async_resets)
 		return;
 	tsc_async_resets = true;
-	pr_info("tsc: Marking TSC async resets true due to %s\n", reason);
+	pr_debug("tsc: Marking TSC async resets true due to %s\n", reason);
 }
 
 void tsc_verify_tsc_adjust(bool resume)
@@ -144,7 +144,7 @@ static void tsc_sanitize_first_cpu(struct tsc_adjust *cur, s64 bootval,
 			wrmsrl(MSR_IA32_TSC_ADJUST, 0);
 			bootval = 0;
 		} else {
-			pr_info("TSC ADJUST: CPU%u: %lld NOT forced to 0\n",
+			pr_debug("TSC ADJUST: CPU%u: %lld NOT forced to 0\n",
 				cpu, bootval);
 		}
 	}

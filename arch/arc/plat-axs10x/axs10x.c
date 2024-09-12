@@ -85,7 +85,7 @@ static void __init axs10x_print_board_ver(unsigned int creg, const char *str)
 	} board;
 
 	board.val = ioread32((void __iomem *)creg);
-	pr_info("AXS: %s FPGA Date: %u-%u-%u\n", str, board.d, board.m,
+	pr_debug("AXS: %s FPGA Date: %u-%u-%u\n", str, board.d, board.m,
 		board.y);
 }
 

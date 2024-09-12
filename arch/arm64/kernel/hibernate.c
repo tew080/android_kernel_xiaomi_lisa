@@ -139,7 +139,7 @@ int arch_hibernation_header_save(void *addr, unsigned int max_size)
 		return -ENODEV;
 	}
 	hdr->sleep_cpu_mpidr = cpu_logical_map(sleep_cpu);
-	pr_info("Hibernating on CPU %d [mpidr:0x%llx]\n", sleep_cpu,
+	pr_debug("Hibernating on CPU %d [mpidr:0x%llx]\n", sleep_cpu,
 		hdr->sleep_cpu_mpidr);
 
 	return 0;
@@ -159,7 +159,7 @@ int arch_hibernation_header_restore(void *addr)
 	}
 
 	sleep_cpu = get_logical_index(hdr->sleep_cpu_mpidr);
-	pr_info("Hibernated on CPU %d [mpidr:0x%llx]\n", sleep_cpu,
+	pr_debug("Hibernated on CPU %d [mpidr:0x%llx]\n", sleep_cpu,
 		hdr->sleep_cpu_mpidr);
 	if (sleep_cpu < 0) {
 		pr_crit("Hibernated on a CPU not known to this kernel!\n");
@@ -167,7 +167,7 @@ int arch_hibernation_header_restore(void *addr)
 		return -EINVAL;
 	}
 	if (!cpu_online(sleep_cpu)) {
-		pr_info("Hibernated on a CPU that is offline! Bringing CPU up.\n");
+		pr_debug("Hibernated on a CPU that is offline! Bringing CPU up.\n");
 		ret = cpu_up(sleep_cpu);
 		if (ret) {
 			pr_err("Failed to bring hibernate-CPU up!\n");

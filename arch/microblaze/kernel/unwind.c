@@ -214,7 +214,7 @@ static void microblaze_unwind_inner(struct task_struct *task,
 			const struct pt_regs *regs =
 				(const struct pt_regs *) fp;
 #endif
-			pr_info("HW EXCEPTION\n");
+			pr_debug("HW EXCEPTION\n");
 #ifndef CONFIG_MMU
 			microblaze_unwind_inner(task, regs->r17 - 4,
 						fp + EX_HANDLER_STACK_SIZ,
@@ -228,7 +228,7 @@ static void microblaze_unwind_inner(struct task_struct *task,
 			if ((return_to >= handler->start_addr)
 			    && (return_to <= handler->end_addr)) {
 				if (!trace)
-					pr_info("%s\n", handler->trap_name);
+					pr_debug("%s\n", handler->trap_name);
 				unwind_trap(task, pc, fp, trace);
 				return;
 			}
@@ -248,7 +248,7 @@ static void microblaze_unwind_inner(struct task_struct *task,
 		} else {
 			/* Have we reached userland? */
 			if (unlikely(pc == task_pt_regs(task)->pc)) {
-				pr_info("[<%p>] PID %lu [%s]\n",
+				pr_debug("[<%p>] PID %lu [%s]\n",
 					(void *) pc,
 					(unsigned long) task->pid,
 					task->comm);

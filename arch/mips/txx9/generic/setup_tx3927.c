@@ -67,7 +67,7 @@ void __init tx3927_setup(void)
 	/* do reset on watchdog */
 	tx3927_ccfgptr->ccfg |= TX3927_CCFG_WR;
 
-	pr_info("TX3927 -- CRIR:%08lx CCFG:%08lx PCFG:%08lx\n",
+	pr_debug("TX3927 -- CRIR:%08lx CCFG:%08lx PCFG:%08lx\n",
 		tx3927_ccfgptr->crir, tx3927_ccfgptr->ccfg,
 		tx3927_ccfgptr->pcfg);
 
@@ -96,11 +96,11 @@ void __init tx3927_setup(void)
 	conf = read_c0_conf();
 	if (conf & TX39_CONF_DCE) {
 		if (!(conf & TX39_CONF_WBON))
-			pr_info("TX3927 D-Cache WriteThrough.\n");
+			pr_debug("TX3927 D-Cache WriteThrough.\n");
 		else if (!(conf & TX39_CONF_CWFON))
-			pr_info("TX3927 D-Cache WriteBack.\n");
+			pr_debug("TX3927 D-Cache WriteBack.\n");
 		else
-			pr_info("TX3927 D-Cache WriteBack (CWF) .\n");
+			pr_debug("TX3927 D-Cache WriteBack (CWF) .\n");
 	}
 }
 

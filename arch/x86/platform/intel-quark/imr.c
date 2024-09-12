@@ -560,7 +560,7 @@ static void __init imr_fixup_memmap(struct imr_device *idev)
 		pr_err("unable to setup IMR for kernel: %zu KiB (%lx - %lx)\n",
 			size / 1024, start, end);
 	} else {
-		pr_info("protecting kernel .text - .rodata: %zu KiB (%lx - %lx)\n",
+		pr_debug("protecting kernel .text - .rodata: %zu KiB (%lx - %lx)\n",
 			size / 1024, start, end);
 	}
 

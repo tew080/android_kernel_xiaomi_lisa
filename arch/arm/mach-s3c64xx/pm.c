@@ -275,7 +275,7 @@ static int s3c64xx_cpu_suspend(unsigned long arg)
 
 	/* we should never get past here */
 
-	pr_info("Failed to suspend the system\n");
+	pr_debug("Failed to suspend the system\n");
 	return 1; /* Aborting suspend */
 }
 

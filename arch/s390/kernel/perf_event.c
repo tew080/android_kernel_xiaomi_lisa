@@ -126,7 +126,7 @@ static void print_debug_cf(void)
 
 	memset(&cf_info, 0, sizeof(cf_info));
 	if (!qctri(&cf_info))
-		pr_info("CPU[%i] CPUM_CF: ver=%u.%u A=%04x E=%04x C=%04x\n",
+		pr_debug("CPU[%i] CPUM_CF: ver=%u.%u A=%04x E=%04x C=%04x\n",
 			cpu, cf_info.cfvn, cf_info.csvn,
 			cf_info.auth_ctl, cf_info.enable_ctl, cf_info.act_ctl);
 }
@@ -140,16 +140,16 @@ static void print_debug_sf(void)
 	if (qsi(&si))
 		return;
 
-	pr_info("CPU[%i] CPUM_SF: basic=%i diag=%i min=%lu max=%lu cpu_speed=%u\n",
+	pr_debug("CPU[%i] CPUM_SF: basic=%i diag=%i min=%lu max=%lu cpu_speed=%u\n",
 		cpu, si.as, si.ad, si.min_sampl_rate, si.max_sampl_rate,
 		si.cpu_speed);
 
 	if (si.as)
-		pr_info("CPU[%i] CPUM_SF: Basic-sampling: a=%i e=%i c=%i"
+		pr_debug("CPU[%i] CPUM_SF: Basic-sampling: a=%i e=%i c=%i"
 			" bsdes=%i tear=%016lx dear=%016lx\n", cpu,
 			si.as, si.es, si.cs, si.bsdes, si.tear, si.dear);
 	if (si.ad)
-		pr_info("CPU[%i] CPUM_SF: Diagnostic-sampling: a=%i e=%i c=%i"
+		pr_debug("CPU[%i] CPUM_SF: Diagnostic-sampling: a=%i e=%i c=%i"
 			" dsdes=%i tear=%016lx dear=%016lx\n", cpu,
 			si.ad, si.ed, si.cd, si.dsdes, si.tear, si.dear);
 }

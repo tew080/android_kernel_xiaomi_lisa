@@ -455,7 +455,7 @@ static int __init hl_init(void)
 	int rc;
 	dev_t dev;
 
-	pr_info("loading driver\n");
+	pr_debug("loading driver\n");
 
 	rc = alloc_chrdev_region(&dev, 0, HL_MAX_MINORS, HL_NAME);
 	if (rc < 0) {

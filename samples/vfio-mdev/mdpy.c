@@ -759,7 +759,7 @@ static int __init mdpy_dev_init(void)
 	}
 	cdev_init(&mdpy_cdev, &vd_fops);
 	cdev_add(&mdpy_cdev, mdpy_devt, MINORMASK + 1);
-	pr_info("%s: major %d\n", __func__, MAJOR(mdpy_devt));
+	pr_debug("%s: major %d\n", __func__, MAJOR(mdpy_devt));
 
 	mdpy_class = class_create(THIS_MODULE, MDPY_CLASS_NAME);
 	if (IS_ERR(mdpy_class)) {

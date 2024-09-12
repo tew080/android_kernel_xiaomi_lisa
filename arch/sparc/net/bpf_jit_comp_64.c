@@ -1539,7 +1539,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
 		build_epilogue(&ctx);
 
 		if (bpf_jit_enable > 1)
-			pr_info("Pass %d: size = %u, seen = [%c%c%c%c%c%c]\n", pass,
+			pr_debug("Pass %d: size = %u, seen = [%c%c%c%c%c%c]\n", pass,
 				ctx.idx * 4,
 				ctx.tmp_1_used ? '1' : ' ',
 				ctx.tmp_2_used ? '2' : ' ',

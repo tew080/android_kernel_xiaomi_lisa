@@ -190,7 +190,7 @@ static void enable_extra_feature(unsigned int features)
 		u &= ~CCR_L2C_PREFETCH_DISABLE;
 	else
 		u |= CCR_L2C_PREFETCH_DISABLE;
-	pr_info("Tauros2: %s L2 prefetch.\n",
+	pr_debug("Tauros2: %s L2 prefetch.\n",
 			(features & CACHE_TAUROS2_PREFETCH_ON)
 			? "Enabling" : "Disabling");
 
@@ -198,7 +198,7 @@ static void enable_extra_feature(unsigned int features)
 		u |= CCR_L2C_BURST8_ENABLE;
 	else
 		u &= ~CCR_L2C_BURST8_ENABLE;
-	pr_info("Tauros2: %s burst8 line fill.\n",
+	pr_debug("Tauros2: %s burst8 line fill.\n",
 			(features & CACHE_TAUROS2_LINEFILL_BURST8)
 			? "Enabling" : "Disabling");
 
@@ -221,7 +221,7 @@ static void __init tauros2_internal_init(unsigned int features)
 		 */
 		feat = read_extra_features();
 		if (!(feat & 0x00400000)) {
-			pr_info("Tauros2: Enabling L2 cache.\n");
+			pr_debug("Tauros2: Enabling L2 cache.\n");
 			write_extra_features(feat | 0x00400000);
 		}
 
@@ -258,7 +258,7 @@ static void __init tauros2_internal_init(unsigned int features)
 		 */
 		actlr = read_actlr();
 		if (!(actlr & 0x00000002)) {
-			pr_info("Tauros2: Enabling L2 cache.\n");
+			pr_debug("Tauros2: Enabling L2 cache.\n");
 			write_actlr(actlr | 0x00000002);
 		}
 
@@ -271,7 +271,7 @@ static void __init tauros2_internal_init(unsigned int features)
 		return;
 	}
 
-	pr_info("Tauros2: L2 cache support initialised "
+	pr_debug("Tauros2: L2 cache support initialised "
 			 "in %s mode.\n", mode);
 }
 
@@ -291,11 +291,11 @@ void __init tauros2_init(unsigned int features)
 
 	node = of_find_matching_node(NULL, tauros2_ids);
 	if (!node) {
-		pr_info("Not found marvell,tauros2-cache, disable it\n");
+		pr_debug("Not found marvell,tauros2-cache, disable it\n");
 	} else {
 		ret = of_property_read_u32(node, "marvell,tauros2-cache-features", &f);
 		if (ret) {
-			pr_info("Not found marvell,tauros-cache-features property, "
+			pr_debug("Not found marvell,tauros-cache-features property, "
 				"disable extra features\n");
 			features = 0;
 		} else

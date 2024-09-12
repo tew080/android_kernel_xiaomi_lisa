@@ -1044,7 +1044,7 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
 
 	dev_set_drvdata(dev, svc);
 
-	pr_info("Intel Service Layer Driver Initialized\n");
+	pr_debug("Intel Service Layer Driver Initialized\n");
 
 	return 0;
 

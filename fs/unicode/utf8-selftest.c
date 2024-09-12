@@ -294,7 +294,7 @@ static int __init init_test_ucd(void)
 	check_utf8_comparisons();
 
 	if (!failed_tests)
-		pr_info("All %u tests passed\n", total_tests);
+		pr_debug("All %u tests passed\n", total_tests);
 	else
 		pr_err("%u out of %u tests failed\n", failed_tests,
 		       total_tests);

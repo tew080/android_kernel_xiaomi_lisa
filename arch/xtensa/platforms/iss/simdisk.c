@@ -174,7 +174,7 @@ static int simdisk_attach(struct simdisk *dev, const char *filename)
 	dev->size = simc_lseek(dev->fd, 0, SEEK_END);
 	set_capacity(dev->gd, dev->size >> SECTOR_SHIFT);
 	dev->filename = filename;
-	pr_info("SIMDISK: %s=%s\n", dev->gd->disk_name, dev->filename);
+	pr_debug("SIMDISK: %s=%s\n", dev->gd->disk_name, dev->filename);
 out:
 	if (err)
 		kfree(filename);
@@ -197,7 +197,7 @@ static int simdisk_detach(struct simdisk *dev)
 					dev->filename, errno);
 			err = -EIO;
 		} else {
-			pr_info("SIMDISK: %s detached from %s\n",
+			pr_debug("SIMDISK: %s detached from %s\n",
 					dev->gd->disk_name, dev->filename);
 			dev->fd = -1;
 			kfree(dev->filename);
@@ -308,7 +308,7 @@ static int __init simdisk_init(void)
 		pr_err("SIMDISK: register_blkdev: %d\n", simdisk_major);
 		return -EIO;
 	}
-	pr_info("SIMDISK: major: %d\n", simdisk_major);
+	pr_debug("SIMDISK: major: %d\n", simdisk_major);
 
 	if (n_files > simdisk_count)
 		simdisk_count = n_files;

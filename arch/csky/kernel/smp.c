@@ -232,7 +232,7 @@ void csky_start_secondary(void)
 	notify_cpu_starting(cpu);
 	set_cpu_online(cpu, true);
 
-	pr_info("CPU%u Online: %s...\n", cpu, __func__);
+	pr_debug("CPU%u Online: %s...\n", cpu, __func__);
 
 	local_irq_enable();
 	preempt_disable();

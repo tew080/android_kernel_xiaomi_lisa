@@ -1301,7 +1301,7 @@ static void pnv_eeh_dump_hub_diag_common(struct OpalIoP7IOCErrorData *data)
 	/* GEM */
 	if (data->gemXfir || data->gemRfir ||
 	    data->gemRirqfir || data->gemMask || data->gemRwof)
-		pr_info("  GEM: %016llx %016llx %016llx %016llx %016llx\n",
+		pr_debug("  GEM: %016llx %016llx %016llx %016llx %016llx\n",
 			be64_to_cpu(data->gemXfir),
 			be64_to_cpu(data->gemRfir),
 			be64_to_cpu(data->gemRirqfir),
@@ -1311,7 +1311,7 @@ static void pnv_eeh_dump_hub_diag_common(struct OpalIoP7IOCErrorData *data)
 	/* LEM */
 	if (data->lemFir || data->lemErrMask ||
 	    data->lemAction0 || data->lemAction1 || data->lemWof)
-		pr_info("  LEM: %016llx %016llx %016llx %016llx %016llx\n",
+		pr_debug("  LEM: %016llx %016llx %016llx %016llx %016llx\n",
 			be64_to_cpu(data->lemFir),
 			be64_to_cpu(data->lemErrMask),
 			be64_to_cpu(data->lemAction0),
@@ -1335,40 +1335,40 @@ static void pnv_eeh_get_and_dump_hub_diag(struct pci_controller *hose)
 
 	switch (be16_to_cpu(data->type)) {
 	case OPAL_P7IOC_DIAG_TYPE_RGC:
-		pr_info("P7IOC diag-data for RGC\n\n");
+		pr_debug("P7IOC diag-data for RGC\n\n");
 		pnv_eeh_dump_hub_diag_common(data);
 		if (data->rgc.rgcStatus || data->rgc.rgcLdcp)
-			pr_info("  RGC: %016llx %016llx\n",
+			pr_debug("  RGC: %016llx %016llx\n",
 				be64_to_cpu(data->rgc.rgcStatus),
 				be64_to_cpu(data->rgc.rgcLdcp));
 		break;
 	case OPAL_P7IOC_DIAG_TYPE_BI:
-		pr_info("P7IOC diag-data for BI %s\n\n",
+		pr_debug("P7IOC diag-data for BI %s\n\n",
 			data->bi.biDownbound ? "Downbound" : "Upbound");
 		pnv_eeh_dump_hub_diag_common(data);
 		if (data->bi.biLdcp0 || data->bi.biLdcp1 ||
 		    data->bi.biLdcp2 || data->bi.biFenceStatus)
-			pr_info("  BI:  %016llx %016llx %016llx %016llx\n",
+			pr_debug("  BI:  %016llx %016llx %016llx %016llx\n",
 				be64_to_cpu(data->bi.biLdcp0),
 				be64_to_cpu(data->bi.biLdcp1),
 				be64_to_cpu(data->bi.biLdcp2),
 				be64_to_cpu(data->bi.biFenceStatus));
 		break;
 	case OPAL_P7IOC_DIAG_TYPE_CI:
-		pr_info("P7IOC diag-data for CI Port %d\n\n",
+		pr_debug("P7IOC diag-data for CI Port %d\n\n",
 			data->ci.ciPort);
 		pnv_eeh_dump_hub_diag_common(data);
 		if (data->ci.ciPortStatus || data->ci.ciPortLdcp)
-			pr_info("  CI:  %016llx %016llx\n",
+			pr_debug("  CI:  %016llx %016llx\n",
 				be64_to_cpu(data->ci.ciPortStatus),
 				be64_to_cpu(data->ci.ciPortLdcp));
 		break;
 	case OPAL_P7IOC_DIAG_TYPE_MISC:
-		pr_info("P7IOC diag-data for MISC\n\n");
+		pr_debug("P7IOC diag-data for MISC\n\n");
 		pnv_eeh_dump_hub_diag_common(data);
 		break;
 	case OPAL_P7IOC_DIAG_TYPE_I2C:
-		pr_info("P7IOC diag-data for I2C\n\n");
+		pr_debug("P7IOC diag-data for I2C\n\n");
 		pnv_eeh_dump_hub_diag_common(data);
 		break;
 	default:
@@ -1502,7 +1502,7 @@ static int pnv_eeh_next_error(struct eeh_pe **pe)
 				pr_err("EEH: dead IOC detected\n");
 				ret = EEH_NEXT_ERR_DEAD_IOC;
 			} else if (be16_to_cpu(severity) == OPAL_EEH_SEV_INF) {
-				pr_info("EEH: IOC informative error "
+				pr_debug("EEH: IOC informative error "
 					"detected\n");
 				pnv_eeh_get_and_dump_hub_diag(hose);
 				ret = EEH_NEXT_ERR_NONE;
@@ -1526,7 +1526,7 @@ static int pnv_eeh_next_error(struct eeh_pe **pe)
 					eeh_pe_loc_get(phb_pe));
 				ret = EEH_NEXT_ERR_FENCED_PHB;
 			} else if (be16_to_cpu(severity) == OPAL_EEH_SEV_INF) {
-				pr_info("EEH: PHB#%x informative error "
+				pr_debug("EEH: PHB#%x informative error "
 					"detected, location: %s\n",
 					hose->global_number,
 					eeh_pe_loc_get(phb_pe));
@@ -1543,9 +1543,9 @@ static int pnv_eeh_next_error(struct eeh_pe **pe)
 			 */
 			if (pnv_eeh_get_pe(hose,
 				be64_to_cpu(frozen_pe_no), pe)) {
-				pr_info("EEH: Clear non-existing PHB#%x-PE#%llx\n",
+				pr_debug("EEH: Clear non-existing PHB#%x-PE#%llx\n",
 					hose->global_number, be64_to_cpu(frozen_pe_no));
-				pr_info("EEH: PHB location: %s\n",
+				pr_debug("EEH: PHB location: %s\n",
 					eeh_pe_loc_get(phb_pe));
 
 				/* Dump PHB diag-data */
@@ -1722,9 +1722,9 @@ static int __init eeh_powernv_init(void)
 
 	ret = eeh_ops_register(&pnv_eeh_ops);
 	if (!ret)
-		pr_info("EEH: PowerNV platform initialized\n");
+		pr_debug("EEH: PowerNV platform initialized\n");
 	else
-		pr_info("EEH: Failed to initialize PowerNV platform (%d)\n", ret);
+		pr_debug("EEH: Failed to initialize PowerNV platform (%d)\n", ret);
 
 	return ret;
 }

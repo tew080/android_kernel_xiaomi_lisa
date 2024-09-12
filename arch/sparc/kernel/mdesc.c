@@ -1095,7 +1095,7 @@ static void get_mondo_data(struct mdesc_handle *hp, u64 mp,
 	val = mdesc_get_property(hp, mp, "q-nonresumable-#bits", NULL);
 	get_one_mondo_bits(val, &tb->nonresum_qmask, 2, 2);
 	if (!printed++) {
-		pr_info("SUN4V: Mondo queue sizes "
+		pr_debug("SUN4V: Mondo queue sizes "
 			"[cpu(%u) dev(%u) r(%u) nr(%u)]\n",
 			tb->cpu_mondo_qmask + 1,
 			tb->dev_mondo_qmask + 1,

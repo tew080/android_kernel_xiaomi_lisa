@@ -239,14 +239,14 @@ static void sdk7786_power_off(void)
 /* Initialize the board */
 static void __init sdk7786_setup(char **cmdline_p)
 {
-	pr_info("Renesas Technology Europe SDK7786 support:\n");
+	pr_debug("Renesas Technology Europe SDK7786 support:\n");
 
 	regulator_register_fixed(0, dummy_supplies, ARRAY_SIZE(dummy_supplies));
 
 	sdk7786_fpga_init();
 	sdk7786_nmi_init();
 
-	pr_info("\tPCB revision:\t%d\n", fpga_read_reg(PCBRR) & 0xf);
+	pr_debug("\tPCB revision:\t%d\n", fpga_read_reg(PCBRR) & 0xf);
 
 	machine_ops.restart = sdk7786_restart;
 	pm_power_off = sdk7786_power_off;

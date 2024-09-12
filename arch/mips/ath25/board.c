@@ -143,7 +143,7 @@ int __init ath25_find_config(phys_addr_t base, unsigned long size)
 		pr_warn("WARNING: broken board data detected\n");
 		config = ath25_board.config;
 		if (is_zero_ether_addr(config->enet0_mac)) {
-			pr_info("Fixing up empty mac addresses\n");
+			pr_debug("Fixing up empty mac addresses\n");
 			config->reset_config_gpio = 0xffff;
 			config->sys_led_gpio = 0xffff;
 			eth_random_addr(config->wlan0_mac);
@@ -165,14 +165,14 @@ int __init ath25_find_config(phys_addr_t base, unsigned long size)
 	radio_data = board_data + 0x100 + ((rcfg - bcfg) & 0xfff);
 	ath25_board.radio = radio_data;
 	offset = radio_data - board_data;
-	pr_info("Radio config found at offset 0x%x (0x%x)\n", rcfg - bcfg,
+	pr_debug("Radio config found at offset 0x%x (0x%x)\n", rcfg - bcfg,
 		offset);
 	rcfg_size = BOARD_CONFIG_BUFSZ - offset;
 	memcpy_fromio(radio_data, rcfg, rcfg_size);
 
 	mac_addr = &radio_data[0x1d * 2];
 	if (is_broadcast_ether_addr(mac_addr)) {
-		pr_info("Radio MAC is blank; using board-data\n");
+		pr_debug("Radio MAC is blank; using board-data\n");
 		ether_addr_copy(mac_addr, ath25_board.config->wlan0_mac);
 	}
 

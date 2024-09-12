@@ -31,9 +31,9 @@ unsigned int imx_get_soc_revision(void)
 void imx_print_silicon_rev(const char *cpu, int srev)
 {
 	if (srev == IMX_CHIP_REVISION_UNKNOWN)
-		pr_info("CPU identified as %s, unknown revision\n", cpu);
+		pr_debug("CPU identified as %s, unknown revision\n", cpu);
 	else
-		pr_info("CPU identified as %s, silicon rev %d.%d\n",
+		pr_debug("CPU identified as %s, silicon rev %d.%d\n",
 				cpu, (srev >> 4) & 0xf, srev & 0xf);
 }
 

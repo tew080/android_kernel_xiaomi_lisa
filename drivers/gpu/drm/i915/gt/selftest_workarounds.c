@@ -171,7 +171,7 @@ print_results(const struct intel_engine_cs *engine, const u32 *results)
 		u32 expected = get_whitelist_reg(engine, i);
 		u32 actual = results[i];
 
-		pr_info("RING_NONPRIV[%d]: expected 0x%08x, found 0x%08x\n",
+		pr_debug("RING_NONPRIV[%d]: expected 0x%08x, found 0x%08x\n",
 			i, expected, actual);
 	}
 }
@@ -292,7 +292,7 @@ static int check_whitelist_across_reset(struct intel_engine_cs *engine,
 	intel_wakeref_t wakeref;
 	int err;
 
-	pr_info("Checking %d whitelisted registers on %s (RING_NONPRIV) [%s]\n",
+	pr_debug("Checking %d whitelisted registers on %s (RING_NONPRIV) [%s]\n",
 		engine->whitelist.count, engine->name, name);
 
 	ctx = kernel_context(i915);
@@ -629,10 +629,10 @@ err_request:
 			       engine->name, err, reg);
 
 			if (ro_reg)
-				pr_info("%s: Whitelisted read-only register: %x, original value %08x\n",
+				pr_debug("%s: Whitelisted read-only register: %x, original value %08x\n",
 					engine->name, reg, results[0]);
 			else
-				pr_info("%s: Whitelisted register: %x, original value %08x, rsvd %08x\n",
+				pr_debug("%s: Whitelisted register: %x, original value %08x, rsvd %08x\n",
 					engine->name, reg, results[0], rsvd);
 
 			expect = results[0];
@@ -644,7 +644,7 @@ err_request:
 					expect = results[0];
 				else
 					expect = reg_write(expect, w, rsvd);
-				pr_info("Wrote %08x, read %08x, expect %08x\n",
+				pr_debug("Wrote %08x, read %08x, expect %08x\n",
 					w, results[idx], expect);
 				idx++;
 			}
@@ -655,7 +655,7 @@ err_request:
 					expect = results[0];
 				else
 					expect = reg_write(expect, w, rsvd);
-				pr_info("Wrote %08x, read %08x, expect %08x\n",
+				pr_debug("Wrote %08x, read %08x, expect %08x\n",
 					w, results[idx], expect);
 				idx++;
 			}
@@ -1124,7 +1124,7 @@ live_gpu_reset_workarounds(void *arg)
 
 	i915_gem_context_lock_engines(ctx);
 
-	pr_info("Verifying after GPU reset...\n");
+	pr_debug("Verifying after GPU reset...\n");
 
 	igt_global_reset_lock(&i915->gt);
 	wakeref = intel_runtime_pm_get(&i915->runtime_pm);
@@ -1178,7 +1178,7 @@ live_engine_reset_workarounds(void *arg)
 		struct intel_engine_cs *engine = ce->engine;
 		bool ok;
 
-		pr_info("Verifying after %s reset...\n", engine->name);
+		pr_debug("Verifying after %s reset...\n", engine->name);
 
 		ok = verify_wa_lists(ctx, &lists, "before reset");
 		if (!ok) {

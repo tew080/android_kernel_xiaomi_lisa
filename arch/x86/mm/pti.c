@@ -61,13 +61,13 @@
 static void __init pti_print_if_insecure(const char *reason)
 {
 	if (boot_cpu_has_bug(X86_BUG_CPU_MELTDOWN))
-		pr_info("%s\n", reason);
+		pr_debug("%s\n", reason);
 }
 
 static void __init pti_print_if_secure(const char *reason)
 {
 	if (!boot_cpu_has_bug(X86_BUG_CPU_MELTDOWN))
-		pr_info("%s\n", reason);
+		pr_debug("%s\n", reason);
 }
 
 static enum pti_mode {
@@ -634,7 +634,7 @@ void __init pti_init(void)
 	if (!boot_cpu_has(X86_FEATURE_PTI))
 		return;
 
-	pr_info("enabled\n");
+	pr_debug("enabled\n");
 
 #ifdef CONFIG_X86_32
 	/*

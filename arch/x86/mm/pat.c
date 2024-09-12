@@ -55,7 +55,7 @@ void pat_disable(const char *reason)
 	}
 
 	pat_disabled = true;
-	pr_info("x86/PAT: %s\n", reason);
+	pr_debug("x86/PAT: %s\n", reason);
 }
 
 static int __init nopat(char *str)
@@ -204,7 +204,7 @@ static void __init_cache_modes(u64 pat)
 					   pat_msg + 4 * i);
 		update_cache_mode_entry(i, cache);
 	}
-	pr_info("x86/PAT: Configuration [0-7]: %s\n", pat_msg);
+	pr_debug("x86/PAT: Configuration [0-7]: %s\n", pat_msg);
 
 	init_cm_done = true;
 }
@@ -483,7 +483,7 @@ static int reserve_ram_pages_type(u64 start, u64 end,
 		page = pfn_to_page(pfn);
 		type = get_page_memtype(page);
 		if (type != _PAGE_CACHE_MODE_WB) {
-			pr_info("x86/PAT: reserve_ram_pages_type failed [mem %#010Lx-%#010Lx], track 0x%x, req 0x%x\n",
+			pr_debug("x86/PAT: reserve_ram_pages_type failed [mem %#010Lx-%#010Lx], track 0x%x, req 0x%x\n",
 				start, end - 1, type, req_type);
 			if (new_type)
 				*new_type = type;
@@ -606,7 +606,7 @@ int reserve_memtype(u64 start, u64 end, enum page_cache_mode req_type,
 
 	err = rbt_memtype_check_insert(new, new_type);
 	if (err) {
-		pr_info("x86/PAT: reserve_memtype failed [mem %#010Lx-%#010Lx], track %s, req %s\n",
+		pr_debug("x86/PAT: reserve_memtype failed [mem %#010Lx-%#010Lx], track %s, req %s\n",
 			start, end - 1,
 			cattr_name(new->type), cattr_name(req_type));
 		kfree(new);
@@ -655,7 +655,7 @@ int free_memtype(u64 start, u64 end)
 	spin_unlock(&memtype_lock);
 
 	if (IS_ERR(entry)) {
-		pr_info("x86/PAT: %s:%d freeing invalid memtype [mem %#010Lx-%#010Lx]\n",
+		pr_debug("x86/PAT: %s:%d freeing invalid memtype [mem %#010Lx-%#010Lx]\n",
 			current->comm, current->pid, start, end - 1);
 		return -EINVAL;
 	}
@@ -863,7 +863,7 @@ int kernel_map_sync_memtype(u64 base, unsigned long size,
 				size;
 
 	if (ioremap_change_attr((unsigned long)__va(base), id_sz, pcm) < 0) {
-		pr_info("x86/PAT: %s:%d ioremap_change_attr failed %s for [mem %#010Lx-%#010Lx]\n",
+		pr_debug("x86/PAT: %s:%d ioremap_change_attr failed %s for [mem %#010Lx-%#010Lx]\n",
 			current->comm, current->pid,
 			cattr_name(pcm),
 			base, (unsigned long long)(base + size-1));

@@ -74,7 +74,7 @@ static int __init vdso_init(void)
 	get_timer_node_info();
 
 	vdso_pages = (vdso_end - vdso_start) >> PAGE_SHIFT;
-	pr_info("vdso: %ld pages (%ld code @ %p, %ld data @ %p)\n",
+	pr_debug("vdso: %ld pages (%ld code @ %p, %ld data @ %p)\n",
 		vdso_pages + 1, vdso_pages, vdso_start, 1L, vdso_data);
 
 	/* Allocate the vDSO pagelist */

@@ -67,10 +67,10 @@ void __init hv_init_spinlocks(void)
 	if (!hv_pvspin || !apic ||
 	    !(ms_hyperv.hints & HV_X64_CLUSTER_IPI_RECOMMENDED) ||
 	    !(ms_hyperv.features & HV_X64_MSR_GUEST_IDLE_AVAILABLE)) {
-		pr_info("PV spinlocks disabled\n");
+		pr_debug("PV spinlocks disabled\n");
 		return;
 	}
-	pr_info("PV spinlocks enabled\n");
+	pr_debug("PV spinlocks enabled\n");
 
 	__pv_init_lock_hash();
 	pv_ops.lock.queued_spin_lock_slowpath = __pv_queued_spin_lock_slowpath;

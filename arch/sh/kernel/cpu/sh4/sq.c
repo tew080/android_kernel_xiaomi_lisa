@@ -180,7 +180,7 @@ unsigned long sq_remap(unsigned long phys, unsigned int size,
 		goto out;
 
 	psz = (size + (PAGE_SIZE - 1)) >> PAGE_SHIFT;
-	pr_info("sqremap: %15s  [%4d page%s]  va 0x%08lx   pa 0x%08lx\n",
+	pr_debug("sqremap: %15s  [%4d page%s]  va 0x%08lx   pa 0x%08lx\n",
 		likely(map->name) ? map->name : "???",
 		psz, psz == 1 ? " " : "s",
 		map->sq_addr, map->addr);

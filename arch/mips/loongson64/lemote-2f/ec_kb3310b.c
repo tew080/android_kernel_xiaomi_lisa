@@ -113,7 +113,7 @@ int ec_get_event_num(void)
 		udelay(EC_REG_DELAY);
 	}
 	if (timeout <= 0) {
-		pr_info("%s: get event number timeout.\n", __func__);
+		pr_debug("%s: get event number timeout.\n", __func__);
 
 		return -EINVAL;
 	}

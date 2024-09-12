@@ -118,7 +118,7 @@ static void __init numa_setup_memory(void)
  */
 void __init numa_setup(void)
 {
-	pr_info("NUMA mode: %s\n", mode->name);
+	pr_debug("NUMA mode: %s\n", mode->name);
 	nodes_clear(node_possible_map);
 	/* Initially attach all possible CPUs to node 0. */
 	cpumask_copy(&node_to_cpumask_map[0], cpu_possible_mask);

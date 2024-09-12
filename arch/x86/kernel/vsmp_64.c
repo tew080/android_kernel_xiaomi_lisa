@@ -51,7 +51,7 @@ static void __init set_vsmp_ctl(void)
 
 	writel(ctl, address + 4);
 	ctl = readl(address + 4);
-	pr_info("vSMP CTL: control set to:0x%08x\n", ctl);
+	pr_debug("vSMP CTL: control set to:0x%08x\n", ctl);
 
 	early_iounmap(address, 8);
 }
@@ -120,7 +120,7 @@ static void __init vsmp_cap_cpus(void)
 		node_shift = 8;
 	maxcpus = (topology & ((1 << node_shift) - 1)) + 1;
 
-	pr_info("vSMP CTL: Capping CPUs to %d (CONFIG_X86_VSMP is unset)\n",
+	pr_debug("vSMP CTL: Capping CPUs to %d (CONFIG_X86_VSMP is unset)\n",
 		maxcpus);
 	setup_max_cpus = maxcpus;
 	early_iounmap(address, 4);

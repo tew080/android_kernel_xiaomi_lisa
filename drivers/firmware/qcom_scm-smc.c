@@ -299,7 +299,7 @@ static int scm_call_qcpe(const struct arm_smccc_args *smc,
 	struct ion_handle *ihandle = NULL;
 #endif
 
-	pr_info("SCM IN [QCPE]: 0x%x, 0x%x, 0x%llx, 0x%llx, 0x%llx, 0x%llx, 0x%llx\n",
+	pr_debug("SCM IN [QCPE]: 0x%x, 0x%x, 0x%llx, 0x%llx, 0x%llx, 0x%llx, 0x%llx\n",
 		smc->a[0], smc->a[1], smc->a[2], smc->a[3], smc->a[4], smc->a[5],
 		smc->a[5]);
 
@@ -373,7 +373,7 @@ static int scm_call_qcpe(const struct arm_smccc_args *smc,
 	res->a2 = smc_params.args[2];
 	res->a3 = smc_params.args[3];
 	res->a0 = smc_params.args[0];
-	pr_info("SCM OUT [QCPE]: 0x%llx, 0x%llx, 0x%llx, 0x%llx\n",
+	pr_debug("SCM OUT [QCPE]: 0x%llx, 0x%llx, 0x%llx, 0x%llx\n",
 		res->a0, res->a1, res->a2, res->a3);
 	goto no_err;
 

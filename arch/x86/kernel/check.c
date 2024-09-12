@@ -133,7 +133,7 @@ void __init setup_bios_corruption_check(void)
 	}
 
 	if (num_scan_areas)
-		pr_info("Scanning %d areas for low memory corruption\n", num_scan_areas);
+		pr_debug("Scanning %d areas for low memory corruption\n", num_scan_areas);
 }
 
 
@@ -176,7 +176,7 @@ static int start_periodic_check_for_corruption(void)
 	if (!num_scan_areas || !memory_corruption_check || corruption_check_period == 0)
 		return 0;
 
-	pr_info("Scanning for low memory corruption every %d seconds\n", corruption_check_period);
+	pr_debug("Scanning for low memory corruption every %d seconds\n", corruption_check_period);
 
 	/* First time we run the checks right away */
 	queue_delayed_work(system_power_efficient_wq,&bios_check_work, 0);

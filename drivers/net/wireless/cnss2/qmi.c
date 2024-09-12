@@ -2803,7 +2803,7 @@ static int cnss_wlfw_connect_to_server(struct cnss_plat_data *plat_priv,
 
 	set_bit(CNSS_QMI_WLFW_CONNECTED, &plat_priv->driver_state);
 
-	cnss_pr_info("QMI WLFW service connected, state: 0x%lx\n",
+	cnss_pr_debug("QMI WLFW service connected, state: 0x%lx\n",
 		     plat_priv->driver_state);
 
 	kfree(data);
@@ -2860,7 +2860,7 @@ int cnss_wlfw_server_exit(struct cnss_plat_data *plat_priv)
 
 	clear_bit(CNSS_QMI_WLFW_CONNECTED, &plat_priv->driver_state);
 
-	cnss_pr_info("QMI WLFW service disconnected, state: 0x%lx\n",
+	cnss_pr_debug("QMI WLFW service disconnected, state: 0x%lx\n",
 		     plat_priv->driver_state);
 
 	cnss_qmi_deinit(plat_priv);
@@ -2883,7 +2883,7 @@ static int wlfw_new_server(struct qmi_handle *qmi_wlfw,
 	struct cnss_qmi_event_server_arrive_data *event_data;
 
 	if (plat_priv && test_bit(CNSS_QMI_DEL_SERVER, &plat_priv->driver_state)) {
-		cnss_pr_info("WLFW server delete in progress, Ignore server arrive, state: 0x%lx\n",
+		cnss_pr_debug("WLFW server delete in progress, Ignore server arrive, state: 0x%lx\n",
 			     plat_priv->driver_state);
 		return 0;
 	}
@@ -2911,7 +2911,7 @@ static void wlfw_del_server(struct qmi_handle *qmi_wlfw,
 		container_of(qmi_wlfw, struct cnss_plat_data, qmi_wlfw);
 
 	if (plat_priv && test_bit(CNSS_QMI_DEL_SERVER, &plat_priv->driver_state)) {
-		cnss_pr_info("WLFW server delete in progress, Ignore server delete, state: 0x%lx\n",
+		cnss_pr_debug("WLFW server delete in progress, Ignore server delete, state: 0x%lx\n",
 			     plat_priv->driver_state);
 		return;
 	}
@@ -3017,7 +3017,7 @@ int cnss_qmi_get_dms_mac(struct cnss_plat_data *plat_priv)
 	}
 	plat_priv->dms.mac_valid = true;
 	memcpy(plat_priv->dms.mac, resp.mac_address, QMI_WLFW_MAC_ADDR_SIZE_V01);
-	cnss_pr_info("Received DMS MAC: [%pM]\n", plat_priv->dms.mac);
+	cnss_pr_debug("Received DMS MAC: [%pM]\n", plat_priv->dms.mac);
 out:
 	return ret;
 }
@@ -3042,7 +3042,7 @@ static int cnss_dms_connect_to_server(struct cnss_plat_data *plat_priv,
 	}
 
 	set_bit(CNSS_QMI_DMS_CONNECTED, &plat_priv->driver_state);
-	cnss_pr_info("QMI DMS service connected, state: 0x%lx\n",
+	cnss_pr_debug("QMI DMS service connected, state: 0x%lx\n",
 		     plat_priv->driver_state);
 out:
 	return ret;
@@ -3068,7 +3068,7 @@ static void dms_del_server(struct qmi_handle *qmi_dms,
 		container_of(qmi_dms, struct cnss_plat_data, qmi_dms);
 
 	clear_bit(CNSS_QMI_DMS_CONNECTED, &plat_priv->driver_state);
-	cnss_pr_info("QMI DMS service disconnected, state: 0x%lx\n",
+	cnss_pr_debug("QMI DMS service disconnected, state: 0x%lx\n",
 		     plat_priv->driver_state);
 }
 

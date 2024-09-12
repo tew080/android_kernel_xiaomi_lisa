@@ -27,7 +27,7 @@ static void __init memchunk_cmdline_override(char *name, unsigned long *sizep)
 		if (!strncmp(name, p, k) && p[k] == '=') {
 			p += k + 1;
 			*sizep = memparse(p, NULL);
-			pr_info("%s: forcing memory chunk size to 0x%08lx\n",
+			pr_debug("%s: forcing memory chunk size to 0x%08lx\n",
 				name, *sizep);
 			break;
 		}

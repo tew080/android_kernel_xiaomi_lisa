@@ -604,7 +604,7 @@ static int __init hugetlbpage_init(void)
 	int psize;
 
 	if (hugetlb_disabled) {
-		pr_info("HugeTLB support is disabled!\n");
+		pr_debug("HugeTLB support is disabled!\n");
 		return 0;
 	}
 
@@ -660,7 +660,7 @@ static int __init hugetlbpage_init(void)
 		if (IS_ENABLED(CONFIG_HUGETLB_PAGE_SIZE_VARIABLE))
 			hugetlbpage_init_default();
 	} else
-		pr_info("Failed to initialize. Disabling HugeTLB");
+		pr_debug("Failed to initialize. Disabling HugeTLB");
 
 	return 0;
 }

@@ -123,7 +123,7 @@ static int __init st_clksrc_of_register(struct device_node *np)
 		return ret;
 	}
 
-	pr_info("clksrc-st-lpc: clocksource initialised - running @ %luHz\n",
+	pr_debug("clksrc-st-lpc: clocksource initialised - running @ %luHz\n",
 		clk_get_rate(ddata.clk));
 
 	return ret;

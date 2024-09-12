@@ -305,7 +305,7 @@ static int igt_buddy_alloc_smoke(void *arg)
 
 	igt_mm_config(&mm_size, &chunk_size);
 
-	pr_info("buddy_init with size=%llx, chunk_size=%llx\n", mm_size, chunk_size);
+	pr_debug("buddy_init with size=%llx, chunk_size=%llx\n", mm_size, chunk_size);
 
 	err = i915_buddy_init(&mm, mm_size, chunk_size);
 	if (err) {
@@ -325,7 +325,7 @@ static int igt_buddy_alloc_smoke(void *arg)
 			break;
 		}
 
-		pr_info("filling from max_order=%u\n", max_order);
+		pr_debug("filling from max_order=%u\n", max_order);
 
 		order = max_order;
 		total = 0;
@@ -336,7 +336,7 @@ retry:
 			if (IS_ERR(block)) {
 				err = PTR_ERR(block);
 				if (err == -ENOMEM) {
-					pr_info("buddy_alloc hit -ENOMEM with order=%d\n",
+					pr_debug("buddy_alloc hit -ENOMEM with order=%d\n",
 						order);
 				} else {
 					if (order--) {
@@ -410,7 +410,7 @@ static int igt_buddy_alloc_pessimistic(void *arg)
 	for (order = 0; order < max_order; order++) {
 		block = i915_buddy_alloc(&mm, order);
 		if (IS_ERR(block)) {
-			pr_info("buddy_alloc hit -ENOMEM with order=%d\n",
+			pr_debug("buddy_alloc hit -ENOMEM with order=%d\n",
 				order);
 			err = PTR_ERR(block);
 			goto err;
@@ -422,7 +422,7 @@ static int igt_buddy_alloc_pessimistic(void *arg)
 	/* And now the last remaining block available */
 	block = i915_buddy_alloc(&mm, 0);
 	if (IS_ERR(block)) {
-		pr_info("buddy_alloc hit -ENOMEM on final alloc\n");
+		pr_debug("buddy_alloc hit -ENOMEM on final alloc\n");
 		err = PTR_ERR(block);
 		goto err;
 	}
@@ -432,7 +432,7 @@ static int igt_buddy_alloc_pessimistic(void *arg)
 	for (order = max_order; order--; ) {
 		block = i915_buddy_alloc(&mm, order);
 		if (!IS_ERR(block)) {
-			pr_info("buddy_alloc unexpectedly succeeded at order %d, it should be full!",
+			pr_debug("buddy_alloc unexpectedly succeeded at order %d, it should be full!",
 				order);
 			list_add_tail(&block->link, &blocks);
 			err = -EINVAL;
@@ -452,7 +452,7 @@ static int igt_buddy_alloc_pessimistic(void *arg)
 
 		block = i915_buddy_alloc(&mm, order);
 		if (IS_ERR(block)) {
-			pr_info("buddy_alloc (realloc) hit -ENOMEM with order=%d\n",
+			pr_debug("buddy_alloc (realloc) hit -ENOMEM with order=%d\n",
 				order);
 			err = PTR_ERR(block);
 			goto err;
@@ -464,7 +464,7 @@ static int igt_buddy_alloc_pessimistic(void *arg)
 	/* To confirm, now the whole mm should be available */
 	block = i915_buddy_alloc(&mm, max_order);
 	if (IS_ERR(block)) {
-		pr_info("buddy_alloc (realloc) hit -ENOMEM with order=%d\n",
+		pr_debug("buddy_alloc (realloc) hit -ENOMEM with order=%d\n",
 			max_order);
 		err = PTR_ERR(block);
 		goto err;
@@ -503,7 +503,7 @@ static int igt_buddy_alloc_optimistic(void *arg)
 	for (order = 0; order <= max_order; order++) {
 		block = i915_buddy_alloc(&mm, order);
 		if (IS_ERR(block)) {
-			pr_info("buddy_alloc hit -ENOMEM with order=%d\n",
+			pr_debug("buddy_alloc hit -ENOMEM with order=%d\n",
 				order);
 			err = PTR_ERR(block);
 			goto err;
@@ -515,7 +515,7 @@ static int igt_buddy_alloc_optimistic(void *arg)
 	/* Should be completely full! */
 	block = i915_buddy_alloc(&mm, 0);
 	if (!IS_ERR(block)) {
-		pr_info("buddy_alloc unexpectedly succeeded, it should be full!");
+		pr_debug("buddy_alloc unexpectedly succeeded, it should be full!");
 		list_add_tail(&block->link, &blocks);
 		err = -EINVAL;
 		goto err;
@@ -562,7 +562,7 @@ static int igt_buddy_alloc_pathological(void *arg)
 		for (order = top; order--; ) {
 			block = i915_buddy_alloc(&mm, order);
 			if (IS_ERR(block)) {
-				pr_info("buddy_alloc hit -ENOMEM with order=%d, top=%d\n",
+				pr_debug("buddy_alloc hit -ENOMEM with order=%d, top=%d\n",
 					order, top);
 				err = PTR_ERR(block);
 				goto err;
@@ -573,7 +573,7 @@ static int igt_buddy_alloc_pathological(void *arg)
 		/* There should be one final page for this sub-allocation */
 		block = i915_buddy_alloc(&mm, 0);
 		if (IS_ERR(block)) {
-			pr_info("buddy_alloc hit -ENOMEM for hole\n");
+			pr_debug("buddy_alloc hit -ENOMEM for hole\n");
 			err = PTR_ERR(block);
 			goto err;
 		}
@@ -581,7 +581,7 @@ static int igt_buddy_alloc_pathological(void *arg)
 
 		block = i915_buddy_alloc(&mm, top);
 		if (!IS_ERR(block)) {
-			pr_info("buddy_alloc unexpectedly succeeded at top-order %d/%d, it should be full!",
+			pr_debug("buddy_alloc unexpectedly succeeded at top-order %d/%d, it should be full!",
 				top, max_order);
 			list_add_tail(&block->link, &blocks);
 			err = -EINVAL;
@@ -595,7 +595,7 @@ static int igt_buddy_alloc_pathological(void *arg)
 	for (order = 1; order <= max_order; order++) {
 		block = i915_buddy_alloc(&mm, order);
 		if (!IS_ERR(block)) {
-			pr_info("buddy_alloc unexpectedly succeeded at order %d, it should be full!",
+			pr_debug("buddy_alloc unexpectedly succeeded at order %d, it should be full!",
 				order);
 			list_add_tail(&block->link, &blocks);
 			err = -EINVAL;
@@ -623,7 +623,7 @@ static int igt_buddy_alloc_range(void *arg)
 
 	igt_mm_config(&size, &chunk_size);
 
-	pr_info("buddy_init with size=%llx, chunk_size=%llx\n", size, chunk_size);
+	pr_debug("buddy_init with size=%llx, chunk_size=%llx\n", size, chunk_size);
 
 	err = i915_buddy_init(&mm, size, chunk_size);
 	if (err) {
@@ -649,7 +649,7 @@ static int igt_buddy_alloc_range(void *arg)
 		err = i915_buddy_alloc_range(&mm, &tmp, offset, size);
 		if (err) {
 			if (err == -ENOMEM) {
-				pr_info("alloc_range hit -ENOMEM with size=%llx\n",
+				pr_debug("alloc_range hit -ENOMEM with size=%llx\n",
 					size);
 			} else {
 				pr_err("alloc_range with offset=%llx, size=%llx failed(%d)\n",

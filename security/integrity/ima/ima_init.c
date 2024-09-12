@@ -118,7 +118,7 @@ int __init ima_init(void)
 
 	ima_tpm_chip = tpm_default_chip();
 	if (!ima_tpm_chip)
-		pr_info("No TPM chip found, activating TPM-bypass!\n");
+		pr_debug("No TPM chip found, activating TPM-bypass!\n");
 
 	rc = integrity_init_keyring(INTEGRITY_KEYRING_IMA);
 	if (rc)

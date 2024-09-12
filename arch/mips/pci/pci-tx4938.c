@@ -21,7 +21,7 @@ int __init tx4938_report_pciclk(void)
 {
 	int pciclk = 0;
 
-	pr_info("PCIC --%s PCICLK:",
+	pr_debug("PCIC --%s PCICLK:",
 		(__raw_readq(&tx4938_ccfgptr->ccfg) & TX4938_CCFG_PCI66) ?
 		" PCI66" : "");
 	if (__raw_readq(&tx4938_ccfgptr->pcfg) & TX4938_PCFG_PCICLKEN_ALL) {
@@ -62,7 +62,7 @@ void __init tx4938_report_pci1clk(void)
 	unsigned int pciclk =
 		txx9_gbus_clock / ((ccfg & TX4938_CCFG_PCI1DMD) ? 4 : 2);
 
-	pr_info("PCIC1 -- %sPCICLK:%u.%uMHz\n",
+	pr_debug("PCIC1 -- %sPCICLK:%u.%uMHz\n",
 		(ccfg & TX4938_CCFG_PCI1_66) ? "PCI66 " : "",
 		(pciclk + 50000) / 1000000,
 		((pciclk + 50000) / 100000) % 10);

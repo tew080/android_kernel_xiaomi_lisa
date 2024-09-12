@@ -1108,7 +1108,7 @@ static int __init alchemy_clk_init(void)
 		t++;
 	}
 
-	pr_info("Alchemy clocktree installed\n");
+	pr_debug("Alchemy clocktree installed\n");
 	return 0;
 
 out:

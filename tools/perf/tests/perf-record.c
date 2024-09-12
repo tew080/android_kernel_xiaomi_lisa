@@ -190,7 +190,7 @@ int test__PERF_RECORD(struct test *test __maybe_unused, int subtest __maybe_unus
 				}
 
 				if (verbose > 0) {
-					pr_info("%" PRIu64" %d ", sample.time, sample.cpu);
+					pr_debug("%" PRIu64" %d ", sample.time, sample.cpu);
 					perf_event__fprintf(event, stderr);
 				}
 

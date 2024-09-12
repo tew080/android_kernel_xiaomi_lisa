@@ -341,7 +341,7 @@ static void loongson3_smp_finish(void)
 	local_irq_enable();
 	loongson3_ipi_write64(0,
 			ipi_mailbox_buf[cpu_logical_map(cpu)] + 0x0);
-	pr_info("CPU#%d finished, CP0_ST=%x\n",
+	pr_debug("CPU#%d finished, CP0_ST=%x\n",
 			smp_processor_id(), read_c0_status());
 }
 
@@ -365,7 +365,7 @@ static void __init loongson3_smp_setup(void)
 		}
 		i++;
 	}
-	pr_info("Detected %i available CPU(s)\n", num);
+	pr_debug("Detected %i available CPU(s)\n", num);
 
 	while (num < loongson_sysconf.nr_cpus) {
 		__cpu_logical_map[num] = -1;
@@ -395,7 +395,7 @@ static int loongson3_boot_secondary(int cpu, struct task_struct *idle)
 {
 	unsigned long startargs[4];
 
-	pr_info("Booting CPU#%d...\n", cpu);
+	pr_debug("Booting CPU#%d...\n", cpu);
 
 	/* startargs[] are initial PC, SP and GP for secondary CPU */
 	startargs[0] = (unsigned long)&smp_bootstrap;

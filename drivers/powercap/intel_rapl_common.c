@@ -540,7 +540,7 @@ static void rapl_init_domains(struct rapl_package *rp)
 			rd->domain_energy_unit =
 			    rapl_defaults->dram_domain_energy_unit;
 			if (rd->domain_energy_unit)
-				pr_info("DRAM domain energy unit %dpj\n",
+				pr_debug("DRAM domain energy unit %dpj\n",
 					rd->domain_energy_unit);
 		}
 		rd++;
@@ -1192,7 +1192,7 @@ static void rapl_detect_powerlimit(struct rapl_domain *rd)
 	/* check if the domain is locked by BIOS, ignore if MSR doesn't exist */
 	if (!rapl_read_data_raw(rd, FW_LOCK, false, &val64)) {
 		if (val64) {
-			pr_info("RAPL %s domain %s locked by BIOS\n",
+			pr_debug("RAPL %s domain %s locked by BIOS\n",
 				rd->rp->name, rd->name);
 			rd->state |= DOMAIN_STATE_BIOS_LOCKED;
 		}
@@ -1218,7 +1218,7 @@ static int rapl_detect_domains(struct rapl_package *rp, int cpu)
 		/* use physical package id to read counters */
 		if (!rapl_check_domain(cpu, i, rp)) {
 			rp->domain_map |= 1 << i;
-			pr_info("Found RAPL domain %s\n", rapl_domain_names[i]);
+			pr_debug("Found RAPL domain %s\n", rapl_domain_names[i]);
 		}
 	}
 	rp->nr_domains = bitmap_weight(&rp->domain_map, RAPL_DOMAIN_MAX);

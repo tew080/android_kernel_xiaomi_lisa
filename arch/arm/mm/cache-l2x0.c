@@ -613,7 +613,7 @@ static void __init l2c310_enable(void __iomem *base, unsigned num_lock)
 	if (rev >= L310_CACHE_ID_RTL_R2P0) {
 		if (cortex_a9 && !l2x0_bresp_disable) {
 			aux |= L310_AUX_CTRL_EARLY_BRESP;
-			pr_info("L2C-310 enabling early BRESP for Cortex-A9\n");
+			pr_debug("L2C-310 enabling early BRESP for Cortex-A9\n");
 		} else if (aux & L310_AUX_CTRL_EARLY_BRESP) {
 			pr_warn("L2C-310 early BRESP only supported with Cortex-A9\n");
 			aux &= ~L310_AUX_CTRL_EARLY_BRESP;
@@ -634,7 +634,7 @@ static void __init l2c310_enable(void __iomem *base, unsigned num_lock)
 
 		if (!(aux & L310_AUX_CTRL_FULL_LINE_ZERO) && !outer_cache.write_sec) {
 			aux |= L310_AUX_CTRL_FULL_LINE_ZERO;
-			pr_info("L2C-310 full line of zeros enabled for Cortex-A9\n");
+			pr_debug("L2C-310 full line of zeros enabled for Cortex-A9\n");
 		}
 	} else if (aux & (L310_AUX_CTRL_FULL_LINE_ZERO | L310_AUX_CTRL_EARLY_BRESP)) {
 		pr_err("L2C-310: disabling Cortex-A9 specific feature bits\n");
@@ -656,7 +656,7 @@ static void __init l2c310_enable(void __iomem *base, unsigned num_lock)
 	if (aux & (L310_AUX_CTRL_DATA_PREFETCH | L310_AUX_CTRL_INSTR_PREFETCH)) {
 		u32 prefetch = readl_relaxed(base + L310_PREFETCH_CTRL);
 
-		pr_info("L2C-310 %s%s prefetch enabled, offset %u lines\n",
+		pr_debug("L2C-310 %s%s prefetch enabled, offset %u lines\n",
 			aux & L310_AUX_CTRL_INSTR_PREFETCH ? "I" : "",
 			aux & L310_AUX_CTRL_DATA_PREFETCH ? "D" : "",
 			1 + (prefetch & L310_PREFETCH_CTRL_OFFSET_MASK));
@@ -667,7 +667,7 @@ static void __init l2c310_enable(void __iomem *base, unsigned num_lock)
 		u32 power_ctrl;
 
 		power_ctrl = readl_relaxed(base + L310_POWER_CTRL);
-		pr_info("L2C-310 dynamic clock gating %sabled, standby mode %sabled\n",
+		pr_debug("L2C-310 dynamic clock gating %sabled, standby mode %sabled\n",
 			power_ctrl & L310_DYNAMIC_CLK_GATING_EN ? "en" : "dis",
 			power_ctrl & L310_STNDBY_MODE_EN ? "en" : "dis");
 	}
@@ -723,7 +723,7 @@ static void __init l2c310_fixup(void __iomem *base, u32 cache_id,
 	if (n) {
 		unsigned i;
 
-		pr_info("L2C-310 errat%s", n > 1 ? "a" : "um");
+		pr_debug("L2C-310 errat%s", n > 1 ? "a" : "um");
 		for (i = 0; i < n; i++)
 			pr_cont(" %s", errata[i]);
 		pr_cont(" enabled\n");
@@ -855,7 +855,7 @@ static int __init __l2c_init(const struct l2c_init_data *data,
 	if (data->fixup)
 		data->fixup(l2x0_base, cache_id, &fns);
 	if (nosync) {
-		pr_info("L2C: disabling outer sync\n");
+		pr_debug("L2C: disabling outer sync\n");
 		fns.sync = NULL;
 	}
 
@@ -881,9 +881,9 @@ static int __init __l2c_init(const struct l2c_init_data *data,
 	/* Re-read it in case some bits are reserved. */
 	aux = readl_relaxed(l2x0_base + L2X0_AUX_CTRL);
 
-	pr_info("%s cache controller enabled, %d ways, %d kB\n",
+	pr_debug("%s cache controller enabled, %d ways, %d kB\n",
 		data->type, ways, l2x0_size >> 10);
-	pr_info("%s: CACHE_ID 0x%08x, AUX_CTRL 0x%08x\n",
+	pr_debug("%s: CACHE_ID 0x%08x, AUX_CTRL 0x%08x\n",
 		data->type, cache_id, aux);
 
 	l2x0_pmu_register(l2x0_base, cache_id);
@@ -995,12 +995,12 @@ static int __init l2x0_cache_size_of_parse(const struct device_node *np,
 		return -EINVAL;
 	}
 
-	pr_info("L2C OF: override cache size: %d bytes (%dKB)\n",
+	pr_debug("L2C OF: override cache size: %d bytes (%dKB)\n",
 		cache_size, cache_size >> 10);
-	pr_info("L2C OF: override line size: %d bytes\n", line_size);
-	pr_info("L2C OF: override way size: %d bytes (%dKB)\n",
+	pr_debug("L2C OF: override line size: %d bytes\n", line_size);
+	pr_debug("L2C OF: override way size: %d bytes (%dKB)\n",
 		way_size, way_size >> 10);
-	pr_info("L2C OF: override associativity: %d\n", *associativity);
+	pr_debug("L2C OF: override associativity: %d\n", *associativity);
 
 	/*
 	 * Calculates the bits 17:19 to set for way size:

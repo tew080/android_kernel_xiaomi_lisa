@@ -87,7 +87,7 @@ void __init nf_init(void)
 	nf_call(id, virt_to_phys(buf), 256);
 	buf[255] = 0;
 
-	pr_info("NatFeats found (%s, %lu.%lu)\n", buf, version >> 16,
+	pr_debug("NatFeats found (%s, %lu.%lu)\n", buf, version >> 16,
 		version & 0xffff);
 
 	mach_power_off = nf_poweroff;

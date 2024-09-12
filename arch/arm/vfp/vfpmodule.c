@@ -794,7 +794,7 @@ static int __init vfp_init(void)
 	unregister_undef_hook(&vfp_detect_hook);
 	vfp_vector = vfp_null_entry;
 
-	pr_info("VFP support v0.3: ");
+	pr_debug("VFP support v0.3: ");
 	if (VFP_arch) {
 		pr_cont("not present\n");
 		return 0;

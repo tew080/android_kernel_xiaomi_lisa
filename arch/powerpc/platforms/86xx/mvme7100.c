@@ -68,7 +68,7 @@ static void __init mvme7100_setup_arch(void)
 	} else
 		pr_warn("Unable to map board registers\n");
 
-	pr_info("MVME7100 board from Artesyn\n");
+	pr_debug("MVME7100 board from Artesyn\n");
 }
 
 /*

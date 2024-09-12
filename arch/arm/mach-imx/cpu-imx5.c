@@ -77,7 +77,7 @@ int __init mx51_neon_fixup(void)
 	if (mx51_revision() < IMX_CHIP_REVISION_3_0 &&
 			(elf_hwcap & HWCAP_NEON)) {
 		elf_hwcap &= ~HWCAP_NEON;
-		pr_info("Turning off NEON support, detected broken NEON implementation\n");
+		pr_debug("Turning off NEON support, detected broken NEON implementation\n");
 	}
 	return 0;
 }

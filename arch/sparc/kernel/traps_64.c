@@ -2104,7 +2104,7 @@ void sun4v_resum_error(struct pt_regs *regs, unsigned long offset)
 		 * invocation, but for now do the same thing we
 		 * do for a DS shutdown request.
 		 */
-		pr_info("Shutdown request, %u seconds...\n",
+		pr_debug("Shutdown request, %u seconds...\n",
 			local_copy.err_secs);
 		orderly_poweroff(true);
 		goto out;

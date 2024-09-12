@@ -1573,7 +1573,7 @@ static int __init its_lpi_init(u32 id_bits)
 
 	if (numlpis > 2 && !WARN_ON(numlpis > lpis)) {
 		lpis = numlpis;
-		pr_info("ITS: Using hypervisor restricted LPI range [%u]\n",
+		pr_debug("ITS: Using hypervisor restricted LPI range [%u]\n",
 			lpis);
 	}
 
@@ -1718,7 +1718,7 @@ static int __init its_setup_lpi_prop_table(void)
 					  LPI_PROPBASE_SZ));
 	}
 
-	pr_info("GICv3: using LPI property table @%pa\n",
+	pr_debug("GICv3: using LPI property table @%pa\n",
 		&gic_rdists->prop_table_pa);
 
 	return its_lpi_init(lpi_id_bits);
@@ -1867,7 +1867,7 @@ retry_baser:
 	baser->psz = psz;
 	tmp = indirect ? GITS_LVL1_ENTRY_SIZE : esz;
 
-	pr_info("ITS@%pa: allocated %d %s @%lx (%s, esz %d, psz %dK, shr %d)\n",
+	pr_debug("ITS@%pa: allocated %d %s @%lx (%s, esz %d, psz %dK, shr %d)\n",
 		&its->phys_base, (int)(PAGE_ORDER_TO_SIZE(order) / (int)tmp),
 		its_base_type_string[type],
 		(unsigned long)virt_to_phys(base),
@@ -2058,7 +2058,7 @@ static int __init allocate_lpi_tables(void)
 	if ((val & GICR_CTLR_ENABLE_LPIS) && enabled_lpis_allowed()) {
 		gic_rdists->flags |= (RDIST_FLAGS_RD_TABLES_PREALLOCATED |
 				      RDIST_FLAGS_PROPBASE_NEEDS_FLUSHING);
-		pr_info("GICv3: Using preallocated redistributor tables\n");
+		pr_debug("GICv3: Using preallocated redistributor tables\n");
 	}
 
 	err = its_setup_lpi_prop_table();
@@ -2221,7 +2221,7 @@ static void its_cpu_init_lpis(void)
 	dsb(sy);
 out:
 	gic_data_rdist()->lpi_enabled = true;
-	pr_info("GICv3: CPU%d: using %s LPI pending table @%pa\n",
+	pr_debug("GICv3: CPU%d: using %s LPI pending table @%pa\n",
 		smp_processor_id(),
 		gic_data_rdist()->pend_page ? "allocated" : "reserved",
 		&paddr);
@@ -3490,7 +3490,7 @@ static int its_init_vpe_domain(void)
 	int entries;
 
 	if (gic_rdists->has_direct_lpi) {
-		pr_info("ITS: Using DirectLPI for VPE invalidation\n");
+		pr_debug("ITS: Using DirectLPI for VPE invalidation\n");
 		return 0;
 	}
 
@@ -3518,7 +3518,7 @@ static int its_init_vpe_domain(void)
 
 	raw_spin_lock_init(&vpe_proxy.lock);
 	vpe_proxy.next_victim = 0;
-	pr_info("ITS: Allocated DevID %x as GICv4 proxy device (%d slots)\n",
+	pr_debug("ITS: Allocated DevID %x as GICv4 proxy device (%d slots)\n",
 		devid, vpe_proxy.dev->nr_ites);
 
 	return 0;
@@ -3591,7 +3591,7 @@ static int __init its_probe_one(struct resource *res,
 		goto out_unmap;
 	}
 
-	pr_info("ITS %pR\n", res);
+	pr_debug("ITS %pR\n", res);
 
 	its = kzalloc(sizeof(*its), GFP_KERNEL);
 	if (!its) {
@@ -3617,10 +3617,10 @@ static int __init its_probe_one(struct resource *res,
 
 			its->list_nr = err;
 
-			pr_info("ITS@%pa: Using ITS number %d\n",
+			pr_debug("ITS@%pa: Using ITS number %d\n",
 				&res->start, err);
 		} else {
-			pr_info("ITS@%pa: Single VMOVP capable\n", &res->start);
+			pr_debug("ITS@%pa: Single VMOVP capable\n", &res->start);
 		}
 	}
 
@@ -3669,7 +3669,7 @@ static int __init its_probe_one(struct resource *res,
 			baser |= GITS_CBASER_nC;
 			gits_write_cbaser(baser, its->base + GITS_CBASER);
 		}
-		pr_info("ITS: using cache flushing for cmd queue\n");
+		pr_debug("ITS: using cache flushing for cmd queue\n");
 		its->flags |= ITS_FLAGS_CMDQ_NEEDS_FLUSHING;
 	}
 
@@ -3714,7 +3714,7 @@ static int redist_disable_lpis(void)
 	u64 val;
 
 	if (!gic_rdists_supports_plpis()) {
-		pr_info("CPU%d: LPIs not supported\n", smp_processor_id());
+		pr_debug("CPU%d: LPIs not supported\n", smp_processor_id());
 		return -ENXIO;
 	}
 
@@ -3879,7 +3879,7 @@ static int __init gic_acpi_parse_srat_its(union acpi_subtable_headers *header,
 	its_srat_maps[its_in_srat].numa_node = node;
 	its_srat_maps[its_in_srat].its_id = its_affinity->its_id;
 	its_in_srat++;
-	pr_info("SRAT: PXM %d -> ITS %d -> Node %d\n",
+	pr_debug("SRAT: PXM %d -> ITS %d -> Node %d\n",
 		its_affinity->proximity_domain, its_affinity->its_id, node);
 
 	return 0;

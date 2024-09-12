@@ -21,7 +21,7 @@ int __init tx4927_report_pciclk(void)
 {
 	int pciclk = 0;
 
-	pr_info("PCIC --%s PCICLK:",
+	pr_debug("PCIC --%s PCICLK:",
 		(__raw_readq(&tx4927_ccfgptr->ccfg) & TX4927_CCFG_PCI66) ?
 		" PCI66" : "");
 	if (__raw_readq(&tx4927_ccfgptr->pcfg) & TX4927_PCFG_PCICLKEN_ALL) {

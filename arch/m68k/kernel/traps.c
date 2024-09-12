@@ -819,7 +819,7 @@ void show_trace(unsigned long *stack)
 	unsigned long addr;
 	int i;
 
-	pr_info("Call Trace:");
+	pr_debug("Call Trace:");
 	addr = (unsigned long)stack + THREAD_SIZE - 1;
 	endstack = (unsigned long *)(addr & -THREAD_SIZE);
 	i = 0;
@@ -854,17 +854,17 @@ void show_registers(struct pt_regs *regs)
 	int i;
 
 	print_modules();
-	pr_info("PC: [<%08lx>] %pS\n", regs->pc, (void *)regs->pc);
-	pr_info("SR: %04x  SP: %p  a2: %08lx\n", regs->sr, regs, regs->a2);
-	pr_info("d0: %08lx    d1: %08lx    d2: %08lx    d3: %08lx\n",
+	pr_debug("PC: [<%08lx>] %pS\n", regs->pc, (void *)regs->pc);
+	pr_debug("SR: %04x  SP: %p  a2: %08lx\n", regs->sr, regs, regs->a2);
+	pr_debug("d0: %08lx    d1: %08lx    d2: %08lx    d3: %08lx\n",
 	       regs->d0, regs->d1, regs->d2, regs->d3);
-	pr_info("d4: %08lx    d5: %08lx    a0: %08lx    a1: %08lx\n",
+	pr_debug("d4: %08lx    d5: %08lx    a0: %08lx    a1: %08lx\n",
 	       regs->d4, regs->d5, regs->a0, regs->a1);
 
-	pr_info("Process %s (pid: %d, task=%p)\n",
+	pr_debug("Process %s (pid: %d, task=%p)\n",
 		current->comm, task_pid_nr(current), current);
 	addr = (unsigned long)&fp->un;
-	pr_info("Frame format=%X ", regs->format);
+	pr_debug("Frame format=%X ", regs->format);
 	switch (regs->format) {
 	case 0x2:
 		pr_cont("instr addr=%08lx\n", fp->un.fmt2.iaddr);
@@ -886,13 +886,13 @@ void show_registers(struct pt_regs *regs)
 	case 0x7:
 		pr_cont("eff addr=%08lx ssw=%04x faddr=%08lx\n",
 			fp->un.fmt7.effaddr, fp->un.fmt7.ssw, fp->un.fmt7.faddr);
-		pr_info("wb 1 stat/addr/data: %04x %08lx %08lx\n",
+		pr_debug("wb 1 stat/addr/data: %04x %08lx %08lx\n",
 			fp->un.fmt7.wb1s, fp->un.fmt7.wb1a, fp->un.fmt7.wb1dpd0);
-		pr_info("wb 2 stat/addr/data: %04x %08lx %08lx\n",
+		pr_debug("wb 2 stat/addr/data: %04x %08lx %08lx\n",
 			fp->un.fmt7.wb2s, fp->un.fmt7.wb2a, fp->un.fmt7.wb2d);
-		pr_info("wb 3 stat/addr/data: %04x %08lx %08lx\n",
+		pr_debug("wb 3 stat/addr/data: %04x %08lx %08lx\n",
 			fp->un.fmt7.wb3s, fp->un.fmt7.wb3a, fp->un.fmt7.wb3d);
-		pr_info("push data: %08lx %08lx %08lx %08lx\n",
+		pr_debug("push data: %08lx %08lx %08lx %08lx\n",
 			fp->un.fmt7.wb1dpd0, fp->un.fmt7.pd1, fp->un.fmt7.pd2,
 			fp->un.fmt7.pd3);
 		addr += sizeof(fp->un.fmt7);
@@ -911,7 +911,7 @@ void show_registers(struct pt_regs *regs)
 		pr_cont("ssw=%04x isc=%04x isb=%04x daddr=%08lx dobuf=%08lx\n",
 			fp->un.fmtb.ssw, fp->un.fmtb.isc, fp->un.fmtb.isb,
 			fp->un.fmtb.daddr, fp->un.fmtb.dobuf);
-		pr_info("baddr=%08lx dibuf=%08lx ver=%x\n",
+		pr_debug("baddr=%08lx dibuf=%08lx ver=%x\n",
 			fp->un.fmtb.baddr, fp->un.fmtb.dibuf, fp->un.fmtb.ver);
 		addr += sizeof(fp->un.fmtb);
 		break;
@@ -920,7 +920,7 @@ void show_registers(struct pt_regs *regs)
 	}
 	show_stack(NULL, (unsigned long *)addr);
 
-	pr_info("Code:");
+	pr_debug("Code:");
 	set_fs(KERNEL_DS);
 	cp = (u16 *)regs->pc;
 	for (i = -8; i < 16; i++) {
@@ -951,7 +951,7 @@ void show_stack(struct task_struct *task, unsigned long *stack)
 	}
 	endstack = (unsigned long *)(((unsigned long)stack + THREAD_SIZE - 1) & -THREAD_SIZE);
 
-	pr_info("Stack from %08lx:", (unsigned long)stack);
+	pr_debug("Stack from %08lx:", (unsigned long)stack);
 	p = stack;
 	for (i = 0; i < kstack_depth_to_print; i++) {
 		if (p + 1 > endstack)

@@ -201,7 +201,7 @@ static int bmips_boot_secondary(int cpu, struct task_struct *idle)
 	 *   start_secondary
 	 */
 
-	pr_info("SMP: Booting CPU%d...\n", cpu);
+	pr_debug("SMP: Booting CPU%d...\n", cpu);
 
 	if (cpumask_test_cpu(cpu, &bmips_booted_mask)) {
 		/* kseg1 might not exist if this CPU enabled XKS01 */
@@ -260,7 +260,7 @@ static void bmips_init_secondary(void)
  */
 static void bmips_smp_finish(void)
 {
-	pr_info("SMP: CPU%d is running\n", smp_processor_id());
+	pr_debug("SMP: CPU%d is running\n", smp_processor_id());
 
 	/* make sure there won't be a timer interrupt for a little while */
 	write_c0_compare(read_c0_count() + mips_hpt_frequency / HZ);
@@ -367,7 +367,7 @@ static int bmips_cpu_disable(void)
 	if (cpu == 0)
 		return -EBUSY;
 
-	pr_info("SMP: CPU%d is offline\n", cpu);
+	pr_debug("SMP: CPU%d is offline\n", cpu);
 
 	set_cpu_online(cpu, false);
 	calculate_cpu_foreign_map();

@@ -164,7 +164,7 @@ void __init pdc_pdt_init(void)
 
 	if (ret != PDC_OK) {
 		pdt_type = PDT_NONE;
-		pr_info("PDT: Firmware does not provide any page deallocation"
+		pr_debug("PDT: Firmware does not provide any page deallocation"
 			" information.\n");
 		return;
 	}
@@ -173,7 +173,7 @@ void __init pdc_pdt_init(void)
 	if (WARN_ON(entries > MAX_PDT_ENTRIES))
 		entries = pdt_status.pdt_entries = MAX_PDT_ENTRIES;
 
-	pr_info("PDT: type %s, size %lu, entries %lu, status %lu, dbe_loc 0x%lx,"
+	pr_debug("PDT: type %s, size %lu, entries %lu, status %lu, dbe_loc 0x%lx,"
 		" good_mem %lu MB\n",
 			pdt_type == PDT_PDC ? __stringify(PDT_PDC) :
 			pdt_type == PDT_PAT_CELL ? __stringify(PDT_PAT_CELL)
@@ -183,7 +183,7 @@ void __init pdc_pdt_init(void)
 			pdt_status.good_mem / 1024 / 1024);
 
 	if (entries == 0) {
-		pr_info("PDT: Firmware reports all memory OK.\n");
+		pr_debug("PDT: Firmware reports all memory OK.\n");
 		return;
 	}
 

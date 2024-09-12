@@ -3401,7 +3401,7 @@ static int mxt_check_dedicated_touch(struct device_node *dt, const char *prop,
 
 	ret = of_property_read_string(dt->parent, active_prop, &active_touch);
 	if (ret < 0) {
-		pr_info(" %s:not dedicated active touch\n", __func__);
+		pr_debug(" %s:not dedicated active touch\n", __func__);
 		return -ENODEV;
 	}
 
@@ -3413,7 +3413,7 @@ static int mxt_check_dedicated_touch(struct device_node *dt, const char *prop,
 
 	temp = strnstr(active_touch, compatible, strlen(active_touch));
 	if (!temp) {
-		pr_info(" %s:no match compatible, %s, %s\n",
+		pr_debug(" %s:no match compatible, %s, %s\n",
 			__func__, compatible, active_touch);
 		return -ENODEV;
 

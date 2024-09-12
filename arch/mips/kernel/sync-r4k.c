@@ -30,7 +30,7 @@ void synchronise_count_master(int cpu)
 	int i;
 	unsigned long flags;
 
-	pr_info("Synchronize counters for CPU %u: ", cpu);
+	pr_debug("Synchronize counters for CPU %u: ", cpu);
 
 	local_irq_save(flags);
 

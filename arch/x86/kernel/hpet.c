@@ -141,34 +141,34 @@ static void _hpet_print_config(const char *function, int line)
 {
 	u32 i, id, period, cfg, status, channels, l, h;
 
-	pr_info("%s(%d):\n", function, line);
+	pr_debug("%s(%d):\n", function, line);
 
 	id = hpet_readl(HPET_ID);
 	period = hpet_readl(HPET_PERIOD);
-	pr_info("ID: 0x%x, PERIOD: 0x%x\n", id, period);
+	pr_debug("ID: 0x%x, PERIOD: 0x%x\n", id, period);
 
 	cfg = hpet_readl(HPET_CFG);
 	status = hpet_readl(HPET_STATUS);
-	pr_info("CFG: 0x%x, STATUS: 0x%x\n", cfg, status);
+	pr_debug("CFG: 0x%x, STATUS: 0x%x\n", cfg, status);
 
 	l = hpet_readl(HPET_COUNTER);
 	h = hpet_readl(HPET_COUNTER+4);
-	pr_info("COUNTER_l: 0x%x, COUNTER_h: 0x%x\n", l, h);
+	pr_debug("COUNTER_l: 0x%x, COUNTER_h: 0x%x\n", l, h);
 
 	channels = ((id & HPET_ID_NUMBER) >> HPET_ID_NUMBER_SHIFT) + 1;
 
 	for (i = 0; i < channels; i++) {
 		l = hpet_readl(HPET_Tn_CFG(i));
 		h = hpet_readl(HPET_Tn_CFG(i)+4);
-		pr_info("T%d: CFG_l: 0x%x, CFG_h: 0x%x\n", i, l, h);
+		pr_debug("T%d: CFG_l: 0x%x, CFG_h: 0x%x\n", i, l, h);
 
 		l = hpet_readl(HPET_Tn_CMP(i));
 		h = hpet_readl(HPET_Tn_CMP(i)+4);
-		pr_info("T%d: CMP_l: 0x%x, CMP_h: 0x%x\n", i, l, h);
+		pr_debug("T%d: CMP_l: 0x%x, CMP_h: 0x%x\n", i, l, h);
 
 		l = hpet_readl(HPET_Tn_ROUTE(i));
 		h = hpet_readl(HPET_Tn_ROUTE(i)+4);
-		pr_info("T%d ROUTE_l: 0x%x, ROUTE_h: 0x%x\n", i, l, h);
+		pr_debug("T%d ROUTE_l: 0x%x, ROUTE_h: 0x%x\n", i, l, h);
 	}
 }
 
@@ -515,7 +515,7 @@ static irqreturn_t hpet_msi_interrupt_handler(int irq, void *data)
 	struct clock_event_device *evt = &hc->evt;
 
 	if (!evt->event_handler) {
-		pr_info("Spurious interrupt HPET channel %d\n", hc->num);
+		pr_debug("Spurious interrupt HPET channel %d\n", hc->num);
 		return IRQ_HANDLED;
 	}
 
@@ -631,7 +631,7 @@ static void __init hpet_select_clockevents(void)
 			break;
 	}
 
-	pr_info("%d channels of %d reserved for per-cpu timers\n",
+	pr_debug("%d channels of %d reserved for per-cpu timers\n",
 		hpet_base.nr_channels, hpet_base.nr_clockevents);
 }
 
@@ -879,7 +879,7 @@ static bool __init hpet_is_pc10_damaged(void)
 		return false;
 	}
 
-	pr_info("HPET dysfunctional in PC10. Force disabled.\n");
+	pr_debug("HPET dysfunctional in PC10. Force disabled.\n");
 	boot_hpet_disable = true;
 	return true;
 }

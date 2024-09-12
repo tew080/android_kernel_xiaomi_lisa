@@ -63,7 +63,7 @@ static bool __init fpu__probe_without_cpuid(void)
 
 	asm volatile("fninit ; fnstsw %0 ; fnstcw %1" : "+m" (fsw), "+m" (fcw));
 
-	pr_info("x86/fpu: Probing for FPU: FSW=0x%04hx FCW=0x%04hx\n", fsw, fcw);
+	pr_debug("x86/fpu: Probing for FPU: FSW=0x%04hx FCW=0x%04hx\n", fsw, fcw);
 
 	return fsw == 0 && (fcw & 0x103f) == 0x003f;
 }
@@ -268,7 +268,7 @@ static void __init fpu__init_parse_early_param(void)
 	if (arglen <= 0)
 		return;
 
-	pr_info("Clearing CPUID bits:");
+	pr_debug("Clearing CPUID bits:");
 	do {
 		res = get_option(&argptr, &bit);
 		if (res == 0 || res == 3)

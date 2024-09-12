@@ -140,7 +140,7 @@ static int bmips_cpufreq_init(struct cpufreq_policy *policy)
 	}
 
 	cpufreq_generic_init(policy, freq_table, TRANSITION_LATENCY);
-	pr_info("%s: registered\n", BMIPS_CPUFREQ_NAME);
+	pr_debug("%s: registered\n", BMIPS_CPUFREQ_NAME);
 
 	return 0;
 }

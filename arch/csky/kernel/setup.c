@@ -78,7 +78,7 @@ void __init setup_arch(char **cmdline_p)
 
 	console_verbose();
 
-	pr_info("Phys. mem: %ldMB\n",
+	pr_debug("Phys. mem: %ldMB\n",
 		(unsigned long) memblock_phys_mem_size()/1024/1024);
 
 	init_mm.start_code = (unsigned long) _stext;

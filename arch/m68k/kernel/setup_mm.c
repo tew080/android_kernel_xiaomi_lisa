@@ -359,7 +359,7 @@ void __init setup_arch(char **cmdline_p)
 		memblock_reserve(m68k_ramdisk.addr, m68k_ramdisk.size);
 		initrd_start = (unsigned long)phys_to_virt(m68k_ramdisk.addr);
 		initrd_end = initrd_start + m68k_ramdisk.size;
-		pr_info("initrd: %08lx - %08lx\n", initrd_start, initrd_end);
+		pr_debug("initrd: %08lx - %08lx\n", initrd_start, initrd_end);
 	}
 #endif
 

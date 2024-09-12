@@ -39,13 +39,13 @@ void __init platform_init(bp_tag_t* bootparam)
 
 void platform_halt(void)
 {
-	pr_info(" ** Called platform_halt() **\n");
+	pr_debug(" ** Called platform_halt() **\n");
 	simc_exit(0);
 }
 
 void platform_power_off(void)
 {
-	pr_info(" ** Called platform_power_off() **\n");
+	pr_debug(" ** Called platform_power_off() **\n");
 	simc_exit(0);
 }
 void platform_restart(void)

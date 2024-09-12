@@ -358,7 +358,7 @@ void pseries_enable_reloc_on_exc(void)
 		rc = enable_reloc_on_exceptions();
 		if (!H_IS_LONG_BUSY(rc)) {
 			if (rc == H_P2) {
-				pr_info("Relocation on exceptions not"
+				pr_debug("Relocation on exceptions not"
 					" supported\n");
 			} else if (rc != H_SUCCESS) {
 				pr_warn("Unable to enable relocation"
@@ -918,7 +918,7 @@ static void pSeries_cmo_feature_init(void)
 	pr_debug("CMO_PageSize = %lu\n", CMO_PageSize);
 
 	if (CMO_PrPSP != -1 || CMO_SecPSP != -1) {
-		pr_info("CMO enabled\n");
+		pr_debug("CMO enabled\n");
 		pr_debug("CMO enabled, PrPSP=%d, SecPSP=%d\n", CMO_PrPSP,
 		         CMO_SecPSP);
 		powerpc_firmware_features |= FW_FEATURE_CMO;

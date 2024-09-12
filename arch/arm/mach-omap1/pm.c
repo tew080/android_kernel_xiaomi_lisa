@@ -613,18 +613,18 @@ static int __init omap_pm_init(void)
 	if (!cpu_class_is_omap1())
 		return -ENODEV;
 
-	pr_info("Power Management for TI OMAP.\n");
+	pr_debug("Power Management for TI OMAP.\n");
 
 	if (!IS_ENABLED(CONFIG_OMAP_32K_TIMER))
-		pr_info("OMAP1 PM: sleep states in idle disabled due to no 32KiHz timer\n");
+		pr_debug("OMAP1 PM: sleep states in idle disabled due to no 32KiHz timer\n");
 
 	if (!IS_ENABLED(CONFIG_OMAP_DM_TIMER))
-		pr_info("OMAP1 PM: sleep states in idle disabled due to no DMTIMER support\n");
+		pr_debug("OMAP1 PM: sleep states in idle disabled due to no DMTIMER support\n");
 
 	if (IS_ENABLED(CONFIG_OMAP_32K_TIMER) &&
 	    IS_ENABLED(CONFIG_OMAP_DM_TIMER)) {
 		/* OMAP16xx only */
-		pr_info("OMAP1 PM: sleep states in idle enabled\n");
+		pr_debug("OMAP1 PM: sleep states in idle enabled\n");
 		enable_dyn_sleep = 1;
 	}
 

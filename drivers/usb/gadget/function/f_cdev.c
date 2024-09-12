@@ -585,7 +585,7 @@ static void usb_cser_resume(struct usb_function *f)
 
 	/* process pending read request */
 	if (port->setup_pending) {
-		pr_info("%s: start_rx called due to rx_out error.\n", __func__);
+		pr_debug("%s: start_rx called due to rx_out error.\n", __func__);
 		port->setup_pending = false;
 		spin_unlock_irqrestore(&port->port_lock, flags);
 		usb_cser_start_rx(port);
@@ -1989,7 +1989,7 @@ static struct f_cdev *f_cdev_alloc(char *func_name, int portno)
 
 	usb_cser_debugfs_init(port);
 
-	pr_info("port_name:%s (%pK) portno:(%d)\n",
+	pr_debug("port_name:%s (%pK) portno:(%d)\n",
 			port->name, port, port->port_num);
 	return port;
 

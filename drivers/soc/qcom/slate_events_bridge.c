@@ -145,7 +145,7 @@ void seb_send_input(struct event *evnt)
 			}
 			break;
 		default:
-			pr_info("event: type[%d] , data: %d\n",
+			pr_debug("event: type[%d] , data: %d\n",
 						evnt->sub_id, evnt->evnt_data);
 		}
 	}

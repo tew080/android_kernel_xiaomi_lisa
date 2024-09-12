@@ -538,7 +538,7 @@ static int qtnf_event_handle_radar(struct qtnf_vif *vif,
 		return -EINVAL;
 	}
 
-	pr_info("%s: radar event=%u f1=%u f2=%u bw=%u\n",
+	pr_debug("%s: radar event=%u f1=%u f2=%u bw=%u\n",
 		vif->netdev->name, ev->event,
 		chandef.center_freq1, chandef.center_freq2,
 		chandef.width);
@@ -609,7 +609,7 @@ qtnf_event_handle_external_auth(struct qtnf_vif *vif,
 	ether_addr_copy(auth.bssid, ev->bssid);
 	auth.action = ev->action;
 
-	pr_info("%s: external auth bss=%pM action=%u akm=%u\n",
+	pr_debug("%s: external auth bss=%pM action=%u akm=%u\n",
 		vif->netdev->name, auth.bssid, auth.action,
 		auth.key_mgmt_suite);
 

@@ -552,7 +552,7 @@ static int navi10_get_metrics_table(struct smu_context *smu,
 		ret = smu_update_table(smu, SMU_TABLE_SMU_METRICS, 0,
 				(void *)smu_table->metrics_table, false);
 		if (ret) {
-			pr_info("Failed to export SMU metrics table!\n");
+			pr_debug("Failed to export SMU metrics table!\n");
 			mutex_unlock(&smu->metrics_lock);
 			return ret;
 		}
@@ -1274,7 +1274,7 @@ static int navi10_notify_smc_dispaly_config(struct smu_context *smu)
 				}
 			}
 		} else {
-			pr_info("Attempt to set Hard Min for DCEFCLK Failed!");
+			pr_debug("Attempt to set Hard Min for DCEFCLK Failed!");
 		}
 	}
 

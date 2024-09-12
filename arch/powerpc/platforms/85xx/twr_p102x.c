@@ -117,7 +117,7 @@ static void __init twr_p1025_setup_arch(void)
 #endif
 #endif	/* CONFIG_QUICC_ENGINE */
 
-	pr_info("TWR-P1025 board from Freescale Semiconductor\n");
+	pr_debug("TWR-P1025 board from Freescale Semiconductor\n");
 }
 
 machine_arch_initcall(twr_p1025, mpc85xx_common_publish_devices);

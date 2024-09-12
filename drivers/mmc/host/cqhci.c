@@ -1273,7 +1273,7 @@ int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc,
 	init_completion(&cq_host->halt_comp);
 	init_waitqueue_head(&cq_host->wait_queue);
 
-	pr_info("%s: CQHCI version %u.%02u\n",
+	pr_debug("%s: CQHCI version %u.%02u\n",
 		mmc_hostname(mmc), cqhci_ver_major(cq_host),
 		cqhci_ver_minor(cq_host));
 

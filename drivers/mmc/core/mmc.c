@@ -1749,11 +1749,11 @@ static void mmc_initialize_cqe(struct mmc_host *host, struct mmc_card *card)
 			host->cqe_enabled = true;
 
 			if (card->ext_csd.cmdq_en) {
-				pr_info("%s: Command Queue Engine enabled\n",
+				pr_debug("%s: Command Queue Engine enabled\n",
 					mmc_hostname(host));
 			} else {
 				host->hsq_enabled = true;
-				pr_info("%s: Host Software Queue enabled\n",
+				pr_debug("%s: Host Software Queue enabled\n",
 					mmc_hostname(host));
 			}
 		}

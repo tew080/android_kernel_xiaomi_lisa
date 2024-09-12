@@ -160,14 +160,14 @@ static int qbt_touch_connect(struct input_handler *handler,
 		return ret;
 	}
 
-	pr_info("Connected device: %s\n", dev_name(&dev->dev));
+	pr_debug("Connected device: %s\n", dev_name(&dev->dev));
 
 	return ret;
 }
 
 static void qbt_touch_disconnect(struct input_handle *handle)
 {
-	pr_info("Disconnected device: %s\n", dev_name(&handle->dev->dev));
+	pr_debug("Disconnected device: %s\n", dev_name(&handle->dev->dev));
 
 	input_close_device(handle);
 	input_unregister_handle(handle);

@@ -489,7 +489,7 @@ int __init uniphier_cache_init(void)
 
 	uniphier_cache_enable();
 
-	pr_info("enabled outer cache (cache level: %d)\n", cache_level);
+	pr_debug("enabled outer cache (cache level: %d)\n", cache_level);
 
 	return ret;
 }

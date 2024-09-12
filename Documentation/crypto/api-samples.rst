@@ -123,7 +123,7 @@ Code Example For Use of Operational State Memory With SHASH
 
         sdesc = init_sdesc(alg);
         if (IS_ERR(sdesc)) {
-            pr_info("can't alloc sdesc\n");
+            pr_debug("can't alloc sdesc\n");
             return PTR_ERR(sdesc);
         }
 
@@ -141,7 +141,7 @@ Code Example For Use of Operational State Memory With SHASH
 
         alg = crypto_alloc_shash(hash_alg_name, 0, 0);
         if (IS_ERR(alg)) {
-                pr_info("can't alloc alg %s\n", hash_alg_name);
+                pr_debug("can't alloc alg %s\n", hash_alg_name);
                 return PTR_ERR(alg);
         }
         ret = calc_hash(alg, data, datalen, digest);

@@ -62,10 +62,10 @@ void intel_p5_mcheck_init(struct cpuinfo_x86 *c)
 	/* Read registers before enabling: */
 	rdmsr(MSR_IA32_P5_MC_ADDR, l, h);
 	rdmsr(MSR_IA32_P5_MC_TYPE, l, h);
-	pr_info("Intel old style machine check architecture supported.\n");
+	pr_debug("Intel old style machine check architecture supported.\n");
 
 	/* Enable MCE: */
 	cr4_set_bits(X86_CR4_MCE);
-	pr_info("Intel old style machine check reporting enabled on CPU#%d.\n",
+	pr_debug("Intel old style machine check reporting enabled on CPU#%d.\n",
 		smp_processor_id());
 }

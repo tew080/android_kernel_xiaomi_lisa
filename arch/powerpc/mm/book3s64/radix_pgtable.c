@@ -237,7 +237,7 @@ print_mapping(unsigned long start, unsigned long end, unsigned long size, bool e
 
 	string_get_size(size, 1, STRING_UNITS_2, buf, sizeof(buf));
 
-	pr_info("Mapped 0x%016lx-0x%016lx with %s pages%s\n", start, end, buf,
+	pr_debug("Mapped 0x%016lx-0x%016lx with %s pages%s\n", start, end, buf,
 		exec ? " (exec)" : "");
 }
 
@@ -396,7 +396,7 @@ static void __init radix_init_partition_table(void)
 	dw1 = __pa(process_tb) | (PRTB_SIZE_SHIFT - 12) | PATB_GR;
 	mmu_partition_table_set_entry(0, dw0, dw1, false);
 
-	pr_info("Initializing Radix MMU\n");
+	pr_debug("Initializing Radix MMU\n");
 }
 
 static int __init get_idx_from_shift(unsigned int shift)
@@ -444,7 +444,7 @@ static int __init radix_dt_scan_page_sizes(unsigned long node,
 	if (!prop)
 		return 0;
 
-	pr_info("Page sizes from device-tree:\n");
+	pr_debug("Page sizes from device-tree:\n");
 	for (; size >= 4; size -= 4, ++prop) {
 
 		struct mmu_psize_def *def;
@@ -452,7 +452,7 @@ static int __init radix_dt_scan_page_sizes(unsigned long node,
 		/* top 3 bit is AP encoding */
 		shift = be32_to_cpu(prop[0]) & ~(0xe << 28);
 		ap = be32_to_cpu(prop[0]) >> 29;
-		pr_info("Page size shift = %d AP=0x%x\n", shift, ap);
+		pr_debug("Page size shift = %d AP=0x%x\n", shift, ap);
 
 		idx = get_idx_from_shift(shift);
 		if (idx < 0)
@@ -509,7 +509,7 @@ void setup_kuep(bool disabled)
 		return;
 
 	if (smp_processor_id() == boot_cpuid)
-		pr_info("Activating Kernel Userspace Execution Prevention\n");
+		pr_debug("Activating Kernel Userspace Execution Prevention\n");
 
 	/*
 	 * Radix always uses key0 of the IAMR to determine if an access is
@@ -527,7 +527,7 @@ void setup_kuap(bool disabled)
 		return;
 
 	if (smp_processor_id() == boot_cpuid) {
-		pr_info("Activating Kernel Userspace Access Prevention\n");
+		pr_debug("Activating Kernel Userspace Access Prevention\n");
 		cur_cpu_spec->mmu_features |= MMU_FTR_RADIX_KUAP;
 	}
 

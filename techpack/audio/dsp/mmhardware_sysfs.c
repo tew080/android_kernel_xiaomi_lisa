@@ -13,61 +13,61 @@ static ssize_t mm_register_show(struct kobject *dev,
 	switch (mi->mm_id) {
 		case MM_HW_ADSP:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n", mi->on_register);
 			break;
 		case MM_HW_CODEC:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n", mi->on_register);
 			break;
 		case MM_HW_PA_1:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n%d\n", mi->on_register, mi->on_calibration);
 			break;
 		case MM_HW_PA_2:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n%d\n", mi->on_register, mi->on_calibration);
 			break;
 		case MM_HW_PA_3:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n%d\n", mi->on_register, mi->on_calibration);
 			break;
 		case MM_HW_PA_4:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n%d\n", mi->on_register, mi->on_calibration);
 			break;
 		case MM_HW_PA_5:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n%d\n", mi->on_register, mi->on_calibration);
 			break;
 		case MM_HW_PA_6:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n%d\n", mi->on_register, mi->on_calibration);
 			break;
 		case MM_HW_PA_7:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n%d\n", mi->on_register, mi->on_calibration);
 			break;
 		case MM_HW_PA_8:
 			if (!mi->on_register) {
-				pr_info("%s: 0x%x is not registered\n", __func__, mi->mm_id);
+				pr_debug("%s: 0x%x is not registered\n", __func__, mi->mm_id);
 			}
 			return sprintf(buf, "%d\n%d\n", mi->on_register, mi->on_calibration);
 			break;
@@ -165,7 +165,7 @@ int register_kobj_under_mmsysfs(enum hardware_id mm_id, const char *name)
 		if (mm_id == mi->mm_id) {
 			find_id = 1;
 			if (mi->on_register) {
-				pr_info("%s: device(id:%d name:%s) has already registered\n", __func__, mi->mm_id, name);
+				pr_debug("%s: device(id:%d name:%s) has already registered\n", __func__, mi->mm_id, name);
 				ret = -4;
 				goto err;
 			}

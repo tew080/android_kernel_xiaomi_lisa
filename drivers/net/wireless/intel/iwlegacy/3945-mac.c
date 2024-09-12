@@ -3884,7 +3884,7 @@ il3945_init(void)
 	 * "the hard way", rather than using device's scan.
 	 */
 	if (il3945_mod_params.disable_hw_scan) {
-		pr_info("hw_scan is disabled\n");
+		pr_debug("hw_scan is disabled\n");
 		il3945_mac_ops.hw_scan = NULL;
 	}
 

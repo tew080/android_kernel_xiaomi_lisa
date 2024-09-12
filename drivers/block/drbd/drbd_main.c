@@ -2414,7 +2414,7 @@ static void drbd_cleanup(void)
 
 	idr_destroy(&drbd_devices);
 
-	pr_info("module cleanup done.\n");
+	pr_debug("module cleanup done.\n");
 }
 
 /**
@@ -3015,11 +3015,11 @@ static int __init drbd_init(void)
 
 	drbd_debugfs_init();
 
-	pr_info("initialized. "
+	pr_debug("initialized. "
 	       "Version: " REL_VERSION " (api:%d/proto:%d-%d)\n",
 	       API_VERSION, PRO_VERSION_MIN, PRO_VERSION_MAX);
-	pr_info("%s\n", drbd_buildtag());
-	pr_info("registered as block device major %d\n", DRBD_MAJOR);
+	pr_debug("%s\n", drbd_buildtag());
+	pr_debug("registered as block device major %d\n", DRBD_MAJOR);
 	return 0; /* Success! */
 
 fail:

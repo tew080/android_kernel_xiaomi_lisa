@@ -645,7 +645,7 @@ static int vpe_elfload(struct vpe *v)
 	if (!v->load_addr)
 		return -ENOMEM;
 
-	pr_info("VPE loader: loading to %p\n", v->load_addr);
+	pr_debug("VPE loader: loading to %p\n", v->load_addr);
 
 	if (relocate) {
 		for (i = 0; i < hdr->e_shnum; i++) {
@@ -742,7 +742,7 @@ static int vpe_elfload(struct vpe *v)
 				" Unable to use AMVP (AP/SP) facilities.\n");
 	}
 
-	pr_info(" elf loaded\n");
+	pr_debug(" elf loaded\n");
 	return 0;
 }
 

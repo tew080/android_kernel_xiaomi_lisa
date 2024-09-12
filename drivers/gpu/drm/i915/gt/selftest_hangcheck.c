@@ -433,7 +433,7 @@ static int igt_reset_nop(void *arg)
 		if (err)
 			break;
 	} while (time_before(jiffies, end_time));
-	pr_info("%s: %d resets\n", __func__, count);
+	pr_debug("%s: %d resets\n", __func__, count);
 
 	mutex_lock(&gt->i915->drm.struct_mutex);
 	err = igt_flush_test(gt->i915, I915_WAIT_LOCKED);
@@ -528,7 +528,7 @@ static int igt_reset_nop_engine(void *arg)
 			}
 		} while (time_before(jiffies, end_time));
 		clear_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
-		pr_info("%s(%s): %d resets\n", __func__, engine->name, count);
+		pr_debug("%s(%s): %d resets\n", __func__, engine->name, count);
 
 		if (err)
 			break;
@@ -927,7 +927,7 @@ static int __igt_reset_engines(struct intel_gt *gt,
 		} while (time_before(jiffies, end_time));
 		clear_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
 		intel_engine_pm_put(engine);
-		pr_info("i915_reset_engine(%s:%s): %lu resets\n",
+		pr_debug("i915_reset_engine(%s:%s): %lu resets\n",
 			engine->name, test_name, count);
 
 		reported = i915_reset_engine_count(global, engine);
@@ -1511,7 +1511,7 @@ static int igt_reset_queue(void *arg)
 			prev = rq;
 			count++;
 		} while (time_before(jiffies, end_time));
-		pr_info("%s: Completed %d resets\n", engine->name, count);
+		pr_debug("%s: Completed %d resets\n", engine->name, count);
 
 		*h.batch = MI_BATCH_BUFFER_END;
 		intel_gt_chipset_flush(engine->gt);

@@ -95,7 +95,7 @@ static int qnx6_dir_longfilename(struct inode *inode,
 	   mmi 3g filesystem does not have that checksum */
 	if (!test_opt(s, MMI_FS) && fs32_to_cpu(sbi, de->de_checksum) !=
 			qnx6_lfile_checksum(lf->lf_fname, lf_size))
-		pr_info("long filename checksum error.\n");
+		pr_debug("long filename checksum error.\n");
 
 	pr_debug("qnx6_readdir:%.*s inode:%u\n",
 		 lf_size, lf->lf_fname, de_inode);

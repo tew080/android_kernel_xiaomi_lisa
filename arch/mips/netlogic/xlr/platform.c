@@ -166,12 +166,12 @@ int xls_platform_usb_init(void)
 
 	val = nlm_read_reg(gpio_mmio, 21);
 	if (((val >> 22) & 0x01) == 0) {
-		pr_info("Detected USB Device mode - Not supported!\n");
+		pr_debug("Detected USB Device mode - Not supported!\n");
 		nlm_write_reg(usb_mmio,	 0, 0x01000000);
 		return 0;
 	}
 
-	pr_info("Detected USB Host mode - Adding XLS USB devices.\n");
+	pr_debug("Detected USB Host mode - Adding XLS USB devices.\n");
 	/* Clear reset, host mode */
 	nlm_write_reg(usb_mmio,	 0, 0x02000000);
 

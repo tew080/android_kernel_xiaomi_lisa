@@ -122,7 +122,7 @@ static int bm_set_memory(u64 ba, u32 size)
 			       ba, bare, bar);
 			return -ENOMEM;
 		}
-		pr_info("BMan BAR already configured\n");
+		pr_debug("BMan BAR already configured\n");
 		__bman_requires_cleanup = 1;
 		return 1;
 	}

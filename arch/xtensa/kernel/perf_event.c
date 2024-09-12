@@ -355,10 +355,10 @@ void perf_event_print_debug(void)
 	unsigned i;
 
 	local_irq_save(flags);
-	pr_info("CPU#%d: PMG: 0x%08lx\n", smp_processor_id(),
+	pr_debug("CPU#%d: PMG: 0x%08lx\n", smp_processor_id(),
 		get_er(XTENSA_PMU_PMG));
 	for (i = 0; i < XCHAL_NUM_PERF_COUNTERS; ++i)
-		pr_info("PM%d: 0x%08lx, PMCTRL%d: 0x%08lx, PMSTAT%d: 0x%08lx\n",
+		pr_debug("PM%d: 0x%08lx, PMCTRL%d: 0x%08lx, PMSTAT%d: 0x%08lx\n",
 			i, get_er(XTENSA_PMU_PM(i)),
 			i, get_er(XTENSA_PMU_PMCTRL(i)),
 			i, get_er(XTENSA_PMU_PMSTAT(i)));

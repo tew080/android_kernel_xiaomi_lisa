@@ -454,7 +454,7 @@ void __init mpc52xx_init_irq(void)
 
 	irq_set_default_host(mpc52xx_irqhost);
 
-	pr_info("MPC52xx PIC is up and running!\n");
+	pr_debug("MPC52xx PIC is up and running!\n");
 }
 
 /**
