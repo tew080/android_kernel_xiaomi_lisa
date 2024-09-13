@@ -964,22 +964,6 @@ CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL=y
 ######
 
 ######
-## Cpuset configuration helper
-######
-CONFIG_CPUSET_ASSIST=y
-CONFIG_CPUSET_AUDIO_APP="0-3"
-CONFIG_CPUSET_BG="0-2"
-CONFIG_CPUSET_CAMERA="0-7"
-CONFIG_CPUSET_DISPLAY="0-6"
-CONFIG_CPUSET_FG="0-6"
-CONFIG_CPUSET_RESTRICTED="0-3"
-CONFIG_CPUSET_SYSTEM_BG="0-3"
-CONFIG_CPUSET_TOP_APP="0-7"
-######
-## end of  Cpuset configuration helper
-######
-
-######
 ## UClamp configuration helper
 ######
 CONFIG_UCLAMP_ASSIST=y
@@ -1045,4 +1029,5 @@ CONFIG_ZRAM_SIZE_OVERRIDE=6
 ######
 ## end of  Zram size to set from kernel
 ######
+
 
