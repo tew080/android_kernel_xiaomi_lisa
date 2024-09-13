@@ -989,17 +989,6 @@ CONFIG_UCLAMP_ASSIST=y
 ######
 
 ######
-## SBalance IRQ balancer
-######
-CONFIG_IRQ_SBALANCE=y
-CONFIG_IRQ_SBALANCE_POLL_MSEC=500
-CONFIG_IRQ_SBALANCE_THRESH=1024
-CONFIG_SBALANCE_EXCLUDE_CPUS=3,6,7
-######
-## end of  SBalance IRQ balancer
-######
-
-######
 ## Enable BBR2 TCP
 ######
 CONFIG_TCP_CONG_WESTWOOD=y
